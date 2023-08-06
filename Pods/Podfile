@@ -1,0 +1,29 @@
+use_frameworks!
+
+platform :ios, '12.0'
+#inhibit_all_warnings!
+
+workspace '../XZMocoa.xcworkspace'
+project '../Example/Example.xcodeproj'
+
+target 'Example' do
+  pod 'XZMocoa', :path => '../'
+  
+  pod 'SDWebImage'
+  pod 'YYModel'
+  pod 'XZPageView'
+  pod 'XZPageControl'
+  pod 'XZURLQuery'
+  
+  target 'ExampleTests' do
+    inherit! :search_paths
+
+    
+  end
+
+  target 'ExampleUITests' do
+    inherit! :search_paths
+
+    
+  end
+end

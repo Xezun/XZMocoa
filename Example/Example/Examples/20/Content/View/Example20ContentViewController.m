@@ -1,0 +1,52 @@
+//
+//  Example20ContentViewController.m
+//  Example
+//
+//  Created by Xezun on 2023/7/29.
+//
+
+#import "Example20ContentViewController.h"
+@import XZMocoa;
+@import WebKit;
+@import XZURLQuery;
+
+@interface Example20ContentViewController ()
+
+@property (nonatomic, copy) NSURL *url;
+@property (weak, nonatomic) IBOutlet WKWebView *webView;
+@end
+
+@implementation Example20ContentViewController
+
++ (void)load {
+    Mocoa(@"https://mocoa.xezun.com/examples/20/content/").viewNibClass = self;
+}
+
+- (instancetype)initWithMocoaURL:(NSURL *)url nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
+    self = [super initWithMocoaURL:url nibName:nibName bundle:bundle];
+    if (self) {
+        self.title = @"WebView";
+        _url = [url.xz_query urlForName:@"url"];
+        NSLog(@"url: %@", _url);
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
+    [self.webView loadRequest:request];
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

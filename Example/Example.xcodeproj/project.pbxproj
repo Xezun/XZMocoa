@@ -1,0 +1,1443 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		290BF2562A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 290BF2552A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m */; };
+		290BF25A2A76D1E300DD5AF6 /* Example20Group101Editor.m in Sources */ = {isa = PBXBuildFile; fileRef = 290BF2582A76D1E300DD5AF6 /* Example20Group101Editor.m */; };
+		290BF25B2A76D1E300DD5AF6 /* Example20Group101Editor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 290BF2592A76D1E300DD5AF6 /* Example20Group101Editor.xib */; };
+		29178B732A7908160082C080 /* Example21ContactEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29178B712A7908160082C080 /* Example21ContactEditor.xib */; };
+		29391AC42A74F821009E49C7 /* Example20ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29391AC22A74F821009E49C7 /* Example20ContentViewController.m */; };
+		29391AC52A74F821009E49C7 /* Example20ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29391AC32A74F821009E49C7 /* Example20ContentViewController.xib */; };
+		29391AC72A74FEFB009E49C7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29391AC62A74FEFB009E49C7 /* WebKit.framework */; };
+		298480B62A6FB3AD00757DBB /* Example10ContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 298480B52A6FB3AD00757DBB /* Example10ContentView.m */; };
+		298480B92A6FC36400757DBB /* Example10RootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 298480B82A6FC36400757DBB /* Example10RootView.m */; };
+		29914EA72A6CE3D700D0ACF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EA62A6CE3D700D0ACF3 /* AppDelegate.m */; };
+		29914EAA2A6CE3D700D0ACF3 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EA92A6CE3D700D0ACF3 /* SceneDelegate.m */; };
+		29914EAD2A6CE3D700D0ACF3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EAC2A6CE3D700D0ACF3 /* ViewController.m */; };
+		29914EB02A6CE3D700D0ACF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29914EAE2A6CE3D700D0ACF3 /* Main.storyboard */; };
+		29914EB22A6CE3D800D0ACF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29914EB12A6CE3D800D0ACF3 /* Assets.xcassets */; };
+		29914EB52A6CE3D800D0ACF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29914EB32A6CE3D800D0ACF3 /* LaunchScreen.storyboard */; };
+		29914EB82A6CE3D800D0ACF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EB72A6CE3D800D0ACF3 /* main.m */; };
+		29914EC22A6CE3D800D0ACF3 /* ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EC12A6CE3D800D0ACF3 /* ExampleTests.m */; };
+		29914ECC2A6CE3D800D0ACF3 /* ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914ECB2A6CE3D800D0ACF3 /* ExampleUITests.m */; };
+		29914ECE2A6CE3D800D0ACF3 /* ExampleUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914ECD2A6CE3D800D0ACF3 /* ExampleUITestsLaunchTests.m */; };
+		29914EE32A6CED7200D0ACF3 /* Example11ViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EE22A6CED7200D0ACF3 /* Example11ViewModel.m */; };
+		29914EE62A6CEF3800D0ACF3 /* Example11Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EE52A6CEF3800D0ACF3 /* Example11Model.m */; };
+		29914EEB2A6D0E3A00D0ACF3 /* Example10ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EEA2A6D0E3A00D0ACF3 /* Example10ViewController.m */; };
+		29914EF22A6D0F5C00D0ACF3 /* Example10ContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EF12A6D0F5C00D0ACF3 /* Example10ContactView.m */; };
+		29914EF82A6D0F9100D0ACF3 /* Example10Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EF72A6D0F9100D0ACF3 /* Example10Contact.m */; };
+		29914EFB2A6D0FBA00D0ACF3 /* Example10ContactViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EFA2A6D0FBA00D0ACF3 /* Example10ContactViewModel.m */; };
+		29914EFD2A6D115100D0ACF3 /* Example10ContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29914EFC2A6D115100D0ACF3 /* Example10ContactView.xib */; };
+		29914F012A6D2BC200D0ACF3 /* Example11ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EFF2A6D2BC200D0ACF3 /* Example11ViewController.m */; };
+		29914F022A6D2BC200D0ACF3 /* Example11ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29914F002A6D2BC200D0ACF3 /* Example11ViewController.xib */; };
+		29914F0C2A6D6ABB00D0ACF3 /* Example20ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914F0A2A6D6ABB00D0ACF3 /* Example20ViewController.m */; };
+		29914F0D2A6D6ABB00D0ACF3 /* Example20ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29914F0B2A6D6ABB00D0ACF3 /* Example20ViewController.xib */; };
+		29914F152A6D6D8800D0ACF3 /* Example20ViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914F142A6D6D8800D0ACF3 /* Example20ViewModel.m */; };
+		29914F1C2A6D8F6100D0ACF3 /* Example20Group101Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914F1B2A6D8F6100D0ACF3 /* Example20Group101Cell.m */; };
+		29914F1F2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914F1E2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m */; };
+		29914F222A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914F212A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m */; };
+		2996C8722A71930B00A77E2F /* Example20Group100Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8702A71930B00A77E2F /* Example20Group100Cell.m */; };
+		2996C8732A71930B00A77E2F /* Example20Group100Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2996C8712A71930B00A77E2F /* Example20Group100Cell.xib */; };
+		2996C8752A7208BA00A77E2F /* Example20Group101Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2996C8742A7208BA00A77E2F /* Example20Group101Cell.xib */; };
+		2996C87B2A72110E00A77E2F /* Example20Group102Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8792A72110E00A77E2F /* Example20Group102Cell.m */; };
+		2996C87C2A72110E00A77E2F /* Example20Group102Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2996C87A2A72110E00A77E2F /* Example20Group102Cell.xib */; };
+		2996C87F2A7213C200A77E2F /* Example20Group100SectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C87E2A7213C200A77E2F /* Example20Group100SectionViewModel.m */; };
+		2996C8832A7213FA00A77E2F /* Example20Group102SectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8822A7213FA00A77E2F /* Example20Group102SectionViewModel.m */; };
+		2996C8862A72141300A77E2F /* Example20Group100CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8852A72141300A77E2F /* Example20Group100CellViewModel.m */; };
+		2996C8892A72142700A77E2F /* Example20Group102CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8882A72142700A77E2F /* Example20Group102CellViewModel.m */; };
+		2996C88D2A72145C00A77E2F /* Example20Group102SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C88C2A72145C00A77E2F /* Example20Group102SectionModel.m */; };
+		2996C8902A72146800A77E2F /* Example20Group102CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C88F2A72146800A77E2F /* Example20Group102CellModel.m */; };
+		2996C8942A72148C00A77E2F /* Example20Group100SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8932A72148C00A77E2F /* Example20Group100SectionModel.m */; };
+		2996C8972A72149A00A77E2F /* Example20Group100CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8962A72149A00A77E2F /* Example20Group100CellModel.m */; };
+		2996C8A22A7219B300A77E2F /* Example20Group101SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8A12A7219B300A77E2F /* Example20Group101SectionModel.m */; };
+		2996C8A52A7219DC00A77E2F /* Example20Group101CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8A42A7219DC00A77E2F /* Example20Group101CellModel.m */; };
+		2996C8A82A721C7F00A77E2F /* Example20Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8A72A721C7F00A77E2F /* Example20Model.m */; };
+		2996C8AA2A721D9700A77E2F /* Example20Model.json in Resources */ = {isa = PBXBuildFile; fileRef = 2996C8A92A721D9700A77E2F /* Example20Model.json */; };
+		29AA8BE32A6ED88C00D36758 /* Example10Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 29AA8BE22A6ED88C00D36758 /* Example10Model.m */; };
+		29B3EBC12A7898B50008E65B /* Example21ContactBookViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EB9D2A7898B50008E65B /* Example21ContactBookViewModel.m */; };
+		29B3EBC22A7898B50008E65B /* Example21ContactBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EB9F2A7898B50008E65B /* Example21ContactBook.m */; };
+		29B3EBC32A7898B50008E65B /* Example21ContactBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBA32A7898B50008E65B /* Example21ContactBookViewController.m */; };
+		29B3EBC52A7898B50008E65B /* Example21ContactBookTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBA92A7898B50008E65B /* Example21ContactBookTestViewController.m */; };
+		29B3EBC62A7898B50008E65B /* Example21ContactCellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBAE2A7898B50008E65B /* Example21ContactCellViewModel.m */; };
+		29B3EBC72A7898B50008E65B /* Example21Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBB22A7898B50008E65B /* Example21Contact.m */; };
+		29B3EBC82A7898B50008E65B /* Example21ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29B3EBB62A7898B50008E65B /* Example21ContactCell.xib */; };
+		29B3EBC92A7898B50008E65B /* Example21ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBB72A7898B50008E65B /* Example21ContactCell.m */; };
+		29B3EBCA2A7898B50008E65B /* Example21ContactEditorViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBBB2A7898B50008E65B /* Example21ContactEditorViewModel.m */; };
+		29B3EBCB2A7898B50008E65B /* Example21ContactEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */; };
+		52BED4A2CAA8869D88AE24B6 /* Pods_ExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08675C782301AD7500A5B3F1 /* Pods_ExampleUITests.framework */; };
+		BFB5FD01E6FBCBD3A6654D14 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE993E3923446CDF5614926 /* Pods_Example.framework */; };
+		F64ED86FA7B0E4C7AFB6F803 /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		29914EBE2A6CE3D800D0ACF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29914E9A2A6CE3D700D0ACF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29914EA12A6CE3D700D0ACF3;
+			remoteInfo = Example;
+		};
+		29914EC82A6CE3D800D0ACF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29914E9A2A6CE3D700D0ACF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29914EA12A6CE3D700D0ACF3;
+			remoteInfo = Example;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08675C782301AD7500A5B3F1 /* Pods_ExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		148C011F47F41A3763903F04 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		290BF2542A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101EditorViewModel.h; sourceTree = "<group>"; };
+		290BF2552A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101EditorViewModel.m; sourceTree = "<group>"; };
+		290BF2572A76D1E300DD5AF6 /* Example20Group101Editor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101Editor.h; sourceTree = "<group>"; };
+		290BF2582A76D1E300DD5AF6 /* Example20Group101Editor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101Editor.m; sourceTree = "<group>"; };
+		290BF2592A76D1E300DD5AF6 /* Example20Group101Editor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example20Group101Editor.xib; sourceTree = "<group>"; };
+		29178B712A7908160082C080 /* Example21ContactEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example21ContactEditor.xib; sourceTree = "<group>"; };
+		29391AC12A74F821009E49C7 /* Example20ContentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20ContentViewController.h; sourceTree = "<group>"; };
+		29391AC22A74F821009E49C7 /* Example20ContentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20ContentViewController.m; sourceTree = "<group>"; };
+		29391AC32A74F821009E49C7 /* Example20ContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example20ContentViewController.xib; sourceTree = "<group>"; };
+		29391AC62A74FEFB009E49C7 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		298480B42A6FB3AD00757DBB /* Example10ContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10ContentView.h; sourceTree = "<group>"; };
+		298480B52A6FB3AD00757DBB /* Example10ContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10ContentView.m; sourceTree = "<group>"; };
+		298480B72A6FC36400757DBB /* Example10RootView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10RootView.h; sourceTree = "<group>"; };
+		298480B82A6FC36400757DBB /* Example10RootView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10RootView.m; sourceTree = "<group>"; };
+		29914EA22A6CE3D700D0ACF3 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29914EA52A6CE3D700D0ACF3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		29914EA62A6CE3D700D0ACF3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		29914EA82A6CE3D700D0ACF3 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		29914EA92A6CE3D700D0ACF3 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		29914EAB2A6CE3D700D0ACF3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		29914EAC2A6CE3D700D0ACF3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		29914EAF2A6CE3D700D0ACF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		29914EB12A6CE3D800D0ACF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		29914EB42A6CE3D800D0ACF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		29914EB62A6CE3D800D0ACF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29914EB72A6CE3D800D0ACF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29914EBD2A6CE3D800D0ACF3 /* ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		29914EC12A6CE3D800D0ACF3 /* ExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExampleTests.m; sourceTree = "<group>"; };
+		29914EC72A6CE3D800D0ACF3 /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		29914ECB2A6CE3D800D0ACF3 /* ExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExampleUITests.m; sourceTree = "<group>"; };
+		29914ECD2A6CE3D800D0ACF3 /* ExampleUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExampleUITestsLaunchTests.m; sourceTree = "<group>"; };
+		29914EE12A6CED7200D0ACF3 /* Example11ViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example11ViewModel.h; sourceTree = "<group>"; };
+		29914EE22A6CED7200D0ACF3 /* Example11ViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example11ViewModel.m; sourceTree = "<group>"; };
+		29914EE42A6CEF3800D0ACF3 /* Example11Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example11Model.h; sourceTree = "<group>"; };
+		29914EE52A6CEF3800D0ACF3 /* Example11Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example11Model.m; sourceTree = "<group>"; };
+		29914EE92A6D0E3A00D0ACF3 /* Example10ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10ViewController.h; sourceTree = "<group>"; };
+		29914EEA2A6D0E3A00D0ACF3 /* Example10ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10ViewController.m; sourceTree = "<group>"; };
+		29914EF02A6D0F5C00D0ACF3 /* Example10ContactView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10ContactView.h; sourceTree = "<group>"; };
+		29914EF12A6D0F5C00D0ACF3 /* Example10ContactView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10ContactView.m; sourceTree = "<group>"; };
+		29914EF62A6D0F9100D0ACF3 /* Example10Contact.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10Contact.h; sourceTree = "<group>"; };
+		29914EF72A6D0F9100D0ACF3 /* Example10Contact.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10Contact.m; sourceTree = "<group>"; };
+		29914EF92A6D0FBA00D0ACF3 /* Example10ContactViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10ContactViewModel.h; sourceTree = "<group>"; };
+		29914EFA2A6D0FBA00D0ACF3 /* Example10ContactViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10ContactViewModel.m; sourceTree = "<group>"; };
+		29914EFC2A6D115100D0ACF3 /* Example10ContactView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example10ContactView.xib; sourceTree = "<group>"; };
+		29914EFE2A6D2BC200D0ACF3 /* Example11ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example11ViewController.h; sourceTree = "<group>"; };
+		29914EFF2A6D2BC200D0ACF3 /* Example11ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example11ViewController.m; sourceTree = "<group>"; };
+		29914F002A6D2BC200D0ACF3 /* Example11ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example11ViewController.xib; sourceTree = "<group>"; };
+		29914F092A6D6ABB00D0ACF3 /* Example20ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20ViewController.h; sourceTree = "<group>"; };
+		29914F0A2A6D6ABB00D0ACF3 /* Example20ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20ViewController.m; sourceTree = "<group>"; };
+		29914F0B2A6D6ABB00D0ACF3 /* Example20ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example20ViewController.xib; sourceTree = "<group>"; };
+		29914F132A6D6D8800D0ACF3 /* Example20ViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20ViewModel.h; sourceTree = "<group>"; };
+		29914F142A6D6D8800D0ACF3 /* Example20ViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20ViewModel.m; sourceTree = "<group>"; };
+		29914F1A2A6D8F6100D0ACF3 /* Example20Group101Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101Cell.h; sourceTree = "<group>"; };
+		29914F1B2A6D8F6100D0ACF3 /* Example20Group101Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101Cell.m; sourceTree = "<group>"; };
+		29914F1D2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101CellViewModel.h; sourceTree = "<group>"; };
+		29914F1E2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101CellViewModel.m; sourceTree = "<group>"; };
+		29914F202A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101SectionViewModel.h; sourceTree = "<group>"; };
+		29914F212A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101SectionViewModel.m; sourceTree = "<group>"; };
+		2996C86F2A71930B00A77E2F /* Example20Group100Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group100Cell.h; sourceTree = "<group>"; };
+		2996C8702A71930B00A77E2F /* Example20Group100Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group100Cell.m; sourceTree = "<group>"; };
+		2996C8712A71930B00A77E2F /* Example20Group100Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example20Group100Cell.xib; sourceTree = "<group>"; };
+		2996C8742A7208BA00A77E2F /* Example20Group101Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Example20Group101Cell.xib; sourceTree = "<group>"; };
+		2996C8782A72110E00A77E2F /* Example20Group102Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group102Cell.h; sourceTree = "<group>"; };
+		2996C8792A72110E00A77E2F /* Example20Group102Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group102Cell.m; sourceTree = "<group>"; };
+		2996C87A2A72110E00A77E2F /* Example20Group102Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example20Group102Cell.xib; sourceTree = "<group>"; };
+		2996C87D2A7213C200A77E2F /* Example20Group100SectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group100SectionViewModel.h; sourceTree = "<group>"; };
+		2996C87E2A7213C200A77E2F /* Example20Group100SectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group100SectionViewModel.m; sourceTree = "<group>"; };
+		2996C8812A7213FA00A77E2F /* Example20Group102SectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group102SectionViewModel.h; sourceTree = "<group>"; };
+		2996C8822A7213FA00A77E2F /* Example20Group102SectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group102SectionViewModel.m; sourceTree = "<group>"; };
+		2996C8842A72141300A77E2F /* Example20Group100CellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group100CellViewModel.h; sourceTree = "<group>"; };
+		2996C8852A72141300A77E2F /* Example20Group100CellViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group100CellViewModel.m; sourceTree = "<group>"; };
+		2996C8872A72142700A77E2F /* Example20Group102CellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group102CellViewModel.h; sourceTree = "<group>"; };
+		2996C8882A72142700A77E2F /* Example20Group102CellViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group102CellViewModel.m; sourceTree = "<group>"; };
+		2996C88B2A72145C00A77E2F /* Example20Group102SectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group102SectionModel.h; sourceTree = "<group>"; };
+		2996C88C2A72145C00A77E2F /* Example20Group102SectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group102SectionModel.m; sourceTree = "<group>"; };
+		2996C88E2A72146800A77E2F /* Example20Group102CellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group102CellModel.h; sourceTree = "<group>"; };
+		2996C88F2A72146800A77E2F /* Example20Group102CellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group102CellModel.m; sourceTree = "<group>"; };
+		2996C8922A72148C00A77E2F /* Example20Group100SectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group100SectionModel.h; sourceTree = "<group>"; };
+		2996C8932A72148C00A77E2F /* Example20Group100SectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group100SectionModel.m; sourceTree = "<group>"; };
+		2996C8952A72149900A77E2F /* Example20Group100CellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group100CellModel.h; sourceTree = "<group>"; };
+		2996C8962A72149A00A77E2F /* Example20Group100CellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group100CellModel.m; sourceTree = "<group>"; };
+		2996C8A02A7219B300A77E2F /* Example20Group101SectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101SectionModel.h; sourceTree = "<group>"; };
+		2996C8A12A7219B300A77E2F /* Example20Group101SectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101SectionModel.m; sourceTree = "<group>"; };
+		2996C8A32A7219DC00A77E2F /* Example20Group101CellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101CellModel.h; sourceTree = "<group>"; };
+		2996C8A42A7219DC00A77E2F /* Example20Group101CellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101CellModel.m; sourceTree = "<group>"; };
+		2996C8A62A721C7F00A77E2F /* Example20Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Model.h; sourceTree = "<group>"; };
+		2996C8A72A721C7F00A77E2F /* Example20Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Model.m; sourceTree = "<group>"; };
+		2996C8A92A721D9700A77E2F /* Example20Model.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Example20Model.json; sourceTree = "<group>"; };
+		29AA8BE12A6ED88C00D36758 /* Example10Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10Model.h; sourceTree = "<group>"; };
+		29AA8BE22A6ED88C00D36758 /* Example10Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10Model.m; sourceTree = "<group>"; };
+		29B3EB9C2A7898B50008E65B /* Example21ContactBookViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactBookViewModel.h; sourceTree = "<group>"; };
+		29B3EB9D2A7898B50008E65B /* Example21ContactBookViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactBookViewModel.m; sourceTree = "<group>"; };
+		29B3EB9F2A7898B50008E65B /* Example21ContactBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactBook.m; sourceTree = "<group>"; };
+		29B3EBA02A7898B50008E65B /* Example21ContactBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactBook.h; sourceTree = "<group>"; };
+		29B3EBA22A7898B50008E65B /* Example21ContactBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactBookViewController.h; sourceTree = "<group>"; };
+		29B3EBA32A7898B50008E65B /* Example21ContactBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactBookViewController.m; sourceTree = "<group>"; };
+		29B3EBA92A7898B50008E65B /* Example21ContactBookTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactBookTestViewController.m; sourceTree = "<group>"; };
+		29B3EBAA2A7898B50008E65B /* Example21ContactBookTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactBookTestViewController.h; sourceTree = "<group>"; };
+		29B3EBAE2A7898B50008E65B /* Example21ContactCellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactCellViewModel.m; sourceTree = "<group>"; };
+		29B3EBB02A7898B50008E65B /* Example21ContactCellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactCellViewModel.h; sourceTree = "<group>"; };
+		29B3EBB22A7898B50008E65B /* Example21Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21Contact.m; sourceTree = "<group>"; };
+		29B3EBB32A7898B50008E65B /* Example21Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21Contact.h; sourceTree = "<group>"; };
+		29B3EBB52A7898B50008E65B /* Example21ContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactCell.h; sourceTree = "<group>"; };
+		29B3EBB62A7898B50008E65B /* Example21ContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Example21ContactCell.xib; sourceTree = "<group>"; };
+		29B3EBB72A7898B50008E65B /* Example21ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactCell.m; sourceTree = "<group>"; };
+		29B3EBBB2A7898B50008E65B /* Example21ContactEditorViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactEditorViewModel.m; sourceTree = "<group>"; };
+		29B3EBBC2A7898B50008E65B /* Example21ContactEditorViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditorViewModel.h; sourceTree = "<group>"; };
+		29B3EBBE2A7898B50008E65B /* Example21ContactEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditor.h; sourceTree = "<group>"; };
+		29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactEditor.m; sourceTree = "<group>"; };
+		62B24EDB69DD5EA24EEE5DE8 /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94D4E050FD770A1772594BB4 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		A81803A1EA4BC3CC84B95C92 /* Pods-ExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-ExampleUITests/Pods-ExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B680479E2362B0E5DBEC2380 /* Pods-ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D777A13F50891001338FA6F5 /* Pods-ExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-ExampleUITests/Pods-ExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FEE993E3923446CDF5614926 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		29914E9F2A6CE3D700D0ACF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29391AC72A74FEFB009E49C7 /* WebKit.framework in Frameworks */,
+				BFB5FD01E6FBCBD3A6654D14 /* Pods_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29914EBA2A6CE3D800D0ACF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F64ED86FA7B0E4C7AFB6F803 /* Pods_ExampleTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29914EC42A6CE3D800D0ACF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52BED4A2CAA8869D88AE24B6 /* Pods_ExampleUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		290BF24B2A76B25000DD5AF6 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				290BF24E2A76B27100DD5AF6 /* ViewModel */,
+				290BF24D2A76B26B00DD5AF6 /* View */,
+				290BF24C2A76B26000DD5AF6 /* Model */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		290BF24C2A76B26000DD5AF6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		290BF24D2A76B26B00DD5AF6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		290BF24E2A76B27100DD5AF6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29391ABD2A74F7BD009E49C7 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				29391AC02A74F7E7009E49C7 /* Model */,
+				29391ABF2A74F7DF009E49C7 /* View */,
+				29391ABE2A74F7D9009E49C7 /* ViewModel */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		29391ABE2A74F7D9009E49C7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29391ABF2A74F7DF009E49C7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29391AC12A74F821009E49C7 /* Example20ContentViewController.h */,
+				29391AC22A74F821009E49C7 /* Example20ContentViewController.m */,
+				29391AC32A74F821009E49C7 /* Example20ContentViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29391AC02A74F7E7009E49C7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		298480B32A6FB37A00757DBB /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				298480B42A6FB3AD00757DBB /* Example10ContentView.h */,
+				298480B52A6FB3AD00757DBB /* Example10ContentView.m */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		29914E992A6CE3D700D0ACF3 = {
+			isa = PBXGroup;
+			children = (
+				29914EA42A6CE3D700D0ACF3 /* Example */,
+				29914EC02A6CE3D800D0ACF3 /* ExampleTests */,
+				29914ECA2A6CE3D800D0ACF3 /* ExampleUITests */,
+				29914EA32A6CE3D700D0ACF3 /* Products */,
+				B149C6D6F9B43AED217D8F4E /* Pods */,
+				EB7D3144C7ADD76A26F44F44 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		29914EA32A6CE3D700D0ACF3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				29914EA22A6CE3D700D0ACF3 /* Example.app */,
+				29914EBD2A6CE3D800D0ACF3 /* ExampleTests.xctest */,
+				29914EC72A6CE3D800D0ACF3 /* ExampleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29914EA42A6CE3D700D0ACF3 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				29914EA52A6CE3D700D0ACF3 /* AppDelegate.h */,
+				29914EA62A6CE3D700D0ACF3 /* AppDelegate.m */,
+				29914EA82A6CE3D700D0ACF3 /* SceneDelegate.h */,
+				29914EA92A6CE3D700D0ACF3 /* SceneDelegate.m */,
+				29914EAB2A6CE3D700D0ACF3 /* ViewController.h */,
+				29914EAC2A6CE3D700D0ACF3 /* ViewController.m */,
+				29914EAE2A6CE3D700D0ACF3 /* Main.storyboard */,
+				29914EDA2A6CECCB00D0ACF3 /* Examples */,
+				29914EB12A6CE3D800D0ACF3 /* Assets.xcassets */,
+				29914EB32A6CE3D800D0ACF3 /* LaunchScreen.storyboard */,
+				29914EB62A6CE3D800D0ACF3 /* Info.plist */,
+				29914EB72A6CE3D800D0ACF3 /* main.m */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
+		29914EC02A6CE3D800D0ACF3 /* ExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				29914EC12A6CE3D800D0ACF3 /* ExampleTests.m */,
+			);
+			path = ExampleTests;
+			sourceTree = "<group>";
+		};
+		29914ECA2A6CE3D800D0ACF3 /* ExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				29914ECB2A6CE3D800D0ACF3 /* ExampleUITests.m */,
+				29914ECD2A6CE3D800D0ACF3 /* ExampleUITestsLaunchTests.m */,
+			);
+			path = ExampleUITests;
+			sourceTree = "<group>";
+		};
+		29914EDA2A6CECCB00D0ACF3 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				29914EE82A6D0CCC00D0ACF3 /* 10 */,
+				29914EE72A6D0A5800D0ACF3 /* 11 */,
+				29914F082A6D6A6E00D0ACF3 /* 20 */,
+				29B3EB992A7898B50008E65B /* 21 */,
+			);
+			path = Examples;
+			sourceTree = "<group>";
+		};
+		29914EDE2A6CED4300D0ACF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29914EE42A6CEF3800D0ACF3 /* Example11Model.h */,
+				29914EE52A6CEF3800D0ACF3 /* Example11Model.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29914EDF2A6CED4A00D0ACF3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29914EFE2A6D2BC200D0ACF3 /* Example11ViewController.h */,
+				29914EFF2A6D2BC200D0ACF3 /* Example11ViewController.m */,
+				29914F002A6D2BC200D0ACF3 /* Example11ViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29914EE02A6CED4F00D0ACF3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29914EE12A6CED7200D0ACF3 /* Example11ViewModel.h */,
+				29914EE22A6CED7200D0ACF3 /* Example11ViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29914EE72A6D0A5800D0ACF3 /* 11 */ = {
+			isa = PBXGroup;
+			children = (
+				29914EE02A6CED4F00D0ACF3 /* ViewModel */,
+				29914EDF2A6CED4A00D0ACF3 /* View */,
+				29914EDE2A6CED4300D0ACF3 /* Model */,
+			);
+			path = 11;
+			sourceTree = "<group>";
+		};
+		29914EE82A6D0CCC00D0ACF3 /* 10 */ = {
+			isa = PBXGroup;
+			children = (
+				29AA8BE02A6ED86700D36758 /* Controller */,
+				29AA8BDF2A6ED85F00D36758 /* View */,
+				29AA8BDE2A6ED85800D36758 /* Model */,
+			);
+			path = 10;
+			sourceTree = "<group>";
+		};
+		29914EEC2A6D0E7400D0ACF3 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				29914EEF2A6D0ED900D0ACF3 /* ViewModel */,
+				29914EEE2A6D0ED400D0ACF3 /* View */,
+				29914EED2A6D0E8C00D0ACF3 /* Model */,
+			);
+			path = Contact;
+			sourceTree = "<group>";
+		};
+		29914EED2A6D0E8C00D0ACF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29914EF62A6D0F9100D0ACF3 /* Example10Contact.h */,
+				29914EF72A6D0F9100D0ACF3 /* Example10Contact.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29914EEE2A6D0ED400D0ACF3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29914EF02A6D0F5C00D0ACF3 /* Example10ContactView.h */,
+				29914EF12A6D0F5C00D0ACF3 /* Example10ContactView.m */,
+				29914EFC2A6D115100D0ACF3 /* Example10ContactView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29914EEF2A6D0ED900D0ACF3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29914EF92A6D0FBA00D0ACF3 /* Example10ContactViewModel.h */,
+				29914EFA2A6D0FBA00D0ACF3 /* Example10ContactViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29914F082A6D6A6E00D0ACF3 /* 20 */ = {
+			isa = PBXGroup;
+			children = (
+				29914F0E2A6D6ACF00D0ACF3 /* Page */,
+				29914F0F2A6D6AD700D0ACF3 /* Group */,
+				29391ABD2A74F7BD009E49C7 /* Content */,
+				290BF24B2A76B25000DD5AF6 /* Editor */,
+			);
+			path = 20;
+			sourceTree = "<group>";
+		};
+		29914F0E2A6D6ACF00D0ACF3 /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				29914F122A6D6B0500D0ACF3 /* ViewModel */,
+				29914F112A6D6B0000D0ACF3 /* View */,
+				29914F102A6D6AFA00D0ACF3 /* Model */,
+			);
+			path = Page;
+			sourceTree = "<group>";
+		};
+		29914F0F2A6D6AD700D0ACF3 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				2996C86B2A71918800A77E2F /* 100 */,
+				29914F162A6D8F2100D0ACF3 /* 101 */,
+				2996C8762A7210EA00A77E2F /* 102 */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		29914F102A6D6AFA00D0ACF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2996C8A62A721C7F00A77E2F /* Example20Model.h */,
+				2996C8A72A721C7F00A77E2F /* Example20Model.m */,
+				2996C8A92A721D9700A77E2F /* Example20Model.json */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29914F112A6D6B0000D0ACF3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29914F092A6D6ABB00D0ACF3 /* Example20ViewController.h */,
+				29914F0A2A6D6ABB00D0ACF3 /* Example20ViewController.m */,
+				29914F0B2A6D6ABB00D0ACF3 /* Example20ViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29914F122A6D6B0500D0ACF3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29914F132A6D6D8800D0ACF3 /* Example20ViewModel.h */,
+				29914F142A6D6D8800D0ACF3 /* Example20ViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29914F162A6D8F2100D0ACF3 /* 101 */ = {
+			isa = PBXGroup;
+			children = (
+				29914F172A6D8F2A00D0ACF3 /* Model */,
+				29914F182A6D8F2E00D0ACF3 /* View */,
+				29914F192A6D8F3300D0ACF3 /* ViewModel */,
+			);
+			path = 101;
+			sourceTree = "<group>";
+		};
+		29914F172A6D8F2A00D0ACF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2996C8A02A7219B300A77E2F /* Example20Group101SectionModel.h */,
+				2996C8A12A7219B300A77E2F /* Example20Group101SectionModel.m */,
+				2996C8A32A7219DC00A77E2F /* Example20Group101CellModel.h */,
+				2996C8A42A7219DC00A77E2F /* Example20Group101CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29914F182A6D8F2E00D0ACF3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29914F1A2A6D8F6100D0ACF3 /* Example20Group101Cell.h */,
+				29914F1B2A6D8F6100D0ACF3 /* Example20Group101Cell.m */,
+				2996C8742A7208BA00A77E2F /* Example20Group101Cell.xib */,
+				290BF2572A76D1E300DD5AF6 /* Example20Group101Editor.h */,
+				290BF2582A76D1E300DD5AF6 /* Example20Group101Editor.m */,
+				290BF2592A76D1E300DD5AF6 /* Example20Group101Editor.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29914F192A6D8F3300D0ACF3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29914F202A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.h */,
+				29914F212A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m */,
+				29914F1D2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.h */,
+				29914F1E2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m */,
+				290BF2542A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.h */,
+				290BF2552A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2996C86B2A71918800A77E2F /* 100 */ = {
+			isa = PBXGroup;
+			children = (
+				2996C86C2A71919F00A77E2F /* Model */,
+				2996C86D2A7191A500A77E2F /* View */,
+				2996C86E2A7191AB00A77E2F /* ViewModel */,
+			);
+			path = 100;
+			sourceTree = "<group>";
+		};
+		2996C86C2A71919F00A77E2F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2996C8922A72148C00A77E2F /* Example20Group100SectionModel.h */,
+				2996C8932A72148C00A77E2F /* Example20Group100SectionModel.m */,
+				2996C8952A72149900A77E2F /* Example20Group100CellModel.h */,
+				2996C8962A72149A00A77E2F /* Example20Group100CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2996C86D2A7191A500A77E2F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2996C86F2A71930B00A77E2F /* Example20Group100Cell.h */,
+				2996C8702A71930B00A77E2F /* Example20Group100Cell.m */,
+				2996C8712A71930B00A77E2F /* Example20Group100Cell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2996C86E2A7191AB00A77E2F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2996C87D2A7213C200A77E2F /* Example20Group100SectionViewModel.h */,
+				2996C87E2A7213C200A77E2F /* Example20Group100SectionViewModel.m */,
+				2996C8842A72141300A77E2F /* Example20Group100CellViewModel.h */,
+				2996C8852A72141300A77E2F /* Example20Group100CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2996C8762A7210EA00A77E2F /* 102 */ = {
+			isa = PBXGroup;
+			children = (
+				2996C88A2A72143300A77E2F /* Model */,
+				2996C8772A7210F100A77E2F /* View */,
+				2996C8802A7213D900A77E2F /* ViewModel */,
+			);
+			path = 102;
+			sourceTree = "<group>";
+		};
+		2996C8772A7210F100A77E2F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2996C8782A72110E00A77E2F /* Example20Group102Cell.h */,
+				2996C8792A72110E00A77E2F /* Example20Group102Cell.m */,
+				2996C87A2A72110E00A77E2F /* Example20Group102Cell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2996C8802A7213D900A77E2F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2996C8812A7213FA00A77E2F /* Example20Group102SectionViewModel.h */,
+				2996C8822A7213FA00A77E2F /* Example20Group102SectionViewModel.m */,
+				2996C8872A72142700A77E2F /* Example20Group102CellViewModel.h */,
+				2996C8882A72142700A77E2F /* Example20Group102CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2996C88A2A72143300A77E2F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2996C88B2A72145C00A77E2F /* Example20Group102SectionModel.h */,
+				2996C88C2A72145C00A77E2F /* Example20Group102SectionModel.m */,
+				2996C88E2A72146800A77E2F /* Example20Group102CellModel.h */,
+				2996C88F2A72146800A77E2F /* Example20Group102CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29AA8BDE2A6ED85800D36758 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29AA8BE12A6ED88C00D36758 /* Example10Model.h */,
+				29AA8BE22A6ED88C00D36758 /* Example10Model.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29AA8BDF2A6ED85F00D36758 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				298480B72A6FC36400757DBB /* Example10RootView.h */,
+				298480B82A6FC36400757DBB /* Example10RootView.m */,
+				29914EEC2A6D0E7400D0ACF3 /* Contact */,
+				298480B32A6FB37A00757DBB /* Content */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29AA8BE02A6ED86700D36758 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				29914EE92A6D0E3A00D0ACF3 /* Example10ViewController.h */,
+				29914EEA2A6D0E3A00D0ACF3 /* Example10ViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		29B3EB992A7898B50008E65B /* 21 */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EB9A2A7898B50008E65B /* ContactBook */,
+				29B3EBAC2A7898B50008E65B /* Cell */,
+				29B3EBB92A7898B50008E65B /* Editor */,
+			);
+			path = 21;
+			sourceTree = "<group>";
+		};
+		29B3EB9A2A7898B50008E65B /* ContactBook */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EB9B2A7898B50008E65B /* ViewModel */,
+				29B3EB9E2A7898B50008E65B /* Model */,
+				29B3EBA12A7898B50008E65B /* View */,
+			);
+			path = ContactBook;
+			sourceTree = "<group>";
+		};
+		29B3EB9B2A7898B50008E65B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EB9C2A7898B50008E65B /* Example21ContactBookViewModel.h */,
+				29B3EB9D2A7898B50008E65B /* Example21ContactBookViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29B3EB9E2A7898B50008E65B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EBA02A7898B50008E65B /* Example21ContactBook.h */,
+				29B3EB9F2A7898B50008E65B /* Example21ContactBook.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29B3EBA12A7898B50008E65B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EBA22A7898B50008E65B /* Example21ContactBookViewController.h */,
+				29B3EBA32A7898B50008E65B /* Example21ContactBookViewController.m */,
+				29B3EBAA2A7898B50008E65B /* Example21ContactBookTestViewController.h */,
+				29B3EBA92A7898B50008E65B /* Example21ContactBookTestViewController.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29B3EBAC2A7898B50008E65B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EBAD2A7898B50008E65B /* ViewModel */,
+				29B3EBB12A7898B50008E65B /* Model */,
+				29B3EBB42A7898B50008E65B /* View */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		29B3EBAD2A7898B50008E65B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EBB02A7898B50008E65B /* Example21ContactCellViewModel.h */,
+				29B3EBAE2A7898B50008E65B /* Example21ContactCellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29B3EBB12A7898B50008E65B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EBB32A7898B50008E65B /* Example21Contact.h */,
+				29B3EBB22A7898B50008E65B /* Example21Contact.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29B3EBB42A7898B50008E65B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EBB52A7898B50008E65B /* Example21ContactCell.h */,
+				29B3EBB72A7898B50008E65B /* Example21ContactCell.m */,
+				29B3EBB62A7898B50008E65B /* Example21ContactCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29B3EBB92A7898B50008E65B /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EBBA2A7898B50008E65B /* ViewModel */,
+				29B3EBBD2A7898B50008E65B /* View */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		29B3EBBA2A7898B50008E65B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EBBC2A7898B50008E65B /* Example21ContactEditorViewModel.h */,
+				29B3EBBB2A7898B50008E65B /* Example21ContactEditorViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29B3EBBD2A7898B50008E65B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29B3EBBE2A7898B50008E65B /* Example21ContactEditor.h */,
+				29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */,
+				29178B712A7908160082C080 /* Example21ContactEditor.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B149C6D6F9B43AED217D8F4E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				148C011F47F41A3763903F04 /* Pods-Example.debug.xcconfig */,
+				94D4E050FD770A1772594BB4 /* Pods-Example.release.xcconfig */,
+				B680479E2362B0E5DBEC2380 /* Pods-ExampleTests.debug.xcconfig */,
+				62B24EDB69DD5EA24EEE5DE8 /* Pods-ExampleTests.release.xcconfig */,
+				A81803A1EA4BC3CC84B95C92 /* Pods-ExampleUITests.debug.xcconfig */,
+				D777A13F50891001338FA6F5 /* Pods-ExampleUITests.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods/Pods;
+			sourceTree = "<group>";
+		};
+		EB7D3144C7ADD76A26F44F44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29391AC62A74FEFB009E49C7 /* WebKit.framework */,
+				FEE993E3923446CDF5614926 /* Pods_Example.framework */,
+				9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */,
+				08675C782301AD7500A5B3F1 /* Pods_ExampleUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		29914EA12A6CE3D700D0ACF3 /* Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29914ED12A6CE3D800D0ACF3 /* Build configuration list for PBXNativeTarget "Example" */;
+			buildPhases = (
+				B4BC9226695BF210F839994C /* [CP] Check Pods Manifest.lock */,
+				29914E9E2A6CE3D700D0ACF3 /* Sources */,
+				29914E9F2A6CE3D700D0ACF3 /* Frameworks */,
+				29914EA02A6CE3D700D0ACF3 /* Resources */,
+				6D6DAC128DCB3F51941A5E7C /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Example;
+			productName = Example;
+			productReference = 29914EA22A6CE3D700D0ACF3 /* Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		29914EBC2A6CE3D800D0ACF3 /* ExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29914ED42A6CE3D800D0ACF3 /* Build configuration list for PBXNativeTarget "ExampleTests" */;
+			buildPhases = (
+				EB3713F35E7BB77DBE4C0E37 /* [CP] Check Pods Manifest.lock */,
+				29914EB92A6CE3D800D0ACF3 /* Sources */,
+				29914EBA2A6CE3D800D0ACF3 /* Frameworks */,
+				29914EBB2A6CE3D800D0ACF3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				29914EBF2A6CE3D800D0ACF3 /* PBXTargetDependency */,
+			);
+			name = ExampleTests;
+			productName = ExampleTests;
+			productReference = 29914EBD2A6CE3D800D0ACF3 /* ExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		29914EC62A6CE3D800D0ACF3 /* ExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29914ED72A6CE3D800D0ACF3 /* Build configuration list for PBXNativeTarget "ExampleUITests" */;
+			buildPhases = (
+				15F62E3B6AA324662E493166 /* [CP] Check Pods Manifest.lock */,
+				29914EC32A6CE3D800D0ACF3 /* Sources */,
+				29914EC42A6CE3D800D0ACF3 /* Frameworks */,
+				29914EC52A6CE3D800D0ACF3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				29914EC92A6CE3D800D0ACF3 /* PBXTargetDependency */,
+			);
+			name = ExampleUITests;
+			productName = ExampleUITests;
+			productReference = 29914EC72A6CE3D800D0ACF3 /* ExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29914E9A2A6CE3D700D0ACF3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					29914EA12A6CE3D700D0ACF3 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					29914EBC2A6CE3D800D0ACF3 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 29914EA12A6CE3D700D0ACF3;
+					};
+					29914EC62A6CE3D800D0ACF3 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 29914EA12A6CE3D700D0ACF3;
+					};
+				};
+			};
+			buildConfigurationList = 29914E9D2A6CE3D700D0ACF3 /* Build configuration list for PBXProject "Example" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 29914E992A6CE3D700D0ACF3;
+			productRefGroup = 29914EA32A6CE3D700D0ACF3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				29914EA12A6CE3D700D0ACF3 /* Example */,
+				29914EBC2A6CE3D800D0ACF3 /* ExampleTests */,
+				29914EC62A6CE3D800D0ACF3 /* ExampleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		29914EA02A6CE3D700D0ACF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2996C8732A71930B00A77E2F /* Example20Group100Cell.xib in Resources */,
+				290BF25B2A76D1E300DD5AF6 /* Example20Group101Editor.xib in Resources */,
+				29178B732A7908160082C080 /* Example21ContactEditor.xib in Resources */,
+				29914EB52A6CE3D800D0ACF3 /* LaunchScreen.storyboard in Resources */,
+				2996C87C2A72110E00A77E2F /* Example20Group102Cell.xib in Resources */,
+				29B3EBC82A7898B50008E65B /* Example21ContactCell.xib in Resources */,
+				29914F022A6D2BC200D0ACF3 /* Example11ViewController.xib in Resources */,
+				2996C8752A7208BA00A77E2F /* Example20Group101Cell.xib in Resources */,
+				29914EB22A6CE3D800D0ACF3 /* Assets.xcassets in Resources */,
+				29914EFD2A6D115100D0ACF3 /* Example10ContactView.xib in Resources */,
+				29914EB02A6CE3D700D0ACF3 /* Main.storyboard in Resources */,
+				2996C8AA2A721D9700A77E2F /* Example20Model.json in Resources */,
+				29391AC52A74F821009E49C7 /* Example20ContentViewController.xib in Resources */,
+				29914F0D2A6D6ABB00D0ACF3 /* Example20ViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29914EBB2A6CE3D800D0ACF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29914EC52A6CE3D800D0ACF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		15F62E3B6AA324662E493166 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ExampleUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6D6DAC128DCB3F51941A5E7C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B4BC9226695BF210F839994C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB3713F35E7BB77DBE4C0E37 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ExampleTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		29914E9E2A6CE3D700D0ACF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29914EFB2A6D0FBA00D0ACF3 /* Example10ContactViewModel.m in Sources */,
+				2996C8892A72142700A77E2F /* Example20Group102CellViewModel.m in Sources */,
+				29914EEB2A6D0E3A00D0ACF3 /* Example10ViewController.m in Sources */,
+				29B3EBCB2A7898B50008E65B /* Example21ContactEditor.m in Sources */,
+				29B3EBCA2A7898B50008E65B /* Example21ContactEditorViewModel.m in Sources */,
+				29B3EBC72A7898B50008E65B /* Example21Contact.m in Sources */,
+				29914F152A6D6D8800D0ACF3 /* Example20ViewModel.m in Sources */,
+				29914F0C2A6D6ABB00D0ACF3 /* Example20ViewController.m in Sources */,
+				2996C8972A72149A00A77E2F /* Example20Group100CellModel.m in Sources */,
+				29914F012A6D2BC200D0ACF3 /* Example11ViewController.m in Sources */,
+				2996C8A22A7219B300A77E2F /* Example20Group101SectionModel.m in Sources */,
+				29914EF22A6D0F5C00D0ACF3 /* Example10ContactView.m in Sources */,
+				2996C87B2A72110E00A77E2F /* Example20Group102Cell.m in Sources */,
+				2996C8A82A721C7F00A77E2F /* Example20Model.m in Sources */,
+				29B3EBC32A7898B50008E65B /* Example21ContactBookViewController.m in Sources */,
+				2996C8942A72148C00A77E2F /* Example20Group100SectionModel.m in Sources */,
+				29391AC42A74F821009E49C7 /* Example20ContentViewController.m in Sources */,
+				2996C88D2A72145C00A77E2F /* Example20Group102SectionModel.m in Sources */,
+				29914EE32A6CED7200D0ACF3 /* Example11ViewModel.m in Sources */,
+				298480B92A6FC36400757DBB /* Example10RootView.m in Sources */,
+				29914EAD2A6CE3D700D0ACF3 /* ViewController.m in Sources */,
+				2996C8902A72146800A77E2F /* Example20Group102CellModel.m in Sources */,
+				29B3EBC92A7898B50008E65B /* Example21ContactCell.m in Sources */,
+				298480B62A6FB3AD00757DBB /* Example10ContentView.m in Sources */,
+				29914F1C2A6D8F6100D0ACF3 /* Example20Group101Cell.m in Sources */,
+				290BF25A2A76D1E300DD5AF6 /* Example20Group101Editor.m in Sources */,
+				29AA8BE32A6ED88C00D36758 /* Example10Model.m in Sources */,
+				29B3EBC52A7898B50008E65B /* Example21ContactBookTestViewController.m in Sources */,
+				29914EA72A6CE3D700D0ACF3 /* AppDelegate.m in Sources */,
+				29914EE62A6CEF3800D0ACF3 /* Example11Model.m in Sources */,
+				2996C8A52A7219DC00A77E2F /* Example20Group101CellModel.m in Sources */,
+				290BF2562A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m in Sources */,
+				29B3EBC62A7898B50008E65B /* Example21ContactCellViewModel.m in Sources */,
+				2996C87F2A7213C200A77E2F /* Example20Group100SectionViewModel.m in Sources */,
+				2996C8722A71930B00A77E2F /* Example20Group100Cell.m in Sources */,
+				29B3EBC22A7898B50008E65B /* Example21ContactBook.m in Sources */,
+				29914F1F2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m in Sources */,
+				29B3EBC12A7898B50008E65B /* Example21ContactBookViewModel.m in Sources */,
+				29914EB82A6CE3D800D0ACF3 /* main.m in Sources */,
+				29914EF82A6D0F9100D0ACF3 /* Example10Contact.m in Sources */,
+				29914EAA2A6CE3D700D0ACF3 /* SceneDelegate.m in Sources */,
+				2996C8832A7213FA00A77E2F /* Example20Group102SectionViewModel.m in Sources */,
+				2996C8862A72141300A77E2F /* Example20Group100CellViewModel.m in Sources */,
+				29914F222A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29914EB92A6CE3D800D0ACF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29914EC22A6CE3D800D0ACF3 /* ExampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29914EC32A6CE3D800D0ACF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29914ECC2A6CE3D800D0ACF3 /* ExampleUITests.m in Sources */,
+				29914ECE2A6CE3D800D0ACF3 /* ExampleUITestsLaunchTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		29914EBF2A6CE3D800D0ACF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29914EA12A6CE3D700D0ACF3 /* Example */;
+			targetProxy = 29914EBE2A6CE3D800D0ACF3 /* PBXContainerItemProxy */;
+		};
+		29914EC92A6CE3D800D0ACF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29914EA12A6CE3D700D0ACF3 /* Example */;
+			targetProxy = 29914EC82A6CE3D800D0ACF3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		29914EAE2A6CE3D700D0ACF3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29914EAF2A6CE3D700D0ACF3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		29914EB32A6CE3D800D0ACF3 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29914EB42A6CE3D800D0ACF3 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		29914ECF2A6CE3D800D0ACF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		29914ED02A6CE3D800D0ACF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		29914ED22A6CE3D800D0ACF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 148C011F47F41A3763903F04 /* Pods-Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DRRPBNFZ6Z;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xezun.demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		29914ED32A6CE3D800D0ACF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94D4E050FD770A1772594BB4 /* Pods-Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DRRPBNFZ6Z;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xezun.demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		29914ED52A6CE3D800D0ACF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B680479E2362B0E5DBEC2380 /* Pods-ExampleTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xezun.ExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Example";
+			};
+			name = Debug;
+		};
+		29914ED62A6CE3D800D0ACF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62B24EDB69DD5EA24EEE5DE8 /* Pods-ExampleTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xezun.ExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Example";
+			};
+			name = Release;
+		};
+		29914ED82A6CE3D800D0ACF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A81803A1EA4BC3CC84B95C92 /* Pods-ExampleUITests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xezun.ExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Example;
+			};
+			name = Debug;
+		};
+		29914ED92A6CE3D800D0ACF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D777A13F50891001338FA6F5 /* Pods-ExampleUITests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xezun.ExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Example;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		29914E9D2A6CE3D700D0ACF3 /* Build configuration list for PBXProject "Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29914ECF2A6CE3D800D0ACF3 /* Debug */,
+				29914ED02A6CE3D800D0ACF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29914ED12A6CE3D800D0ACF3 /* Build configuration list for PBXNativeTarget "Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29914ED22A6CE3D800D0ACF3 /* Debug */,
+				29914ED32A6CE3D800D0ACF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29914ED42A6CE3D800D0ACF3 /* Build configuration list for PBXNativeTarget "ExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29914ED52A6CE3D800D0ACF3 /* Debug */,
+				29914ED62A6CE3D800D0ACF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29914ED72A6CE3D800D0ACF3 /* Build configuration list for PBXNativeTarget "ExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29914ED82A6CE3D800D0ACF3 /* Debug */,
+				29914ED92A6CE3D800D0ACF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29914E9A2A6CE3D700D0ACF3 /* Project object */;
+}
