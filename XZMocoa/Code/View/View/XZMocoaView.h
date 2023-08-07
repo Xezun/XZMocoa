@@ -21,10 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// 视图模型。
 @property (nonatomic, strong, nullable) __kindof XZMocoaViewModel *viewModel;
 
-/// 视图模型 KVC 事件，默认不执行任何操作。
+/// 视图模型 KVO 事件，默认不执行任何操作。
 - (void)viewModelWillChange;
 
-/// 视图模型 KVC 事件，默认不执行任何操作。
+/// 视图模型 KVO 事件，默认不执行任何操作。
 - (void)viewModelDidChange;
 
 /// 获取当前视图所在的视图控制器，如果自身已经是控制器，则返回自身。
@@ -44,7 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// 模块启动参数。
+/// @typedef
+/// 模块初始化参数。
 typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 
 @interface UIViewController (XZMocoaModuleSupporting)
