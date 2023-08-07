@@ -144,18 +144,10 @@ FOUNDATION_EXPORT NSString * const XZMocoaEmitNone;
 /// Mocoa Keyed Actions 事件名。
 typedef NSString *XZMocoaKeyEvents;
 
-/// @define
-/// 事件行为。
-/// @param viewModel 事件发送者（为避免循环引用而设计）
-/// @param target 事件接收者（为避免循环引用而设计）
-typedef void(^XZMocoaKeyHandler)(__kindof XZMocoaViewModel *viewModel, id target);
-
 /// 没有 key 也可作为一种事件，或者称为默认事件，值为空字符串。
 FOUNDATION_EXPORT XZMocoaKeyEvents const XZMocoaKeyEventsNone;
 
-@interface XZMocoaViewModel (XZMocoaViewModelKeyedActions)
-
-@property (nonatomic, readonly) void (^bind)(XZMocoaKeyEvents keyEvents, id target, XZMocoaKeyHandler action);
+@interface XZMocoaViewModel (XZMocoaViewModelKeyEvents)
 
 /// 绑定 target-action 事件。
 /// @note

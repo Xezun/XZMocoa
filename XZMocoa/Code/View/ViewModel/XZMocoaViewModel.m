@@ -8,14 +8,13 @@
 
 #import "XZMocoaViewModel.h"
 #import "XZMocoaView.h"
-
-@class XZMocoaObserver;
+#import "XZMocoaKeyedTargetActions.h"
 
 @implementation XZMocoaViewModel {
     @private
     NSMutableOrderedSet<XZMocoaViewModel *> *_subViewModels;
     XZMocoaViewModel * __unsafe_unretained _superViewModel;
-    XZMocoaObserver  *_observer;
+    XZMocoaKeyedTargetActions  *_keyedTargetActions;
 }
 
 - (void)dealloc {
@@ -180,6 +179,7 @@
 
 
 
+
 NSString * const XZMocoaEmitNone = @"";
 
 @implementation XZMocoaViewModel (XZMocoaViewModelHierarchyEmitting)
@@ -196,48 +196,27 @@ NSString * const XZMocoaEmitNone = @"";
 @end
 
 
+
 XZMocoaKeyEvents const XZMocoaKeyEventsNone = @"";
 
-@interface XZMocoaObserver : NSObject
-@property (nonatomic, unsafe_unretained) XZMocoaViewModel *owner;
-- (instancetype)initWithOwner:(XZMocoaViewModel *)owner;
-- (void)addTarget:(id)target action:(XZMocoaKeyHandler)action selector:(nullable SEL)selector forKeyEvents:(NSString *)keyEvents;
-- (void)removeTarget:(id)target action:(SEL)action forKeyEvents:(nullable NSString *)key;
-- (void)sendActionsForKeyEvents:(NSString *)key;
-@end
-
-@implementation XZMocoaViewModel (XZMocoaViewModelKeyedActions)
-
-- (void (^)(XZMocoaKeyEvents, id, XZMocoaKeyHandler))bind {
-    return ^(XZMocoaKeyEvents keyEvents, id target, XZMocoaKeyHandler action) {
-        [self _addTarget:target action:action selector:nil forKeyEvents:keyEvents];
-    };
-}
-
-- (void)_addTarget:(id)target action:(XZMocoaKeyHandler)action selector:(SEL)selector forKeyEvents:(NSString *)event {
-    NSParameterAssert(event && target && action);
-    if (_observer == nil) {
-        _observer = [[XZMocoaObserver alloc] initWithOwner:self];
-    }
-    [_observer addTarget:target action:action selector:selector forKeyEvents:event];
-    action(self, target);
-}
+@implementation XZMocoaViewModel (XZMocoaViewModelKeyEvents)
 
 - (void)addTarget:(id)target action:(SEL)action forKeyEvents:(NSString *)keyEvents {
-    [self _addTarget:target action:^(XZMocoaViewModel *viewModel, id target) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [target performSelector:action withObject:viewModel];
-#pragma clang diagnostic pop
-    } selector:action forKeyEvents:keyEvents];
+    if (!target || !action || !keyEvents) {
+        return;
+    }
+    if (_keyedTargetActions == nil) {
+        _keyedTargetActions = [[XZMocoaKeyedTargetActions alloc] initWithOwner:self];
+    }
+    [_keyedTargetActions addTarget:target action:action forKeyEvents:keyEvents];
 }
 
 - (void)removeTarget:(id)target action:(SEL)action forKeyEvents:(nullable NSString *)keyEvents {
-    [_observer removeTarget:target action:action forKeyEvents:keyEvents];
+    [_keyedTargetActions removeTarget:target action:action forKeyEvents:keyEvents];
 }
 
 - (void)sendActionsForKeyEvents:(NSString *)keyEvents {
-    [_observer sendActionsForKeyEvents:keyEvents];
+    [_keyedTargetActions sendActionsForKeyEvents:keyEvents];
 }
 
 - (void)addTarget:(id)target action:(SEL)action {
@@ -254,101 +233,6 @@ XZMocoaKeyEvents const XZMocoaKeyEventsNone = @"";
 
 @end
 
-
-
-
-@interface XZMocoaTargetAction : NSObject
-@property (nonatomic, weak, readonly) id target;
-@property (nonatomic, copy, readonly) XZMocoaKeyHandler action;
-@property (nonatomic, readonly) SEL selector;
-- (instancetype)initWithTarget:(id)target action:(XZMocoaKeyHandler)action selector:(nullable SEL)selector;
-@end
-
-
-@implementation XZMocoaObserver {
-    NSMutableDictionary<NSString *, NSMutableArray<XZMocoaTargetAction *> *> *_table;
-}
-
-- (instancetype)initWithOwner:(XZMocoaViewModel *)owner {
-    self = [super init];
-    if (self) {
-        _owner = owner;
-        _table = [NSMutableDictionary dictionary];
-    }
-    return self;
-}
-
-- (void)addTarget:(id)target action:(XZMocoaKeyHandler)action selector:(nullable SEL)selector forKeyEvents:(NSString *)key {
-    NSMutableArray<XZMocoaTargetAction *> *targetActions = _table[key];
-    if (targetActions == nil) {
-        targetActions = [NSMutableArray array];
-        _table[key] = targetActions;
-    }
-    id targetAction = [[XZMocoaTargetAction alloc] initWithTarget:target action:action selector:selector];
-    [targetActions addObject:targetAction];
-}
-
-- (void)removeTarget:(id)target action:(SEL)action forKeyEvents:(nullable NSString *)keyEvent {
-    if (target == nil) {
-        [_table removeAllObjects];
-    } else if (action == NULL) {
-        if (keyEvent == nil) {
-            [_table[keyEvent] removeAllObjects];
-        } else {
-            _table[keyEvent] = nil;
-        }
-    } else if (keyEvent == nil) {
-        [_table enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSMutableArray<XZMocoaTargetAction *> *targetActions, BOOL *stop) {
-            [self _removeTarget:target action:action inTargetActions:targetActions];
-        }];
-    } else {
-        [self _removeTarget:target action:action inTargetActions:_table[keyEvent]];
-    }
-}
-
-- (void)_removeTarget:(id)target action:(SEL)action inTargetActions:(NSMutableArray *)targetActions {
-    [targetActions enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(XZMocoaTargetAction *targetAction, NSUInteger idx, BOOL *stop) {
-        id const _target = targetAction.target;
-        if (_target == nil) {
-            return [targetActions removeObjectAtIndex:idx];
-        }
-        SEL const _selector = targetAction.selector;
-        if (_selector == nil) {
-            return; // 通过 bind 方法绑定的
-        }
-        if (_target == target && _selector == action) {
-            [targetActions removeObjectAtIndex:idx];
-        }
-    }];
-}
-
-- (void)sendActionsForKeyEvents:(NSString *)keyEvent {
-    NSMutableArray<XZMocoaTargetAction *> *targetActions = _table[keyEvent];
-    [targetActions enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(XZMocoaTargetAction *targetAction, NSUInteger idx, BOOL *stop) {
-        id const target = targetAction.target;
-        if (target == nil) {
-            [targetActions removeObjectAtIndex:idx]; // 删除 target 已销毁的监听
-        } else {
-            targetAction.action(self.owner, target);
-        }
-    }];
-}
-
-@end
-
-@implementation XZMocoaTargetAction
-
-- (instancetype)initWithTarget:(id)target action:(XZMocoaKeyHandler)action selector:(nullable SEL)selector {
-    self = [super init];
-    if (self) {
-        _target = target;
-        _action = action;
-        _selector = selector;
-    }
-    return self;
-}
-
-@end
 
 
 //#import "XZMocoaImageView.h"

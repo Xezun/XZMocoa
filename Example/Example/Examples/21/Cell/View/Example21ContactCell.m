@@ -21,13 +21,18 @@
 }
 
 - (void)viewModelDidChange {
-    self.viewModel.bind(@"name", self, ^(Example21ContactCellViewModel *viewModel, Example21ContactCell *self) {
-        self.textLabel.text = viewModel.name;
-    });
-    
-    self.viewModel.bind(@"phone", self, ^(Example21ContactCellViewModel *viewModel, Example21ContactCell *self) {
-        self.detailTextLabel.text = viewModel.phone;
-    });
+    [self.viewModel addTarget:self action:@selector(nameDidChange:) forKeyEvents:@"name"];
+    [self.viewModel addTarget:self action:@selector(phoneDidChange:) forKeyEvents:@"phone"];
 }
+
+- (void)nameDidChange:(Example21ContactCellViewModel *)viewModel {
+    self.textLabel.text = viewModel.name;
+}
+
+- (void)phoneDidChange:(Example21ContactCellViewModel *)viewModel {
+    self.detailTextLabel.text = viewModel.phone;
+}
+
+
 
 @end
