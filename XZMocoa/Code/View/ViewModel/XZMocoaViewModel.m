@@ -84,7 +84,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: %p, isReady = %@; subViewModels = %@>", self.class, self, @(self.isReady), self.subViewModels];
+    return [NSString stringWithFormat:@"<%@: %p, isReady = %@; subViewModels = (%ld objects)>", self.class, self, @(self.isReady), self.subViewModels.count];
 }
 
 @end
