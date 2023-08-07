@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XZMocoa/XZMocoaViewModel.h>
+@import XZURLQuery;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -43,36 +44,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
-//@interface XZMocoaOptions : NSMutableDictionary
-//
-//+ (XZMocoaOptions *)optionsWithURL:(NSURL *)url;
-//+ (XZMocoaOptions *)optionsWithDictionar:(NSDictionary *)dict;
-//
-//@end
-
+/// 模块启动参数。
+typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 
 @interface UIViewController (XZMocoaModuleSupporting)
 
 /// 根据视图控制器的模块地址，构造视图控制器。
 /// @discussion
-/// 一般情况下，此方法用于进入，以视图控制器作为入口的模块，构造视图控制器用。
-/// @discussion
-/// 本方法使用 -initWithMocoaURL:nibName:bundle: 方法初始化视图控制器。
-/// @discussion
-/// 可通过 url 的 query 携带参数传递给新的控制器。
+/// 参数 url 的 query 将作为 options 参数，调用 -viewControllerWithMocoaModule:options: 方法完成实例化控制器。
 /// @param url 模块地址
 + (nullable __kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url;
-//+ (nullable __kindof UIViewController *)viewControllerWithMocoaModule:(XZMocoaModule *)aModule options:(id)options;
+/// 根据 XZMocoaModule 模块，实例化视图控制器。
+/// @discussion
+/// 一般情况下，此方法用于进入，以视图控制器作为入口的模块，构造视图控制器用。
+/// @discussion
+/// 本方法使用 -initWithMocoaOptions:nibName:bundle: 方法初始化视图控制器。
+/// @param aModule 模块对象
+/// @param options 实例化参数
++ (nullable __kindof UIViewController *)viewControllerWithMocoaModule:(XZMocoaModule *)aModule options:(XZMocoaOptions)options;
 
-/// XZMocoaModule 使用此方法初始化控制器。
+/// XZMocoa 使用此方法初始化控制器。
 /// @discussion
 /// 便利初始化方法，默认直接调用 -initWithNibName:bundle: 方法完成初始化。
 /// @discussion
-/// 子类可以通过重写此方法获取 url 中的参数信息，或将控制器的初始化改为其它初始化方法。
-/// @param url 创建控制器时所用的 url 对象
-- (instancetype)initWithMocoaURL:(NSURL *)url nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle;
-//- (instancetype)initWithMocoaOptions:(id)options nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle;
+/// 子类可以通过重写此方法获取 options 中的参数信息，或将控制器的初始化改为其它初始化方法。
+/// @param options 初始化参数
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle;
 
 /// 通过 XZMocoaURL 弹出层控制器。
 /// @discussion 如果 XZMocoaURL 没有对应的控制器，那么此方法将不产生任何效果。

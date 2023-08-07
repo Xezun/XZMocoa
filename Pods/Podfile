@@ -13,7 +13,7 @@ target 'Example' do
   pod 'YYModel'
   pod 'XZPageView'
   pod 'XZPageControl'
-  pod 'XZURLQuery'
+  pod 'XZExtensions'
   
   target 'ExampleTests' do
     inherit! :search_paths

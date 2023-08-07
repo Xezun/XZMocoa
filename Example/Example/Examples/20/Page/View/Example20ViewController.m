@@ -20,8 +20,8 @@
     Mocoa(@"https://mocoa.xezun.com/examples/20").viewNibClass = self;
 }
 
-- (instancetype)initWithMocoaURL:(NSURL *)url nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle {
-    self = [super initWithMocoaURL:url nibName:nibName bundle:bundle];
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle {
+    self = [super initWithMocoaOptions:options nibName:nibName bundle:bundle];
     if (self) {
         self.title = @"UITableView";
         self.hidesBottomBarWhenPushed = YES;

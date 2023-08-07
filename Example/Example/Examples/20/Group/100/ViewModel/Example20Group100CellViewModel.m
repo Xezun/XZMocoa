@@ -8,6 +8,7 @@
 #import "Example20Group100CellViewModel.h"
 #import "Example20Group100CellModel.h"
 @import XZURLQuery;
+@import XZExtensions;
 
 @implementation Example20Group100CellViewModel
 
@@ -33,9 +34,8 @@
 - (void)tableView:(id<XZMocoaView>)tableView didSelectRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     // 目标作为独立模块，直接打开，通过 url 参数传值
     Example20Group100CellModel *model = self.model;
-    XZURLQuery *query = [XZURLQuery queryForURLString:@"https://mocoa.xezun.com/examples/20/content/"];
-    query[@"url"] = model.url;
-    [tableView.navigationController pushViewControllerWithMocoaURL:query.url animated:YES];
+    NSURL *url = [NSURL xz_URLWithFormat:@"https://mocoa.xezun.com/examples/20/content/?url=%@", model.url.xz_stringByAddingPercentEncoding];
+    [tableView.navigationController pushViewControllerWithMocoaURL:url animated:YES];
 }
 
 @end

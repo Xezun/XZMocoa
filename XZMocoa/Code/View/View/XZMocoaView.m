@@ -168,20 +168,20 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 @implementation UIViewController (XZMocoaModuleSupporting)
 
 + (__kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url {
-    XZMocoaModule * const module = [XZMocoaModule moduleForURL:url];
-    if (module == nil) {
-        return nil;
-    }
+    XZMocoaOptions const options = [XZURLQuery queryForURL:url].dictionaryRepresentation;
+    return [self viewControllerWithMocoaModule:[XZMocoaModule moduleForURL:url] options:options];
+}
++ (__kindof UIViewController *)viewControllerWithMocoaModule:(XZMocoaModule *)module options:(XZMocoaOptions)options {
     Class const ViewController = module.viewClass;
     if (![ViewController isSubclassOfClass:UIViewController.class]) {
         return nil;
     }
     NSString *nibName = module.viewNibName;
     NSBundle *bundle  = module.viewNibBundle;
-    return [[ViewController alloc] initWithMocoaURL:url nibName:nibName bundle:bundle];
+    return [[ViewController alloc] initWithMocoaOptions:options nibName:nibName bundle:bundle];
 }
 
-- (instancetype)initWithMocoaURL:(NSURL *)url nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
     return [self initWithNibName:nibName bundle:bundle];
 }
 

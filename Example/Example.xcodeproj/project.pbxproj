@@ -241,37 +241,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		290BF24B2A76B25000DD5AF6 /* Editor */ = {
-			isa = PBXGroup;
-			children = (
-				290BF24E2A76B27100DD5AF6 /* ViewModel */,
-				290BF24D2A76B26B00DD5AF6 /* View */,
-				290BF24C2A76B26000DD5AF6 /* Model */,
-			);
-			path = Editor;
-			sourceTree = "<group>";
-		};
-		290BF24C2A76B26000DD5AF6 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		290BF24D2A76B26B00DD5AF6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		290BF24E2A76B27100DD5AF6 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		29391ABD2A74F7BD009E49C7 /* Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -476,7 +445,6 @@
 				29914F0E2A6D6ACF00D0ACF3 /* Page */,
 				29914F0F2A6D6AD700D0ACF3 /* Group */,
 				29391ABD2A74F7BD009E49C7 /* Content */,
-				290BF24B2A76B25000DD5AF6 /* Editor */,
 			);
 			path = 20;
 			sourceTree = "<group>";
