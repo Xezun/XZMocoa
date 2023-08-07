@@ -57,7 +57,6 @@
 		2996C8A22A7219B300A77E2F /* Example20Group101SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8A12A7219B300A77E2F /* Example20Group101SectionModel.m */; };
 		2996C8A52A7219DC00A77E2F /* Example20Group101CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8A42A7219DC00A77E2F /* Example20Group101CellModel.m */; };
 		2996C8A82A721C7F00A77E2F /* Example20Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8A72A721C7F00A77E2F /* Example20Model.m */; };
-		2996C8AA2A721D9700A77E2F /* Example20Model.json in Resources */ = {isa = PBXBuildFile; fileRef = 2996C8A92A721D9700A77E2F /* Example20Model.json */; };
 		29AA8BE32A6ED88C00D36758 /* Example10Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 29AA8BE22A6ED88C00D36758 /* Example10Model.m */; };
 		29B3EBC12A7898B50008E65B /* Example21ContactBookViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EB9D2A7898B50008E65B /* Example21ContactBookViewModel.m */; };
 		29B3EBC22A7898B50008E65B /* Example21ContactBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EB9F2A7898B50008E65B /* Example21ContactBook.m */; };
@@ -69,6 +68,7 @@
 		29B3EBC92A7898B50008E65B /* Example21ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBB72A7898B50008E65B /* Example21ContactCell.m */; };
 		29B3EBCA2A7898B50008E65B /* Example21ContactEditorViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBBB2A7898B50008E65B /* Example21ContactEditorViewModel.m */; };
 		29B3EBCB2A7898B50008E65B /* Example21ContactEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */; };
+		29FBDA172A8120A9006BBB66 /* Example20Model.json in Resources */ = {isa = PBXBuildFile; fileRef = 29FBDA162A8120A9006BBB66 /* Example20Model.json */; };
 		52BED4A2CAA8869D88AE24B6 /* Pods_ExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08675C782301AD7500A5B3F1 /* Pods_ExampleUITests.framework */; };
 		BFB5FD01E6FBCBD3A6654D14 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE993E3923446CDF5614926 /* Pods_Example.framework */; };
 		F64ED86FA7B0E4C7AFB6F803 /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */; };
@@ -181,7 +181,6 @@
 		2996C8A42A7219DC00A77E2F /* Example20Group101CellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101CellModel.m; sourceTree = "<group>"; };
 		2996C8A62A721C7F00A77E2F /* Example20Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Model.h; sourceTree = "<group>"; };
 		2996C8A72A721C7F00A77E2F /* Example20Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Model.m; sourceTree = "<group>"; };
-		2996C8A92A721D9700A77E2F /* Example20Model.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Example20Model.json; sourceTree = "<group>"; };
 		29AA8BE12A6ED88C00D36758 /* Example10Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10Model.h; sourceTree = "<group>"; };
 		29AA8BE22A6ED88C00D36758 /* Example10Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10Model.m; sourceTree = "<group>"; };
 		29B3EB9C2A7898B50008E65B /* Example21ContactBookViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactBookViewModel.h; sourceTree = "<group>"; };
@@ -203,6 +202,7 @@
 		29B3EBBC2A7898B50008E65B /* Example21ContactEditorViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditorViewModel.h; sourceTree = "<group>"; };
 		29B3EBBE2A7898B50008E65B /* Example21ContactEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditor.h; sourceTree = "<group>"; };
 		29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactEditor.m; sourceTree = "<group>"; };
+		29FBDA162A8120A9006BBB66 /* Example20Model.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Example20Model.json; sourceTree = "<group>"; };
 		62B24EDB69DD5EA24EEE5DE8 /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D4E050FD770A1772594BB4 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -474,7 +474,7 @@
 			children = (
 				2996C8A62A721C7F00A77E2F /* Example20Model.h */,
 				2996C8A72A721C7F00A77E2F /* Example20Model.m */,
-				2996C8A92A721D9700A77E2F /* Example20Model.json */,
+				29FBDA162A8120A9006BBB66 /* Example20Model.json */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -908,6 +908,7 @@
 				2996C8732A71930B00A77E2F /* Example20Group100Cell.xib in Resources */,
 				290BF25B2A76D1E300DD5AF6 /* Example20Group101Editor.xib in Resources */,
 				29178B732A7908160082C080 /* Example21ContactEditor.xib in Resources */,
+				29FBDA172A8120A9006BBB66 /* Example20Model.json in Resources */,
 				29914EB52A6CE3D800D0ACF3 /* LaunchScreen.storyboard in Resources */,
 				2996C87C2A72110E00A77E2F /* Example20Group102Cell.xib in Resources */,
 				29B3EBC82A7898B50008E65B /* Example21ContactCell.xib in Resources */,
@@ -916,7 +917,6 @@
 				29914EB22A6CE3D800D0ACF3 /* Assets.xcassets in Resources */,
 				29914EFD2A6D115100D0ACF3 /* Example10ContactView.xib in Resources */,
 				29914EB02A6CE3D700D0ACF3 /* Main.storyboard in Resources */,
-				2996C8AA2A721D9700A77E2F /* Example20Model.json in Resources */,
 				29391AC52A74F821009E49C7 /* Example20ContentViewController.xib in Resources */,
 				29914F0D2A6D6ABB00D0ACF3 /* Example20ViewController.xib in Resources */,
 			);

@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) XZMocoaTableViewModel *tableViewModel;
 
+- (void)headerRefreshAction:(void (^)(BOOL hasData))completion;
+- (void)footerRefreshAction:(void (^)(BOOL hasData))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

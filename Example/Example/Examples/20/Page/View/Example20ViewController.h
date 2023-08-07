@@ -10,7 +10,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Example20ViewController : UIViewController
-
 @end
 
 NS_ASSUME_NONNULL_END

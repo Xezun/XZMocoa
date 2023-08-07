@@ -13,8 +13,8 @@
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
     XZMocoaModule *listModule = Mocoa(@"https://mocoa.xezun.com/examples/20/list/");
     
-    NSMutableArray *list = [NSMutableArray arrayWithCapacity:self.list.count];
-    for (NSDictionary *dict in self.list) {
+    NSMutableArray *list = [NSMutableArray arrayWithCapacity:self.data.count];
+    for (NSDictionary *dict in self.data) {
         XZMocoaName name = dict[@"group"];
         if (!name) continue;
         XZMocoaModule *module = [listModule sectionForName:name];
@@ -23,7 +23,7 @@
             [list addObject:item];
         }
     }
-    self.list = list;
+    self.data = list;
     
     return YES;
 }

@@ -12,7 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Example20Model : XZMocoaModel <YYModel>
 
-@property (nonatomic, copy) NSArray *list;
+@property (nonatomic) NSInteger code;
+@property (nonatomic, copy) NSString *message;
+@property (nonatomic, copy) NSArray *data;
 
 @end
 
