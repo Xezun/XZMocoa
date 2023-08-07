@@ -23,23 +23,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cleanupBatchUpdates XZ_UNAVAILABLE;
 
 /// 批量更新：将一组`reload/insert/delete/move`操作放在块函数`batchUpdates`统一执行。
-/// @discussion 一般情况下，仅需要在块函数`batchUpdates`中执行数据的更新逻辑，视图模型会自行分析数据变动并刷新视图。
+/// @discussion
+/// 自动分析：一般情况下，仅需要在块函数`batchUpdates`中执行数据的更新逻辑，视图模型会自行分析数据变动并刷新视图。
+/// @discussion
+/// 差异分析依据`-isEqual:`方法，如果有重复数据，则差异分析关闭，执行整体刷新。
 /// @code
-/// - (void)createView {
-///     _dataArray = [NSMutableArray arrayWithObjects:@"A", @"B", @"C", nil];
-///     _viewModel = [[XZMocoaTableViewModel alloc] initWithModel:_dataArray];
-///     _tableView.viewModel = _viewModel;
-/// }
-///
-/// - (void)updateView {
-///     NSArray *newData = @[@"0", @"1", @"C", @"6", @"E", @"8", @"F"];
-///     [_viewModel performBatchUpdates:^{
-///         [_dataArray removeAllObjects];
-///         [_dataArray addObjectsFromArray:newData];
-///     }];
-/// }
+/// [_viewModel performBatchUpdates:^{
+///     [_dataArray removeAllObjects];
+///     [_dataArray addObjectsFromArray:newData];
+/// }];
 /// @endcode
-/// @discussion 也可以在`batchUpdates`中执行`reload/insert/delete/move`方法更新视图，且此时视图模型的自动分析功能会关闭。
+/// @discussion
+/// 手动分析：在`batchUpdates`中，更新数据的同时执行`reload/insert/delete/move`方法。
 /// @code
 /// [_viewModel performBatchUpdates:^{
 ///     [_dataArray removeObjectAtIndex:0];
@@ -51,9 +46,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///     [_viewModel moveSectionAtIndex:3 toIndex:5];
 /// }];
 /// @endcode
-/// @attention 批量更新状态不可重入，上级进入批量更新状态，则所有下级都进入批量更新状态，所以不能批量更新中，嵌套执行上级的批量更新方法。
-/// @attention 需要注意的是，调用`reload/insert/delete/move`方法操作的实时数据，每次操作的对象应该是上一步操作后的结果，这与`UITableView`不同。
-/// @attention @b差异分析依赖于数据的`-isEqual:`方法，因此不能出现重复数据。
+/// @discussion
+/// 需要注意的是，调用`reload/insert/delete/move`方法操作的实时数据，每次操作的对象应该是上一步操作后的结果，这与`UITableView`不同。
+/// @discussion
+/// 手动分析的更新逻辑由开发者控制，性能更好，能提高大批量数据情形下的性能，请以实际体验采用合适的方式。
+/// @attention
+/// 批量更新状态不可重入，上级进入批量更新状态，所有下级也会进入批量更新状态，即不能批量更新中，嵌套执行上级的批量更新方法。
 /// @param batchUpdates 执行数据更新的块函数
 - (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates;
 
