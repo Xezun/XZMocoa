@@ -141,13 +141,23 @@ FOUNDATION_EXPORT NSString * const XZMocoaEmitNone;
 // 在开发中，如果 ViewModel 的事件较多且复杂，建议使用 delegate 发送事件。但是对于大多数
 // 业务场景中，ViewModel 事件不仅少而且单一，使用 target-action 机制就完全可以满足要求。
 //
-// TO_DO 编译器插件，在属性中添加 mocoa=keyEvents 标记，生成的 setter 中添加发送 keyEvents 事件的代码。
+
 
 /// Mocoa Keyed Actions 事件名。
 typedef NSString *XZMocoaKeyEvents;
 
 /// 没有 key 也可作为一种事件，或者称为默认事件，值为空字符串。
 FOUNDATION_EXPORT XZMocoaKeyEvents const XZMocoaKeyEventsNone;
+
+/// 用于标记属性可以被添加 target-action 的属性或方法，仅起标记作用。
+/// @code
+/// @property (nonatomic) BOOL isLoading XZ_MOCOA_KEY();          // The keyEvents is 'isLoading'
+/// @property (nonatomic) BOOL isLoading XZ_MOCOA_KEY("loading"); // The keyEvents is 'loading'
+/// - (void)startLoading XZ_MOCOA_KEY("isLoading");               // The keyEvents is 'isLoading'
+/// @endcode
+/// @todo
+/// 编译器插件，在属性中添加 mocoa=keyEvents 标记，生成的 setter 中添加发送 keyEvents 事件的代码。
+#define XZ_MOCOA_KEY(keyEvents)
 
 @interface XZMocoaViewModel (XZMocoaViewModelKeyEvents)
 
