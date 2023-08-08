@@ -140,6 +140,8 @@ FOUNDATION_EXPORT NSString * const XZMocoaEmitNone;
 // ViewModel 的 target-action 机制，主要用于 ViewModel 向 View 发送事件。
 // 在开发中，如果 ViewModel 的事件较多且复杂，建议使用 delegate 发送事件。但是对于大多数
 // 业务场景中，ViewModel 事件不仅少而且单一，使用 target-action 机制就完全可以满足要求。
+//
+// TO_DO 编译器插件，在属性中添加 mocoa=keyEvents 标记，生成的 setter 中添加发送 keyEvents 事件的代码。
 
 /// Mocoa Keyed Actions 事件名。
 typedef NSString *XZMocoaKeyEvents;
@@ -149,30 +151,25 @@ FOUNDATION_EXPORT XZMocoaKeyEvents const XZMocoaKeyEventsNone;
 
 @interface XZMocoaViewModel (XZMocoaViewModelKeyEvents)
 
-/// 绑定 target-action 事件。
+/// 添加 target-action 事件。
 /// @note
 /// 由于使用 -performSelector:withObject: 方法，所以 action 方法的必须没有返回值，即返回 void 值，否则可能会引起内存泄漏。
 /// @note
-/// 事件在绑定时，会立即触发一次。
+/// 调用此方法时，target-action 会立即触发一次。
 /// @param target 接收事件的对象
 /// @param action 执行事件的方法，可接收一个参数，无返回值
-/// @param keyEvents 事件
-- (void)addTarget:(id)target action:(SEL)action forKeyEvents:(XZMocoaKeyEvents)keyEvents;
+/// @param keyEvents 事件，nil 表示添加默认事件
+- (void)addTarget:(id)target action:(SEL)action forKeyEvents:(nullable XZMocoaKeyEvents)keyEvents;
 /// 移除 target-action 事件。
-/// @param target 接收事件的对象，若为 nil 则移除所有事件
-/// @param action 执行事件的方法，若为 nil 则移除 target 绑定的 keyEvent 事件（包括 bind 方法绑定的事件）
-/// @param keyEvents 绑定的事件，若为 nil 则移除所有 keyEvent 中 action 对应的事件
-- (void)removeTarget:(id)target action:(nullable SEL)action forKeyEvents:(nullable XZMocoaKeyEvents)keyEvents;
+/// @discussion
+/// 移除所有匹配 target、action、keyEvents 的事件，值 nil 表示匹配所有，例如都为 nil 会移除所有事件。
+/// @param target 接收事件的对象
+/// @param action 执行事件的方法
+/// @param keyEvents 绑定的事件
+- (void)removeTarget:(nullable id)target action:(nullable SEL)action forKeyEvents:(nullable XZMocoaKeyEvents)keyEvents;
 /// 发送 target-action 事件。
-/// @param keyEvents 事件
-- (void)sendActionsForKeyEvents:(XZMocoaKeyEvents)keyEvents;
-
-/// 添加默认事件接收者。
-- (void)addTarget:(id)target action:(SEL)action;
-/// 移除默认事件接收者。
-- (void)removeTarget:(id)target action:(nullable SEL)action;
-/// 触发默认事件。
-- (void)sendActions;
+/// @param keyEvents 事件，nil 表示发送默认事件
+- (void)sendActionsForKeyEvents:(nullable XZMocoaKeyEvents)keyEvents;
 
 @end
 

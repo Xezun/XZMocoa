@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XZMocoaTargetAction : NSObject
 @property (nonatomic, weak, readonly) id target;
 @property (nonatomic, readonly) SEL action;
-- (instancetype)initWithTarget:(id)target action:(nullable SEL)selector;
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithTarget:(id)target action:(SEL)action;
 - (void)sendActionWithObject:(id)object;
 @end
 

@@ -202,33 +202,21 @@ XZMocoaKeyEvents const XZMocoaKeyEventsNone = @"";
 @implementation XZMocoaViewModel (XZMocoaViewModelKeyEvents)
 
 - (void)addTarget:(id)target action:(SEL)action forKeyEvents:(NSString *)keyEvents {
-    if (!target || !action || !keyEvents) {
-        return;
+    if (!target || !action) {
+        return XZLog(@"参数 target=%@ action=%@ 不能为 nil 值，添加事件失败", target, NSStringFromSelector(action));
     }
     if (_keyedTargetActions == nil) {
         _keyedTargetActions = [[XZMocoaKeyedTargetActions alloc] initWithOwner:self];
     }
-    [_keyedTargetActions addTarget:target action:action forKeyEvents:keyEvents];
+    [_keyedTargetActions addTarget:target action:action forKeyEvents:keyEvents ?: XZMocoaKeyEventsNone];
 }
 
 - (void)removeTarget:(id)target action:(SEL)action forKeyEvents:(nullable NSString *)keyEvents {
     [_keyedTargetActions removeTarget:target action:action forKeyEvents:keyEvents];
 }
 
-- (void)sendActionsForKeyEvents:(NSString *)keyEvents {
-    [_keyedTargetActions sendActionsForKeyEvents:keyEvents];
-}
-
-- (void)addTarget:(id)target action:(SEL)action {
-    [self addTarget:target action:action forKeyEvents:XZMocoaKeyEventsNone];
-}
-
-- (void)removeTarget:(id)target action:(SEL)action {
-    [self removeTarget:target action:action forKeyEvents:XZMocoaKeyEventsNone];
-}
-
-- (void)sendActions {
-    [self sendActionsForKeyEvents:XZMocoaKeyEventsNone];
+- (void)sendActionsForKeyEvents:(nullable NSString *)keyEvents {
+    [_keyedTargetActions sendActionsForKeyEvents:keyEvents ?: XZMocoaKeyEventsNone];
 }
 
 @end
