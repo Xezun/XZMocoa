@@ -10,7 +10,6 @@
 #import "XZMocoaModule.h"
 #import <objc/runtime.h>
 #import "XZMocoaDefines.h"
-@import XZDefines;
 
 static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source) {
     if (xz_objc_class_copyMethod(cls, target, source)) return;

@@ -202,8 +202,9 @@ XZMocoaKeyEvents const XZMocoaKeyEventsNone = @"";
 @implementation XZMocoaViewModel (XZMocoaViewModelKeyEvents)
 
 - (void)addTarget:(id)target action:(SEL)action forKeyEvents:(NSString *)keyEvents {
-    if (!target || !action) {
-        return XZLog(@"参数 target=%@ action=%@ 不能为 nil 值，添加事件失败", target, NSStringFromSelector(action));
+    if (target == nil || action == nil) {
+        XZLog(@"为 target=%@ action=%@ 添加事件失败，参数不能为 nil", target, NSStringFromSelector(action));
+        return;
     }
     if (_keyedTargetActions == nil) {
         _keyedTargetActions = [[XZMocoaKeyedTargetActions alloc] initWithOwner:self];

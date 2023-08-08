@@ -31,15 +31,22 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '11.0'
   s.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'XZ_FRAMEWORK=1' }
   
-  s.dependency 'XZURLQuery'
-  s.dependency 'XZDefines/XZMacro'
-  s.dependency 'XZDefines/XZRuntime'
-  s.dependency 'XZExtensions/NSArray'
-  s.dependency 'XZExtensions/NSIndexSet'
+  s.default_subspec = 'Code'
   
   s.subspec 'Code' do |ss|
     ss.source_files = 'XZMocoa/Code/**/*.{h,m}'
     ss.project_header_files = 'XZMocoa/Code/**/Private/*.{h,m}'
+    
+    ss.dependency 'XZURLQuery'
+    ss.dependency 'XZDefines/XZMacro'
+    ss.dependency 'XZDefines/XZRuntime'
+    ss.dependency 'XZExtensions/NSArray'
+    ss.dependency 'XZExtensions/NSIndexSet'
+  end
+  
+  s.subspec 'Debug' do |ss|
+    ss.dependency 'XZMocoa/Code'
+    ss.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'XZ_DEBUG=1' }
   end
   
   # s.resource_bundles = {

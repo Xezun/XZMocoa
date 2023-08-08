@@ -8,7 +8,6 @@
 #import "XZMocoaView.h"
 #import "XZMocoaDefines.h"
 @import XZExtensions;
-@import XZDefines;
 
 static const void * const _viewModel = &_viewModel;
 
@@ -169,6 +168,7 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 - (__kindof UIViewController *)instantiateViewControllerWithOptions:(XZMocoaOptions)options {
     Class const ViewController = self.viewClass;
     if (![ViewController isSubclassOfClass:UIViewController.class]) {
+        XZLog(@"当前模块 %@ 不是 UIViewController 模块，无法构造视图控制器", self);
         return nil;
     }
     NSString *nibName = self.viewNibName;
