@@ -9,6 +9,23 @@
 #import "Example21ContactBookViewModel.h"
 #import "Example21ContactBook.h"
 
+typedef NS_ENUM(NSUInteger, Example21ContactBookTestAction) {
+    Example21ContactBookTestActionRestData = 0,
+    Example21ContactBookTestActionSwitchList1,
+    Example21ContactBookTestActionSwitchList2,
+    Example21ContactBookTestActionSortByNameAsc,
+    Example21ContactBookTestActionSortByNameDesc,
+    Example21ContactBookTestActionSortByPhoneAsc,
+    Example21ContactBookTestActionSortByPhoneDesc,
+    Example21ContactBookTestActionInsertAtFirst,
+    Example21ContactBookTestActionInsertAtMiddle,
+    Example21ContactBookTestActionInsertAtLast,
+    Example21ContactBookTestActionDeleteFirst,
+    Example21ContactBookTestActionDeleteLast,
+    Example21ContactBookTestActionDeleteRandom,
+    Example21ContactBookTestActionDeleteAll,
+};
+
 @implementation Example21ContactBookViewModel {
     Example21ContactBook *_contactBook;
 }
@@ -24,17 +41,25 @@
     [super prepare];
 }
 
-- (void)contactBookDidChange:(Example21ContactBook *)book {
-    
+- (NSArray<NSString *> *)testActions {
+    return @[
+        @"恢复默认列表",
+        @"列表切换测试-列表1", @"列表切换测试-列表2",
+        @"姓名正序", @"姓名反序",
+        @"号码正序", @"号码反序",
+        @"在头部添加一个", @"在中间添加一个", @"在尾部添加一个",
+        @"删除第一个", @"删除最后一个", @"随即删除一个",
+        @"移除所有"
+    ];
 }
 
-- (void)performAction:(Example21ContactBookTestAction)action {
+- (void)performTestActionAtIndex:(NSUInteger)index {
     [_tableViewModel performBatchUpdates:^{
-        [self _performAction:action];
+        [self performTestAction:(Example21ContactBookTestAction)index];
     }];
 }
 
-- (void)_performAction:(Example21ContactBookTestAction)action {
+- (void)performTestAction:(Example21ContactBookTestAction)action {
     switch (action) {
         case Example21ContactBookTestActionRestData: {
             NSMutableArray *contacts = [NSMutableArray arrayWithCapacity:10];

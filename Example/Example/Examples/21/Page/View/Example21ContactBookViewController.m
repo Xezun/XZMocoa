@@ -71,13 +71,14 @@
 }
 
 - (void)navigationBarButton2Action:(id)sender {
-    Example21ContactBookTestViewController *nextVC = [[Example21ContactBookTestViewController alloc] init];
+    Example21ContactBookViewModel *viewModel = self.viewModel;
+    Example21ContactBookTestViewController *nextVC = [[Example21ContactBookTestViewController alloc] initWithTestActions:viewModel.testActions];
     nextVC.delegate = self;
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
-- (void)testVC:(Example21ContactBookTestViewController *)textVC didSelectTestAction:(Example21ContactBookTestAction)action {
-    [self.viewModel performAction:action];
+- (void)testVC:(Example21ContactBookTestViewController *)textVC didSelectTestActionAtIndex:(NSUInteger)index {
+    [self.viewModel performTestActionAtIndex:index];
 }
 
 @end

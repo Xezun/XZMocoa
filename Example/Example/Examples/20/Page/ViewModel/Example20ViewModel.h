@@ -13,8 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) XZMocoaTableViewModel *tableViewModel;
 
-- (void)headerRefreshAction:(void (^)(BOOL hasData))completion;
-- (void)footerRefreshAction:(void (^)(BOOL hasData))completion;
+@property (nonatomic, setter=setHeaderRefreshing:) BOOL isHeaderRefreshing XZ_MOCOA_KEY("isHeaderRefreshing");
+@property (nonatomic, setter=setFooterRefreshing:) BOOL isFooterRefreshing XZ_MOCOA_KEY("isFooterRefreshing");
+
+- (void)headerDidBeginRefreshing;
+- (void)footerDidBeginRefreshing;
 
 @end
 

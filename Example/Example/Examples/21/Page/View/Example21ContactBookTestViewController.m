@@ -16,18 +16,10 @@
 
 @implementation Example21ContactBookTestViewController
 
-- (instancetype)initWithStyle:(UITableViewStyle)style {
-    self = [super initWithStyle:UITableViewStyleGrouped];
+- (instancetype)initWithTestActions:(NSArray<NSString *> *)testActions {
+    self = [self initWithStyle:(UITableViewStyleGrouped)];
     if (self) {
-        self.title = @"请选择操作";
-        self.hidesBottomBarWhenPushed = YES;
-    }
-    return self;
-}
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+        _dataArray = testActions.copy;
         self.title = @"请选择操作";
         self.hidesBottomBarWhenPushed = YES;
     }
@@ -36,16 +28,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.dataArray = @[
-        @"恢复默认列表",
-        @"列表切换测试-列表1", @"列表切换测试-列表2",
-        @"姓名正序", @"姓名反序",
-        @"号码正序", @"号码反序",
-        @"在头部添加一个", @"在中间添加一个", @"在尾部添加一个",
-        @"删除第一个", @"删除最后一个", @"随即删除一个",
-        @"移除所有"
-    ];
 }
 
 #pragma mark - Table view data source
@@ -76,7 +58,7 @@
     [self.navigationController popViewControllerAnimated:YES];
     // 延迟 0.5 以便返回页面查看动画效果
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.delegate testVC:self didSelectTestAction:indexPath.row];
+        [self.delegate testVC:self didSelectTestActionAtIndex:indexPath.row];
     });
 }
 

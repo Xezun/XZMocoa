@@ -39,17 +39,33 @@
     [refresh addTarget:self action:@selector(refreshControlAction:) forControlEvents:(UIControlEventValueChanged)];
     self.tableView.contentView.refreshControl = refresh;
     
-    
     Example20ViewModel *viewModel = [[Example20ViewModel alloc] initWithModel:nil ready:YES];
     self.viewModel = viewModel;
     self.tableView.viewModel = viewModel.tableViewModel;
+    
+    [viewModel addTarget:self action:@selector(headerRefreshingChanged:) forKeyEvents:@"isHeaderRefreshing"];
+    [viewModel addTarget:self action:@selector(footerRefreshingChanged:) forKeyEvents:@"isFooterRefreshing"];
 }
 
 - (void)refreshControlAction:(UIRefreshControl *)sender {
     Example20ViewModel *viewModel = self.viewModel;
-    [viewModel headerRefreshAction:^(BOOL hasData) {
-        [sender endRefreshing];
-    }];
+    [viewModel headerDidBeginRefreshing];
+}
+
+- (void)headerRefreshingChanged:(Example20ViewModel *)viewModel {
+    if (viewModel.isHeaderRefreshing) {
+        [self.tableView.contentView.refreshControl beginRefreshing];
+    } else {
+        [self.tableView.contentView.refreshControl endRefreshing];
+    }
+}
+
+- (void)footerRefreshingChanged:(Example20ViewModel *)viewModel {
+    if (viewModel.isFooterRefreshing) {
+        [self.tableView.contentView.refreshControl beginRefreshing];
+    } else {
+        [self.tableView.contentView.refreshControl endRefreshing];
+    }
 }
 
 @end

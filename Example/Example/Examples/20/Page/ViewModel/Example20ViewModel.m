@@ -18,6 +18,8 @@
 }
 
 - (void)prepare {
+    _isHeaderRefreshing = NO;
+    _isFooterRefreshing = NO;
     _cursor = 100;
     _dataArray = [NSMutableArray array];
     
@@ -28,9 +30,28 @@
     [self addSubViewModel:_tableViewModel];
     
     [super prepare];
+    
+    [self headerDidBeginRefreshing];
 }
 
-- (void)headerRefreshAction:(void (^)(BOOL hasData))completion {
+- (void)setHeaderRefreshing:(BOOL)isHeaderRefreshing {
+    _isHeaderRefreshing = isHeaderRefreshing;
+    [self sendActionsForKeyEvents:@"isHeaderRefreshing"];
+}
+
+- (void)setFooterRefreshing:(BOOL)isFooterRefreshing {
+    _isFooterRefreshing = isFooterRefreshing;
+    [self sendActionsForKeyEvents:@"isFooterRefreshing"];
+}
+
+- (void)headerDidBeginRefreshing {
+    if (_isFooterRefreshing) {
+        return [self setHeaderRefreshing:NO];
+    }
+    if (_isHeaderRefreshing) {
+        return;
+    }
+    _isHeaderRefreshing = YES;
     [self loadData:0 completion:^(NSArray *data) {
         if (data.count > 0) {
             self->_tableViewModel.rowAnimation = UITableViewRowAnimationBottom;
@@ -38,23 +59,26 @@
                 [self->_dataArray removeAllObjects];
                 [self->_dataArray addObjectsFromArray:data];
             }];
-            completion(YES);
-        } else {
-            completion(NO);
         }
+        self.isHeaderRefreshing = NO;
     }];
 }
 
-- (void)footerRefreshAction:(void (^)(BOOL hasData))completion {
+- (void)footerDidBeginRefreshing {
+    if (_isHeaderRefreshing) {
+        return [self setFooterRefreshing:NO];
+    }
+    if (_isFooterRefreshing) {
+        return;
+    }
+    _isFooterRefreshing = YES;
     [self loadData:_dataArray.count completion:^(NSArray *data) {
         if (data.count > 0) {
             [self->_tableViewModel performBatchUpdates:^{
                 [self->_dataArray addObjectsFromArray:data];
             }];
-            completion(YES);
-        } else {
-            completion(NO);
         }
+        self.isFooterRefreshing = NO;
     }];
 }
 
@@ -90,7 +114,7 @@
             }
         }
         
-        NSTimeInterval delay = arc4random_uniform(1000) / 500.0 + 0.3;
+        NSTimeInterval delay = arc4random_uniform(400) / 1000.0 + 0.1;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             completion(array);
         });
