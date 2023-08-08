@@ -32,7 +32,7 @@
 - (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle {
     self = [super initWithMocoaOptions:options nibName:nibName bundle:bundle];
     if (self) {
-        self.title = @"基本用法二";
+        self.title = @"Example 11";
         self.hidesBottomBarWhenPushed = YES;
     }
     return self;

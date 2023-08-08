@@ -25,7 +25,7 @@
 - (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
     self = [super initWithMocoaOptions:options nibName:nibName bundle:bundle];
     if (self) {
-        self.title = @"UITableView";
+        self.title = @"Example 20";
         self.hidesBottomBarWhenPushed = YES;
         self.navigationItem.backButtonTitle = @"返回";
     }
