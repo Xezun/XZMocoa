@@ -6,10 +6,22 @@
 //
 
 #import <XZMocoa/XZMocoaListityView.h>
+#import <XZMocoa/XZMocoaCollectionViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XZMocoaCollectionView : XZMocoaListityView
+
+@property (nonatomic, strong, nullable) __kindof XZMocoaCollectionViewModel *viewModel;
+@property (nonatomic, strong) IBOutlet UICollectionView *contentView;
+
+@end
+
+@interface XZMocoaCollectionView (UICollectionViewDelegate) <UICollectionViewDelegate>
+
+@end
+
+@interface XZMocoaCollectionView (UICollectionViewDataSource) <UICollectionViewDataSource>
 
 @end
 

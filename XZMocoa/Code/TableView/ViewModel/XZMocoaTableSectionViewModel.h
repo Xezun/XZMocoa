@@ -7,7 +7,6 @@
 
 #import <XZMocoa/XZMocoaListitySectionViewModel.h>
 #import <XZMocoa/XZMocoaTableCellViewModel.h>
-#import <XZMocoa/XZMocoaTableSectionViewModel.h>
 #import <XZMocoa/XZMocoaTableSectionHeaderViewModel.h>
 #import <XZMocoa/XZMocoaTableSectionFooterViewModel.h>
 

@@ -6,10 +6,13 @@
 //
 
 #import <XZMocoa/XZMocoaListitySectionViewModel.h>
+#import <XZMocoa/XZMocoaCollectionCellViewModel.h>
+#import <XZMocoa/XZMocoaCollectionSectionHeaderViewModel.h>
+#import <XZMocoa/XZMocoaCollectionSectionFooterViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaCollectionSectionViewModel : XZMocoaListitySectionViewModel
+@interface XZMocoaCollectionSectionViewModel : XZMocoaListitySectionViewModel<XZMocoaCollectionSectionHeaderViewModel *, XZMocoaCollectionSectionFooterViewModel *, XZMocoaCollectionCellViewModel *>
 
 @end
 
