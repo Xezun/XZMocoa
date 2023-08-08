@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Example21ContactEditorInputView : UIView
-
+@property (weak, nonatomic) IBOutlet UITextField *textField;
 @end
 
 NS_ASSUME_NONNULL_END

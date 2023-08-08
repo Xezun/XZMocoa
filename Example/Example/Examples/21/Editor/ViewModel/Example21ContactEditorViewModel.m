@@ -11,10 +11,12 @@
 
 @implementation Example21ContactEditorViewModel
 
-- (void)prepare {
-    [super prepare];
-    
-    
++ (void)load {
+    XZMocoa(@"https://mocoa.xezun.com/examples/21/editor").viewModelClass = self;
+}
+
+- (void)dealloc {
+    XZLog(@"EditorViewModel: %@", self);
 }
 
 - (NSString *)firstName {
@@ -37,23 +39,17 @@
         return;
     }
     
-    BOOL hasChanges = NO;
     Example21Contact *model = self.model;
-    if (![firstName isEqualToString:model.firstName]) {
+    
+    if (![firstName isEqualToString:model.firstName] || ![lastName isEqualToString:model.lastName]) {
         model.firstName = firstName;
-        hasChanges = YES;
-    }
-    if (![lastName isEqualToString:model.lastName]) {
         model.lastName  = lastName;
-        hasChanges = YES;
+        [self emit:@"name" value:nil];
     }
+
     if (![phone isEqualToString:model.phone]) {
         model.phone = phone;
-        hasChanges = YES;
-    }
-    
-    if (hasChanges) {
-        [self emit:XZMocoaEmitNone value:nil];
+        [self emit:@"phone" value:nil];
     }
 }
 

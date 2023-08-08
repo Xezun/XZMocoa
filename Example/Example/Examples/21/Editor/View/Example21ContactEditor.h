@@ -7,15 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Example21ContactEditorViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-
 @interface Example21ContactEditor : UIViewController
-
-@property (nonatomic, strong) Example21ContactEditorViewModel *viewModel;
-
 @end
 
 NS_ASSUME_NONNULL_END

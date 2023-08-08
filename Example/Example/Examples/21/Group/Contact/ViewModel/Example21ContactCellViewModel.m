@@ -7,9 +7,7 @@
 //
 
 #import "Example21ContactCellViewModel.h"
-#import "Example21ContactEditorViewModel.h"
 #import "Example21Contact.h"
-#import "Example21ContactEditor.h"
 
 @implementation Example21ContactCellViewModel
 
@@ -34,28 +32,30 @@
     _phone = model.phone;
 }
 
+- (NSString *)name {
+    Example21Contact *model = self.model;
+    return [NSString stringWithFormat:@"%@ %@", model.firstName, model.lastName];
+}
+
+- (NSString *)phone {
+    Example21Contact *model = self.model;
+    return model.phone;
+}
+
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit)emit {
-    if (subViewModel == _editorViewModel) {
-        [self loadData];
-        [self sendActionsForKeyEvents:@"name"];
-        [self sendActionsForKeyEvents:@"phone"];
-    }
+    // 收到 editor 的 emit 事件。作为唯一下级，这里省略了对 subViewModel 的身份判定。
+    // 由于与 target-action 使用了一样的名称，因此这里用了 emit.name 直接发送 target-action 事件。
+    [self sendActionsForKeyEvents:emit.name];
 }
 
 - (void)tableView:(UITableView<XZMocoaView> *)tableView didSelectRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    Example21ContactEditor *next = [[Example21ContactEditor alloc] init];
-    next.viewModel = self.editorViewModel;
-    [tableView.navigationController presentViewController:next animated:YES completion:nil];
-}
-
-@synthesize editorViewModel = _editorViewModel;
-
-- (Example21ContactEditorViewModel *)editorViewModel {
-    if (_editorViewModel == nil) {
-        _editorViewModel = [[Example21ContactEditorViewModel alloc] initWithModel:self.model];
-        [self addSubViewModel:_editorViewModel];
-    }
-    return _editorViewModel;
+    XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/21/editor");
+    UIViewController<XZMocoaView> *nextVC = [module instantiateViewControllerWithOptions:@{
+        @"model": self.model
+    }];
+    // 添加为子模块，使用 emit 机制监听 name/phone 的变化
+    [self addSubViewModel:nextVC.viewModel];
+    [tableView.navigationController presentViewController:nextVC animated:YES completion:nil];
 }
 
 @end

@@ -66,6 +66,7 @@
 		29B3EBCA2A7898B50008E65B /* Example21ContactEditorViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBBB2A7898B50008E65B /* Example21ContactEditorViewModel.m */; };
 		29B3EBCB2A7898B50008E65B /* Example21ContactEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */; };
 		29FBDA172A8120A9006BBB66 /* Example20Model.json in Resources */ = {isa = PBXBuildFile; fileRef = 29FBDA162A8120A9006BBB66 /* Example20Model.json */; };
+		29FBDA432A82482A006BBB66 /* Example21ContactEditorInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA422A82482A006BBB66 /* Example21ContactEditorInputView.m */; };
 		52BED4A2CAA8869D88AE24B6 /* Pods_ExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08675C782301AD7500A5B3F1 /* Pods_ExampleUITests.framework */; };
 		BFB5FD01E6FBCBD3A6654D14 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE993E3923446CDF5614926 /* Pods_Example.framework */; };
 		F64ED86FA7B0E4C7AFB6F803 /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */; };
@@ -195,6 +196,8 @@
 		29B3EBBE2A7898B50008E65B /* Example21ContactEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditor.h; sourceTree = "<group>"; };
 		29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactEditor.m; sourceTree = "<group>"; };
 		29FBDA162A8120A9006BBB66 /* Example20Model.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Example20Model.json; sourceTree = "<group>"; };
+		29FBDA412A82482A006BBB66 /* Example21ContactEditorInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditorInputView.h; sourceTree = "<group>"; };
+		29FBDA422A82482A006BBB66 /* Example21ContactEditorInputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example21ContactEditorInputView.m; sourceTree = "<group>"; };
 		62B24EDB69DD5EA24EEE5DE8 /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D4E050FD770A1772594BB4 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -754,6 +757,8 @@
 				29B3EBBE2A7898B50008E65B /* Example21ContactEditor.h */,
 				29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */,
 				29178B712A7908160082C080 /* Example21ContactEditor.xib */,
+				29FBDA412A82482A006BBB66 /* Example21ContactEditorInputView.h */,
+				29FBDA422A82482A006BBB66 /* Example21ContactEditorInputView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1045,6 +1050,7 @@
 				298480B92A6FC36400757DBB /* Example10RootView.m in Sources */,
 				29914EAD2A6CE3D700D0ACF3 /* ViewController.m in Sources */,
 				2996C8902A72146800A77E2F /* Example20Group102CellModel.m in Sources */,
+				29FBDA432A82482A006BBB66 /* Example21ContactEditorInputView.m in Sources */,
 				29B3EBC92A7898B50008E65B /* Example21ContactCell.m in Sources */,
 				298480B62A6FB3AD00757DBB /* Example10ContentView.m in Sources */,
 				29914F1C2A6D8F6100D0ACF3 /* Example20Group101Cell.m in Sources */,

@@ -26,10 +26,12 @@
 }
 
 - (void)nameDidChange:(Example21ContactCellViewModel *)viewModel {
+    XZLog(@"old: %@, new: %@", self.textLabel.text, viewModel.name);
     self.textLabel.text = viewModel.name;
 }
 
 - (void)phoneDidChange:(Example21ContactCellViewModel *)viewModel {
+    XZLog(@"old: %@, new: %@", self.detailTextLabel.text, viewModel.phone);
     self.detailTextLabel.text = viewModel.phone;
 }
 
