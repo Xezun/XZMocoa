@@ -48,6 +48,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// 模块初始化参数。
 typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 
+@class UIStoryboard;
+@interface XZMocoaModule (UIViewControllerInstantiation)
+/// 实例化控制器。
+/// - Parameter options: 实例化参数，传递给控制器的初始化参数
+- (nullable __kindof UIViewController *)instantiateViewControllerWithOptions:(nullable XZMocoaOptions)options;
+@end
+
 @interface UIViewController (XZMocoaModuleSupporting)
 
 /// 根据视图控制器的模块地址，构造视图控制器。
@@ -55,14 +62,6 @@ typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 /// 参数 url 的 query 将作为 options 参数，调用 -viewControllerWithMocoaModule:options: 方法完成实例化控制器。
 /// @param url 模块地址
 + (nullable __kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url;
-/// 根据 XZMocoaModule 模块，实例化视图控制器。
-/// @discussion
-/// 一般情况下，此方法用于进入，以视图控制器作为入口的模块，构造视图控制器用。
-/// @discussion
-/// 本方法使用 -initWithMocoaOptions:nibName:bundle: 方法初始化视图控制器。
-/// @param aModule 模块对象
-/// @param options 实例化参数
-+ (nullable __kindof UIViewController *)viewControllerWithMocoaModule:(XZMocoaModule *)aModule options:(XZMocoaOptions)options;
 
 /// XZMocoa 使用此方法初始化控制器。
 /// @discussion

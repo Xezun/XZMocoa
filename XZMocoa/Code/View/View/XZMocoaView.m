@@ -164,21 +164,26 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 
 @end
 
+@implementation XZMocoaModule (UIViewControllerInstantiation)
+
+- (__kindof UIViewController *)instantiateViewControllerWithOptions:(XZMocoaOptions)options {
+    Class const ViewController = self.viewClass;
+    if (![ViewController isSubclassOfClass:UIViewController.class]) {
+        return nil;
+    }
+    NSString *nibName = self.viewNibName;
+    NSBundle *bundle  = self.viewNibBundle;
+    return [[ViewController alloc] initWithMocoaOptions:options nibName:nibName bundle:bundle];
+}
+
+@end
+
 
 @implementation UIViewController (XZMocoaModuleSupporting)
 
 + (__kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url {
     XZMocoaOptions const options = [XZURLQuery queryForURL:url].dictionaryRepresentation;
-    return [self viewControllerWithMocoaModule:[XZMocoaModule moduleForURL:url] options:options];
-}
-+ (__kindof UIViewController *)viewControllerWithMocoaModule:(XZMocoaModule *)module options:(XZMocoaOptions)options {
-    Class const ViewController = module.viewClass;
-    if (![ViewController isSubclassOfClass:UIViewController.class]) {
-        return nil;
-    }
-    NSString *nibName = module.viewNibName;
-    NSBundle *bundle  = module.viewNibBundle;
-    return [[ViewController alloc] initWithMocoaOptions:options nibName:nibName bundle:bundle];
+    return [[XZMocoaModule moduleForURL:url] instantiateViewControllerWithOptions:options];
 }
 
 - (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
