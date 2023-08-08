@@ -7,10 +7,11 @@
 
 #import "Example20Group102CellViewModel.h"
 #import "Example20Group102CellModel.h"
+@import XZExtensions;
 
 @implementation Example20Group102CellViewModel
 + (void)load {
-    Mocoa(@"https://mocoa.xezun.com/examples/20/list/102/:/").viewModelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/102/:/").viewModelClass = self;
 }
 
 - (void)prepare {
@@ -24,6 +25,13 @@
         [array addObject:obj.image];
     }
     self.images = array;
+}
+
+- (void)tableView:(UITableView<XZMocoaView> *)tableView didSelectRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    NSArray<Example20Group102CellModel *> *models = self.model;
+    Example20Group102CellModel *model = models[self.currentIndex];
+    NSURL *url = [NSURL xz_URLWithFormat:@"https://mocoa.xezun.com/examples/20/content/?url=%@", model.url.xz_stringByAddingPercentEncoding];
+    [tableView.navigationController pushViewControllerWithMocoaURL:url animated:YES];
 }
 
 @end

@@ -6,7 +6,6 @@
 //
 
 #import <XZMocoa/XZMocoa.h>
-#import "Example20Group101EditorViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *details;
 @property (nonatomic, copy) NSArray<NSURL *> *images;
 
-@property (nonatomic, strong) Example20Group101EditorViewModel *editorViewModel;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,7 +11,7 @@
 @implementation Example20Model
 
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
-    XZMocoaModule *listModule = Mocoa(@"https://mocoa.xezun.com/examples/20/list/");
+    XZMocoaModule *listModule = XZMocoa(@"https://mocoa.xezun.com/examples/20/list/");
     
     NSMutableArray *list = [NSMutableArray arrayWithCapacity:self.data.count];
     for (NSDictionary *dict in self.data) {

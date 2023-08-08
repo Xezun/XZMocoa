@@ -9,6 +9,6 @@
 
 @implementation Example20Group102CellModel
 + (void)load {
-    Mocoa(@"https://mocoa.xezun.com/examples/20/list/102/:/").modelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/102/:/").modelClass = self;
 }
 @end

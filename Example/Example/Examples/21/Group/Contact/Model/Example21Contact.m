@@ -15,7 +15,7 @@
 @implementation Example21Contact
 
 + (void)load {
-    Mocoa(@"https://mocoa.xezun.com/examples/21/").section.cell.viewModelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/21/").section.cell.viewModelClass = self;
 }
 
 + (Example21Contact *)contactWithFirstName:(NSString *)firstName lastName:(NSString *)lastName phone:(NSString *)phone {

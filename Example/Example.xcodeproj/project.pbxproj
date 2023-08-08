@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		290BF2562A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 290BF2552A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m */; };
-		290BF25A2A76D1E300DD5AF6 /* Example20Group101Editor.m in Sources */ = {isa = PBXBuildFile; fileRef = 290BF2582A76D1E300DD5AF6 /* Example20Group101Editor.m */; };
-		290BF25B2A76D1E300DD5AF6 /* Example20Group101Editor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 290BF2592A76D1E300DD5AF6 /* Example20Group101Editor.xib */; };
 		29178B732A7908160082C080 /* Example21ContactEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29178B712A7908160082C080 /* Example21ContactEditor.xib */; };
 		29391AC42A74F821009E49C7 /* Example20ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29391AC22A74F821009E49C7 /* Example20ContentViewController.m */; };
 		29391AC52A74F821009E49C7 /* Example20ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29391AC32A74F821009E49C7 /* Example20ContentViewController.xib */; };
@@ -94,11 +91,6 @@
 /* Begin PBXFileReference section */
 		08675C782301AD7500A5B3F1 /* Pods_ExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		148C011F47F41A3763903F04 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
-		290BF2542A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101EditorViewModel.h; sourceTree = "<group>"; };
-		290BF2552A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101EditorViewModel.m; sourceTree = "<group>"; };
-		290BF2572A76D1E300DD5AF6 /* Example20Group101Editor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101Editor.h; sourceTree = "<group>"; };
-		290BF2582A76D1E300DD5AF6 /* Example20Group101Editor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101Editor.m; sourceTree = "<group>"; };
-		290BF2592A76D1E300DD5AF6 /* Example20Group101Editor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example20Group101Editor.xib; sourceTree = "<group>"; };
 		29178B712A7908160082C080 /* Example21ContactEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example21ContactEditor.xib; sourceTree = "<group>"; };
 		29391AC12A74F821009E49C7 /* Example20ContentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20ContentViewController.h; sourceTree = "<group>"; };
 		29391AC22A74F821009E49C7 /* Example20ContentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20ContentViewController.m; sourceTree = "<group>"; };
@@ -525,9 +517,6 @@
 				29914F1A2A6D8F6100D0ACF3 /* Example20Group101Cell.h */,
 				29914F1B2A6D8F6100D0ACF3 /* Example20Group101Cell.m */,
 				2996C8742A7208BA00A77E2F /* Example20Group101Cell.xib */,
-				290BF2572A76D1E300DD5AF6 /* Example20Group101Editor.h */,
-				290BF2582A76D1E300DD5AF6 /* Example20Group101Editor.m */,
-				290BF2592A76D1E300DD5AF6 /* Example20Group101Editor.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -539,8 +528,6 @@
 				29914F212A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m */,
 				29914F1D2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.h */,
 				29914F1E2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m */,
-				290BF2542A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.h */,
-				290BF2552A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -914,7 +901,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2996C8732A71930B00A77E2F /* Example20Group100Cell.xib in Resources */,
-				290BF25B2A76D1E300DD5AF6 /* Example20Group101Editor.xib in Resources */,
 				29178B732A7908160082C080 /* Example21ContactEditor.xib in Resources */,
 				29FBDA172A8120A9006BBB66 /* Example20Model.json in Resources */,
 				29914EB52A6CE3D800D0ACF3 /* LaunchScreen.storyboard in Resources */,
@@ -1062,13 +1048,11 @@
 				29B3EBC92A7898B50008E65B /* Example21ContactCell.m in Sources */,
 				298480B62A6FB3AD00757DBB /* Example10ContentView.m in Sources */,
 				29914F1C2A6D8F6100D0ACF3 /* Example20Group101Cell.m in Sources */,
-				290BF25A2A76D1E300DD5AF6 /* Example20Group101Editor.m in Sources */,
 				29AA8BE32A6ED88C00D36758 /* Example10Model.m in Sources */,
 				29B3EBC52A7898B50008E65B /* Example21ContactBookTestViewController.m in Sources */,
 				29914EA72A6CE3D700D0ACF3 /* AppDelegate.m in Sources */,
 				29914EE62A6CEF3800D0ACF3 /* Example11Model.m in Sources */,
 				2996C8A52A7219DC00A77E2F /* Example20Group101CellModel.m in Sources */,
-				290BF2562A76B2DF00DD5AF6 /* Example20Group101EditorViewModel.m in Sources */,
 				29B3EBC62A7898B50008E65B /* Example21ContactCellViewModel.m in Sources */,
 				2996C87F2A7213C200A77E2F /* Example20Group100SectionViewModel.m in Sources */,
 				2996C8722A71930B00A77E2F /* Example20Group100Cell.m in Sources */,

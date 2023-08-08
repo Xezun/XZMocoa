@@ -10,7 +10,7 @@
 @implementation Example20Group101CellModel
 
 + (void)load {
-    Mocoa(@"https://mocoa.xezun.com/examples/20/list/101/:/").modelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/101/:/").modelClass = self;
 }
 
 @end

@@ -16,13 +16,17 @@
 @implementation Example20Group102Cell
 
 + (void)load {
-    Mocoa(@"https://mocoa.xezun.com/examples/20/list/102/:/").viewNibClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/102/:/").viewNibClass = self;
 }
 
 @dynamic viewModel;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    // 解决 UIScrollView 屏蔽了 cell 的点击事件的问题
+    self.pageView.userInteractionEnabled = NO;
+    [self addGestureRecognizer:self.pageView.scrollView.panGestureRecognizer];
     
     self.pageView.isLoopable = YES;
     self.pageControl.currentIndicatorShape = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 10, 6.0) cornerRadius:3.0];
@@ -48,6 +52,8 @@
 
 - (void)pageControlValueChanged:(XZPageControl *)pageControl {
     [self.pageView setCurrentPage:pageControl.currentPage animated:YES];
+    Example20Group102CellViewModel *viewModel = self.viewModel;
+    viewModel.currentIndex = pageControl.currentPage;
 }
 
 - (NSInteger)numberOfPagesInPageView:(XZPageView *)pageView {
@@ -72,6 +78,8 @@
 
 - (void)pageView:(XZPageView *)pageView didPageToIndex:(NSInteger)index {
     self.pageControl.currentPage = index;
+    Example20Group102CellViewModel *viewModel = self.viewModel;
+    viewModel.currentIndex = index;
 }
 
 @end

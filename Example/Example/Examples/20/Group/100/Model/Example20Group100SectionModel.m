@@ -11,7 +11,7 @@
 @implementation Example20Group100SectionModel
 
 + (void)load {
-    Mocoa(@"https://mocoa.xezun.com/examples/20/list/100/").modelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/100/").modelClass = self;
 }
 
 + (NSDictionary<NSString *,id> *)modelContainerPropertyGenericClass {

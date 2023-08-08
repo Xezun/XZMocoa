@@ -12,7 +12,7 @@
 @implementation Example20Group101CellViewModel
 
 + (void)load {
-    Mocoa(@"https://mocoa.xezun.com/examples/20/list/101/:/").viewModelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/101/:/").viewModelClass = self;
 }
 
 - (void)prepare {
@@ -37,19 +37,13 @@
     }
 }
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit)emit {
-    if (subViewModel == _editorViewModel) {
-        self.images = emit.value;
-        [self sendActionsForKeyEvents:@"images"];
-    }
-}
-
-- (Example20Group101EditorViewModel *)editorViewModel {
-    if (_editorViewModel == nil) {
-        _editorViewModel = [[Example20Group101EditorViewModel alloc] initWithModel:self.images];
-        [self addSubViewModel:_editorViewModel];
-    }
-    return _editorViewModel;
+- (void)tableView:(id<XZMocoaView>)tableView didSelectRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    // 通过模块初始化传递参数
+    Example20Group101CellModel *model = self.model;
+    UIViewController *nextVC = [XZMocoa(@"https://mocoa.xezun.com/examples/20/content/") instantiateViewControllerWithOptions:@{
+        @"url": model.url
+    }];
+    [tableView.navigationController pushViewController:nextVC animated:YES];
 }
 
 @end

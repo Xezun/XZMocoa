@@ -10,7 +10,7 @@
 @implementation Example20Group100SectionViewModel
 
 + (void)load {
-    Mocoa(@"https://mocoa.xezun.com/examples/20/list/100/").viewModelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/100/").viewModelClass = self;
 }
 
 @end

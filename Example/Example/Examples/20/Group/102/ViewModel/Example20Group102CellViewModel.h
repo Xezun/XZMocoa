@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSArray<NSURL *> *images;
 
+@property (nonatomic) NSInteger currentIndex;
+
 @end
 
 NS_ASSUME_NONNULL_END

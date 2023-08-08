@@ -23,7 +23,7 @@
     _cursor = 100;
     _dataArray = [NSMutableArray array];
     
-    XZMocoaModule *module = Mocoa(@"https://mocoa.xezun.com/examples/20/list/");
+    XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/20/list/");
     _tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:_dataArray];
     _tableViewModel.rowAnimation = UITableViewRowAnimationFade;
     _tableViewModel.module = module;
