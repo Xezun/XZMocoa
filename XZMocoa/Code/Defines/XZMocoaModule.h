@@ -259,13 +259,13 @@ FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName sectionNam
 
 /// 获取模块地址 NSURL 或 NSString 获取对应的 MVVM 模块。
 /// @param stringOrURL 模块的地址，NSString 或 NSURL 对象
-FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable Mocoa(NSString *stringOrURL) XZATTR_OVERLOAD {
+FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(NSString *stringOrURL) XZATTR_OVERLOAD {
     return [XZMocoaModule moduleForURLString:stringOrURL];
 }
 
 /// 获取模块地址 NSURL 或 NSString 获取对应的 MVVM 模块。
 /// @param stringOrURL 模块的地址，NSString 或 NSURL 对象
-FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable Mocoa(NSURL *stringOrURL) XZATTR_OVERLOAD {
+FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(NSURL *stringOrURL) XZATTR_OVERLOAD {
     return [XZMocoaModule moduleForURL:stringOrURL];
 }
 
