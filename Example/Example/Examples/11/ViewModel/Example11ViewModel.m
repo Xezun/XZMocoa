@@ -51,7 +51,7 @@
     self.address = data.address;
     self.title   = data.title;
     self.content = data.content;
-    [self sendActions];
+    [self sendActionsForKeyEvents:nil];
 }
 
 - (NSString *)formatPhoneNumber:(NSString *)phone {

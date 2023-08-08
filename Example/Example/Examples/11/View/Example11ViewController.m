@@ -51,7 +51,7 @@
     [viewModel ready];
     self.viewModel = viewModel;
     
-    [viewModel addTarget:self action:@selector(viewModelDidUpdate:)];
+    [viewModel addTarget:self action:@selector(viewModelDidUpdate:) forKeyEvents:nil];
 }
 
 - (void)viewModelDidUpdate:(Example11ViewModel *)viewModel {
