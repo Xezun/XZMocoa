@@ -254,7 +254,7 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
 }
 
 - (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didMoveCellAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
-    [self.contentView moveItemAtIndexPath:indexPath toIndexPath:indexPath];
+    [self.contentView moveItemAtIndexPath:indexPath toIndexPath:newIndexPath];
 }
 
 - (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didReloadSectionsAtIndexes:(NSIndexSet *)sections {
