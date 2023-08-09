@@ -186,7 +186,7 @@
             [oldViewModel removeFromSuperViewModel];
             
             id const newViewModel = [self loadViewModelForSectionAtIndex:idx];
-            [self insertSectionViewModel:newViewModel atIndex:idx];
+            [self _insertSectionViewModel:newViewModel atIndex:idx];
         }];
         
         [self didReloadSectionsAtIndexes:oldSections];
@@ -196,7 +196,7 @@
             [oldViewModel removeFromSuperViewModel];
             
             XZMocoaListitySectionViewModel *newViewModel = [self loadViewModelForSectionAtIndex:section];
-            [self insertSectionViewModel:newViewModel atIndex:section];
+            [self _insertSectionViewModel:newViewModel atIndex:section];
         }];
         
         [self didReloadSectionsAtIndexes:sections];
@@ -213,7 +213,7 @@
     // 添加元素，正向遍历：只有前面的元素正确了，后面的才能正确。
     [sections enumerateIndexesUsingBlock:^(NSUInteger section, BOOL * _Nonnull stop) {
         id const newViewModel = [self loadViewModelForSectionAtIndex:section];
-        [self insertSectionViewModel:newViewModel atIndex:section];
+        [self _insertSectionViewModel:newViewModel atIndex:section];
     }];
     
     [self didInsertSectionsAtIndexes:sections];
@@ -263,9 +263,9 @@
         // 批量更新过程中，移动 section 需要找到原始位置
         id        const oldViewModel = [self sectionViewModelAtIndex:section];
         NSInteger const oldSection   = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
-        [self moveSectionAtIndex:section fromIndex:oldSection toIndex:newSection];
+        [self _moveSectionAtIndex:section fromIndex:oldSection toIndex:newSection];
     } else {
-        [self moveSectionAtIndex:section fromIndex:section toIndex:newSection];
+        [self _moveSectionAtIndex:section fromIndex:section toIndex:newSection];
         
         // 先刷型视图，后更新 index 的原因：
         // 因为 index 改变，可能会导致视图再次发生刷新，那么就会导致
@@ -284,11 +284,11 @@
 /// @param section 当前位置
 /// @param oldSection 原始位置
 /// @param newSection 目标位置
-- (void)moveSectionAtIndex:(NSInteger)section fromIndex:(NSInteger)oldSection toIndex:(NSInteger)newSection {
+- (void)_moveSectionAtIndex:(NSInteger)section fromIndex:(NSInteger)oldSection toIndex:(NSInteger)newSection {
     _needsDifferenceBatchUpdates = NO;
     
     // 更新数据
-    [self moveSectionViewModelFromIndex:section toIndex:newSection];
+    [self _moveSectionViewModelFromIndex:section toIndex:newSection];
     
     // 新旧位置无变化，不需要发送事件。
     if (oldSection == newSection) {
@@ -505,16 +505,16 @@
     // 也可能会改变 remain、changes 中的元素，且排序的过程中，也可能会改变其他元素的位置，
     // 因此在处理排序时，应从低位 0 开始遍历，逐个查找该位置上预期元素，然后将其移动到该位置上。
     
-    XZLog(@"【差异分析】开始");
     XZLog(@"【原始】%@", oldDataModels);
     XZLog(@"【目标】%@", newDataModels);
+    XZLog(@"【差异分析】开始");
 
     NSIndexSet                           * const inserts = [NSMutableIndexSet indexSet];
     NSIndexSet                           * const deletes = [NSMutableIndexSet indexSet];
     NSIndexSet                           * const remains = [NSMutableIndexSet indexSet];
     NSDictionary<NSNumber *, NSNumber *> * const changes = [NSMutableDictionary dictionaryWithCapacity:oldCount];
     [newDataModels xz_differenceFromArray:oldDataModels inserts:(id)inserts deletes:(id)deletes changes:(id)changes remains:(id)remains];
-    XZLog(@"【保留】%@", remains);
+    XZLog(@"【不变】%@", remains);
 
     // 删除元素，反向遍历：从后面开始删除，不会影响前面的
     [deletes enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger section, BOOL *stop) {
@@ -522,14 +522,13 @@
         [oldViewModel removeFromSuperViewModel];
     }];
     [self didDeleteSectionsAtIndexes:deletes];
-    
     XZLog(@"【删除】%@", deletes);
     
     // 添加元素，正向遍历：按位置记录下新添加的元素，以便在后续排序时，查找该位置上的元素。
     NSMutableDictionary * const insertedViewModels = [NSMutableDictionary dictionaryWithCapacity:inserts.count];
     [inserts enumerateIndexesUsingBlock:^(NSUInteger section, BOOL * _Nonnull stop) {
         XZMocoaListitySectionViewModel * const newViewModel = [self loadViewModelForSectionAtIndex:section];
-        [self insertSectionViewModel:newViewModel atIndex:section];
+        [self _insertSectionViewModel:newViewModel atIndex:section];
         insertedViewModels[@(section)] = newViewModel;
     }];
     [self didInsertSectionsAtIndexes:inserts];
@@ -538,24 +537,22 @@
     // 排序元素：从低位开始遍历，每一个位置，都应该能根据 inserts/remains/changes 中找到对应的元素。
     for (NSInteger to = 0; to < newCount; to++) {
         if ([inserts containsIndex:to]) {
-            // to 位置为新插入的元素，先找到 viewModel 当前位置，然后将其移动到 to 位置上。
-            id const sectionViewModel = insertedViewModels[@(to)];
-            NSInteger const index = [self indexOfSectionViewModel:sectionViewModel];
-            [self moveSectionViewModelFromIndex:index toIndex:to];
+            NSInteger const index = [self indexOfSectionViewModel:insertedViewModels[@(to)]];
+            [self _moveSectionViewModelFromIndex:index toIndex:to];
         } else if ([remains containsIndex:to]) {
             // to 位置为保持不变的元素，在 old 中找到 viewModel 然后将其移动到 to 位置上。
-            XZMocoaListitySectionViewModel * const sectionViewModel = oldViewModels[to];
-            NSInteger const index = [self indexOfSectionViewModel:sectionViewModel];
-            [self moveSectionViewModelFromIndex:index toIndex:to];
+            NSInteger const index = [self indexOfSectionViewModel:oldViewModels[to]];
+            [self moveSubViewModelAtIndex:index toIndex:to];
             // 记录待更新的 section
             [forwardIndexes addIndex:to];
         } else {
             // to 位置为被移动的元素，先找到它原来的位置，然后找到 viewModel 然后再移动位置。
-            NSInteger const from = changes[@(to)].integerValue;
-            id const sectionViewModel = oldViewModels[from];
-            NSInteger const index = [self indexOfSectionViewModel:sectionViewModel];
+            NSInteger const from  = changes[@(to)].integerValue;
+            NSInteger const index = [self indexOfSectionViewModel:oldViewModels[from]];
             // 移动 section 并更新视图
-            [self moveSectionAtIndex:index fromIndex:from toIndex:to];
+            // [self moveSectionAtIndex:index fromIndex:from toIndex:to];
+            [self _moveSectionViewModelFromIndex:index toIndex:to];
+            [self didMoveSectionAtIndex:from toIndex:to];
             XZLog(@"【移动】%ld(%ld) -> %ld, %@", from, index, to, self.sectionDataModels);
             // 记录待更新的 section
             [forwardIndexes addIndex:to];
@@ -569,21 +566,22 @@
 #pragma mark - 私有方法
 
 /// 将 viewModel 添加到末尾，并添加为子元素。
-- (void)addSectionViewModel:(XZMocoaListitySectionViewModel *)sectionViewModel {
+- (void)_addSectionViewModel:(XZMocoaListitySectionViewModel *)sectionViewModel {
     NSParameterAssert([sectionViewModel isKindOfClass:[XZMocoaListitySectionViewModel class]]);
     [_sectionViewModels addObject:sectionViewModel];
     [self addSubViewModel:sectionViewModel];
 }
 
 /// 将 viewModel 插入到 index 位置，并添加为子元素。
-- (void)insertSectionViewModel:(XZMocoaListitySectionViewModel *)sectionViewModel atIndex:(NSInteger)index {
+- (void)_insertSectionViewModel:(XZMocoaListitySectionViewModel *)sectionViewModel atIndex:(NSInteger)index {
     NSParameterAssert([sectionViewModel isKindOfClass:[XZMocoaListitySectionViewModel class]]);
     [_sectionViewModels insertObject:sectionViewModel atIndex:index];
     [self addSubViewModel:sectionViewModel];
 }
 
 /// 将 oldIndex 位置上的 viewModel 移动到 newIndex 位置上，在子元素集合中的位置不变。
-- (void)moveSectionViewModelFromIndex:(NSInteger)oldIndex toIndex:(NSInteger)newIndex {
+- (void)_moveSectionViewModelFromIndex:(NSInteger)oldIndex toIndex:(NSInteger)newIndex {
+    if (newIndex == oldIndex) return;
     id const viewModel = _sectionViewModels[oldIndex];
     [_sectionViewModels removeObjectAtIndex:oldIndex];
     [_sectionViewModels insertObject:viewModel atIndex:newIndex];
@@ -596,7 +594,7 @@
     
     for (NSInteger section = 0; section < count; section++) {
         XZMocoaListitySectionViewModel *viewModel = [self loadViewModelForSectionAtIndex:section];
-        [self addSectionViewModel:viewModel];
+        [self _addSectionViewModel:viewModel];
     }
 }
 

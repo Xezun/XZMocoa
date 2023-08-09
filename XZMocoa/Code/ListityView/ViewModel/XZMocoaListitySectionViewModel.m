@@ -151,7 +151,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
             [oldViewModel removeFromSuperViewModel];
             
             id const newViewModel = [self loadViewModelForCellAtIndex:row];
-            [self insertCellViewModel:newViewModel atIndex:row];
+            [self _insertCellViewModel:newViewModel atIndex:row];
         }];
         [self didReloadCellsAtIndexes:oldRows];
     } else {
@@ -160,7 +160,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
             [oldViewModel removeFromSuperViewModel]; // 由 -didRemoveSubViewModel: 执行清理
             
             id const newViewModel = [self loadViewModelForCellAtIndex:row];
-            [self insertCellViewModel:newViewModel atIndex:row];
+            [self _insertCellViewModel:newViewModel atIndex:row];
         }];
         [self didReloadCellsAtIndexes:rows];
     }
@@ -175,7 +175,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     
     [rows enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
         id const newViewModel = [self loadViewModelForCellAtIndex:row];
-        [self insertCellViewModel:newViewModel atIndex:row];
+        [self _insertCellViewModel:newViewModel atIndex:row];
     }];
     
     [self didInsertCellsAtIndexes:rows];
@@ -224,9 +224,9 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     if (self.isPerformingBatchUpdates) {
         id const viewModel = [self cellViewModelAtIndex:row];
         NSInteger const oldRow = [_isPerformingBatchUpdates indexOfObject:viewModel];
-        [self moveCellAtIndex:row fromIndex:oldRow toIndex:newRow];
+        [self _moveCellAtIndex:row fromIndex:oldRow toIndex:newRow];
     } else {
-        [self moveCellAtIndex:row fromIndex:row toIndex:newRow];
+        [self _moveCellAtIndex:row fromIndex:row toIndex:newRow];
         
         NSInteger const min = MIN(row, newRow);
         NSInteger const max = MAX(row, newRow);
@@ -240,11 +240,11 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
 /// @param row 当前位置
 /// @param oldRow 原始位置（批量更新前的位置）
 /// @param newRow 目标位置
-- (void)moveCellAtIndex:(NSInteger)row fromIndex:(NSInteger)oldRow toIndex:(NSInteger)newRow {
+- (void)_moveCellAtIndex:(NSInteger)row fromIndex:(NSInteger)oldRow toIndex:(NSInteger)newRow {
     _needsDifferenceBatchUpdates = NO;
     
     if (row != newRow) {
-        [self moveCellViewModelFromIndex:row toIndex:newRow];
+        [self _moveCellViewModelFromIndex:row toIndex:newRow];
     }
     
     if (oldRow == newRow) {
@@ -375,7 +375,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     
     if (oldDataModels.xz_containsDuplicateObjects) {
         [self reloadData];
-        XZLog(@"由于旧数据中包含重复元素，本次批量更新没有进行差异化分析");
+        XZLog(@"由于旧数据中包含重复元素，本次批量更新没有进行差异分析");
         return;
     }
     
@@ -391,7 +391,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     
     if (newDataModels.xz_containsDuplicateObjects) {
         [self reloadData];
-        XZLog(@"由于新数据中包含重复元素，本次批量更新没有进行差异化分析");
+        XZLog(@"由于新数据中包含重复元素，本次批量更新没有进行差异分析");
         return;
     }
     
@@ -401,58 +401,63 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     NSDictionary<NSNumber *, NSNumber *> * const changes = [NSMutableDictionary dictionaryWithCapacity:oldCount];
     [newDataModels xz_differenceFromArray:oldDataModels inserts:(id)inserts deletes:(id)deletes changes:(id)changes remains:(id)remains];
     
-    XZLog(@"【差异分析】开始");
     XZLog(@"『原始』%@", oldDataModels);
     XZLog(@"『目标』%@", newDataModels);
-    XZLog(@"『保留』%@", remains);
-
-    // 1、更新数据：先执行删除，后执行添加
-    [deletes enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-        [[self cellViewModelAtIndex:row] removeFromSuperViewModel];
-    }];
+    XZLog(@"【差异分析】开始");
     
-    [inserts enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-        XZMocoaListityCellViewModel * const newViewModel = [self loadViewModelForCellAtIndex:row];
-        [self insertCellViewModel:newViewModel atIndex:row];
-    }];
-    
-    // 2、更新视图：整体刷新时，就不需要差异性分析
     if ( needsUpdateAll ) {
-        // 视图整体刷新
+        // 整体刷新时，就不需要差异性分析
+        for (NSInteger index = 0; index < newCount; index++) {
+            id model = newDataModels[index];
+            NSInteger oldIndex = [oldDataModels indexOfObject:model];
+            if (oldIndex == NSNotFound) {
+                id vm = [self loadViewModelForCellAtIndex:index];
+                [self _insertCellViewModel:vm atIndex:index];
+            } else {
+                _cellViewModels[index] = oldViewModels[oldIndex];
+            }
+        }
+        for (NSInteger index = oldCount; index >= newCount; index--) {
+            [_cellViewModels[index] removeFromSuperViewModel];
+        }
         [self didReloadData];
     } else {
-        // 视图局部刷新
+        XZLog(@"『不变』%@", remains);
+        
+        // 1、更新数据：先执行删除，后执行添加
+        [deletes enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger row, BOOL *stop) {
+            [[self cellViewModelAtIndex:row] removeFromSuperViewModel];
+        }];
         [self didDeleteCellsAtIndexes:deletes];
         XZLog(@"『删除』%@", deletes);
+        
+        NSMutableDictionary *newViewModels = [NSMutableDictionary dictionaryWithCapacity:inserts.count];
+        [inserts enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
+            XZMocoaListityCellViewModel * const newViewModel = [self loadViewModelForCellAtIndex:row];
+            [self _insertCellViewModel:newViewModel atIndex:row];
+            newViewModels[@(row)] = newViewModel;
+        }];
         [self didInsertCellsAtIndexes:inserts];
         XZLog(@"『添加』%@", inserts);
-        // 记录新插入的元素，因为排序移动的过程中，新插入元素的位置可能发生变化。
-        NSDictionary * const insertedViewModels = [inserts xz_reduce:nil next:^id(NSMutableDictionary *result, NSInteger idx, BOOL *stop) {
-            if (result == nil) {
-                result = [NSMutableDictionary dictionaryWithCapacity:inserts.count];
-            }
-            result[@(idx)] = [self cellViewModelAtIndex:idx];
-            return result;
-        }];
         
         // 排序移动
         for (NSInteger to = 0; to < newCount; to++) {
             if ([inserts containsIndex:to]) {
-                // to 位置为新插入的元素，先找到 viewModel 当前位置，然后将其移动到 to 位置上。
-                id const viewModel = insertedViewModels[@(to)];
+                id const viewModel = newViewModels[@(to)];
                 NSInteger const index = [self indexOfCellViewModel:viewModel];
-                [self moveCellViewModelFromIndex:index toIndex:to];
+                [self _moveCellViewModelFromIndex:index toIndex:to];
+                XZLog(@"『调整』%ld -> %ld, %@", (long)index, (long)to, self.cellDataModels);
             } else if ([remains containsIndex:to]) {
                 // to 位置为保持不变的元素，在 old 中找到 viewModel 然后将其移动到 to 位置上。
-                id const viewModel = oldViewModels[to];
-                NSInteger const index = [self indexOfCellViewModel:viewModel];
-                [self moveCellViewModelFromIndex:index toIndex:to];
+                NSInteger const index = [self indexOfCellViewModel:oldViewModels[to]];
+                [self _moveCellViewModelFromIndex:index toIndex:to];
+                XZLog(@"『调整』%ld -> %ld, %@", (long)index, (long)to, self.cellDataModels);
             } else {
                 // to 位置为被移动的元素，先找到它原来的位置，然后找到 viewModel 然后再移动位置。
-                NSInteger const from = changes[@(to)].integerValue;
-                id const viewModel = oldViewModels[from];
-                NSInteger const index = [self indexOfCellViewModel:viewModel];
-                [self moveCellAtIndex:index fromIndex:from toIndex:to];
+                NSInteger const from  = changes[@(to)].integerValue;
+                NSInteger const index = [self indexOfCellViewModel:oldViewModels[from]];
+                [self _moveCellViewModelFromIndex:index toIndex:to];
+                [self didMoveCellAtIndex:from toIndex:to];
                 XZLog(@"『移动』%ld(%ld) -> %ld, %@", (long)from, (long)index, (long)to, self.cellDataModels);
             }
         }
@@ -464,17 +469,18 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
 
 #pragma mark - 私有方法
 
-- (void)addCellViewModel:(XZMocoaListityCellViewModel *)cellViewModel {
+- (void)_addCellViewModel:(XZMocoaListityCellViewModel *)cellViewModel {
     [_cellViewModels addObject:cellViewModel];
     [self addSubViewModel:cellViewModel];
 }
 
-- (void)insertCellViewModel:(XZMocoaListityCellViewModel *)cellViewModel atIndex:(NSInteger)index {
+- (void)_insertCellViewModel:(XZMocoaListityCellViewModel *)cellViewModel atIndex:(NSInteger)index {
     [_cellViewModels insertObject:cellViewModel atIndex:index];
     [self addSubViewModel:cellViewModel];
 }
 
-- (void)moveCellViewModelFromIndex:(NSInteger)row toIndex:(NSInteger)newRow {
+- (void)_moveCellViewModelFromIndex:(NSInteger)row toIndex:(NSInteger)newRow {
+    if (newRow == row) return;
     id const viewModel = _cellViewModels[row];
     [_cellViewModels removeObjectAtIndex:row];
     [_cellViewModels insertObject:viewModel atIndex:newRow];
@@ -503,7 +509,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     NSInteger const count = model.numberOfCellModels;
     for (NSInteger index = 0; index < count; index++) {
         XZMocoaListityCellViewModel *viewModel = [self loadViewModelForCellAtIndex:index];
-        [self addCellViewModel:viewModel];
+        [self _addCellViewModel:viewModel];
     }
 }
 
