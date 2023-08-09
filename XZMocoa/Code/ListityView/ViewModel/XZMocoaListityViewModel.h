@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didInsertSectionsAtIndexes:(NSIndexSet *)sections;
 - (void)didDeleteSectionsAtIndexes:(NSIndexSet *)sections;
 - (void)didMoveSectionAtIndex:(NSInteger)section toIndex:(NSInteger)newSection;
-- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates;
+- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
 
 // MARK: 子类必须重写的方法
 

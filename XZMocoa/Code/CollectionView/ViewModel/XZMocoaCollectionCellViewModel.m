@@ -27,15 +27,15 @@
     [self emit:XZMocoaEmitNone value:nil];
 }
 
-- (void)collectonView:(UICollectionView *)collectonView didSelectRow:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView didSelectRow:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
 }
 
-- (void)collectonView:(UICollectionView *)collectonView willDisplayRow:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView willDisplayRow:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
 }
 
-- (void)collectonView:(UICollectionView *)collectonView didEndDisplayingRow:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingRow:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
 }
 

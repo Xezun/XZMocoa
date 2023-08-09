@@ -64,9 +64,9 @@
     [self.delegate tableViewModel:self didMoveSectionAtIndex:oldSection toIndex:newSection];
 }
 
-- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates {
+- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     if (!self.isReady) return;
-    [self.delegate tableViewModel:self performBatchUpdates:batchUpdates];
+    [self.delegate tableViewModel:self performBatchUpdates:batchUpdates completion:completion];
 }
 
 - (XZMocoaListitySectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {

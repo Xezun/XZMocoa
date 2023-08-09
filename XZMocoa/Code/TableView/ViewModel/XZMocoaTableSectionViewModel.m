@@ -47,13 +47,7 @@
     }
     XZMocoaName     const name    = model.mocoaName;
     XZMocoaModule * const module  = [self.module submoduleForKind:kind forName:name];
-    Class           const VMClass = (^Class(Class aClass, XZMocoaKind kind) {
-        if (aClass) return aClass;
-        if ([kind isEqualToString:XZMocoaKindHeader]) return [XZMocoaTableSectionHeaderFooterViewModel class];
-        if ([kind isEqualToString:XZMocoaKindFooter]) return [XZMocoaTableSectionHeaderFooterViewModel class];
-        NSString *reason = [NSString stringWithFormat:@"UITableView 不支持 %@ 类型的子元素", kind];
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:reason userInfo:nil];
-    })(module.viewModelClass, kind);
+    Class           const VMClass = module.viewModelClass ?: [XZMocoaTableSectionHeaderFooterViewModel class];
     
     XZMocoaListitySectionSupplementaryViewModel *vm = [[VMClass alloc] initWithModel:model];
     vm.index      = index;

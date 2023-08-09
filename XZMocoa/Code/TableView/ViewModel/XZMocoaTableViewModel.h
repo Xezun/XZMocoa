@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didDeleteSectionsAtIndexes:(NSIndexSet *)sections;
 - (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didMoveSectionAtIndex:(NSInteger)section toIndex:(NSInteger)newSection;
 
-- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates;
+- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
 
 @end
 

@@ -8,8 +8,15 @@
 
 #import "XZMocoaTableCell.h"
 #import "XZMocoaModule.h"
-#import <objc/runtime.h>
 #import "XZMocoaDefines.h"
+
+
+@implementation XZMocoaTableCell
+@dynamic viewModel;
+@end
+
+
+#import <objc/runtime.h>
 
 static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source) {
     if (xz_objc_class_copyMethod(cls, target, source)) return;
@@ -41,12 +48,6 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 - (void)mocoa_tableView:(UITableView *)tableView didEndDisplayingRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.viewModel tableView:tableView didEndDisplayingRow:self atIndexPath:indexPath];
 }
-
-@end
-
-@implementation XZMocoaTableCell
-
-@dynamic viewModel;
 
 @end
 

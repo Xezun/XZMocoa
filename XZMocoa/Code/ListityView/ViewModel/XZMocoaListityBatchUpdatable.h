@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @attention
 /// 批量更新状态不可重入，上级进入批量更新状态，所有下级也会进入批量更新状态，即不能批量更新中，嵌套执行上级的批量更新方法。
 /// @param batchUpdates 执行数据更新的块函数
-- (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates;
+- (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
 
 @end
 

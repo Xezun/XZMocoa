@@ -1,13 +1,13 @@
 //
-//  XZMocoaCollectionSectionFooterViewModel.m
+//  XZMocoaCollectionSectionSupplementaryViewModel.m
 //  XZMocoa
 //
-//  Created by Xezun on 2023/7/22.
+//  Created by Xezun on 2023/8/9.
 //
 
-#import "XZMocoaCollectionSectionFooterViewModel.h"
+#import "XZMocoaCollectionSectionSupplementaryViewModel.h"
 
-@implementation XZMocoaCollectionSectionFooterViewModel
+@implementation XZMocoaCollectionSectionSupplementaryViewModel
 - (CGSize)size {
     return self.frame.size;
 }
@@ -23,6 +23,6 @@
 }
 
 - (void)sizeDidChange {
-    [self emit:XZMocoaEmitNone value:nil];
+//    [self emit:XZMocoaEmitNone value:nil];
 }
 @end

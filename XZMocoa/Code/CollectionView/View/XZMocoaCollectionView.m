@@ -7,13 +7,21 @@
 
 #import "XZMocoaCollectionView.h"
 
+static XZMocoaKind XZMocoaKindFromElementKind(NSString *kind) {
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) return XZMocoaKindHeader;
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) return XZMocoaKindFooter;
+    return kind;
+}
+
+static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
+    if ([kind isEqualToString:XZMocoaKindHeader]) return UICollectionElementKindSectionHeader;
+    if ([kind isEqualToString:XZMocoaKindFooter]) return UICollectionElementKindSectionFooter;
+    return kind;
+}
+
 @implementation XZMocoaCollectionView
 
 @dynamic viewModel, contentView;
-
-//- (instancetype)initWithFrame:(CGRect)frame {
-//    [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:nil];
-//}
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
     return [super initWithCoder:coder];
@@ -58,7 +66,7 @@
     
     UICollectionView *contentView = self.contentView;
 //    contentView.separatorStyle = UICollectionViewCellSeparatorStyleNone;
-//    contentView.contentInset   = UIEdgeInsetsZero;
+    contentView.contentInset   = UIEdgeInsetsZero;
 //    
 //    contentView.estimatedRowHeight = 0;
 //    contentView.estimatedSectionFooterHeight = 0;
@@ -77,13 +85,13 @@
     [super viewModelDidChange];
     
     // 刷新视图。
-    UICollectionView * const tableView = self.contentView;
+    UICollectionView * const collectionView = self.contentView;
     if (@available(iOS 11.0, *)) {
-        if (tableView && !tableView.hasUncommittedUpdates) {
-            [tableView reloadData];
+        if (collectionView && !collectionView.hasUncommittedUpdates) {
+            [collectionView reloadData];
         }
     } else {
-        [tableView reloadData];
+        [collectionView reloadData];
     }
 }
 
@@ -93,7 +101,7 @@
         return;
     }
     { // 注册一个默认的 Cell
-        NSString * const identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaNameNone);
+        NSString * const identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
         [collectionView registerClass:UICollectionViewCell.class forCellWithReuseIdentifier:identifier];
     }
     
@@ -102,8 +110,8 @@
             return; // 不是 section 的 module 不需要处理
         }
 
-        [submodule enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName name, BOOL *stop) {
-            if ([kind isEqualToString:XZMocoaKindCell]) {
+        [submodule enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind mocoakind, XZMocoaName name, BOOL *stop) {
+            if ([mocoakind isEqualToString:XZMocoaKindCell]) {
                 NSString * const identifier = XZMocoaReuseIdentifier(section, name);
                 if (submodule.viewNibName != nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
@@ -111,21 +119,14 @@
                 } else if (submodule.viewClass != Nil) {
                     [collectionView registerClass:submodule.viewClass forCellWithReuseIdentifier:identifier];
                 }
-            } else if ([kind isEqualToString:XZMocoaKindHeader]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, name);
-                if (submodule.viewNibName != nil) {
-                    UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
-                    [collectionView registerNib:viewNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:identifier];
-                } else if (submodule.viewClass != Nil) {
-                    [collectionView registerClass:submodule.viewClass forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:identifier];
-                }
-            } else if ([kind isEqualToString:XZMocoaKindFooter]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, name);
+            } else {
+                NSString * const identifier = XZMocoaReuseIdentifier(section, mocoakind, name);
+                NSString * const kind       = UIElementKindFromMocoaKind(mocoakind);
                 if (submodule.viewNibName != Nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
-                    [collectionView registerNib:viewNib forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:identifier];
+                    [collectionView registerNib:viewNib forSupplementaryViewOfKind:kind withReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
-                    [collectionView registerClass:submodule.viewClass forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:identifier];
+                    [collectionView registerClass:submodule.viewClass forSupplementaryViewOfKind:kind withReuseIdentifier:identifier];
                 }
             }
         }];
@@ -138,11 +139,10 @@
 
 @end
 
+@implementation XZMocoaCollectionView (UIScrollViewDelegate)
+@end
 
 @implementation XZMocoaCollectionView (UICollectionViewDelegate)
-
-
-
 @end
 
 
@@ -164,20 +164,13 @@
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    XZMocoaCollectionSectionViewModel *section = [self.viewModel sectionViewModelAtIndex:indexPath.section];
+    XZMocoaKind const mocoaKind = XZMocoaKindFromElementKind(kind);
     
-    XZMocoaKind mocoaKind = kind;
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        mocoaKind = XZMocoaKindHeader;
-    } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-        mocoaKind = XZMocoaKindFooter;
-    }
-    
-    XZMocoaListitySectionSupplementaryViewModel *vm = [section viewModelForSupplementaryKind:mocoaKind atIndex:indexPath.item];
-    if (vm == nil) {
+    XZMocoaListitySectionSupplementaryViewModel *viewModel = [[self.viewModel sectionViewModelAtIndex:indexPath.section] viewModelForSupplementaryKind:mocoaKind atIndex:indexPath.item];
+    if (viewModel == nil) {
         return nil;
     }
-    UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:vm.identifier forIndexPath:indexPath];
+    UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:viewModel.identifier forIndexPath:indexPath];
     return view;
 }
 
@@ -199,6 +192,85 @@
 /// Return an index path with a single index to indicate an entire section, instead of a specific item.
 - (NSIndexPath *)collectionView:(UICollectionView *)collectionView indexPathForIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     return nil;
+}
+
+@end
+
+@implementation XZMocoaCollectionView (UICollectionViewDelegateFlowLayout)
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    XZMocoaCollectionCellViewModel *viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
+    return viewModel.size;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    XZMocoaCollectionSectionViewModel *viewModel = [self.viewModel sectionViewModelAtIndex:section];
+    return viewModel.insets;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    XZMocoaCollectionSectionViewModel *viewModel = [self.viewModel sectionViewModelAtIndex:section];
+    return viewModel.minimumLineSpacing;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    XZMocoaCollectionSectionViewModel *viewModel = [self.viewModel sectionViewModelAtIndex:section];
+    return viewModel.minimumInteritemSpacing;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    XZMocoaCollectionSectionSupplementaryViewModel *viewModel = [[self.viewModel sectionViewModelAtIndex:section] viewModelForSupplementaryKind:XZMocoaKindHeader atIndex:0];
+    return viewModel.size;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    XZMocoaCollectionSectionSupplementaryViewModel *viewModel = [[self.viewModel sectionViewModelAtIndex:section] viewModelForSupplementaryKind:XZMocoaKindFooter atIndex:0];
+    return viewModel.size;
+}
+
+@end
+
+
+@implementation XZMocoaCollectionView (XZMocoaCollectionViewModelDelegate)
+
+- (void)collectionViewModelDidReloadData:(XZMocoaCollectionViewModel *)collectionViewModel {
+    [self.contentView reloadData];
+}
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    [self.contentView reloadItemsAtIndexPaths:indexPaths];
+}
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didInsertCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    [self.contentView insertItemsAtIndexPaths:indexPaths];
+}
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didDeleteCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    [self.contentView deleteItemsAtIndexPaths:indexPaths];
+}
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didMoveCellAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
+    [self.contentView moveItemAtIndexPath:indexPath toIndexPath:indexPath];
+}
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didReloadSectionsAtIndexes:(NSIndexSet *)sections {
+    [self.contentView reloadSections:sections];
+}
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didInsertSectionsAtIndexes:(NSIndexSet *)sections {
+    [self.contentView insertSections:sections];
+}
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didDeleteSectionsAtIndexes:(NSIndexSet *)sections {
+    [self.contentView deleteSections:sections];
+}
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didMoveSectionAtIndex:(NSInteger)section toIndex:(NSInteger)newSection {
+    [self.contentView moveSection:section toSection:newSection];
+}
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
+    [self.contentView performBatchUpdates:batchUpdates completion:completion];
 }
 
 @end

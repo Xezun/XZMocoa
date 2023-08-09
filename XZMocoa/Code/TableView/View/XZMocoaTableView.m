@@ -97,7 +97,7 @@
     }
     
     { // 注册默认的 cell 视图
-        NSString *identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaNameNone);
+        NSString *identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
         [tableView registerClass:UITableViewCell.class forCellReuseIdentifier:identifier];
     }
     
@@ -281,13 +281,14 @@
     [self.contentView moveSection:section toSection:newSection];
 }
 
-- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates {
+- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     if (@available(iOS 11.0, *)) {
-        [self.contentView performBatchUpdates:batchUpdates completion:nil];
+        [self.contentView performBatchUpdates:batchUpdates completion:completion];
     } else {
         [self.contentView beginUpdates];
         batchUpdates();
         [self.contentView endUpdates];
+        if (completion) completion(YES);
     }
 }
 

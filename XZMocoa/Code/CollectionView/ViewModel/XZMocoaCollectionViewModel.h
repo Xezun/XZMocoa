@@ -11,8 +11,28 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaCollectionViewModel : XZMocoaListityViewModel <XZMocoaCollectionCellViewModel *, XZMocoaCollectionSectionViewModel *>
+@class XZMocoaCollectionViewModel;
+@protocol XZMocoaCollectionViewModelDelegate <XZMocoaListityViewModelDelegate>
 
+@required
+- (void)collectionViewModelDidReloadData:(XZMocoaCollectionViewModel *)collectionViewModel;
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didInsertCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didDeleteCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didMoveCellAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didReloadSectionsAtIndexes:(NSIndexSet *)sections;
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didInsertSectionsAtIndexes:(NSIndexSet *)sections;
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didDeleteSectionsAtIndexes:(NSIndexSet *)sections;
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didMoveSectionAtIndex:(NSInteger)section toIndex:(NSInteger)newSection;
+
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
+
+@end
+
+@interface XZMocoaCollectionViewModel : XZMocoaListityViewModel <XZMocoaCollectionCellViewModel *, XZMocoaCollectionSectionViewModel *>
+@property (nonatomic, weak) id<XZMocoaCollectionViewModelDelegate> delegate;
 @end
 
 NS_ASSUME_NONNULL_END

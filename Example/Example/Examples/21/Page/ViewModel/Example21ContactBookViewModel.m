@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, Example21ContactBookTestAction) {
 - (void)performTestActionAtIndex:(NSUInteger)index {
     [_tableViewModel performBatchUpdates:^{
         [self performTestAction:(Example21ContactBookTestAction)index];
-    }];
+    } completion:nil];
 }
 
 - (void)performTestAction:(Example21ContactBookTestAction)action {

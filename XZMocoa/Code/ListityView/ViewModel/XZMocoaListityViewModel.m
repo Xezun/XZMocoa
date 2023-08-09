@@ -119,12 +119,15 @@
         NSIndexPath *to   = [NSIndexPath indexPathForRow:newRow inSection:section];
         [self didMoveCellAtIndexPath:from toIndexPath:to];
     } else if (emit.name == XZMocoaListitySectionEmitBatchUpdates) {
-        void (^const batchUpdates)(void) = emit.value;
+        NSDictionary *value = emit.value;
+        void (^const batchUpdates)(void) = value[@"batchUpdates"];
+        void (^const completion)(BOOL) = value[@"completion"];
         _needsDifferenceBatchUpdates = NO;
         if (!self.isReady || self.isPerformingBatchUpdates) {
             batchUpdates(); // 应用 batchUpdates 中的数据操作，视图操作会被拦截
+            if (completion) completion(NO);
         } else {
-            [self didPerformBatchUpdates:batchUpdates];
+            [self didPerformBatchUpdates:batchUpdates completion:completion];
         }
     } else {
         [super subViewModel:subViewModel didEmit:emit];
@@ -343,7 +346,7 @@
     @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }
 
-- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates {
+- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
     @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }
@@ -391,7 +394,7 @@
     }
 }
 
-- (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates {
+- (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     NSParameterAssert(batchUpdates != nil);
     XZLog(@"===== 批量更新开始 %@ =====", self);
     
@@ -409,9 +412,10 @@
     };
     
     if (self.isReady) {
-        [self didPerformBatchUpdates:tableViewBatchUpdates];
+        [self didPerformBatchUpdates:tableViewBatchUpdates completion:completion];
     } else {
         tableViewBatchUpdates();
+        if (completion) completion(NO);
     }
     [self cleanupBatchUpdates];
     
@@ -427,12 +431,12 @@
             [forwardIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                 [[self sectionViewModelAtIndex:idx] performBatchUpdates:^{
                     // section 内的更新数据已经在 batchUpdates() 执行了。
-                }];
+                } completion:nil];
             }];
         };
         
         if (self.isReady) {
-            [self didPerformBatchUpdates:tableViewBatchUpdates];
+            [self didPerformBatchUpdates:tableViewBatchUpdates completion:nil];
         } else {
             tableViewBatchUpdates();
         }

@@ -308,7 +308,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     _isPerformingBatchUpdates = nil;
 }
 
-- (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates {
+- (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     NSAssert(batchUpdates != nil, @"必须提供 batchUpdates 参数");
     XZLog(@"----- 批量更新开始 %@ -----", self);
     if (![self prepareBatchUpdates]) {
@@ -322,9 +322,11 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     };
     
     if (self.isReady) {
-        [self emit:XZMocoaListitySectionEmitBatchUpdates value:tableViewBatchUpdates];
+        id value = [NSDictionary dictionaryWithObjectsAndKeys:tableViewBatchUpdates, @"batchUpdates", completion, @"completion", nil];
+        [self emit:XZMocoaListitySectionEmitBatchUpdates value:value];
     } else {
         tableViewBatchUpdates();
+        if (completion) completion(NO);
     }
     [self cleanupBatchUpdates];
     

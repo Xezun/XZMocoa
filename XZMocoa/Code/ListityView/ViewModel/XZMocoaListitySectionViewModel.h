@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 //@property (nonatomic, strong, readonly, nullable) HeaderViewModelType headerViewModel;
 //@property (nonatomic, strong, readonly, nullable) FooterViewModelType footerViewModel;
 /// 所有 cell 视图模型。这是一个计算属性，除非遍历所有 cell 对象，请尽量避免直接使用。
-- (nullable __kindof XZMocoaViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
+- (nullable __kindof XZMocoaListitySectionSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 @property (nonatomic, copy, readonly) NSArray<CellViewModelType> *cellViewModels;
 
 /// 返回 YES 表示 header/cell/footer 都没有。

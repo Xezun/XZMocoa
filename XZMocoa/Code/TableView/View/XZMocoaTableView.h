@@ -6,7 +6,6 @@
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <XZMocoa/XZMocoaListityView.h>
 #import <XZMocoa/XZMocoaTableViewModel.h>
 

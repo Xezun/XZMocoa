@@ -58,9 +58,12 @@
             [self->_tableViewModel performBatchUpdates:^{
                 [self->_dataArray removeAllObjects];
                 [self->_dataArray addObjectsFromArray:data];
+            } completion:^(BOOL finished) {
+                self.isHeaderRefreshing = NO;
             }];
+        } else {
+            self.isHeaderRefreshing = NO;
         }
-        self.isHeaderRefreshing = NO;
     }];
 }
 
@@ -76,9 +79,12 @@
         if (data.count > 0) {
             [self->_tableViewModel performBatchUpdates:^{
                 [self->_dataArray addObjectsFromArray:data];
+            } completion:^(BOOL finished) {
+                self.isFooterRefreshing = NO;
             }];
+        } else {
+            self.isFooterRefreshing = NO;
         }
-        self.isFooterRefreshing = NO;
     }];
 }
 
