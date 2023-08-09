@@ -34,6 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XZMocoaTableViewModel : XZMocoaListityViewModel<XZMocoaTableCellViewModel *, XZMocoaTableSectionViewModel *>
 
+/// 在进行批量更新或局部更新时，视图更新的动画效果，默认为 UITableViewRowAnimationAutomatic 自动选择合适的动画效果。
+@property (nonatomic) UITableViewRowAnimation rowAnimation;
+
 @property (nonatomic, weak) id<XZMocoaTableViewModelDelegate> delegate;
 /// 总高度。
 @property (nonatomic, readonly) CGFloat height;

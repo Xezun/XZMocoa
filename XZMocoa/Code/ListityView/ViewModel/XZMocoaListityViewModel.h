@@ -21,9 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @attention 由于需要管理子视图，因此需要设置 module 属性才能正常工作。
 @interface XZMocoaListityViewModel<__covariant CellViewModelType: XZMocoaListityCellViewModel *, __covariant SectionViewModelType: XZMocoaListitySectionViewModel *> : XZMocoaViewModel <XZMocoaListityBatchUpdatable>
 
-/// 在进行批量更新或局部更新时，视图更新的动画效果，默认为 UITableViewRowAnimationAutomatic 自动选择合适的动画效果。
-@property (nonatomic) UITableViewRowAnimation rowAnimation;
-
 /// 一般而言 TableViewModel 只会有一个事件接收者，这里直接用了代理。
 @property (nonatomic, weak) id<XZMocoaListityViewModelDelegate> delegate;
 

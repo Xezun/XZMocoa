@@ -11,6 +11,14 @@
 
 @dynamic delegate;
 
+- (instancetype)initWithModel:(id)model {
+    self = [super initWithModel:model];
+    if (self) {
+        _rowAnimation = UITableViewRowAnimationAutomatic;
+    }
+    return self;
+}
+
 - (CGFloat)height {
     CGFloat height = 0;
     for (XZMocoaTableSectionViewModel *section in self.sectionViewModels) {

@@ -29,7 +29,6 @@
     self = [super initWithModel:model];
     if (self) {
         _isPerformingBatchUpdates = nil;
-        _rowAnimation = UITableViewRowAnimationAutomatic;
         _sectionViewModels = [NSMutableOrderedSet orderedSet];
     }
     return self;
