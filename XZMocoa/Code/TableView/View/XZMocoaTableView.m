@@ -108,7 +108,7 @@
 
         [submodule enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName name, BOOL *stop) {
             if ([kind isEqualToString:XZMocoaKindCell]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, name);
+                NSString * const identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
                 if (submodule.viewNibName != nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
                     [tableView registerNib:viewNib forCellReuseIdentifier:identifier];
@@ -116,7 +116,7 @@
                     [tableView registerClass:submodule.viewClass forCellReuseIdentifier:identifier];
                 }
             } else if ([kind isEqualToString:XZMocoaKindHeader]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, name);
+                NSString * const identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
                 if (submodule.viewNibName != nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
                     [tableView registerNib:viewNib forHeaderFooterViewReuseIdentifier:identifier];
@@ -124,7 +124,7 @@
                     [tableView registerClass:submodule.viewClass forHeaderFooterViewReuseIdentifier:identifier];
                 }
             } else if ([kind isEqualToString:XZMocoaKindFooter]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, name);
+                NSString * const identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
                 if (submodule.viewNibName != nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
                     [tableView registerNib:viewNib forHeaderFooterViewReuseIdentifier:identifier];

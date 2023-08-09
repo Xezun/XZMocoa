@@ -242,16 +242,13 @@ FOUNDATION_EXPORT XZMocoaKind const XZMocoaKindCell;
 
 @end
 
-/// 构造 cell 重用标识符。
+/// 构造重用标识符。
 /// - Parameters:
-///   - sectionName: cell 所在的 section 的 mocoaName
-///   - cellName: cell 的 mocoaName
-FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName _Nullable section, XZMocoaKind _Nullable kind, XZMocoaName _Nullable cell) XZATTR_OVERLOAD {
-    return [NSString stringWithFormat:@"%@-%@-%@", section ?: XZMocoaNameNone, kind ?: XZMocoaKindNone, cell ?: XZMocoaNameNone];
-}
-
-FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName section, XZMocoaName cell) XZATTR_OVERLOAD {
-    return [NSString stringWithFormat:@"%@--%@", section, cell];
+///   - section: 要构造标识符对象的上级
+///   - kind: 要构造标识符对象的分类
+///   - name: 要构造标识符对象的名字
+FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName _Nullable section, XZMocoaKind _Nullable kind, XZMocoaName _Nullable name) XZATTR_OVERLOAD {
+    return [NSString stringWithFormat:@"%@-%@-%@", section ?: XZMocoaNameNone, kind ?: XZMocoaKindNone, name ?: XZMocoaNameNone];
 }
 
 @interface XZMocoaModuleProvider : NSObject <XZMocoaModuleProvider>

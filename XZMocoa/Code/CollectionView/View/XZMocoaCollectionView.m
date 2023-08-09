@@ -114,7 +114,7 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
 
         [submodule enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind mocoakind, XZMocoaName name, BOOL *stop) {
             if ([mocoakind isEqualToString:XZMocoaKindCell]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, name);
+                NSString * const identifier = XZMocoaReuseIdentifier(section, mocoakind, name);
                 if (submodule.viewNibName != nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
                     [collectionView registerNib:viewNib forCellWithReuseIdentifier:identifier];
