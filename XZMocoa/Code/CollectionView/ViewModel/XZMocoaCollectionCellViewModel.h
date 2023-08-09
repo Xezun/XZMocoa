@@ -7,6 +7,8 @@
 
 #import <XZMocoa/XZMocoaListityCellViewModel.h>
 
+@class XZMocoaCollectionView;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /// UICollectionViewCell 视图模型基类。
@@ -15,15 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGSize size;
 - (void)sizeDidChange;
 
-/// 当前 ViewModel 对应的 Cell 将要被选中时，会触发此方法。
-/// @param indexPath Cell 所在的位置
-- (void)collectionView:(UICollectionView *)collectionView didSelectRow:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-/// 当前 ViewModel 对应的 Cell 将要被展示时，会触发此方法。
-/// @param indexPath Cell 所在的位置
-- (void)collectionView:(UICollectionView *)collectionView willDisplayRow:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-/// 当前 ViewModel 对应的 Cell 将要被移除屏幕时，会触发此方法。
-/// @param indexPath Cell 所在的位置
-- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingRow:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath*)indexPath;
+- (void)wasSelectedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
+- (void)willBeDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
+- (void)didEndBeingDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath*)indexPath;
 @end
 
 NS_ASSUME_NONNULL_END

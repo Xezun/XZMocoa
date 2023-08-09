@@ -37,7 +37,7 @@
     }
 }
 
-- (void)tableView:(id<XZMocoaView>)tableView didSelectRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)wasSelectedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     // 通过模块初始化传递参数
     Example20Group101CellModel *model = self.model;
     UIViewController *nextVC = [XZMocoa(@"https://mocoa.xezun.com/examples/20/content/") instantiateViewControllerWithOptions:@{

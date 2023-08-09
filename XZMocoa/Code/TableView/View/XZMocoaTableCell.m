@@ -32,21 +32,21 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 
 + (void)load {
     Class const cls = UITableViewCell.class;
-    mocoa_copyMethod(cls, @selector(tableView:didSelectRowAtIndexPath:), @selector(mocoa_tableView:didSelectRowAtIndexPath:));
-    mocoa_copyMethod(cls, @selector(tableView:willDisplayRowAtIndexPath:), @selector(mocoa_tableView:willDisplayRowAtIndexPath:));
-    mocoa_copyMethod(cls, @selector(tableView:didEndDisplayingRowAtIndexPath:), @selector(mocoa_tableView:didEndDisplayingRowAtIndexPath:));
+    mocoa_copyMethod(cls, @selector(wasSelectedInTableView:atIndexPath:), @selector(mocoa_wasSelectedInTableView:atIndexPath:));
+    mocoa_copyMethod(cls, @selector(willBeDisplayedInTableView:atIndexPath:), @selector(mocoa_willBeDisplayedInTableView:atIndexPath:));
+    mocoa_copyMethod(cls, @selector(didEndBeingDisplayedInTableView:atIndexPath:), @selector(mocoa_didEndBeingDisplayedInTableView:atIndexPath:));
 }
 
-- (void)mocoa_tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel tableView:tableView didSelectRow:self atIndexPath:indexPath];
+- (void)mocoa_wasSelectedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel wasSelectedInTableView:tableView atIndexPath:indexPath];
 }
 
-- (void)mocoa_tableView:(UITableView *)tableView willDisplayRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel tableView:tableView willDisplayRow:self atIndexPath:indexPath];
+- (void)mocoa_willBeDisplayedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel willBeDisplayedInTableView:tableView atIndexPath:indexPath];
 }
 
-- (void)mocoa_tableView:(UITableView *)tableView didEndDisplayingRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel tableView:tableView didEndDisplayingRow:self atIndexPath:indexPath];
+- (void)mocoa_didEndBeingDisplayedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel didEndBeingDisplayedInTableView:tableView atIndexPath:indexPath];
 }
 
 @end

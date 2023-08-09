@@ -222,16 +222,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableView<XZMocoaTableCell> *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [cell tableView:tableView willDisplayRowAtIndexPath:indexPath];
+    [cell willBeDisplayedInTableView:self atIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableView<XZMocoaTableCell> *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    [cell tableView:tableView didEndDisplayingRowAtIndexPath:indexPath];
+    [cell didEndBeingDisplayedInTableView:self atIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableView<XZMocoaTableCell> *cell = (id)[tableView cellForRowAtIndexPath:indexPath];
-    [cell tableView:tableView didSelectRowAtIndexPath:indexPath];
+    [cell wasSelectedInTableView:self atIndexPath:indexPath];
 }
 
 @end

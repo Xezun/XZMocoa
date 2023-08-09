@@ -6,6 +6,8 @@
 //
 
 #import "XZMocoaCollectionView.h"
+#import "XZMocoaCollectionCell.h"
+#import "XZMocoaCollectionSectionSupplementaryView.h"
 
 static XZMocoaKind XZMocoaKindFromElementKind(NSString *kind) {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) return XZMocoaKindHeader;
@@ -27,6 +29,15 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
     return [super initWithCoder:coder];
 }
 
+- (instancetype)initWithCollectionViewClass:(Class)collectionViewClass layout:(UICollectionViewLayout *)layout {
+    self = [super initWithFrame:UIScreen.mainScreen.bounds];
+    if (self) {
+        UICollectionView *contentView = [[collectionViewClass alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+        [super setContentView:contentView];
+    }
+    return self;
+}
+
 - (instancetype)initWithLayout:(UICollectionViewLayout *)layout {
     return [self initWithFrame:UIScreen.mainScreen.bounds layout:layout];
 }
@@ -42,15 +53,6 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
 - (instancetype)initWithFrame:(CGRect)frame {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     return [self initWithCollectionViewClass:UICollectionView.class layout:layout];
-}
-
-- (instancetype)initWithCollectionViewClass:(Class)collectionViewClass layout:(UICollectionViewLayout *)layout {
-    self = [super initWithFrame:UIScreen.mainScreen.bounds];
-    if (self) {
-        UICollectionView *contentView = [[collectionViewClass alloc] initWithFrame:self.bounds collectionViewLayout:layout];
-        [super setContentView:contentView];
-    }
-    return self;
 }
 
 - (void)contentViewWillChange {
@@ -143,6 +145,28 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
 @end
 
 @implementation XZMocoaCollectionView (UICollectionViewDelegate)
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell<XZMocoaCollectionCell> *cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell wasSelectedInCollectionView:self atIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell<XZMocoaCollectionCell> *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    [cell willBeDisplayedInCollectionView:self atIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell<XZMocoaCollectionCell> *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    [cell didEndBeingDisplayedInCollectionView:self atIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView<XZMocoaCollectionSectionSupplementaryView> *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    [view willBeDisplayedInCollectionView:self atIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView<XZMocoaCollectionSectionSupplementaryView> *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    [view didEndBeingDisplayedInCollectionView:self atIndexPath:indexPath];
+}
+
 @end
 
 
@@ -172,26 +196,6 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
     }
     UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:viewModel.identifier forIndexPath:indexPath];
     return view;
-}
-
-// TODO: Not IMP
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath {
-    
-}
-
-- (nullable NSArray<NSString *> *)indexTitlesForCollectionView:(UICollectionView *)collectionView {
-    return nil;
-}
-
-/// Returns the index path that corresponds to the given title / index. (e.g. "B",1)
-/// Return an index path with a single index to indicate an entire section, instead of a specific item.
-- (NSIndexPath *)collectionView:(UICollectionView *)collectionView indexPathForIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return nil;
 }
 
 @end

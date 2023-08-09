@@ -27,7 +27,7 @@
     self.images = array;
 }
 
-- (void)tableView:(UITableView<XZMocoaView> *)tableView didSelectRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)wasSelectedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     NSArray<Example20Group102CellModel *> *models = self.model;
     Example20Group102CellModel *model = models[self.currentIndex];
     NSURL *url = [NSURL xz_URLWithFormat:@"https://mocoa.xezun.com/examples/20/content/?url=%@", model.url.xz_stringByAddingPercentEncoding];

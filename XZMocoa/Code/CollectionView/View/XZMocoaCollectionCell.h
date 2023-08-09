@@ -8,6 +8,8 @@
 #import <XZMocoa/XZMocoaView.h>
 #import <XZMocoa/XZMocoaCollectionCellViewModel.h>
 
+@class XZMocoaCollectionView;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /// 使用 Mocoa 时，UICollectionViewCell 应遵循本协议。
@@ -24,19 +26,19 @@ NS_ASSUME_NONNULL_BEGIN
 // MARK: - 由当前 Cell 所在的 UICollectionViewCell 传递回来的事件
 
 /// 当前 Cell 的点击事件。
-/// @param collectionView 当前 Cell 所属的 UICollectionViewCell 对象
+/// @param collectionView 当前 Cell 所属的 XZMocoaCollectionView 对象
 /// @param indexPath 当前 Cell 的当前所在的位置
-- (void)collectionView:(UICollectionViewCell *)collectionView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)wasSelectedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
 
 /// 当前 Cell 将要被展示在指定位置。
-/// @param collectionView 当前 Cell 所属的 UICollectionViewCell 对象
+/// @param collectionView 当前 Cell 所属的 UICollectionView 对象
 /// @param indexPath 当前 Cell 的将要展示的位置
-- (void)collectionView:(UICollectionViewCell *)collectionView willDisplayRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)willBeDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
 
 /// 当前 Cell 已结束在指定位置的展示。
-/// @param collectionView 当前 Cell 所属的 UICollectionViewCell 对象
+/// @param collectionView 当前 Cell 所属的 XZMocoaCollectionView 对象
 /// @param indexPath 当前 Cell 的当前所在的位置
-- (void)collectionView:(UICollectionViewCell *)collectionView didEndDisplayingRowAtIndexPath:(NSIndexPath*)indexPath;
+- (void)didEndBeingDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath*)indexPath;
 
 @end
 

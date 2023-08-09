@@ -27,15 +27,15 @@
     [self emit:XZMocoaEmitNone value:nil];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)wasSelectedInTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
 
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)willBeDisplayedInTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
 
 }
 
-- (void)tableView:(UITableView *)tableView didEndDisplayingRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)didEndBeingDisplayedInTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
 
 }
 

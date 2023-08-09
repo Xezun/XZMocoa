@@ -25,4 +25,13 @@
 - (void)sizeDidChange {
 //    [self emit:XZMocoaEmitNone value:nil];
 }
+
+- (void)willBeDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+- (void)didEndBeingDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 @end

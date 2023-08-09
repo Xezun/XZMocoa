@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 在 IB 中，IBInspectable 值在 -initWithCoder: 中并没有被赋值，一般需要在 -awakeFromNib 方法中才能获取。
 
-@protocol XZMocoaTableViewDelegate;
-
 /// 对 UITableView 进行了封装，以支持 MVVM 设计模式。
 @interface XZMocoaTableView : XZMocoaListityView
 
@@ -43,9 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @note 默认创建的视图大小，与屏幕相同。
 /// @param style 属性`tableView`的样式
 - (instancetype)initWithStyle:(UITableViewStyle)style;
-
-/// 代理。
-@property (nonatomic, weak) id<XZMocoaTableViewDelegate> delegate;
 
 @end
 
@@ -87,10 +82,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// XZMocoaTableView 实现了协议 XZMocoaTableViewModelDelegate 中的全部方法。
 /// @note 子类可以重写自己的实现，或者调用父类的实现。
 @interface XZMocoaTableView (XZMocoaTableViewModelDelegate) <XZMocoaTableViewModelDelegate>
-@end
-
-/// XZMocoaTableView 接管了 UITableView 的代理事件。
-@protocol XZMocoaTableViewDelegate <UIScrollViewDelegate, UITableViewDelegate>
 @end
 
 NS_ASSUME_NONNULL_END

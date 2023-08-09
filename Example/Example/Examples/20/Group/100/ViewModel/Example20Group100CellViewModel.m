@@ -31,7 +31,7 @@
     }
 } 
 
-- (void)tableView:(id<XZMocoaView>)tableView didSelectRow:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)wasSelectedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     // 通过 url 参数传值
     Example20Group100CellModel *model = self.model;
     NSURL *url = [NSURL xz_URLWithFormat:@"https://mocoa.xezun.com/examples/20/content/?url=%@", model.url.xz_stringByAddingPercentEncoding];

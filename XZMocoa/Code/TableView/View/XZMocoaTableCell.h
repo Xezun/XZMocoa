@@ -28,17 +28,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// 当前 Cell 的点击事件。
 /// @param tableView 当前 Cell 所属的 UITableView 对象
 /// @param indexPath 当前 Cell 的当前所在的位置
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)wasSelectedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
 
 /// 当前 Cell 将要被展示在指定位置。
 /// @param tableView 当前 Cell 所属的 UITableView 对象
 /// @param indexPath 当前 Cell 的将要展示的位置
-- (void)tableView:(UITableView *)tableView willDisplayRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)willBeDisplayedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
 
 /// 当前 Cell 已结束在指定位置的展示。
 /// @param tableView 当前 Cell 所属的 UITableView 对象
 /// @param indexPath 当前 Cell 的当前所在的位置
-- (void)tableView:(UITableView *)tableView didEndDisplayingRowAtIndexPath:(NSIndexPath*)indexPath;
+- (void)didEndBeingDisplayedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath*)indexPath;
 
 @end
 
