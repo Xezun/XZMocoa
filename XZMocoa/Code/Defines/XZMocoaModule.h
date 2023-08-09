@@ -37,9 +37,10 @@ FOUNDATION_EXPORT XZMocoaKind const XZMocoaKindCell;
 @class XZMocoaModule;
 
 /// 为 XZMocoaModule 提供下标式访问方法的协议。
-@protocol XZMocoaModulesNamedSubscripting <NSFastEnumeration>
-- (nullable XZMocoaModule *)objectForKeyedSubscript:(XZMocoaName)name;
-- (void)setObject:(nullable XZMocoaModule *)submodule forKeyedSubscript:(XZMocoaName)name;
+@protocol XZMocoaNamedModulesSubscripting <NSObject>
+- (nullable XZMocoaModule *)objectForKeyedSubscript:(nullable XZMocoaName)name;
+- (void)setObject:(nullable XZMocoaModule *)submodule forKeyedSubscript:(nullable XZMocoaName)name;
+- (void)enumerateKeysAndObjectsUsingBlock:(void (NS_NOESCAPE ^)(XZMocoaName name, XZMocoaModule *submodule, BOOL *stop))block;
 @end
 
 /// 为 XZMocoaModule 提供下标式访问方法的协议。
@@ -49,15 +50,15 @@ FOUNDATION_EXPORT XZMocoaKind const XZMocoaKindCell;
 /// // 下标方式来获取下级
 /// XZMocoaModule *submodule = module[@"header"][@"black"];
 /// @endcode
-@protocol XZMocoaModuleKindedSubscripting <NSObject>
-- (id<XZMocoaModulesNamedSubscripting>)objectForKeyedSubscript:(XZMocoaKind)kind;
-- (void)setObject:(nullable id<XZMocoaModulesNamedSubscripting>)newModules forKeyedSubscript:(XZMocoaKind)kind;
+@protocol XZMocoaKindedModulesSubscripting <NSObject>
+- (id<XZMocoaNamedModulesSubscripting>)objectForKeyedSubscript:(nullable XZMocoaKind)kind;
+- (void)setObject:(nullable id<XZMocoaNamedModulesSubscripting>)newModules forKeyedSubscript:(nullable XZMocoaKind)kind;
 @end
 
 /// Mocoa MVVM 模块。
 /// @discussion
 /// 在 Mocoa 中，由 Model-View-ViewModel 组成的单元被称为模块。
-@interface XZMocoaModule : NSObject <XZMocoaModuleKindedSubscripting>
+@interface XZMocoaModule : NSObject <XZMocoaKindedModulesSubscripting>
 
 /// 模块地址，每个模块都应该有唯一的地址。
 /// @note
@@ -134,28 +135,28 @@ FOUNDATION_EXPORT XZMocoaKind const XZMocoaKindCell;
 /// @note 该方法为懒加载。
 /// @param kind 分类
 /// @param name 名称
-- (XZMocoaModule *)submoduleForKind:(XZMocoaKind)kind forName:(XZMocoaName)name;
-
-/// 获取默认分类的子模块的 XZMocoaModule 对象。
-/// @param name 子模块名称
-- (XZMocoaModule *)submoduleForName:(XZMocoaName)name;
+- (XZMocoaModule *)submoduleForKind:(nullable XZMocoaKind)kind forName:(nullable XZMocoaName)name;
 
 /// 设置或删除指定分类下指定名称的子模块的 XZMocoaModule 对象。
 /// @note 该方法一般用于删除下级，添加下级请用懒加载方法。
 /// @param newSubmodule 子模块的 XZMocoaModule 对象
 /// @param kind 分类
 /// @param name 名称
-- (void)setSubmodule:(nullable XZMocoaModule *)newSubmodule forKind:(XZMocoaKind)kind forName:(XZMocoaName)name;
-
-/// 设置或删除默认分类下的子模块的 XZMocoaModule 对象。
-/// @param newSubmodule 子模块的 XZMocoaModule 对象
-/// @param name 名称
-- (void)setSubmodule:(nullable XZMocoaModule *)newSubmodule forName:(XZMocoaName)name;
+- (void)setSubmodule:(nullable XZMocoaModule *)newSubmodule forKind:(nullable XZMocoaKind)kind forName:(nullable XZMocoaName)name;
 
 /// 获取指定分类下的子模块的的 XZMocoaModule 对象，非懒加载。
 /// @param kind 分类
 /// @param name 名称
-- (nullable XZMocoaModule *)submoduleIfLoadedForKind:(XZMocoaKind)kind forName:(XZMocoaName)name;
+- (nullable XZMocoaModule *)submoduleIfLoadedForKind:(nullable XZMocoaKind)kind forName:(nullable XZMocoaName)name;
+
+/// 获取默认分类的子模块的 XZMocoaModule 对象。
+/// @param name 子模块名称
+- (XZMocoaModule *)submoduleForName:(nullable XZMocoaName)name;
+
+/// 设置或删除默认分类下的子模块的 XZMocoaModule 对象。
+/// @param newSubmodule 子模块的 XZMocoaModule 对象
+/// @param name 名称
+- (void)setSubmodule:(nullable XZMocoaModule *)newSubmodule forName:(nullable XZMocoaName)name;
 
 @end
 
@@ -245,8 +246,12 @@ FOUNDATION_EXPORT XZMocoaKind const XZMocoaKindCell;
 /// - Parameters:
 ///   - sectionName: cell 所在的 section 的 mocoaName
 ///   - cellName: cell 的 mocoaName
-FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName sectionName, XZMocoaName cellName) {
-    return [NSString stringWithFormat:@"%@-%@", sectionName, cellName];
+FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName _Nullable section, XZMocoaKind _Nullable kind, XZMocoaName _Nullable cell) XZATTR_OVERLOAD {
+    return [NSString stringWithFormat:@"%@-%@-%@", section ?: XZMocoaNameNone, kind ?: XZMocoaKindNone, cell ?: XZMocoaNameNone];
+}
+
+FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName section, XZMocoaName cell) XZATTR_OVERLOAD {
+    return [NSString stringWithFormat:@"%@--%@", section, cell];
 }
 
 @interface XZMocoaModuleProvider : NSObject <XZMocoaModuleProvider>

@@ -183,7 +183,7 @@
             [oldSections addIndex:oldSection];
             [oldViewModel removeFromSuperViewModel];
             
-            id const newViewModel = [self createViewModelForSectionAtIndex:idx];
+            id const newViewModel = [self loadViewModelForSectionAtIndex:idx];
             [self insertSectionViewModel:newViewModel atIndex:idx];
         }];
         
@@ -193,7 +193,7 @@
             XZMocoaListitySectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
             [oldViewModel removeFromSuperViewModel];
             
-            XZMocoaListitySectionViewModel *newViewModel = [self createViewModelForSectionAtIndex:section];
+            XZMocoaListitySectionViewModel *newViewModel = [self loadViewModelForSectionAtIndex:section];
             [self insertSectionViewModel:newViewModel atIndex:section];
         }];
         
@@ -210,7 +210,7 @@
     
     // 添加元素，正向遍历：只有前面的元素正确了，后面的才能正确。
     [sections enumerateIndexesUsingBlock:^(NSUInteger section, BOOL * _Nonnull stop) {
-        id const newViewModel = [self createViewModelForSectionAtIndex:section];
+        id const newViewModel = [self loadViewModelForSectionAtIndex:section];
         [self insertSectionViewModel:newViewModel atIndex:section];
     }];
     
@@ -525,7 +525,7 @@
     // 添加元素，正向遍历：按位置记录下新添加的元素，以便在后续排序时，查找该位置上的元素。
     NSMutableDictionary * const insertedViewModels = [NSMutableDictionary dictionaryWithCapacity:inserts.count];
     [inserts enumerateIndexesUsingBlock:^(NSUInteger section, BOOL * _Nonnull stop) {
-        XZMocoaListitySectionViewModel * const newViewModel = [self createViewModelForSectionAtIndex:section];
+        XZMocoaListitySectionViewModel * const newViewModel = [self loadViewModelForSectionAtIndex:section];
         [self insertSectionViewModel:newViewModel atIndex:section];
         insertedViewModels[@(section)] = newViewModel;
     }];
@@ -592,36 +592,23 @@
     NSInteger const count = model.numberOfSectionModels;
     
     for (NSInteger section = 0; section < count; section++) {
-        XZMocoaListitySectionViewModel *viewModel = [self createViewModelForSectionAtIndex:section];
+        XZMocoaListitySectionViewModel *viewModel = [self loadViewModelForSectionAtIndex:section];
         [self addSectionViewModel:viewModel];
     }
 }
 
-/// 创建指定位置上 section 元素，没有添加为子元素。
-- (XZMocoaListitySectionViewModel *)createViewModelForSectionAtIndex:(NSInteger const)index {
-    id viewModel = [self loadSectionViewModelAtIndex:index];
-    if (viewModel == nil) {
-        id const model = [self.model modelForSectionAtIndex:index];
-        viewModel = [[XZMocoaListitySectionViewModel alloc] initWithModel:model];
-    }
-    return viewModel;
-}
-
 #pragma mark - 子类重写
 
-- (XZMocoaListitySectionViewModel *)loadSectionViewModelAtIndex:(NSInteger)index {
-    NSObject<XZMocoaListitySectionModel> * const model = [self.model modelForSectionAtIndex:index];
-    XZMocoaName     const name   = (model.mocoaName ?: XZMocoaNameNone);
-    XZMocoaModule * const module = [self.module submoduleIfLoadedForKind:XZMocoaKindNone forName:name];
+- (XZMocoaListitySectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {
+    id<XZMocoaListitySectionModel> const model = [self.model modelForSectionAtIndex:index];
+    XZMocoaName     const name    = model.mocoaName;
+    XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:name];
+    Class           const VMClass = module.viewModelClass ?: [XZMocoaListitySectionViewModel class];
     
-    XZMocoaListitySectionViewModel * const viewModel = [self loadSectionViewModelWithModule:module model:model];
+    XZMocoaListitySectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
     viewModel.module = module;
     viewModel.index  = index;
     return viewModel;
-}
-
-- (XZMocoaListitySectionViewModel *)loadSectionViewModelWithModule:(XZMocoaModule *)module model:(id)model {
-    @throw [NSException exceptionWithName:NSGenericException reason:@"子类必须重写此方法" userInfo:nil];
 }
 
 #pragma mark - DEBUG

@@ -1,18 +1,15 @@
 //
-//  XZMocoaListitySectionHeaderViewModel.h
+//  XZMocoaListitySectionSupplementaryViewModel.h
 //  XZMocoa
 //
-//  Created by Xezun on 2021/4/1.
-//  Copyright © 2021 Xezun. All rights reserved.
+//  Created by Xezun on 2023/8/9.
 //
 
 #import <XZMocoa/XZMocoaViewModel.h>
-#import <XZMocoa/XZMocoaDefines.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaListitySectionHeaderViewModel : XZMocoaViewModel
-
+@interface XZMocoaListitySectionSupplementaryViewModel : XZMocoaViewModel
 /// 重用标识符。
 @property (nonatomic, copy, XZ_READONLY) NSString *identifier;
 @property (nonatomic) CGRect frame;

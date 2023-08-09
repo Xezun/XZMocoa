@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaCollectionSectionViewModel : XZMocoaListitySectionViewModel<XZMocoaCollectionSectionHeaderViewModel *, XZMocoaCollectionSectionFooterViewModel *, XZMocoaCollectionCellViewModel *>
+@interface XZMocoaCollectionSectionViewModel : XZMocoaListitySectionViewModel<XZMocoaCollectionCellViewModel *>
 
 @end
 

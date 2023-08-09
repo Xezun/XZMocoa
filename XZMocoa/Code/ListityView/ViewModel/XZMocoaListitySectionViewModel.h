@@ -9,19 +9,19 @@
 #import <XZMocoa/XZMocoaViewModel.h>
 #import <XZMocoa/XZMocoaListityBatchUpdatable.h>
 #import <XZMocoa/XZMocoaListitySectionModel.h>
-#import <XZMocoa/XZMocoaListitySectionHeaderViewModel.h>
-#import <XZMocoa/XZMocoaListitySectionFooterViewModel.h>
+#import <XZMocoa/XZMocoaListitySectionSupplementaryViewModel.h>
 #import <XZMocoa/XZMocoaListityCellViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaListitySectionViewModel<__covariant HeaderViewModelType: XZMocoaListitySectionHeaderViewModel *, __covariant FooterViewModelType: XZMocoaListitySectionFooterViewModel *, __covariant CellViewModelType: XZMocoaListityCellViewModel *> : XZMocoaViewModel <XZMocoaListityBatchUpdatable>
+@interface XZMocoaListitySectionViewModel<__covariant CellViewModelType: XZMocoaListityCellViewModel *> : XZMocoaViewModel <XZMocoaListityBatchUpdatable>
 
 @property (nonatomic, strong, readonly, nullable) id<XZMocoaListitySectionModel> model;
 
-@property (nonatomic, strong, readonly, nullable) HeaderViewModelType headerViewModel;
-@property (nonatomic, strong, readonly, nullable) FooterViewModelType footerViewModel;
+//@property (nonatomic, strong, readonly, nullable) HeaderViewModelType headerViewModel;
+//@property (nonatomic, strong, readonly, nullable) FooterViewModelType footerViewModel;
 /// 所有 cell 视图模型。这是一个计算属性，除非遍历所有 cell 对象，请尽量避免直接使用。
+- (nullable __kindof XZMocoaViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 @property (nonatomic, copy, readonly) NSArray<CellViewModelType> *cellViewModels;
 
 /// 返回 YES 表示 header/cell/footer 都没有。
@@ -91,10 +91,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // MARK: 子类必须重写的方法
 
-- (HeaderViewModelType)loadHeaderViewModelWithModule:(nullable XZMocoaModule *)headerModule model:(nullable id)model;
-- (CellViewModelType)loadCellViewModelWithModule:(nullable XZMocoaModule *)cellModule model:(nullable id)model;
-- (FooterViewModelType)loadFooterViewModelWithModule:(nullable XZMocoaModule *)footerModule model:(nullable id)model;
-
+- (CellViewModelType)loadViewModelForCellAtIndex:(NSInteger)index;
+- (nullable __kindof XZMocoaListitySectionSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 @end
 
 /// 整体刷新

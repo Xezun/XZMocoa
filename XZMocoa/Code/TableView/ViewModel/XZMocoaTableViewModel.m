@@ -69,12 +69,16 @@
     [self.delegate tableViewModel:self performBatchUpdates:batchUpdates];
 }
 
-- (XZMocoaListitySectionViewModel *)loadSectionViewModelWithModule:(XZMocoaModule *)sectionModule model:(id)model {
-    Class ViewModel = sectionModule.viewModelClass;
-    if (ViewModel == Nil) {
-        ViewModel = [XZMocoaTableSectionViewModel class];
-    }
-    return [[ViewModel alloc] initWithModel:model];
+- (XZMocoaListitySectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {
+    id<XZMocoaListitySectionModel> const model = [self.model modelForSectionAtIndex:index];
+    XZMocoaName     const name    = model.mocoaName;
+    XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:name];
+    Class           const VMClass = module.viewModelClass ?: [XZMocoaTableSectionViewModel class];
+    
+    XZMocoaListitySectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
+    viewModel.module = module;
+    viewModel.index  = index;
+    return viewModel;
 }
 
 @end

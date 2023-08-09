@@ -21,8 +21,7 @@
 #import <XZMocoa/XZMocoaListityView.h>
 #import <XZMocoa/XZMocoaListityBatchUpdatable.h>
 #import <XZMocoa/XZMocoaListityCellViewModel.h>
-#import <XZMocoa/XZMocoaListitySectionFooterViewModel.h>
-#import <XZMocoa/XZMocoaListitySectionHeaderViewModel.h>
+#import <XZMocoa/XZMocoaListitySectionSupplementaryViewModel.h>
 #import <XZMocoa/XZMocoaListitySectionViewModel.h>
 #import <XZMocoa/XZMocoaListityViewModel.h>
 
@@ -32,11 +31,10 @@
 #import <XZMocoa/XZMocoaTableCellModel.h>
 #import <XZMocoa/XZMocoaTableView.h>
 #import <XZMocoa/XZMocoaTableCell.h>
-#import <XZMocoa/XZMocoaTableSectionFooter.h>
-#import <XZMocoa/XZMocoaTableSectionHeader.h>
+#import <XZMocoa/XZMocoaTableSectionHeaderFooter.h>
+#import <XZMocoa/XZMocoaTableSectionHeaderFooter.h>
 #import <XZMocoa/XZMocoaTableCellViewModel.h>
-#import <XZMocoa/XZMocoaTableSectionFooterViewModel.h>
-#import <XZMocoa/XZMocoaTableSectionHeaderViewModel.h>
+#import <XZMocoa/XZMocoaTableSectionHeaderFooterViewModel.h>
 #import <XZMocoa/XZMocoaTableSectionViewModel.h>
 #import <XZMocoa/XZMocoaTableViewModel.h>
 

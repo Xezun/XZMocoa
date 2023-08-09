@@ -9,8 +9,8 @@
 #import "XZMocoaTableView.h"
 #import "XZMocoaDefines.h"
 #import "XZMocoaTableCell.h"
-#import "XZMocoaTableSectionHeader.h"
-#import "XZMocoaTableSectionFooter.h"
+#import "XZMocoaTableSectionHeaderFooter.h"
+#import "XZMocoaTableSectionHeaderFooter.h"
 
 @interface XZMocoaTableView ()
 @end
@@ -186,17 +186,17 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
+    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
     if (viewModel == nil) {
         return nil;
     }
-    UITableViewHeaderFooterView<XZMocoaTableSectionHeader> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
+    UITableViewHeaderFooterView<XZMocoaTableSectionHeaderFooter> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
     view.viewModel = viewModel;
     return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
+    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
     if (viewModel == nil) {
         return XZMocoaTableViewHeaderFooterHeight;
     }
@@ -204,17 +204,17 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    XZMocoaTableSectionFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
+    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
     if (viewModel == nil) {
         return nil;
     }
-    UITableViewHeaderFooterView<XZMocoaTableSectionFooter> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
+    UITableViewHeaderFooterView<XZMocoaTableSectionHeaderFooter> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
     view.viewModel = viewModel;
     return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    XZMocoaTableSectionFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
+    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
     if (viewModel == nil) {
         return XZMocoaTableViewHeaderFooterHeight;
     }

@@ -7,13 +7,14 @@
 
 #import <XZMocoa/XZMocoaListitySectionViewModel.h>
 #import <XZMocoa/XZMocoaTableCellViewModel.h>
-#import <XZMocoa/XZMocoaTableSectionHeaderViewModel.h>
-#import <XZMocoa/XZMocoaTableSectionFooterViewModel.h>
+#import <XZMocoa/XZMocoaTableSectionHeaderFooterViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaTableSectionViewModel : XZMocoaListitySectionViewModel<XZMocoaTableSectionHeaderViewModel *, XZMocoaTableSectionFooterViewModel *, XZMocoaTableCellViewModel *>
+@interface XZMocoaTableSectionViewModel : XZMocoaListitySectionViewModel<XZMocoaTableCellViewModel *>
 
+@property (nonatomic, readonly, nullable) XZMocoaTableSectionHeaderFooterViewModel *headerViewModel;
+@property (nonatomic, readonly, nullable) XZMocoaTableSectionHeaderFooterViewModel *footerViewModel;
 @property (nonatomic, readonly) CGFloat height;
 
 @end

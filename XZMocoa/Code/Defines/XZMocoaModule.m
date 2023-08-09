@@ -29,12 +29,15 @@ static void XZMocoaPathParser(NSString *path, XZMocoaKind *kind, XZMocoaName *na
 ///   - name: MocoaName
 static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 
+@interface XZMocoaNamedModules : NSObject <XZMocoaNamedModulesSubscripting>
+@end
+
 @interface XZMocoaDomain ()
 @end
 
 @interface XZMocoaModule () {
     /// 懒加载。
-    NSMutableDictionary<XZMocoaKind, id<XZMocoaModulesNamedSubscripting>> *_submodules;
+    NSMutableDictionary<XZMocoaKind, id<XZMocoaNamedModulesSubscripting>> *_submodules;
 }
 @end
 
@@ -116,8 +119,8 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
     [self setViewNibWithClass:viewClass name:NSStringFromClass(viewClass)];
 }
 - (void)enumerateSubmodulesUsingBlock:(void (^NS_NOESCAPE)(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName name, BOOL *stop))block {
-    [_submodules enumerateKeysAndObjectsUsingBlock:^(XZMocoaKind kind, id namedModules, BOOL *stop1) {
-        [(NSDictionary *)namedModules enumerateKeysAndObjectsUsingBlock:^(XZMocoaName name, XZMocoaModule *module, BOOL *stop2) {
+    [_submodules enumerateKeysAndObjectsUsingBlock:^(XZMocoaKind kind, id<XZMocoaNamedModulesSubscripting> namedModules, BOOL *stop1) {
+        [namedModules enumerateKeysAndObjectsUsingBlock:^(XZMocoaName name, XZMocoaModule *module, BOOL *stop2) {
             block(module, kind, name, stop2);
             *stop1 = *stop2;
         }];
@@ -128,14 +131,15 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 #pragma mark - 访问下级的基础方法
 
 - (XZMocoaModule *)submoduleForKind:(XZMocoaKind)kind forName:(XZMocoaName)name {
-    NSParameterAssert(kind && name);
+    if (kind == nil) kind = XZMocoaKindNone;
+    if (name == nil) name = XZMocoaNameNone;
     if (_submodules == nil) {
         _submodules = [NSMutableDictionary dictionary];
     }
     
-    id<XZMocoaModulesNamedSubscripting> namedModules = _submodules[kind];
+    id<XZMocoaNamedModulesSubscripting> namedModules = _submodules[kind];
     if (namedModules == nil) {
-        namedModules = (id)[NSMutableDictionary dictionary];
+        namedModules = [[XZMocoaNamedModules alloc] init];
         _submodules[kind] = namedModules;
     }
     XZMocoaModule *submodule = namedModules[name];
@@ -150,59 +154,65 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
     return submodule;
 }
 
-- (XZMocoaModule *)submoduleForName:(XZMocoaName)name {
-    return [self submoduleForKind:XZMocoaKindNone forName:name];
-}
-
 - (void)setSubmodule:(XZMocoaModule *)newSubmodule forKind:(XZMocoaKind)kind forName:(XZMocoaName)name {
+    if (kind == nil) kind = XZMocoaKindNone;
+    if (name == nil) name = XZMocoaNameNone;
     if (newSubmodule == nil) {
         if (_submodules == nil) {
             return;
         }
-        id<XZMocoaModulesNamedSubscripting> namedModules = _submodules[kind];
+        id<XZMocoaNamedModulesSubscripting> namedModules = _submodules[kind];
         if (namedModules == nil) {
             return;
         }
         namedModules[name] = nil;
     } else if (_submodules == nil) {
         _submodules = [NSMutableDictionary dictionary];
-        id<XZMocoaModulesNamedSubscripting> namedModules = (id)[NSMutableDictionary dictionary];
+        XZMocoaNamedModules *namedModules = [[XZMocoaNamedModules alloc] init];
         _submodules[kind] = namedModules;
         namedModules[name] = newSubmodule;
     } else {
-        id<XZMocoaModulesNamedSubscripting> namedModules = _submodules[kind];
+        id<XZMocoaNamedModulesSubscripting> namedModules = _submodules[kind];
         if (namedModules == nil) {
-            namedModules = (id)[NSMutableDictionary dictionary];
+            namedModules = [[XZMocoaNamedModules alloc] init];
             _submodules[kind] = namedModules;
         }
         namedModules[name] = newSubmodule;
     }
 }
 
-- (void)setSubmodule:(XZMocoaModule *)newSubmodule forName:(XZMocoaName)name {
-    [self setSubmodule:newSubmodule forKind:XZMocoaKindNone forName:name];
+- (XZMocoaModule *)submoduleIfLoadedForKind:(XZMocoaKind)kind forName:(XZMocoaName)name {
+    if (kind == nil) kind = XZMocoaKindNone;
+    if (name == nil) kind = XZMocoaNameNone;
+    return _submodules[kind][name];
 }
 
-- (XZMocoaModule *)submoduleIfLoadedForKind:(XZMocoaKind)kind forName:(XZMocoaName)name {
-    return _submodules[kind][name];
+- (XZMocoaModule *)submoduleForName:(XZMocoaName)name {
+    return [self submoduleForKind:XZMocoaKindNone forName:name];
+}
+
+- (void)setSubmodule:(XZMocoaModule *)newSubmodule forName:(XZMocoaName)name {
+    [self setSubmodule:newSubmodule forKind:XZMocoaKindNone forName:name];
 }
 
 
 #pragma mark - 下标存储方法
 
-- (id<XZMocoaModulesNamedSubscripting>)objectForKeyedSubscript:(XZMocoaKind)kind {
+- (id<XZMocoaNamedModulesSubscripting>)objectForKeyedSubscript:(XZMocoaKind)kind {
+    if (kind == nil) kind = XZMocoaKindNone;
     if (_submodules == nil) {
         _submodules = [NSMutableDictionary dictionary];
     }
-    id<XZMocoaModulesNamedSubscripting> namedModules = _submodules[kind];
+    id<XZMocoaNamedModulesSubscripting> namedModules = _submodules[kind];
     if (namedModules == nil) {
-        namedModules = (id)[NSMutableDictionary dictionary];
+        namedModules = [[XZMocoaNamedModules alloc] init];
         _submodules[kind] = namedModules;
     }
     return namedModules;
 }
 
-- (void)setObject:(id<XZMocoaModulesNamedSubscripting>)newNamedModules forKeyedSubscript:(XZMocoaKind)kind {
+- (void)setObject:(id<XZMocoaNamedModulesSubscripting>)newNamedModules forKeyedSubscript:(XZMocoaKind)kind {
+    if (kind == nil) kind = XZMocoaKindNone;
     if (newNamedModules == nil) {
         if (_submodules == nil) {
             return;
@@ -378,3 +388,32 @@ static void XZMocoaPathParser(NSString *path, XZMocoaKind *kind, XZMocoaName *na
 static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name) {
     return (kind.length ? [NSString stringWithFormat:@"%@:%@", kind, name] : (name.length ? name : @":"));
 }
+
+
+@implementation XZMocoaNamedModules {
+    NSMutableDictionary *_dict;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _dict = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
+- (XZMocoaModule *)objectForKeyedSubscript:(XZMocoaName)name {
+    if (name == nil) name = XZMocoaNameNone;
+    return _dict[name];
+}
+
+- (void)setObject:(XZMocoaModule *)submodule forKeyedSubscript:(XZMocoaName)name {
+    if (name == nil) name = XZMocoaNameNone;
+    _dict[name] = submodule;
+}
+
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^NS_NOESCAPE)(XZMocoaName _Nonnull, XZMocoaModule * _Nonnull, BOOL * _Nonnull))block {
+    [_dict enumerateKeysAndObjectsUsingBlock:block];
+}
+
+@end

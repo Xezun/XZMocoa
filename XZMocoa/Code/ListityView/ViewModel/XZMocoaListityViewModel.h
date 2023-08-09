@@ -91,9 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 // MARK: 子类必须重写的方法
 
 /// 子类应该重写此方法，并返回所需的 SectionViewModel 对象。
-/// @param sectionModule section 模块对象
-/// @param model section 数据
-- (SectionViewModelType)loadSectionViewModelWithModule:(nullable XZMocoaModule *)sectionModule model:(nullable id)model;
+- (SectionViewModelType)loadViewModelForSectionAtIndex:(NSInteger)index;
 
 @end
 

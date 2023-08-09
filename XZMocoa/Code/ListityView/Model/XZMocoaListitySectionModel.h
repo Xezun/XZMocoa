@@ -13,18 +13,22 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol XZMocoaListitySectionModel <XZMocoaModel>
 
 @optional
-/// header 数据，nil 表示无 header 视图。
-@property (nonatomic, readonly, nullable) id headerModel;
-
-/// footer 数据，nil 表示无 footer 视图。
-@property (nonatomic, readonly, nullable) id footerModel;
-
-/// Cell 的数量。
+/// cell 数量。
 @property (nonatomic, readonly) NSInteger numberOfCellModels;
-
-/// Cell 的数据。
-/// @param index Cell 的位置
+/// cell 数据。
+/// @param index 在 section 中 cell 的位置
 - (nullable id)modelForCellAtIndex:(NSInteger)index;
+
+/// 附加视图的类型，默认 XZMocoaKindHeader、XZMocoaKindFooter 两种。
+@property (nonatomic, readonly) NSArray<XZMocoaKind> *supplementaryKinds;
+/// 附加视图的数量，默认1。
+/// - Parameter kind: 附加视图的类型
+- (NSInteger)numberOfModelsForSupplementaryKind:(XZMocoaKind)kind;
+/// 附加视图的数据。
+/// - Parameters:
+///   - kind: 附加视图的类型
+///   - index: 附加视图的位置
+- (nullable id)modelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 
 @end
 

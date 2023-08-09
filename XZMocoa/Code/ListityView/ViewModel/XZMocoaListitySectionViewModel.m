@@ -25,6 +25,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     BOOL _needsDifferenceBatchUpdates;
     /// 记录 cell 视图模型的数组。
     NSMutableOrderedSet<XZMocoaListityCellViewModel *> *_cellViewModels;
+    NSMutableDictionary<XZMocoaKind, NSMutableArray<XZMocoaViewModel *> *> *_supplementaryViewModels;
 }
 @end
 
@@ -37,6 +38,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     if (self) {
         _isPerformingBatchUpdates = nil;
         _cellViewModels           = [NSMutableOrderedSet orderedSet];
+        _supplementaryViewModels  = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -47,23 +49,38 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
 }
 
 - (void)didRemoveSubViewModel:(__kindof XZMocoaViewModel *)viewModel {
-    if (viewModel == _headerViewModel) {
-        _headerViewModel = nil;
-    } else if (viewModel == _footerViewModel) {
-        _footerViewModel = nil;
-    } else {
-        [_cellViewModels removeObject:viewModel];
+    for (XZMocoaKind kind in _supplementaryViewModels) {
+        NSMutableArray * const viewModels = _supplementaryViewModels[kind];
+        NSInteger        const count      = viewModels.count;
+        if (count == 1) {
+            if (viewModels.firstObject == viewModel) {
+                _supplementaryViewModels[kind] = nil;
+                return;
+            }
+        } else {
+            for (NSInteger index = 0; index < count; index++) {
+                if (viewModels[index] == viewModel) {
+                    [viewModels removeObjectAtIndex:index];
+                    return;
+                }
+            }
+        }
     }
+    [_cellViewModels removeObject:viewModel];
 }
 
 #pragma mark - 公开方法
 
 - (BOOL)isEmpty {
-    return _headerViewModel == nil && _footerViewModel == nil && _cellViewModels.count == 0;
+    return _supplementaryViewModels.count == 0 && _cellViewModels.count == 0;
 }
 
 - (NSArray *)cellViewModels {
     return _cellViewModels.array;
+}
+
+- (XZMocoaViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+    return _supplementaryViewModels[kind][index];
 }
 
 - (NSInteger)numberOfCells {
@@ -78,31 +95,26 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     return [_cellViewModels indexOfObject:cellModel];
 }
 
-- (void)setIndex:(NSInteger)index {
-    [super setIndex:index];
-    self.headerViewModel.index = index;
-    self.headerViewModel.index = index;
-}
-
 #pragma mark - 局部更新
 
 - (void)reloadData {
     _needsDifferenceBatchUpdates = NO;
     
     { // 清理旧数据
-        XZMocoaViewModel * const headerViewModel = _headerViewModel;
-        NSOrderedSet     * const cellViewModels  = _cellViewModels.copy;
-        XZMocoaViewModel * const footerViewModel = _footerViewModel;
+        NSMutableDictionary * const supplementaryViewModels = _supplementaryViewModels.copy;
+        NSOrderedSet        * const cellViewModels          = _cellViewModels.copy;
         
-        _headerViewModel = nil;
+        [_supplementaryViewModels removeAllObjects];
         [_cellViewModels removeAllObjects];
-        _footerViewModel = nil;
         
-        [headerViewModel removeFromSuperViewModel];
+        [supplementaryViewModels enumerateKeysAndObjectsUsingBlock:^(id key, NSMutableArray *obj, BOOL *stop) {
+            [obj enumerateObjectsUsingBlock:^(XZMocoaViewModel *viewModel, NSUInteger idx, BOOL * _Nonnull stop) {
+                [viewModel removeFromSuperViewModel];
+            }];
+        }];
         for (XZMocoaViewModel *viewModel in cellViewModels) {
             [viewModel removeFromSuperViewModel];
         }
-        [footerViewModel removeFromSuperViewModel];
     }
     // 加载新数据
     [self loadDataWithoutEvents];
@@ -130,7 +142,6 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
         return;
     }
     
-    id const model = self.model;
     if (self.isPerformingBatchUpdates) {
         NSMutableIndexSet * const oldRows = [NSMutableIndexSet indexSet];
         [rows enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
@@ -139,7 +150,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
             [oldRows addIndex:oldRow];
             [oldViewModel removeFromSuperViewModel];
             
-            id const newViewModel = [self createCellViewModelWithSectionModel:model forIndex:row];
+            id const newViewModel = [self loadViewModelForCellAtIndex:row];
             [self insertCellViewModel:newViewModel atIndex:row];
         }];
         [self didReloadCellsAtIndexes:oldRows];
@@ -148,7 +159,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
             XZMocoaListityCellViewModel * const oldViewModel = _cellViewModels[row];
             [oldViewModel removeFromSuperViewModel]; // 由 -didRemoveSubViewModel: 执行清理
             
-            id const newViewModel = [self createCellViewModelWithSectionModel:model forIndex:row];
+            id const newViewModel = [self loadViewModelForCellAtIndex:row];
             [self insertCellViewModel:newViewModel atIndex:row];
         }];
         [self didReloadCellsAtIndexes:rows];
@@ -162,9 +173,8 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
         return;
     }
     
-    id const model = self.model;
     [rows enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-        id const newViewModel = [self createCellViewModelWithSectionModel:model forIndex:row];
+        id const newViewModel = [self loadViewModelForCellAtIndex:row];
         [self insertCellViewModel:newViewModel atIndex:row];
     }];
     
@@ -335,17 +345,17 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     id<XZMocoaListitySectionModel> const model = self.model;
     
     BOOL needsUpdateAll = NO;
-    
-    id const oldHeader = self.headerViewModel.model;
-    id const newHeader = model.headerModel;
-    if (!(oldHeader == newHeader || [oldHeader isEqual:newHeader])) {
-        needsUpdateAll = YES;
-    }
-    
-    id const oldFooter = self.footerViewModel.model;
-    id const newFooter = model.footerModel;
-    if (!(oldFooter == newFooter || [oldFooter isEqual:newFooter])) {
-        needsUpdateAll = YES;
+    for (XZMocoaKind const kind in model.supplementaryKinds) {
+        NSInteger const count = [model numberOfModelsForSupplementaryKind:kind];
+        for (NSInteger index = 0; index < count; index++) {
+            id newModel = [model modelForSupplementaryKind:kind atIndex:index];
+            id oldModel = _supplementaryViewModels[kind][index].model;
+            if (!(newModel == oldModel || [newModel isEqual:oldModel])) {
+                needsUpdateAll = YES;
+                break;
+            }
+        }
+        if (needsUpdateAll) break;
     }
     
     NSInteger      const oldCount      = self.numberOfCells;
@@ -400,7 +410,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     }];
     
     [inserts enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-        XZMocoaListityCellViewModel * const newViewModel = [self createCellViewModelWithSectionModel:model forIndex:row];
+        XZMocoaListityCellViewModel * const newViewModel = [self loadViewModelForCellAtIndex:row];
         [self insertCellViewModel:newViewModel atIndex:row];
     }];
     
@@ -469,67 +479,30 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
 }
 
 - (void)loadDataWithoutEvents {
-    NSAssert(_headerViewModel == nil && _cellViewModels.count == 0 && _footerViewModel == nil, @"调用此方法前要清除现有的数据");
+    NSAssert(_supplementaryViewModels.count == 0 && _cellViewModels.count == 0, @"调用此方法前要清除现有的数据");
     
     id<XZMocoaListitySectionModel> const model = self.model;
     
-    if (model.headerModel != nil) {
-        _headerViewModel = [self createHeaderViewModelWithSectionModel:model];
-        [self addSubViewModel:_headerViewModel];
+    for (XZMocoaKind kind in model.supplementaryKinds) {
+        NSInteger const count = [model numberOfModelsForSupplementaryKind:kind];
+        for (NSInteger index = 0; index < count; index++) {
+            XZMocoaListitySectionSupplementaryViewModel *vm = [self loadViewModelForSupplementaryKind:kind atIndex:index];
+            if (vm) {
+                if (_supplementaryViewModels[kind]) {
+                    [_supplementaryViewModels[kind] addObject:vm];
+                } else {
+                    _supplementaryViewModels[kind] = [NSMutableArray arrayWithObject:vm];
+                }
+                [self addSubViewModel:vm];
+            }
+        }
     }
     
     NSInteger const count = model.numberOfCellModels;
-    for (NSInteger row = 0; row < count; row++) {
-        XZMocoaListityCellViewModel *viewModel = [self createCellViewModelWithSectionModel:model forIndex:row];
+    for (NSInteger index = 0; index < count; index++) {
+        XZMocoaListityCellViewModel *viewModel = [self loadViewModelForCellAtIndex:index];
         [self addCellViewModel:viewModel];
     }
-    
-    if (model.footerModel != nil) {
-        _footerViewModel = [self createFooterViewModelWithSectionModel:model];
-        [self addSubViewModel:_footerViewModel];
-    }
-}
-
-- (XZMocoaListitySectionHeaderViewModel *)createHeaderViewModelWithSectionModel:(id<XZMocoaListitySectionModel>)sectionModel {
-    id<XZMocoaModel> const model     = sectionModel.headerModel;
-    XZMocoaName      const name      = model.mocoaName ?: XZMocoaNameNone;
-    XZMocoaModule  * const module    = [self.module headerForName:name];
-    
-    XZMocoaListitySectionHeaderViewModel * const viewModel = [self loadHeaderViewModelWithModule:module model:model];
-    if (viewModel) {
-        viewModel.module     = module;
-        viewModel.index      = self.index;
-        viewModel.identifier = XZMocoaReuseIdentifier(sectionModel.mocoaName ?: XZMocoaNameNone, name);
-    }
-    return viewModel;
-}
-
-- (XZMocoaListityCellViewModel *)createCellViewModelWithSectionModel:(id<XZMocoaListitySectionModel>)sectionModel forIndex:(NSInteger)index {
-    id<XZMocoaModel> const model     = [sectionModel modelForCellAtIndex:index];
-    XZMocoaName      const name      = (model.mocoaName ?: XZMocoaNameNone);
-    XZMocoaModule *  const module    = [self.module submoduleIfLoadedForKind:XZMocoaKindCell forName:name];
-
-    XZMocoaListityCellViewModel * const viewModel = [self loadCellViewModelWithModule:module model:model];
-    if (viewModel) {
-        viewModel.module     = module;
-        viewModel.index      = index;
-        viewModel.identifier = XZMocoaReuseIdentifier(sectionModel.mocoaName ?: XZMocoaNameNone, name);
-    }
-    return viewModel;
-}
-
-- (XZMocoaListitySectionFooterViewModel *)createFooterViewModelWithSectionModel:(id<XZMocoaListitySectionModel>)sectionModel {
-    id<XZMocoaModel> const model  = sectionModel.footerModel;
-    XZMocoaName      const name   = model.mocoaName ?: XZMocoaNameNone;
-    XZMocoaModule  * const module = [self.module footerForName:name];
-    
-    XZMocoaListitySectionFooterViewModel * const viewModel = [self loadFooterViewModelWithModule:module model:model];
-    if (viewModel) {
-        viewModel.module     = module;
-        viewModel.index      = self.index;
-        viewModel.identifier = XZMocoaReuseIdentifier(sectionModel.mocoaName ?: XZMocoaNameNone, name);
-    }
-    return viewModel;
 }
 
 #if DEBUG
@@ -547,16 +520,35 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
 }
 #endif
 
-- (XZMocoaListitySectionHeaderViewModel *)loadHeaderViewModelWithModule:(XZMocoaModule *)headerModule model:(id)model {
-    @throw [NSException exceptionWithName:NSGenericException reason:@"子类必须重写此方法" userInfo:nil];
+#pragma mark - 子类重写
+
+- (XZMocoaListityCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
+    id<XZMocoaModel> const model   = [self.model modelForCellAtIndex:index];
+    XZMocoaName      const name    = model.mocoaName;
+    XZMocoaModule *  const module  = [self.module cellForName:name];
+    Class            const VMClass = module.viewModelClass ?: [XZMocoaListityCellViewModel class];
+    
+    XZMocoaListityCellViewModel *vm = [[VMClass alloc] initWithModel:model];
+    vm.index      = index;
+    vm.module     = module;
+    vm.identifier = XZMocoaReuseIdentifier(self.model.mocoaName, XZMocoaKindCell, name);
+    return vm;
 }
 
-- (XZMocoaListityCellViewModel *)loadCellViewModelWithModule:(XZMocoaModule *)cellModule model:(id)model {
-    @throw [NSException exceptionWithName:NSGenericException reason:@"子类必须重写此方法" userInfo:nil];
-}
-
-- (XZMocoaListitySectionFooterViewModel *)loadFooterViewModelWithModule:(XZMocoaModule *)footerModule model:(id)model {
-    @throw [NSException exceptionWithName:NSGenericException reason:@"子类必须重写此方法" userInfo:nil];
+- (XZMocoaListitySectionSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+    id<XZMocoaModel> model = [self.model modelForSupplementaryKind:kind atIndex:index];
+    if (model == nil) {
+        return nil;
+    }
+    XZMocoaName     const name    = model.mocoaName;
+    XZMocoaModule * const module  = [self.module submoduleForKind:kind forName:name];
+    Class           const VMClass = module.viewModelClass ?: [XZMocoaListitySectionSupplementaryViewModel class];
+    
+    XZMocoaListitySectionSupplementaryViewModel *vm = [[VMClass alloc] initWithModel:model];
+    vm.index      = index;
+    vm.module     = module;
+    vm.identifier = XZMocoaReuseIdentifier(self.model.mocoaName, kind, name);
+    return vm;
 }
 
 @end

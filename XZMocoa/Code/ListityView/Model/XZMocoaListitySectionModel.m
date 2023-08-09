@@ -12,20 +12,24 @@
 
 @implementation NSObject (XZMocoaListitySectionModel)
 
-- (id)headerModel {
-    return nil;
-}
-
-- (id)footerModel {
-    return nil;
-}
-
 - (NSInteger)numberOfCellModels {
     return 1;
 }
 
 - (id)modelForCellAtIndex:(NSInteger)index {
     return self;
+}
+
+- (NSArray<XZMocoaKind> *)supplementaryKinds {
+    return @[XZMocoaKindHeader, XZMocoaKindFooter];
+}
+
+- (NSInteger)numberOfModelsForSupplementaryKind:(XZMocoaKind)kind {
+    return 1;
+}
+
+- (id)modelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+    return nil;
 }
 
 @end

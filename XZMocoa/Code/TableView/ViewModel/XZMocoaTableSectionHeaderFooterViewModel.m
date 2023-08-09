@@ -1,13 +1,14 @@
 //
-//  XZMocoaTableSectionHeaderViewModel.m
+//  XZMocoaTableSectionHeaderFooterViewModel.m
 //  XZMocoa
 //
-//  Created by Xezun on 2023/7/22.
+//  Created by Xezun on 2023/8/9.
 //
 
-#import "XZMocoaTableSectionHeaderViewModel.h"
+#import "XZMocoaTableSectionHeaderFooterViewModel.h"
 
-@implementation XZMocoaTableSectionHeaderViewModel
+@implementation XZMocoaTableSectionHeaderFooterViewModel
+
 - (CGFloat)height {
     return self.frame.size.height;
 }
@@ -23,6 +24,7 @@
 }
 
 - (void)heightDidChange {
-    [self emit:XZMocoaEmitNone value:nil];
+//    [self emit:XZMocoaEmitNone value:nil];
 }
+
 @end

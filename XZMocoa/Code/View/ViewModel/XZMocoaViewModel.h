@@ -13,8 +13,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol XZMocoaView;
-
 /// 视图模型 ViewModel 基类。
 /// @discussion 本基类为简化开发而提供，并非 module 必须，可选。
 /// @discussion 为视图模型提供了`ready`机制、层级关系等基础功能。

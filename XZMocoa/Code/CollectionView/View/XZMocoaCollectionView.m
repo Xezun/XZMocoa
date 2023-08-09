@@ -164,31 +164,41 @@
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    XZMocoaCollectionSectionViewModel *viewModel = [self.viewModel sectionViewModelAtIndex:indexPath.section];
+    XZMocoaCollectionSectionViewModel *section = [self.viewModel sectionViewModelAtIndex:indexPath.section];
+    
+    XZMocoaKind mocoaKind = kind;
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        XZMocoaCollectionSectionHeaderViewModel *vm = viewModel.headerViewModel;
-        [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:vm.identifier forIndexPath:indexPath];
+        mocoaKind = XZMocoaKindHeader;
+    } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        mocoaKind = XZMocoaKindFooter;
     }
-    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-        
+    
+    XZMocoaListitySectionSupplementaryViewModel *vm = [section viewModelForSupplementaryKind:mocoaKind atIndex:indexPath.item];
+    if (vm == nil) {
+        return nil;
     }
+    UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:vm.identifier forIndexPath:indexPath];
+    return view;
 }
 
+// TODO: Not IMP
+
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    return NO;
 }
+
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath {
     
 }
 
 - (nullable NSArray<NSString *> *)indexTitlesForCollectionView:(UICollectionView *)collectionView {
-    
+    return nil;
 }
 
 /// Returns the index path that corresponds to the given title / index. (e.g. "B",1)
 /// Return an index path with a single index to indicate an entire section, instead of a specific item.
 - (NSIndexPath *)collectionView:(UICollectionView *)collectionView indexPathForIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    
+    return nil;
 }
 
 @end
