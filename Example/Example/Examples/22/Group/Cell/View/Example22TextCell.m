@@ -1,19 +1,17 @@
 //
-//  Example21ContactCell.m
+//  Example22TextCell.m
 //  Example
 //
-//  Created by Xezun on 2021/4/13.
-//  Copyright © 2021 Xezun. All rights reserved.
+//  Created by Xezun on 2023/8/9.
 //
 
-#import "Example21ContactCell.h"
+#import "Example22TextCell.h"
 
-@implementation Example21ContactCell
-
+@implementation Example22TextCell
 @dynamic viewModel;
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/21/").section.cell.viewNibClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/22/").section.cell.viewNibClass = self;
 }
 
 - (void)viewModelWillChange {
@@ -25,12 +23,12 @@
     [self.viewModel addTarget:self action:@selector(phoneDidChange:) forKeyEvents:@"phone"];
 }
 
-- (void)nameDidChange:(Example21ContactCellViewModel *)viewModel {
+- (void)nameDidChange:(Example22TextViewModel *)viewModel {
     XZLog(@"old: %@, new: %@", self.textLabel.text, viewModel.name);
     self.textLabel.text = viewModel.name;
 }
 
-- (void)phoneDidChange:(Example21ContactCellViewModel *)viewModel {
+- (void)phoneDidChange:(Example22TextViewModel *)viewModel {
     XZLog(@"old: %@, new: %@", self.detailTextLabel.text, viewModel.phone);
     self.detailTextLabel.text = viewModel.phone;
 }

@@ -67,6 +67,13 @@
 		29B3EBCB2A7898B50008E65B /* Example21ContactEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */; };
 		29FBDA172A8120A9006BBB66 /* Example20Model.json in Resources */ = {isa = PBXBuildFile; fileRef = 29FBDA162A8120A9006BBB66 /* Example20Model.json */; };
 		29FBDA432A82482A006BBB66 /* Example21ContactEditorInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA422A82482A006BBB66 /* Example21ContactEditorInputView.m */; };
+		29FBDA792A83A09F006BBB66 /* Example22ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA772A83A09F006BBB66 /* Example22ViewController.m */; };
+		29FBDA7A2A83A09F006BBB66 /* Example22ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29FBDA782A83A09F006BBB66 /* Example22ViewController.xib */; };
+		29FBDA7D2A83A122006BBB66 /* Example22ViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA7C2A83A122006BBB66 /* Example22ViewModel.m */; };
+		29FBDA862A83A905006BBB66 /* Example22TextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA842A83A905006BBB66 /* Example22TextCell.m */; };
+		29FBDA872A83A905006BBB66 /* Example22TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29FBDA852A83A905006BBB66 /* Example22TextCell.xib */; };
+		29FBDA8A2A83A93A006BBB66 /* Example22TextViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA892A83A93A006BBB66 /* Example22TextViewModel.m */; };
+		29FBDA902A83A9FD006BBB66 /* Example22TextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA8F2A83A9FD006BBB66 /* Example22TextModel.m */; };
 		52BED4A2CAA8869D88AE24B6 /* Pods_ExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08675C782301AD7500A5B3F1 /* Pods_ExampleUITests.framework */; };
 		BFB5FD01E6FBCBD3A6654D14 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE993E3923446CDF5614926 /* Pods_Example.framework */; };
 		F64ED86FA7B0E4C7AFB6F803 /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */; };
@@ -198,6 +205,18 @@
 		29FBDA162A8120A9006BBB66 /* Example20Model.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Example20Model.json; sourceTree = "<group>"; };
 		29FBDA412A82482A006BBB66 /* Example21ContactEditorInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditorInputView.h; sourceTree = "<group>"; };
 		29FBDA422A82482A006BBB66 /* Example21ContactEditorInputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example21ContactEditorInputView.m; sourceTree = "<group>"; };
+		29FBDA762A83A09F006BBB66 /* Example22ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example22ViewController.h; sourceTree = "<group>"; };
+		29FBDA772A83A09F006BBB66 /* Example22ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example22ViewController.m; sourceTree = "<group>"; };
+		29FBDA782A83A09F006BBB66 /* Example22ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example22ViewController.xib; sourceTree = "<group>"; };
+		29FBDA7B2A83A122006BBB66 /* Example22ViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example22ViewModel.h; sourceTree = "<group>"; };
+		29FBDA7C2A83A122006BBB66 /* Example22ViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example22ViewModel.m; sourceTree = "<group>"; };
+		29FBDA832A83A905006BBB66 /* Example22TextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example22TextCell.h; sourceTree = "<group>"; };
+		29FBDA842A83A905006BBB66 /* Example22TextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example22TextCell.m; sourceTree = "<group>"; };
+		29FBDA852A83A905006BBB66 /* Example22TextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example22TextCell.xib; sourceTree = "<group>"; };
+		29FBDA882A83A93A006BBB66 /* Example22TextViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example22TextViewModel.h; sourceTree = "<group>"; };
+		29FBDA892A83A93A006BBB66 /* Example22TextViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example22TextViewModel.m; sourceTree = "<group>"; };
+		29FBDA8E2A83A9FD006BBB66 /* Example22TextModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example22TextModel.h; sourceTree = "<group>"; };
+		29FBDA8F2A83A9FD006BBB66 /* Example22TextModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example22TextModel.m; sourceTree = "<group>"; };
 		62B24EDB69DD5EA24EEE5DE8 /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D4E050FD770A1772594BB4 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -344,6 +363,7 @@
 				29914EE72A6D0A5800D0ACF3 /* 11 */,
 				29914F082A6D6A6E00D0ACF3 /* 20 */,
 				29B3EB992A7898B50008E65B /* 21 */,
+				29FBDA6C2A83A048006BBB66 /* 22 */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -773,6 +793,97 @@
 			path = Contact;
 			sourceTree = "<group>";
 		};
+		29FBDA6C2A83A048006BBB66 /* 22 */ = {
+			isa = PBXGroup;
+			children = (
+				29FBDA6D2A83A053006BBB66 /* Page */,
+				29FBDA822A83A717006BBB66 /* Group */,
+			);
+			path = 22;
+			sourceTree = "<group>";
+		};
+		29FBDA6D2A83A053006BBB66 /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				29FBDA702A83A066006BBB66 /* ViewModel */,
+				29FBDA6F2A83A061006BBB66 /* View */,
+				29FBDA6E2A83A059006BBB66 /* Model */,
+			);
+			path = Page;
+			sourceTree = "<group>";
+		};
+		29FBDA6E2A83A059006BBB66 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29FBDA6F2A83A061006BBB66 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29FBDA762A83A09F006BBB66 /* Example22ViewController.h */,
+				29FBDA772A83A09F006BBB66 /* Example22ViewController.m */,
+				29FBDA782A83A09F006BBB66 /* Example22ViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29FBDA702A83A066006BBB66 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29FBDA7B2A83A122006BBB66 /* Example22ViewModel.h */,
+				29FBDA7C2A83A122006BBB66 /* Example22ViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29FBDA7E2A83A6D2006BBB66 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				29FBDA812A83A6F7006BBB66 /* ViewModel */,
+				29FBDA802A83A6F2006BBB66 /* View */,
+				29FBDA7F2A83A6ED006BBB66 /* Model */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		29FBDA7F2A83A6ED006BBB66 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29FBDA8E2A83A9FD006BBB66 /* Example22TextModel.h */,
+				29FBDA8F2A83A9FD006BBB66 /* Example22TextModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29FBDA802A83A6F2006BBB66 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29FBDA832A83A905006BBB66 /* Example22TextCell.h */,
+				29FBDA842A83A905006BBB66 /* Example22TextCell.m */,
+				29FBDA852A83A905006BBB66 /* Example22TextCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29FBDA812A83A6F7006BBB66 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29FBDA882A83A93A006BBB66 /* Example22TextViewModel.h */,
+				29FBDA892A83A93A006BBB66 /* Example22TextViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29FBDA822A83A717006BBB66 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				29FBDA7E2A83A6D2006BBB66 /* Cell */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
 		B149C6D6F9B43AED217D8F4E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -916,6 +1027,8 @@
 				29914EB22A6CE3D800D0ACF3 /* Assets.xcassets in Resources */,
 				29914EFD2A6D115100D0ACF3 /* Example10ContactView.xib in Resources */,
 				29914EB02A6CE3D700D0ACF3 /* Main.storyboard in Resources */,
+				29FBDA7A2A83A09F006BBB66 /* Example22ViewController.xib in Resources */,
+				29FBDA872A83A905006BBB66 /* Example22TextCell.xib in Resources */,
 				29391AC52A74F821009E49C7 /* Example20ContentViewController.xib in Resources */,
 				29914F0D2A6D6ABB00D0ACF3 /* Example20ViewController.xib in Resources */,
 			);
@@ -1031,7 +1144,10 @@
 				29914EFB2A6D0FBA00D0ACF3 /* Example10ContactViewModel.m in Sources */,
 				2996C8892A72142700A77E2F /* Example20Group102CellViewModel.m in Sources */,
 				29914EEB2A6D0E3A00D0ACF3 /* Example10ViewController.m in Sources */,
+				29FBDA792A83A09F006BBB66 /* Example22ViewController.m in Sources */,
 				29B3EBCB2A7898B50008E65B /* Example21ContactEditor.m in Sources */,
+				29FBDA902A83A9FD006BBB66 /* Example22TextModel.m in Sources */,
+				29FBDA7D2A83A122006BBB66 /* Example22ViewModel.m in Sources */,
 				29B3EBCA2A7898B50008E65B /* Example21ContactEditorViewModel.m in Sources */,
 				29B3EBC72A7898B50008E65B /* Example21Contact.m in Sources */,
 				29914F152A6D6D8800D0ACF3 /* Example20ViewModel.m in Sources */,
@@ -1039,12 +1155,14 @@
 				2996C8972A72149A00A77E2F /* Example20Group100CellModel.m in Sources */,
 				29914F012A6D2BC200D0ACF3 /* Example11ViewController.m in Sources */,
 				2996C8A22A7219B300A77E2F /* Example20Group101SectionModel.m in Sources */,
+				29FBDA862A83A905006BBB66 /* Example22TextCell.m in Sources */,
 				29914EF22A6D0F5C00D0ACF3 /* Example10ContactView.m in Sources */,
 				2996C87B2A72110E00A77E2F /* Example20Group102Cell.m in Sources */,
 				2996C8A82A721C7F00A77E2F /* Example20Model.m in Sources */,
 				29B3EBC32A7898B50008E65B /* Example21ContactBookViewController.m in Sources */,
 				2996C8942A72148C00A77E2F /* Example20Group100SectionModel.m in Sources */,
 				29391AC42A74F821009E49C7 /* Example20ContentViewController.m in Sources */,
+				29FBDA8A2A83A93A006BBB66 /* Example22TextViewModel.m in Sources */,
 				2996C88D2A72145C00A77E2F /* Example20Group102SectionModel.m in Sources */,
 				29914EE32A6CED7200D0ACF3 /* Example11ViewModel.m in Sources */,
 				298480B92A6FC36400757DBB /* Example10RootView.m in Sources */,
