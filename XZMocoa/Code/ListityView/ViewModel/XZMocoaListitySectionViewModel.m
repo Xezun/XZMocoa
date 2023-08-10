@@ -14,14 +14,13 @@
 @interface XZMocoaListitySectionViewModel () {
     /// 非 nil 时，表示当前正在批量更新。
     NSOrderedSet *_isPerformingBatchUpdates;
+    NSMutableArray<void (^)(XZMocoaListitySectionViewModel *self)> *_delayedBatchUpdates;
     /// 是否需要执行批量更新的差异分析。
     /// @note 在批量更新时，任一更新操作被调用，都会标记此值为 NO
     BOOL _needsDifferenceBatchUpdates;
     /// 记录 cell 视图模型的数组。
     NSMutableOrderedSet<XZMocoaListityCellViewModel *> *_cellViewModels;
     NSMutableDictionary<XZMocoaKind, NSMutableArray<XZMocoaViewModel *> *> *_supplementaryViewModels;
-    //
-    NSMutableArray<void (^)(XZMocoaListitySectionViewModel *self)> *_delayedBatchUpdates;
 }
 @end
 
