@@ -24,7 +24,7 @@
 }
 
 - (void)heightDidChange {
-//    [self emit:XZMocoaEmitNone value:nil];
+    [self emit:XZMocoaEmitUpdate value:nil];
 }
 
 @end

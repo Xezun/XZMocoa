@@ -12,7 +12,7 @@
 
 - (void)didReloadData {
     if (!self.isReady) return;
-    [self.delegate collectionViewModelDidReloadData:self];
+    [self.delegate collectionViewModel:self didReloadData:NULL];
 }
 
 - (void)didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
@@ -56,8 +56,12 @@
 }
 
 - (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
-    if (!self.isReady) return;
-    [self.delegate collectionViewModel:self performBatchUpdates:batchUpdates completion:completion];
+    if (self.isReady) {
+        [self.delegate collectionViewModel:self didPerformBatchUpdates:batchUpdates completion:completion];
+    } else {
+        batchUpdates();
+        if (completion) dispatch_async(dispatch_get_main_queue(), ^{ completion(YES); });
+    }
 }
 
 - (XZMocoaListitySectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {

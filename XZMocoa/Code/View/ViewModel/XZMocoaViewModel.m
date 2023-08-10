@@ -54,11 +54,12 @@
 }
 
 - (void)ready {
-    if (self.isReady) {
+    if (_isReady) {
         return;
     }
     // ready/prepare 方法组合，可以避免初始化逻辑反复执行。
     [self prepare];
+    _isReady = YES;
 }
 
 - (instancetype)initWithModel:(id)model ready:(BOOL)synchronously {
@@ -79,7 +80,6 @@
     for (XZMocoaViewModel *viewModel in _subViewModels) {
         [viewModel ready];
     }
-    _isReady = YES;
 }
 
 - (NSString *)description {
@@ -181,15 +181,18 @@
 
 
 NSString * const XZMocoaEmitNone = @"";
+NSString * const XZMocoaEmitUpdate = @"XZMocoaEmitUpdate";
 
 @implementation XZMocoaViewModel (XZMocoaViewModelHierarchyEmitting)
 
 - (void)emit:(NSString *)name value:(id)value {
+    if (!self.isReady) return;
     XZMocoaEmit const emit = { name ? name : XZMocoaEmitNone, value, self };
     [self.superViewModel subViewModel:self didEmit:emit];
 }
 
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit const)emit {
+    if (!self.isReady) return;
     [self.superViewModel subViewModel:self didEmit:emit];
 }
 

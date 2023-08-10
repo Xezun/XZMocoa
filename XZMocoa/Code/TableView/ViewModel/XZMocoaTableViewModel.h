@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol XZMocoaTableViewModelDelegate <XZMocoaListityViewModelDelegate>
 
 @required
-- (void)tableViewModelDidReloadData:(XZMocoaTableViewModel *)tableViewModel;
+- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didReloadData:(void * _Nullable)null;
 
 - (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 - (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didInsertCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didDeleteSectionsAtIndexes:(NSIndexSet *)sections;
 - (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didMoveSectionAtIndex:(NSInteger)section toIndex:(NSInteger)newSection;
 
-- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
+- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
 
 @end
 

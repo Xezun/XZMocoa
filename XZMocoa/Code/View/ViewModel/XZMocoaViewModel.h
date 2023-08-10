@@ -45,10 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param synchronously YES，立即同步执行 ready 方法；NO，在 -[NSRunLoop performBlock:] 中异步执行 ready 方法。
 - (instancetype)initWithModel:(nullable id)model ready:(BOOL)synchronously;
 
-/// 调用所有子 MVVM 模块的 -ready 方法，并标记为 isReady 状态。
-/// @discussion ViewModel 应在此方法中，处理初始化逻辑。
+/// 默认向所有 subViewModels 发送 -ready 消息。
+/// @discussion 开发者应在此方法中，处理视图模型的初始化逻辑。
 /// @discussion 子类重写应根据需要，在合适的时机调用`super`实现。
-/// @discussion 此方法仅供子类重写用，外部不应该直接调用此方法。
+/// @discussion 此方法仅为自定义初始化流程用，开发者不应该直接调用此方法。
+/// @discussion 在此方法中，视图模型处于 isReady = NO 的状态。
 - (void)prepare;
 
 @end
@@ -111,9 +112,13 @@ typedef struct XZMocoaEmit {
 
 /// 没有名称的事件，一般作为默认事件的事件名。
 FOUNDATION_EXPORT NSString * const XZMocoaEmitNone;
+/// 更新事件。
+FOUNDATION_EXPORT NSString * const XZMocoaEmitUpdate;
 
 @interface XZMocoaViewModel (XZMocoaViewModelHierarchyEmitting)
 /// 收到下级模块的事件，或监听到下级模块的数据变化。
+/// @discussion
+/// 只有在 isReady 状态下，才会传递事件。 
 /// @discussion
 /// 默认情况下，该方法直接将事件继续向上级模块传递，开发者可重写此方法，根据业务需要，控制事件是否向上传递。
 /// @param subViewModel 传递事件的下级视图模型，可能非事件源，请根据 emit.source 获取事件源
@@ -121,6 +126,7 @@ FOUNDATION_EXPORT NSString * const XZMocoaEmitNone;
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit)emit;
 
 /// 向上级模块发送事件或数据的便利方法，当前对象将作为事件源。
+/// @discussion 只有在 isReady 状态下，才会发送事件。
 /// @param name 事件名，如为 nil 则为默认名称 XZMocoaEmitNone
 /// @param value 事件值
 - (void)emit:(nullable NSString *)name value:(nullable id)value;

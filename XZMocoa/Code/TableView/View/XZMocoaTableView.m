@@ -239,7 +239,7 @@
 
 @implementation XZMocoaTableView (XZMocoaTableViewModelDelegate)
 
-- (void)tableViewModelDidReloadData:(XZMocoaTableViewModel *)tableViewModel {
+- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didReloadData:(void *)foo {
     [self.contentView reloadData];
 }
 
@@ -281,7 +281,7 @@
     [self.contentView moveSection:section toSection:newSection];
 }
 
-- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
+- (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     if (@available(iOS 11.0, *)) {
         [self.contentView performBatchUpdates:batchUpdates completion:completion];
     } else {

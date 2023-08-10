@@ -24,7 +24,7 @@
 }
 
 - (void)sizeDidChange {
-    [self emit:XZMocoaEmitNone value:nil];
+    [self emit:XZMocoaEmitUpdate value:nil];
 }
 
 - (void)wasSelectedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {

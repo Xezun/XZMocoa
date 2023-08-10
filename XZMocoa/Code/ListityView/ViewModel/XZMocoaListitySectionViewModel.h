@@ -12,14 +12,15 @@
 #import <XZMocoa/XZMocoaListitySectionSupplementaryViewModel.h>
 #import <XZMocoa/XZMocoaListityCellViewModel.h>
 
+@class XZMocoaListityViewModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XZMocoaListitySectionViewModel<__covariant CellViewModelType: XZMocoaListityCellViewModel *> : XZMocoaViewModel <XZMocoaListityBatchUpdatable>
 
 @property (nonatomic, strong, readonly, nullable) id<XZMocoaListitySectionModel> model;
+@property (nonatomic, readonly, nullable) __kindof XZMocoaListityViewModel *superViewModel;
 
-//@property (nonatomic, strong, readonly, nullable) HeaderViewModelType headerViewModel;
-//@property (nonatomic, strong, readonly, nullable) FooterViewModelType footerViewModel;
 /// 所有 cell 视图模型。这是一个计算属性，除非遍历所有 cell 对象，请尽量避免直接使用。
 - (nullable __kindof XZMocoaListitySectionSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 @property (nonatomic, copy, readonly) NSArray<CellViewModelType> *cellViewModels;
@@ -76,36 +77,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 向上级发送 Section 重载事件，以刷新视图。
 - (void)didReloadData;
-
 /// 向上级发送 Cell 重载事件，以刷新视图。
 - (void)didReloadCellsAtIndexes:(NSIndexSet *)rows;
-
 /// 向上级发送 Cell 插入事件，以刷新视图。
 - (void)didInsertCellsAtIndexes:(NSIndexSet *)rows;
-
 /// 向上级发送 Cell 删除事件，以刷新视图。
 - (void)didDeleteCellsAtIndexes:(NSIndexSet *)rows;
-
 /// 向上级发送 Cell 移动事件，以刷新视图。
 - (void)didMoveCellAtIndex:(NSInteger)row toIndex:(NSInteger)newRow;
+/// 向上级发送批量更新事件，以刷新视图。
+- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion;
 
 // MARK: 子类必须重写的方法
 
 - (CellViewModelType)loadViewModelForCellAtIndex:(NSInteger)index;
 - (nullable __kindof XZMocoaListitySectionSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 @end
-
-/// 整体刷新
-FOUNDATION_EXPORT NSString * const XZMocoaListitySectionEmitReloadData;
-/// 局部刷新，事件 value 为发生刷新的 cell 的 index 的集合 NSNSIndexSet 对象。
-FOUNDATION_EXPORT NSString * const XZMocoaListitySectionEmitReloadCells;
-/// 添加数据，事件 value 为发生添加的 cell 的 index 的集合 NSNSIndexSet 对象。
-FOUNDATION_EXPORT NSString * const XZMocoaListitySectionEmitInsertCells;
-/// 删除数据，事件 value 为发生删除的 cell 的 index 的集合 NSNSIndexSet 对象。
-FOUNDATION_EXPORT NSString * const XZMocoaListitySectionEmitDeleteCells;
-/// 添加数据，事件 value 为 { from: number, to: number } 字典。
-FOUNDATION_EXPORT NSString * const XZMocoaListitySectionEmitMoveCell;
-/// 批量更新，事件 value 为 block 函数
-FOUNDATION_EXPORT NSString * const XZMocoaListitySectionEmitBatchUpdates;
 
 NS_ASSUME_NONNULL_END

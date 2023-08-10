@@ -29,7 +29,7 @@
 
 - (void)didReloadData {
     if (!self.isReady) return;
-    [self.delegate tableViewModelDidReloadData:self];
+    [self.delegate tableViewModel:self didReloadData:NULL];
 }
 
 - (void)didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
@@ -73,8 +73,12 @@
 }
 
 - (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
-    if (!self.isReady) return;
-    [self.delegate tableViewModel:self performBatchUpdates:batchUpdates completion:completion];
+    if (self.isReady) {
+        [self.delegate tableViewModel:self didPerformBatchUpdates:batchUpdates completion:completion];
+    } else {
+        batchUpdates();
+        if (completion) dispatch_async(dispatch_get_main_queue(), ^{ completion(YES); });
+    }
 }
 
 - (XZMocoaListitySectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {

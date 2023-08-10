@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param newSection 移动后的位置
 - (void)moveSectionAtIndex:(NSInteger)section toIndex:(NSInteger)newSection;
 
-// MARK: - 事件派发
+// MARK: - 子类重写，用以更新视图
 
 - (void)didReloadData;
 - (void)didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
@@ -89,6 +89,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 子类应该重写此方法，并返回所需的 SectionViewModel 对象。
 - (SectionViewModelType)loadViewModelForSectionAtIndex:(NSInteger)index;
+
+
+// 处理
+
+/// section 发送的 Section 重载事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didReloadData:(void * _Nullable)null;
+/// section 发送的 Cell 重载事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didReloadCellsAtIndexes:(NSIndexSet *)rows;
+/// section 发送的 Cell 插入事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didInsertCellsAtIndexes:(NSIndexSet *)rows;
+/// section 发送的 Cell 删除事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didDeleteCellsAtIndexes:(NSIndexSet *)rows;
+/// section 发送的 Cell 移动事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didMoveCellAtIndex:(NSInteger)row toIndex:(NSInteger)newRow;
+/// section 发送的批量更新事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion;
 
 @end
 

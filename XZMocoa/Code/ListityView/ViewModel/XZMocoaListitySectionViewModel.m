@@ -8,14 +8,8 @@
 
 #import "XZMocoaListitySectionViewModel.h"
 #import "XZMocoaDefines.h"
+#import "XZMocoaListityViewModel.h"
 @import XZExtensions;
-
-NSString * const XZMocoaListitySectionEmitReloadData   = @"XZMocoaListitySectionEmitReloadData";
-NSString * const XZMocoaListitySectionEmitReloadCells  = @"XZMocoaListitySectionEmitReloadCells";
-NSString * const XZMocoaListitySectionEmitInsertCells  = @"XZMocoaListitySectionEmitInsertCells";
-NSString * const XZMocoaListitySectionEmitDeleteCells  = @"XZMocoaListitySectionEmitDeleteCells";
-NSString * const XZMocoaListitySectionEmitMoveCell     = @"XZMocoaListitySectionEmitMoveCell";
-NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySectionEmitBatchUpdates";
 
 @interface XZMocoaListitySectionViewModel () {
     /// 非 nil 时，表示当前正在批量更新。
@@ -31,7 +25,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
 
 @implementation XZMocoaListitySectionViewModel
 
-@dynamic model;
+@dynamic model, superViewModel;
 
 - (instancetype)initWithModel:(id)model {
     self = [super initWithModel:model];
@@ -67,6 +61,25 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
         }
     }
     [_cellViewModels removeObject:viewModel];
+}
+
+- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit)emit {
+    if ([emit.name isEqualToString:XZMocoaEmitUpdate]) {
+        for (NSString *key in _supplementaryViewModels) {
+            for (XZMocoaListitySectionSupplementaryViewModel *vm in _supplementaryViewModels[key]) {
+                if (subViewModel == vm) {
+                    [self didReloadData];
+                    return;
+                }
+            }
+        }
+        NSInteger const index = [self indexOfCellViewModel:subViewModel];
+        if (index != NSNotFound) {
+            [self didReloadCellsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+            return;
+        }
+    }
+    [super subViewModel:subViewModel didEmit:emit];
 }
 
 #pragma mark - 公开方法
@@ -257,35 +270,36 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
 #pragma mark - 事件派发
 
 - (void)didReloadData {
-    if (self.isReady) {
-        [self emit:XZMocoaListitySectionEmitReloadData value:nil];
-    }
+    if (!self.isReady) return;
+    [self.superViewModel sectionViewModel:self didReloadData:NULL];
 }
 
 - (void)didReloadCellsAtIndexes:(NSIndexSet *)rows {
-    if (self.isReady) {
-        [self emit:XZMocoaListitySectionEmitReloadCells value:rows];
-    }
+    if (!self.isReady) return;
+    [self.superViewModel sectionViewModel:self didReloadCellsAtIndexes:rows];
 }
 
 - (void)didInsertCellsAtIndexes:(NSIndexSet *)rows {
-    if (self.isReady) {
-        [self emit:XZMocoaListitySectionEmitInsertCells value:rows];
-    }
+    if (!self.isReady) return;
+    [self.superViewModel sectionViewModel:self didInsertCellsAtIndexes:rows];
 }
 
 - (void)didDeleteCellsAtIndexes:(NSIndexSet *)rows {
-    if (self.isReady) {
-        [self emit:XZMocoaListitySectionEmitDeleteCells value:rows];
-    }
+    if (!self.isReady) return;
+    [self.superViewModel sectionViewModel:self didDeleteCellsAtIndexes:rows];
 }
 
 - (void)didMoveCellAtIndex:(NSInteger)row toIndex:(NSInteger)newRow {
+    if (!self.isReady) return;
+    [self.superViewModel sectionViewModel:self didMoveCellAtIndex:row toIndex:newRow];
+}
+
+- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^)(BOOL))completion {
     if (self.isReady) {
-        [self emit:XZMocoaListitySectionEmitMoveCell value:@{
-            @"from": @(row),
-            @"to": @(newRow)
-        }];
+        [self.superViewModel sectionViewModel:self didPerformBatchUpdates:batchUpdates completion:completion];
+    } else {
+        batchUpdates();
+        if (completion) dispatch_async(dispatch_get_main_queue(), ^{ completion(YES); });
     }
 }
 
@@ -308,6 +322,10 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     _isPerformingBatchUpdates = nil;
 }
 
+- (void)setNeedsDifferenceBatchUpdates {
+    _needsDifferenceBatchUpdates = YES;
+}
+
 - (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     NSAssert(batchUpdates != nil, @"必须提供 batchUpdates 参数");
     XZLog(@"----- 批量更新开始 %@ -----", self);
@@ -316,18 +334,12 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     }
     
     void (^const tableViewBatchUpdates)(void) = ^{
-        self->_needsDifferenceBatchUpdates = YES;
+        [self setNeedsDifferenceBatchUpdates];
         batchUpdates();
         [self differenceBatchUpdatesIfNeeded];
     };
     
-    if (self.isReady) {
-        id value = [NSDictionary dictionaryWithObjectsAndKeys:tableViewBatchUpdates, @"batchUpdates", completion, @"completion", nil];
-        [self emit:XZMocoaListitySectionEmitBatchUpdates value:value];
-    } else {
-        tableViewBatchUpdates();
-        if (completion) completion(NO);
-    }
+    [self didPerformBatchUpdates:tableViewBatchUpdates completion:completion];
     [self cleanupBatchUpdates];
     
     NSInteger const count = self.numberOfCells;
@@ -338,9 +350,9 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     XZLog(@"----- 批量更新结束 %@ -----", self);
 }
 
-- (void)differenceBatchUpdatesIfNeeded {
+- (NSIndexSet *)differenceBatchUpdatesIfNeeded {
     if (!_needsDifferenceBatchUpdates) {
-        return;
+        return nil;
     }
     _needsDifferenceBatchUpdates = NO;
     
@@ -376,7 +388,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     if (oldDataModels.xz_containsDuplicateObjects) {
         [self reloadData];
         XZLog(@"由于旧数据中包含重复元素，本次批量更新没有进行差异分析");
-        return;
+        return nil;
     }
     
     NSInteger        const newCount      = model.numberOfCellModels;
@@ -392,7 +404,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     if (newDataModels.xz_containsDuplicateObjects) {
         [self reloadData];
         XZLog(@"由于新数据中包含重复元素，本次批量更新没有进行差异分析");
-        return;
+        return nil;
     }
     
     NSIndexSet   * const inserts = [NSMutableIndexSet indexSet];
@@ -465,6 +477,7 @@ NSString * const XZMocoaListitySectionEmitBatchUpdates = @"XZMocoaListitySection
     
     // 检查结果
     NSAssert([self.cellDataModels isEqualToArray:newDataModels], @"更新结果与预期不一致");
+    return nil;
 }
 
 #pragma mark - 私有方法

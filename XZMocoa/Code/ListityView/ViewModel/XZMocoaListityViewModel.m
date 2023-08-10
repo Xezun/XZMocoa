@@ -74,63 +74,14 @@
 #pragma mark - 处理 SectionViewModel 的事件
 
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit)emit {
-    NSInteger const section = [self indexOfSectionViewModel:subViewModel];
-    if (section == NSNotFound) {
-        return [super subViewModel:subViewModel didEmit:emit];
-    }
-    
-    if (emit.name == XZMocoaListitySectionEmitReloadData) {
-        if (!self.isReady) return;
-        _needsDifferenceBatchUpdates = NO;
-        NSIndexSet *indexes = [NSIndexSet indexSetWithIndex:section];
-        [self didReloadSectionsAtIndexes:indexes];
-    } else if (emit.name == XZMocoaListitySectionEmitReloadCells) {
-        if (!self.isReady) return;
-        _needsDifferenceBatchUpdates = NO;
-        NSIndexSet * const rows       = emit.value;
-        NSArray    * const indexPaths = [rows xz_map:^id _Nonnull(NSInteger idx, BOOL * _Nonnull stop) {
-            return [NSIndexPath indexPathForRow:idx inSection:section];
-        }];
-        [self didReloadCellsAtIndexPaths:indexPaths];
-    } else if (emit.name == XZMocoaListitySectionEmitInsertCells) {
-        if (!self.isReady) return;
-        _needsDifferenceBatchUpdates = NO;
-        NSIndexSet * const rows       = emit.value;
-        NSArray    * const indexPaths = [rows xz_map:^id _Nonnull(NSInteger idx, BOOL * _Nonnull stop) {
-            return [NSIndexPath indexPathForRow:idx inSection:section];
-        }];
-        [self didInsertCellsAtIndexPaths:indexPaths];
-    } else if (emit.name == XZMocoaListitySectionEmitDeleteCells) {
-        if (!self.isReady) return;
-        _needsDifferenceBatchUpdates = NO;
-        NSIndexSet * const rows       = emit.value;
-        NSArray    * const indexPaths = [rows xz_map:^id _Nonnull(NSInteger idx, BOOL * _Nonnull stop) {
-            return [NSIndexPath indexPathForRow:idx inSection:section];
-        }];
-        [self didDeleteCellsAtIndexPaths:indexPaths];
-    } else if (emit.name == XZMocoaListitySectionEmitMoveCell) {
-        if (!self.isReady) return;
-        _needsDifferenceBatchUpdates = NO;
-        NSDictionary<NSString *, NSNumber *> *value = emit.value;
-        NSInteger const row    = [value[@"from"] integerValue];
-        NSInteger const newRow = [value[@"to"] integerValue];
-        NSIndexPath *from = [NSIndexPath indexPathForRow:row inSection:section];
-        NSIndexPath *to   = [NSIndexPath indexPathForRow:newRow inSection:section];
-        [self didMoveCellAtIndexPath:from toIndexPath:to];
-    } else if (emit.name == XZMocoaListitySectionEmitBatchUpdates) {
-        NSDictionary *value = emit.value;
-        void (^const batchUpdates)(void) = value[@"batchUpdates"];
-        void (^const completion)(BOOL) = value[@"completion"];
-        _needsDifferenceBatchUpdates = NO;
-        if (!self.isReady || self.isPerformingBatchUpdates) {
-            batchUpdates(); // 应用 batchUpdates 中的数据操作，视图操作会被拦截
-            if (completion) completion(NO);
-        } else {
-            [self didPerformBatchUpdates:batchUpdates completion:completion];
+    if ([emit.name isEqualToString:XZMocoaEmitUpdate]) {
+        NSInteger const index = [self indexOfSectionViewModel:subViewModel];
+        if (index != NSNotFound) {
+            [self didReloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+            return;
         }
-    } else {
-        [super subViewModel:subViewModel didEmit:emit];
     }
+    [super subViewModel:subViewModel didEmit:emit];
 }
 
 #pragma mark - 局部更新
@@ -393,6 +344,10 @@
     }
 }
 
+- (void)setNeedsDifferenceBatchUpdates {
+    _needsDifferenceBatchUpdates = YES;
+}
+
 - (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     NSParameterAssert(batchUpdates != nil);
     XZLog(@"===== 批量更新开始 %@ =====", self);
@@ -403,19 +358,14 @@
     
     // 批量更新的过程中，由于 section 内的局部更新可能并不会反馈到 section 的变化上来。
     // 比如对 section 数据进行了排序，这并不是 section 整体的更新
-    NSMutableIndexSet * const forwardIndexes = [NSMutableIndexSet indexSet];
+    NSIndexSet * __block forwardIndexes = nil;
     void (^const tableViewBatchUpdates)(void) = ^{
-        self->_needsDifferenceBatchUpdates = YES;
+        [self setNeedsDifferenceBatchUpdates];
         batchUpdates();
-        [self differenceBatchUpdatesIfNeeded:forwardIndexes];
+        forwardIndexes = [self differenceBatchUpdatesIfNeeded];
     };
     
-    if (self.isReady) {
-        [self didPerformBatchUpdates:tableViewBatchUpdates completion:completion];
-    } else {
-        tableViewBatchUpdates();
-        if (completion) completion(NO);
-    }
+    [self didPerformBatchUpdates:tableViewBatchUpdates completion:completion];
     [self cleanupBatchUpdates];
     
     // 后更新 index 以避免因 index 改变而发生视图刷新时，当前的事件还没有派发。
@@ -461,12 +411,12 @@
 /// NSArray *new = @[@"A", @"B", @"C", @"D", @"E", @"F"];
 /// @endcode
 /// @todo 实现二维数组的差异比较，解决跨 section 的更新问题。
-- (void)differenceBatchUpdatesIfNeeded:(NSMutableIndexSet * const)forwardIndexes {
+- (NSIndexSet *)differenceBatchUpdatesIfNeeded {
     if (!_needsDifferenceBatchUpdates) {
-        return;
+        return nil;
     }
     _needsDifferenceBatchUpdates = NO;
-
+    
     // 记录更新前的数据。
     NSInteger      const oldCount      = self.numberOfSections;
     NSArray      * const oldDataModels = [NSMutableArray arrayWithCapacity:oldCount];
@@ -480,7 +430,7 @@
     if (oldDataModels.xz_containsDuplicateObjects) {
         [self reloadData];
         XZLog(@"由于旧数据中包含重复元素，本次批量更新没有进行差异化分析");
-        return;
+        return nil;
     }
     
     id<XZMocoaListityModel> const model = self.model;
@@ -496,7 +446,7 @@
     if (newDataModels.xz_containsDuplicateObjects) {
         [self reloadData];
         XZLog(@"由于新数据中包含重复元素，本次批量更新没有进行差异化分析");
-        return;
+        return nil;
     }
     
     // 差异分析及更新算法：
@@ -534,6 +484,8 @@
     [self didInsertSectionsAtIndexes:inserts];
     XZLog(@"【添加】%@", inserts);
     
+    NSMutableIndexSet * const forwardIndexes = [NSMutableIndexSet indexSet];
+    
     // 排序元素：从低位开始遍历，每一个位置，都应该能根据 inserts/remains/changes 中找到对应的元素。
     for (NSInteger to = 0; to < newCount; to++) {
         if ([inserts containsIndex:to]) {
@@ -561,6 +513,8 @@
 
     // 检查结果
     NSAssert([self.sectionDataModels isEqualToArray:newDataModels], @"更新结果与预期不一致");
+    
+    return forwardIndexes;
 }
 
 #pragma mark - 私有方法
@@ -625,5 +579,70 @@
     return result;
 }
 #endif
+
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didReloadData:(void * _Nullable)null {
+    NSInteger const index = [self indexOfSectionViewModel:viewModel];
+    if (index == NSNotFound) return;
+    if (!self.isReady) return;
+    
+    NSIndexSet *indexes = [NSIndexSet indexSetWithIndex:index];
+    [self didReloadSectionsAtIndexes:indexes];
+}
+
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didReloadCellsAtIndexes:(NSIndexSet *)rows {
+    NSInteger const index = [self indexOfSectionViewModel:viewModel];
+    if (index == NSNotFound) return;
+    if (!self.isReady) return;
+    
+    NSArray * const indexPaths = [rows xz_map:^id(NSInteger idx, BOOL *stop) {
+        return [NSIndexPath indexPathForRow:idx inSection:index];
+    }];
+    [self didReloadCellsAtIndexPaths:indexPaths];
+}
+
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didInsertCellsAtIndexes:(NSIndexSet *)rows {
+    NSInteger const index = [self indexOfSectionViewModel:viewModel];
+    if (index == NSNotFound) return;
+    if (!self.isReady) return;
+    
+    NSArray * const indexPaths = [rows xz_map:^id(NSInteger idx, BOOL *stop) {
+        return [NSIndexPath indexPathForRow:idx inSection:index];
+    }];
+    [self didInsertCellsAtIndexPaths:indexPaths];
+}
+
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didDeleteCellsAtIndexes:(NSIndexSet *)rows {
+    NSInteger const index = [self indexOfSectionViewModel:viewModel];
+    if (index == NSNotFound) return;
+    if (!self.isReady) return;
+    
+    NSArray * const indexPaths = [rows xz_map:^id(NSInteger idx, BOOL *stop) {
+        return [NSIndexPath indexPathForRow:idx inSection:index];
+    }];
+    [self didDeleteCellsAtIndexPaths:indexPaths];
+}
+
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didMoveCellAtIndex:(NSInteger)row toIndex:(NSInteger)newRow {
+    NSInteger const index = [self indexOfSectionViewModel:viewModel];
+    if (index == NSNotFound) return;
+    if (!self.isReady) return;
+    
+    NSIndexPath *from = [NSIndexPath indexPathForRow:row inSection:index];
+    NSIndexPath *to   = [NSIndexPath indexPathForRow:newRow inSection:index];
+    [self didMoveCellAtIndexPath:from toIndexPath:to];
+}
+
+- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
+    NSInteger const index = [self indexOfSectionViewModel:viewModel];
+    if (index == NSNotFound) return;
+    
+    // 应用 batchUpdates 中的数据操作，视图操作会被拦截
+    if (!self.isReady || self.isPerformingBatchUpdates) {
+        batchUpdates();
+        if (completion) completion(NO);
+    } else {
+        [self didPerformBatchUpdates:batchUpdates completion:completion];
+    }
+}
 
 @end

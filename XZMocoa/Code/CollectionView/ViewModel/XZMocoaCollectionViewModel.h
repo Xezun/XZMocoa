@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol XZMocoaCollectionViewModelDelegate <XZMocoaListityViewModelDelegate>
 
 @required
-- (void)collectionViewModelDidReloadData:(XZMocoaCollectionViewModel *)collectionViewModel;
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didReloadData:(void * _Nullable)null;
 
 - (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 - (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didInsertCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didDeleteSectionsAtIndexes:(NSIndexSet *)sections;
 - (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didMoveSectionAtIndex:(NSInteger)section toIndex:(NSInteger)newSection;
 
-- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
 
 @end
 

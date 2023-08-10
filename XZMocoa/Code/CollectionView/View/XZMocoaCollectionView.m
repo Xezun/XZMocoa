@@ -237,7 +237,7 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
 
 @implementation XZMocoaCollectionView (XZMocoaCollectionViewModelDelegate)
 
-- (void)collectionViewModelDidReloadData:(XZMocoaCollectionViewModel *)collectionViewModel {
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didReloadData:(void *)null {
     [self.contentView reloadData];
 }
 
@@ -273,7 +273,7 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
     [self.contentView moveSection:section toSection:newSection];
 }
 
-- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
+- (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     [self.contentView performBatchUpdates:batchUpdates completion:completion];
 }
 
