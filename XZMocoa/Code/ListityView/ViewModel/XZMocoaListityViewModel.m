@@ -330,21 +330,30 @@
     }
     
     // 批量更新的过程中，由于 section 内的局部更新可能并不会反馈到 section 的变化上来。
-    // 比如对 section 数据进行了排序，这并不是 section 整体的更新
+    // 比如对 section 数据进行了排序，这并不是 section 整体的更新，
+    // 因此对于未更新的 section 会在 table 批量更新后，执行 -performBatchUpdates:completion: 方法以进行更新。
     NSIndexSet * __block forwardIndexes = nil;
+    // 由于进行了分步批量更新，需要一个标记，使 completion 在所有更新完成后再执行。
+    NSInteger    __block flagCompletion = 0;
+    
     void (^const tableViewBatchUpdates)(void) = ^{
+        flagCompletion += 1;
         [self setNeedsDifferenceBatchUpdates];
         batchUpdates();
         forwardIndexes = [self differenceBatchUpdatesIfNeeded];
     };
+    void (^const tableViewCompletion)(BOOL) = ^(BOOL finished){
+        XZLog(@"flagCompletion: %ld", flagCompletion);
+        flagCompletion -= 1;
+        if (flagCompletion > 0) return;
+        if (completion) completion(finished);
+    };
     
     // 批量事件
-    [self didPerformBatchUpdates:tableViewBatchUpdates completion:completion];
+    [self didPerformBatchUpdates:tableViewBatchUpdates completion:tableViewCompletion];
     
-    // 批量事件过程中被延迟的事件
-    for (XZMocoaListityDelayedBatchUpdate batchUpdates in [self cleanupBatchUpdates]) {
-        batchUpdates(self);
-    }
+    // 清理批量更新环境，并执行延迟的事件
+    [self cleanupBatchUpdates];
     
     // 后更新 index 以避免因 index 改变而发生视图刷新时，当前的事件还没有派发。
     NSInteger const count = self.numberOfSections;
@@ -355,13 +364,14 @@
     // 传递事件给保留的下级
     if (forwardIndexes.count > 0) {
         void (^const tableViewBatchUpdates)(void) = ^{
+            flagCompletion += 1;
             [forwardIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                 [[self sectionViewModelAtIndex:idx] performBatchUpdates:^{
                     // section 内的更新数据已经在 batchUpdates() 执行了。
                 } completion:nil];
             }];
         };
-        [self didPerformBatchUpdates:tableViewBatchUpdates completion:nil];
+        [self didPerformBatchUpdates:tableViewBatchUpdates completion:tableViewCompletion];
     }
     
     XZLog(@"===== 批量更新结束 %@ =====", self);
