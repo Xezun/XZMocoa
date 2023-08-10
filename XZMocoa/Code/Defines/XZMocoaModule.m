@@ -342,7 +342,7 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 
 @implementation XZMocoaModuleProvider
 
-- (NSURL *)urlForName:(NSString *)name path:(NSString *)path {
++ (NSURL *)urlForName:(NSString *)name path:(NSString *)path {
     NSString *string = [NSString stringWithFormat:@"mocoa://%@%@", name, path];
     NSURL *url = [NSURL URLWithString:string];
     NSAssert(url, @"参数 name=%@ 和 path=%@ 不是合法的 URL 部分", name, path);
@@ -351,7 +351,7 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 
 - (id)domain:(XZMocoaDomain *)domain moduleForName:(NSString *)name atPath:(NSString *)path {
     // 创建模块
-    NSURL * const url = [self urlForName:name path:path];
+    NSURL * const url = [XZMocoaModuleProvider urlForName:name path:path];
     XZMocoaModule * const module = [[XZMocoaModule alloc] initWithURL:url];
     
     // 关联上级模块

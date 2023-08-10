@@ -256,7 +256,7 @@ FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName _Nullable 
 /// - Parameters:
 ///   - name: 域名
 ///   - path: 路径
-- (NSURL *)urlForName:(NSString *)name path:(NSString *)path;
++ (NSURL *)urlForName:(NSString *)name path:(NSString *)path;
 @end
 
 /// 获取模块地址 NSURL 或 NSString 获取对应的 MVVM 模块。
