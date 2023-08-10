@@ -13,10 +13,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol XZMocoaViewModel <NSObject>
+@required
+- (instancetype)initWithModel:(nullable id)model;
+@end
+
 /// 视图模型 ViewModel 基类。
 /// @discussion 本基类为简化开发而提供，并非 module 必须，可选。
 /// @discussion 为视图模型提供了`ready`机制、层级关系等基础功能。
-@interface XZMocoaViewModel : NSObject
+@interface XZMocoaViewModel : NSObject <XZMocoaViewModel>
 
 /// 当前 MVVM 模块对象。
 /// @note 一般情况下，此属性并非必须，但对于某些用于管理子视图的视图，比如拿 UITableView 或 UICollectionView 来说，可能需要设置此属性才能正常工作。
@@ -100,7 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Mocoa Hierarchy Emit 机制，只为解决层级模块间的交互问题，对于不同模块间的交互，或者比较复杂的
 // 交互，Mocoa 也是建议采用常规代理或通知机制，对于代码而言，保持可维护性是优先级最高的。
 
-@interface XZMocoaEmit : NSObject
+@interface XZMocoaEmition : NSObject
 /// 事件名。
 @property (nonatomic, copy, readonly) NSString *name;
 /// 事件值。
@@ -108,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 事件源。
 @property (nonatomic, weak, readonly, nullable) __kindof XZMocoaViewModel *source;
 - (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)emitWithName:(NSString *)name value:(nullable id)value source:(XZMocoaViewModel *)source;
++ (instancetype)emitionWithName:(nullable NSString *)name value:(nullable id)value source:(XZMocoaViewModel *)source;
 @end
 
 /// 没有名称的事件，一般作为默认事件的事件名。
@@ -123,8 +128,8 @@ FOUNDATION_EXPORT NSString * const XZMocoaEmitUpdate;
 /// @discussion
 /// 默认情况下，该方法直接将事件继续向上级模块传递，开发者可重写此方法，根据业务需要，控制事件是否向上传递。
 /// @param subViewModel 传递事件的下级视图模型，可能非事件源，请根据 emit.source 获取事件源
-/// @param emit 事件信息
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit *)emit;
+/// @param emition 事件信息
+- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition;
 
 /// 向上级模块发送事件或数据的便利方法，当前对象将作为事件源。
 /// @discussion 只有在 isReady 状态下，才会发送事件。

@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// @attention 由于需要管理子视图，因此需要设置 module 属性才能正常工作。
 @interface XZMocoaListityViewModel<__covariant CellViewModelType: XZMocoaListityCellViewModel *, __covariant SectionViewModelType: XZMocoaListitySectionViewModel *> : XZMocoaViewModel <XZMocoaListityBatchUpdatable>
 
+/// 接收来自下级的 XZMocoaEmitUpdate 事件，并刷新视图，如果在批量更新的过程中，视图刷新可能会延迟。
+- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition;
+
 /// 一般而言 TableViewModel 只会有一个事件接收者，这里直接用了代理。
 @property (nonatomic, weak) id<XZMocoaListityViewModelDelegate> delegate;
 
@@ -89,9 +92,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 子类应该重写此方法，并返回所需的 SectionViewModel 对象。
 - (SectionViewModelType)loadViewModelForSectionAtIndex:(NSInteger)index;
-
-
-// 处理
 
 /// section 发送的 Section 重载事件，以刷新视图。
 - (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didReloadData:(void * _Nullable)null;

@@ -75,11 +75,11 @@
 
 #pragma mark - 处理 SectionViewModel 的事件
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit *)emit {
-    if ([emit.name isEqualToString:XZMocoaEmitUpdate]) {
+- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition {
+    if ([emition.name isEqualToString:XZMocoaEmitUpdate]) {
         if (self.isPerformingBatchUpdates) {
             [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
-                [self subViewModel:subViewModel didEmit:emit];
+                [self subViewModel:subViewModel didEmit:emition];
             }];
             return;
         }
@@ -89,7 +89,7 @@
             return;
         }
     }
-    [super subViewModel:subViewModel didEmit:emit];
+    [super subViewModel:subViewModel didEmit:emition];
 }
 
 #pragma mark - 局部更新
@@ -307,14 +307,12 @@
     return YES;
 }
 
-- (NSArray<XZMocoaListityDelayedBatchUpdate> *)cleanupBatchUpdates {
-    if (!_isPerformingBatchUpdates) {
-        return nil;
-    }
+- (void)cleanupBatchUpdates {
     _isPerformingBatchUpdates = nil;
-    NSArray *delayedBatchUpdates = _delayedBatchUpdates;
+    for (XZMocoaListityDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
+        batchUpdates(self);
+    }
     _delayedBatchUpdates = nil;
-    return delayedBatchUpdates;
 }
 
 - (void)setNeedsDifferenceBatchUpdates {

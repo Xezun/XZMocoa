@@ -26,7 +26,7 @@ typedef void(^XZMocoaListityDelayedBatchUpdate)(__kindof XZMocoaViewModel *self)
 - (BOOL)prepareBatchUpdates XZ_UNAVAILABLE;
 
 /// 私有方法。清理批量更新环境。
-- (NSArray<XZMocoaListityDelayedBatchUpdate> *)cleanupBatchUpdates XZ_UNAVAILABLE;
+- (void)cleanupBatchUpdates XZ_UNAVAILABLE;
 
 /// 批量更新：将一组`reload/insert/delete/move`操作放在块函数`batchUpdates`统一执行。
 /// @discussion

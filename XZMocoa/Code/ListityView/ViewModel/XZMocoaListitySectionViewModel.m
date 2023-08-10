@@ -64,12 +64,12 @@
     [_cellViewModels removeObject:viewModel];
 }
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit *)emit {
-    if ([emit.name isEqualToString:XZMocoaEmitUpdate]) {
+- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition {
+    if ([emition.name isEqualToString:XZMocoaEmitUpdate]) {
         // 正在批量更新，事件被延迟
         if (self.isPerformingBatchUpdates) {
             [_delayedBatchUpdates addObject:^void(XZMocoaListitySectionViewModel *self) {
-                [self subViewModel:subViewModel didEmit:emit];
+                [self subViewModel:subViewModel didEmit:emition];
             }];
             return;
         }
@@ -87,7 +87,7 @@
             return [self didReloadCellsAtIndexes:[NSIndexSet indexSetWithIndex:index]];;
         }
     }
-    [super subViewModel:subViewModel didEmit:emit];
+    [super subViewModel:subViewModel didEmit:emition];
 }
 
 #pragma mark - 公开方法
@@ -309,12 +309,13 @@
     return YES;
 }
 
-- (NSArray<XZMocoaListityDelayedBatchUpdate> *)cleanupBatchUpdates {
+- (void)cleanupBatchUpdates {
     _isPerformingBatchUpdates = nil;
     
-    NSArray *delayedBatchUpdates = _delayedBatchUpdates;
+    for (XZMocoaListityDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
+        batchUpdates(self);
+    }
     _delayedBatchUpdates = nil;
-    return delayedBatchUpdates;
 }
 
 - (void)setNeedsDifferenceBatchUpdates {
@@ -336,10 +337,8 @@
     
     [self didPerformBatchUpdates:tableViewBatchUpdates completion:completion];
     
-    // 延迟的事件
-    for (XZMocoaListityDelayedBatchUpdate batchUpdates in [self cleanupBatchUpdates]) {
-        batchUpdates(self);
-    }
+    // 清理批量更新环境，并执行延迟的事件
+    [self cleanupBatchUpdates];
     
     NSInteger const count = self.numberOfCells;
     for (NSInteger row = 0; row < count; row++) {
