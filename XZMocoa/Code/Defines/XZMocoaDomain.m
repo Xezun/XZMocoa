@@ -6,6 +6,7 @@
 //
 
 #import "XZMocoaDomain.h"
+#import "XZMocoaDefines.h"
 
 static NSMutableDictionary<NSString *, XZMocoaDomain *> *_domainTable = nil;
 
@@ -68,14 +69,21 @@ static BOOL isValidPath(NSString *path) {
         return nil;
     }
     
-    NSAssert(isValidPath(path), @"参数 path 不合法：%@", path);
+    if (!isValidPath(path)) {
+        XZLog(@"参数 path 不合法：%@", path);
+        return nil;
+    }
+    
     module = [self.provider domain:self moduleForName:self.name atPath:path];
     _keyedModules[path] = module;
     return module;
 }
 
 - (void)setModule:(id)module forPath:(NSString *)path {
-    NSAssert(isValidPath(path), @"参数 path 不合法：%@", path);
+    if (!isValidPath(path)) {
+        XZLog(@"参数 path 不合法：%@", path);
+        return;
+    }
     _keyedModules[path] = module;
 }
 
