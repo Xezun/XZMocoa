@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XZMocoaCollectionSectionSupplementaryViewModel : XZMocoaListitySectionSupplementaryViewModel
 
 @property (nonatomic) CGSize size;
-- (void)sizeDidChange;
 
 - (void)willBeDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
 - (void)didEndBeingDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;

@@ -74,6 +74,7 @@
 		29FBDA872A83A905006BBB66 /* Example22TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29FBDA852A83A905006BBB66 /* Example22TextCell.xib */; };
 		29FBDA8A2A83A93A006BBB66 /* Example22TextViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA892A83A93A006BBB66 /* Example22TextViewModel.m */; };
 		29FBDA902A83A9FD006BBB66 /* Example22TextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA8F2A83A9FD006BBB66 /* Example22TextModel.m */; };
+		29FBDADD2A84E502006BBB66 /* Example22GroupTextSectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDADC2A84E502006BBB66 /* Example22GroupTextSectionViewModel.m */; };
 		52BED4A2CAA8869D88AE24B6 /* Pods_ExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08675C782301AD7500A5B3F1 /* Pods_ExampleUITests.framework */; };
 		BFB5FD01E6FBCBD3A6654D14 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE993E3923446CDF5614926 /* Pods_Example.framework */; };
 		F64ED86FA7B0E4C7AFB6F803 /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */; };
@@ -217,6 +218,8 @@
 		29FBDA892A83A93A006BBB66 /* Example22TextViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example22TextViewModel.m; sourceTree = "<group>"; };
 		29FBDA8E2A83A9FD006BBB66 /* Example22TextModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example22TextModel.h; sourceTree = "<group>"; };
 		29FBDA8F2A83A9FD006BBB66 /* Example22TextModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example22TextModel.m; sourceTree = "<group>"; };
+		29FBDADB2A84E502006BBB66 /* Example22GroupTextSectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example22GroupTextSectionViewModel.h; sourceTree = "<group>"; };
+		29FBDADC2A84E502006BBB66 /* Example22GroupTextSectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example22GroupTextSectionViewModel.m; sourceTree = "<group>"; };
 		62B24EDB69DD5EA24EEE5DE8 /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		9271F814F967A6E9E5E8C3BC /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D4E050FD770A1772594BB4 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -838,14 +841,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		29FBDA7E2A83A6D2006BBB66 /* Cell */ = {
+		29FBDA7E2A83A6D2006BBB66 /* Text */ = {
 			isa = PBXGroup;
 			children = (
 				29FBDA812A83A6F7006BBB66 /* ViewModel */,
 				29FBDA802A83A6F2006BBB66 /* View */,
 				29FBDA7F2A83A6ED006BBB66 /* Model */,
 			);
-			path = Cell;
+			path = Text;
 			sourceTree = "<group>";
 		};
 		29FBDA7F2A83A6ED006BBB66 /* Model */ = {
@@ -872,6 +875,8 @@
 			children = (
 				29FBDA882A83A93A006BBB66 /* Example22TextViewModel.h */,
 				29FBDA892A83A93A006BBB66 /* Example22TextViewModel.m */,
+				29FBDADB2A84E502006BBB66 /* Example22GroupTextSectionViewModel.h */,
+				29FBDADC2A84E502006BBB66 /* Example22GroupTextSectionViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -879,7 +884,7 @@
 		29FBDA822A83A717006BBB66 /* Group */ = {
 			isa = PBXGroup;
 			children = (
-				29FBDA7E2A83A6D2006BBB66 /* Cell */,
+				29FBDA7E2A83A6D2006BBB66 /* Text */,
 			);
 			path = Group;
 			sourceTree = "<group>";
@@ -1174,6 +1179,7 @@
 				29914F1C2A6D8F6100D0ACF3 /* Example20Group101Cell.m in Sources */,
 				29AA8BE32A6ED88C00D36758 /* Example10Model.m in Sources */,
 				29B3EBC52A7898B50008E65B /* Example21ContactBookTestViewController.m in Sources */,
+				29FBDADD2A84E502006BBB66 /* Example22GroupTextSectionViewModel.m in Sources */,
 				29914EA72A6CE3D700D0ACF3 /* AppDelegate.m in Sources */,
 				29914EE62A6CEF3800D0ACF3 /* Example11Model.m in Sources */,
 				2996C8A52A7219DC00A77E2F /* Example20Group101CellModel.m in Sources */,

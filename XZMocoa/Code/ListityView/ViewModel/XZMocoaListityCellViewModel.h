@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XZMocoaListityCellViewModel : XZMocoaViewModel
 /// 重用标识符。
 @property (nonatomic, copy, XZ_READONLY) NSString *identifier;
+/// 修改属性不会发送事件，以避免发送事件太频繁。
 @property (nonatomic) CGRect frame;
 @end
 

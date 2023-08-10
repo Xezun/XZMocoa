@@ -19,11 +19,6 @@
     }
     frame.size = size;
     self.frame = frame;
-    [self sizeDidChange];
-}
-
-- (void)sizeDidChange {
-    [self emit:XZMocoaEmitUpdate value:nil];
 }
 
 - (void)willBeDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {

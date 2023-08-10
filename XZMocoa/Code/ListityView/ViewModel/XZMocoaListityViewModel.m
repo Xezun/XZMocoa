@@ -14,6 +14,8 @@
 @interface XZMocoaListityViewModel () {
     /// 标记当前是否正处于批量更新过程中，记录了更新前的数据。
     NSOrderedSet<XZMocoaListitySectionViewModel *> *_isPerformingBatchUpdates;
+    /// 批量更新时，被延迟的更新。
+    NSMutableArray<XZMocoaListityDelayedBatchUpdate> *_delayedBatchUpdates;
     /// 是否需要执行批量更新的差异分析。
     /// @note 在批量更新时，由于同一对象不能重复操作，因此任一独立更新操作被调用时，都会标记此值为NO，以关闭差异分析，避免重复操作。
     BOOL _needsDifferenceBatchUpdates;
@@ -35,7 +37,7 @@
 }
 
 - (void)prepare {
-    [self loadDataWithoutEvents];
+    [self _loadDataWithoutEvents];
     [super prepare];
 }
 
@@ -73,8 +75,14 @@
 
 #pragma mark - 处理 SectionViewModel 的事件
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit)emit {
+- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit *)emit {
     if ([emit.name isEqualToString:XZMocoaEmitUpdate]) {
+        if (self.isPerformingBatchUpdates) {
+            [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+                [self subViewModel:subViewModel didEmit:emit];
+            }];
+            return;
+        }
         NSInteger const index = [self indexOfSectionViewModel:subViewModel];
         if (index != NSNotFound) {
             [self didReloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
@@ -97,7 +105,7 @@
             [viewModel removeFromSuperViewModel];
         }
         // 加载新数据
-        [self loadDataWithoutEvents];
+        [self _loadDataWithoutEvents];
     }
     
     [self didReloadData];
@@ -229,26 +237,6 @@
     }
 }
 
-/// 移动 section 。
-/// @discussion 对于 UITableView 而言，变化就是从旧位置移动到新位置，但是对于 ViewModel 而言，
-///             每次 move 都会改变数据源中数据的排序，所以数据的移动与视图的移动可能不一致。
-/// @param section 当前位置
-/// @param oldSection 原始位置
-/// @param newSection 目标位置
-- (void)_moveSectionAtIndex:(NSInteger)section fromIndex:(NSInteger)oldSection toIndex:(NSInteger)newSection {
-    _needsDifferenceBatchUpdates = NO;
-    
-    // 更新数据
-    [self _moveSectionViewModelFromIndex:section toIndex:newSection];
-    
-    // 新旧位置无变化，不需要发送事件。
-    if (oldSection == newSection) {
-        return;
-    }
-    
-    [self didMoveSectionAtIndex:oldSection toIndex:newSection];
-}
-
 #pragma mark - 事件派发
 
 - (void)didReloadData {
@@ -314,34 +302,19 @@
         return NO;
     }
     
-    // 将所有 section 标记为进入批量更新状态
-    NSInteger const count = _sectionViewModels.count;
-    for (NSInteger i = 0; i < count; i++) {
-        XZMocoaListitySectionViewModel * const viewModel = _sectionViewModels[i];
-        if ([viewModel prepareBatchUpdates]) {
-            continue;
-        }
-        for (NSInteger j = 0; j < i; j++) { // 回退
-            XZMocoaListitySectionViewModel * const viewModel = _sectionViewModels[j];
-            [viewModel cleanupBatchUpdates];
-        }
-        XZLog(@"当前第 %ld 个 Section 正在进行批量更新，本次操作取消", (long)i);
-        return NO;
-    }
-    
     _isPerformingBatchUpdates = _sectionViewModels.copy;
+    _delayedBatchUpdates = [NSMutableArray array];
     return YES;
 }
 
-- (void)cleanupBatchUpdates {
+- (NSArray<XZMocoaListityDelayedBatchUpdate> *)cleanupBatchUpdates {
     if (!_isPerformingBatchUpdates) {
-        return;
+        return nil;
     }
     _isPerformingBatchUpdates = nil;
-    
-    for (XZMocoaListitySectionViewModel *viewModel in _sectionViewModels) {
-        [viewModel cleanupBatchUpdates];
-    }
+    NSArray *delayedBatchUpdates = _delayedBatchUpdates;
+    _delayedBatchUpdates = nil;
+    return delayedBatchUpdates;
 }
 
 - (void)setNeedsDifferenceBatchUpdates {
@@ -365,8 +338,13 @@
         forwardIndexes = [self differenceBatchUpdatesIfNeeded];
     };
     
+    // 批量事件
     [self didPerformBatchUpdates:tableViewBatchUpdates completion:completion];
-    [self cleanupBatchUpdates];
+    
+    // 批量事件过程中被延迟的事件
+    for (XZMocoaListityDelayedBatchUpdate batchUpdates in [self cleanupBatchUpdates]) {
+        batchUpdates(self);
+    }
     
     // 后更新 index 以避免因 index 改变而发生视图刷新时，当前的事件还没有派发。
     NSInteger const count = self.numberOfSections;
@@ -383,12 +361,7 @@
                 } completion:nil];
             }];
         };
-        
-        if (self.isReady) {
-            [self didPerformBatchUpdates:tableViewBatchUpdates completion:nil];
-        } else {
-            tableViewBatchUpdates();
-        }
+        [self didPerformBatchUpdates:tableViewBatchUpdates completion:nil];
     }
     
     XZLog(@"===== 批量更新结束 %@ =====", self);
@@ -491,18 +464,22 @@
         if ([inserts containsIndex:to]) {
             NSInteger const index = [self indexOfSectionViewModel:insertedViewModels[@(to)]];
             [self _moveSectionViewModelFromIndex:index toIndex:to];
+            XZLog(@"【调整】%ld -> %ld, %@", (long)index, (long)to, self.sectionDataModels);
         } else if ([remains containsIndex:to]) {
             // to 位置为保持不变的元素，在 old 中找到 viewModel 然后将其移动到 to 位置上。
-            NSInteger const index = [self indexOfSectionViewModel:oldViewModels[to]];
+            XZMocoaListitySectionViewModel *viewModel = oldViewModels[to];
+            NSInteger const index = [self indexOfSectionViewModel:viewModel];
             [self moveSubViewModelAtIndex:index toIndex:to];
-            // 记录待更新的 section
-            [forwardIndexes addIndex:to];
+            // 执行更新。在数据更新的过程中，由数据引发的更新已经在更新数据时被拦截下来，在这里差异分析时，不会再触发了。
+            [viewModel performBatchUpdates:^{
+                // Model 已更新，ViewModel 未更新，直接发送事件即可。
+            } completion:nil];;
+            XZLog(@"【调整】%ld -> %ld, %@", (long)index, (long)to, self.sectionDataModels);
         } else {
             // to 位置为被移动的元素，先找到它原来的位置，然后找到 viewModel 然后再移动位置。
             NSInteger const from  = changes[@(to)].integerValue;
             NSInteger const index = [self indexOfSectionViewModel:oldViewModels[from]];
             // 移动 section 并更新视图
-            // [self moveSectionAtIndex:index fromIndex:from toIndex:to];
             [self _moveSectionViewModelFromIndex:index toIndex:to];
             [self didMoveSectionAtIndex:from toIndex:to];
             XZLog(@"【移动】%ld(%ld) -> %ld, %@", from, index, to, self.sectionDataModels);
@@ -542,7 +519,7 @@
 }
 
 /// 添加所有 section 元素，需先清理数据。
-- (void)loadDataWithoutEvents {
+- (void)_loadDataWithoutEvents {
     id<XZMocoaListityModel> const model = self.model;
     NSInteger const count = model.numberOfSectionModels;
     
@@ -550,6 +527,26 @@
         XZMocoaListitySectionViewModel *viewModel = [self loadViewModelForSectionAtIndex:section];
         [self _addSectionViewModel:viewModel];
     }
+}
+
+/// 移动 section 。
+/// @discussion 对于 UITableView 而言，变化就是从旧位置移动到新位置，但是对于 ViewModel 而言，
+///             每次 move 都会改变数据源中数据的排序，所以数据的移动与视图的移动可能不一致。
+/// @param section 当前位置
+/// @param oldSection 原始位置
+/// @param newSection 目标位置
+- (void)_moveSectionAtIndex:(NSInteger)section fromIndex:(NSInteger)oldSection toIndex:(NSInteger)newSection {
+    _needsDifferenceBatchUpdates = NO;
+    
+    // 更新数据
+    [self _moveSectionViewModelFromIndex:section toIndex:newSection];
+    
+    // 新旧位置无变化，不需要发送事件。
+    if (oldSection == newSection) {
+        return;
+    }
+    
+    [self didMoveSectionAtIndex:oldSection toIndex:newSection];
 }
 
 #pragma mark - 子类重写
@@ -585,8 +582,14 @@
     if (index == NSNotFound) return;
     if (!self.isReady) return;
     
-    NSIndexSet *indexes = [NSIndexSet indexSetWithIndex:index];
-    [self didReloadSectionsAtIndexes:indexes];
+    if (!self.isPerformingBatchUpdates || (self.isPerformingBatchUpdates && viewModel.isPerformingBatchUpdates)) {
+        NSIndexSet *indexes = [NSIndexSet indexSetWithIndex:index];
+        [self didReloadSectionsAtIndexes:indexes];
+    } else {
+        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+            [self sectionViewModel:viewModel didReloadData:null];
+        }];
+    }
 }
 
 - (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didReloadCellsAtIndexes:(NSIndexSet *)rows {
@@ -594,10 +597,16 @@
     if (index == NSNotFound) return;
     if (!self.isReady) return;
     
-    NSArray * const indexPaths = [rows xz_map:^id(NSInteger idx, BOOL *stop) {
-        return [NSIndexPath indexPathForRow:idx inSection:index];
-    }];
-    [self didReloadCellsAtIndexPaths:indexPaths];
+    if (!self.isPerformingBatchUpdates || (self.isPerformingBatchUpdates && viewModel.isPerformingBatchUpdates)) {
+        NSArray * const indexPaths = [rows xz_map:^id(NSInteger idx, BOOL *stop) {
+            return [NSIndexPath indexPathForRow:idx inSection:index];
+        }];
+        [self didReloadCellsAtIndexPaths:indexPaths];
+    } else {
+        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+            [self sectionViewModel:viewModel didReloadCellsAtIndexes:rows];
+        }];
+    }
 }
 
 - (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didInsertCellsAtIndexes:(NSIndexSet *)rows {
@@ -605,10 +614,16 @@
     if (index == NSNotFound) return;
     if (!self.isReady) return;
     
-    NSArray * const indexPaths = [rows xz_map:^id(NSInteger idx, BOOL *stop) {
-        return [NSIndexPath indexPathForRow:idx inSection:index];
-    }];
-    [self didInsertCellsAtIndexPaths:indexPaths];
+    if (!self.isPerformingBatchUpdates || (self.isPerformingBatchUpdates && viewModel.isPerformingBatchUpdates)) {
+        NSArray * const indexPaths = [rows xz_map:^id(NSInteger idx, BOOL *stop) {
+            return [NSIndexPath indexPathForRow:idx inSection:index];
+        }];
+        [self didInsertCellsAtIndexPaths:indexPaths];
+    } else {
+        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+            [self sectionViewModel:viewModel didInsertCellsAtIndexes:rows];
+        }];
+    }
 }
 
 - (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didDeleteCellsAtIndexes:(NSIndexSet *)rows {
@@ -616,10 +631,16 @@
     if (index == NSNotFound) return;
     if (!self.isReady) return;
     
-    NSArray * const indexPaths = [rows xz_map:^id(NSInteger idx, BOOL *stop) {
-        return [NSIndexPath indexPathForRow:idx inSection:index];
-    }];
-    [self didDeleteCellsAtIndexPaths:indexPaths];
+    if (!self.isPerformingBatchUpdates || (self.isPerformingBatchUpdates && viewModel.isPerformingBatchUpdates)) {
+        NSArray * const indexPaths = [rows xz_map:^id(NSInteger idx, BOOL *stop) {
+            return [NSIndexPath indexPathForRow:idx inSection:index];
+        }];
+        [self didDeleteCellsAtIndexPaths:indexPaths];
+    } else {
+        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+            [self sectionViewModel:viewModel didDeleteCellsAtIndexes:rows];
+        }];
+    }
 }
 
 - (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didMoveCellAtIndex:(NSInteger)row toIndex:(NSInteger)newRow {
@@ -627,9 +648,15 @@
     if (index == NSNotFound) return;
     if (!self.isReady) return;
     
-    NSIndexPath *from = [NSIndexPath indexPathForRow:row inSection:index];
-    NSIndexPath *to   = [NSIndexPath indexPathForRow:newRow inSection:index];
-    [self didMoveCellAtIndexPath:from toIndexPath:to];
+    if (!self.isPerformingBatchUpdates || (self.isPerformingBatchUpdates && viewModel.isPerformingBatchUpdates)) {
+        NSIndexPath *from = [NSIndexPath indexPathForRow:row inSection:index];
+        NSIndexPath *to   = [NSIndexPath indexPathForRow:newRow inSection:index];
+        [self didMoveCellAtIndexPath:from toIndexPath:to];
+    } else {
+        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+            [self sectionViewModel:viewModel didMoveCellAtIndex:row toIndex:newRow];
+        }];
+    }
 }
 
 - (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
@@ -639,7 +666,7 @@
     // 应用 batchUpdates 中的数据操作，视图操作会被拦截
     if (!self.isReady || self.isPerformingBatchUpdates) {
         batchUpdates();
-        if (completion) completion(NO);
+        if (completion) dispatch_async(dispatch_get_main_queue(), ^{ completion(NO); });
     } else {
         [self didPerformBatchUpdates:batchUpdates completion:completion];
     }

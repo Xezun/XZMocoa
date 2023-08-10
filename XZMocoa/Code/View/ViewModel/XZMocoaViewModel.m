@@ -178,6 +178,23 @@
 @end
 
 
+@implementation XZMocoaEmit
+
++ (instancetype)emitWithName:(NSString *)name value:(id)value source:(XZMocoaViewModel *)source {
+    return [[self alloc] initWithName:name value:value source:source];
+}
+
+- (instancetype)initWithName:(NSString *)name value:(id)value source:(XZMocoaViewModel *)source {
+    self = [super init];
+    if (self) {
+        _name = name;
+        _value = value;
+        _source = source;
+    }
+    return self;
+}
+
+@end
 
 
 NSString * const XZMocoaEmitNone = @"";
@@ -187,11 +204,11 @@ NSString * const XZMocoaEmitUpdate = @"XZMocoaEmitUpdate";
 
 - (void)emit:(NSString *)name value:(id)value {
     if (!self.isReady) return;
-    XZMocoaEmit const emit = { name ? name : XZMocoaEmitNone, value, self };
+    XZMocoaEmit * const emit = [XZMocoaEmit emitWithName:(name ?: XZMocoaEmitNone) value:value source:self];
     [self.superViewModel subViewModel:self didEmit:emit];
 }
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit const)emit {
+- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit *)emit {
     if (!self.isReady) return;
     [self.superViewModel subViewModel:self didEmit:emit];
 }

@@ -288,7 +288,7 @@
         [self.contentView beginUpdates];
         batchUpdates();
         [self.contentView endUpdates];
-        if (completion) completion(YES);
+        if (completion) dispatch_async(dispatch_get_main_queue(), ^{ completion(YES); });
     }
 }
 

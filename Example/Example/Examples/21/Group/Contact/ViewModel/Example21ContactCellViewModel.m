@@ -42,7 +42,7 @@
     return model.phone;
 }
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit)emit {
+- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit *)emit {
     // 收到 editor 的 emit 事件。作为唯一下级，这里省略了对 subViewModel 的身份判定。
     // 由于与 target-action 使用了一样的名称，因此这里用了 emit.name 直接发送 target-action 事件。
     [self sendActionsForKeyEvents:emit.name];

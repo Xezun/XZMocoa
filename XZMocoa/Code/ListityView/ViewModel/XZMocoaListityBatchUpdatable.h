@@ -9,6 +9,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class XZMocoaViewModel;
+/// 在批量更新的过程中，同一元素只能应用一个操作，但是在 MVVM 结构中，
+/// 数据变化也可能会引起刷新操作，为了避免多个更新操作，因此会将这些操作暂存并延迟执行。
+/// Mocoa 并不能区分所有重复操作，开发者应避免。
+typedef void(^XZMocoaListityDelayedBatchUpdate)(__kindof XZMocoaViewModel *self);
+
 /// 批量更新。
 @protocol XZMocoaListityBatchUpdatable <NSObject>
 
@@ -20,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)prepareBatchUpdates XZ_UNAVAILABLE;
 
 /// 私有方法。清理批量更新环境。
-- (void)cleanupBatchUpdates XZ_UNAVAILABLE;
+- (NSArray<XZMocoaListityDelayedBatchUpdate> *)cleanupBatchUpdates XZ_UNAVAILABLE;
 
 /// 批量更新：将一组`reload/insert/delete/move`操作放在块函数`batchUpdates`统一执行。
 /// @discussion

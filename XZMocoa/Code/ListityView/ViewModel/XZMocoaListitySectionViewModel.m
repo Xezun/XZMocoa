@@ -20,6 +20,8 @@
     /// 记录 cell 视图模型的数组。
     NSMutableOrderedSet<XZMocoaListityCellViewModel *> *_cellViewModels;
     NSMutableDictionary<XZMocoaKind, NSMutableArray<XZMocoaViewModel *> *> *_supplementaryViewModels;
+    //
+    NSMutableArray<void (^)(XZMocoaListitySectionViewModel *self)> *_delayedBatchUpdates;
 }
 @end
 
@@ -63,20 +65,27 @@
     [_cellViewModels removeObject:viewModel];
 }
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit)emit {
+- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmit *)emit {
     if ([emit.name isEqualToString:XZMocoaEmitUpdate]) {
+        // 正在批量更新，事件被延迟
+        if (self.isPerformingBatchUpdates) {
+            [_delayedBatchUpdates addObject:^void(XZMocoaListitySectionViewModel *self) {
+                [self subViewModel:subViewModel didEmit:emit];
+            }];
+            return;
+        }
+        // 附加视图更新事件
         for (NSString *key in _supplementaryViewModels) {
             for (XZMocoaListitySectionSupplementaryViewModel *vm in _supplementaryViewModels[key]) {
                 if (subViewModel == vm) {
-                    [self didReloadData];
-                    return;
+                    return [self didReloadData];
                 }
             }
         }
+        // cell视图的更新事件
         NSInteger const index = [self indexOfCellViewModel:subViewModel];
         if (index != NSNotFound) {
-            [self didReloadCellsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
-            return;
+            return [self didReloadCellsAtIndexes:[NSIndexSet indexSetWithIndex:index]];;
         }
     }
     [super subViewModel:subViewModel didEmit:emit];
@@ -249,24 +258,6 @@
     }
 }
 
-/// 移动 Cell 位置。
-/// @param row 当前位置
-/// @param oldRow 原始位置（批量更新前的位置）
-/// @param newRow 目标位置
-- (void)_moveCellAtIndex:(NSInteger)row fromIndex:(NSInteger)oldRow toIndex:(NSInteger)newRow {
-    _needsDifferenceBatchUpdates = NO;
-    
-    if (row != newRow) {
-        [self _moveCellViewModelFromIndex:row toIndex:newRow];
-    }
-    
-    if (oldRow == newRow) {
-        return;
-    }
-    
-    [self didMoveCellAtIndex:oldRow toIndex:newRow];
-}
-
 #pragma mark - 事件派发
 
 - (void)didReloadData {
@@ -315,11 +306,16 @@
         return NO;
     }
     _isPerformingBatchUpdates = _cellViewModels.copy;
+    _delayedBatchUpdates = [NSMutableArray array];
     return YES;
 }
 
-- (void)cleanupBatchUpdates {
+- (NSArray<XZMocoaListityDelayedBatchUpdate> *)cleanupBatchUpdates {
     _isPerformingBatchUpdates = nil;
+    
+    NSArray *delayedBatchUpdates = _delayedBatchUpdates;
+    _delayedBatchUpdates = nil;
+    return delayedBatchUpdates;
 }
 
 - (void)setNeedsDifferenceBatchUpdates {
@@ -340,7 +336,11 @@
     };
     
     [self didPerformBatchUpdates:tableViewBatchUpdates completion:completion];
-    [self cleanupBatchUpdates];
+    
+    // 延迟的事件
+    for (XZMocoaListityDelayedBatchUpdate batchUpdates in [self cleanupBatchUpdates]) {
+        batchUpdates(self);
+    }
     
     NSInteger const count = self.numberOfCells;
     for (NSInteger row = 0; row < count; row++) {
@@ -524,6 +524,24 @@
         XZMocoaListityCellViewModel *viewModel = [self loadViewModelForCellAtIndex:index];
         [self _addCellViewModel:viewModel];
     }
+}
+
+/// 移动 Cell 位置。
+/// @param row 当前位置
+/// @param oldRow 原始位置（批量更新前的位置）
+/// @param newRow 目标位置
+- (void)_moveCellAtIndex:(NSInteger)row fromIndex:(NSInteger)oldRow toIndex:(NSInteger)newRow {
+    _needsDifferenceBatchUpdates = NO;
+    
+    if (row != newRow) {
+        [self _moveCellViewModelFromIndex:row toIndex:newRow];
+    }
+    
+    if (oldRow == newRow) {
+        return;
+    }
+    
+    [self didMoveCellAtIndex:oldRow toIndex:newRow];
 }
 
 #if DEBUG

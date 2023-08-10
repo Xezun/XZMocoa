@@ -20,11 +20,6 @@
     }
     frame.size.height = height;
     self.frame = frame;
-    [self heightDidChange];
-}
-
-- (void)heightDidChange {
-    [self emit:XZMocoaEmitUpdate value:nil];
 }
 
 - (void)wasSelectedInTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
