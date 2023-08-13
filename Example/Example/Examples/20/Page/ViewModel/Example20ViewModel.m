@@ -20,6 +20,7 @@
 - (void)prepare {
     _isHeaderRefreshing = NO;
     _isFooterRefreshing = NO;
+    
     _cursor = 100;
     _dataArray = [NSMutableArray array];
     
@@ -31,7 +32,7 @@
     
     [super prepare];
     
-    [self headerDidBeginRefreshing];
+    [self refreshingHeaderDidBeginAnimating];
 }
 
 - (void)setHeaderRefreshing:(BOOL)isHeaderRefreshing {
@@ -44,9 +45,10 @@
     [self sendActionsForKeyEvents:@"isFooterRefreshing"];
 }
 
-- (void)headerDidBeginRefreshing {
+- (void)refreshingHeaderDidBeginAnimating {
     if (_isFooterRefreshing) {
-        return [self setHeaderRefreshing:NO];
+        self.isHeaderRefreshing = NO;
+        return;
     }
     if (_isHeaderRefreshing) {
         return;
@@ -54,7 +56,7 @@
     _isHeaderRefreshing = YES;
     [self loadData:0 completion:^(NSArray *data) {
         if (data.count > 0) {
-            self->_tableViewModel.rowAnimation = UITableViewRowAnimationBottom;
+            self->_tableViewModel.rowAnimation = UITableViewRowAnimationFade;
             [self->_tableViewModel performBatchUpdates:^{
                 [self->_dataArray removeAllObjects];
                 [self->_dataArray addObjectsFromArray:data];
@@ -67,9 +69,10 @@
     }];
 }
 
-- (void)footerDidBeginRefreshing {
+- (void)refreshingFooterDidBeginAnimating {
     if (_isHeaderRefreshing) {
-        return [self setFooterRefreshing:NO];
+        self.isFooterRefreshing = NO;
+        return;
     }
     if (_isFooterRefreshing) {
         return;
@@ -77,6 +80,7 @@
     _isFooterRefreshing = YES;
     [self loadData:_dataArray.count completion:^(NSArray *data) {
         if (data.count > 0) {
+            self->_tableViewModel.rowAnimation = UITableViewRowAnimationTop;
             [self->_tableViewModel performBatchUpdates:^{
                 [self->_dataArray addObjectsFromArray:data];
             } completion:^(BOOL finished) {
@@ -120,7 +124,7 @@
             }
         }
         
-        NSTimeInterval delay = arc4random_uniform(400) / 1000.0 + 0.1;
+        NSTimeInterval delay = arc4random_uniform(2000) / 1000.0 + 0.5;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             completion(array);
         });
