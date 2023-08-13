@@ -9,15 +9,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, Example20State) {
+    Example20StateDefault,
+    Example20StateRefresh,
+    Example20StateLoading,
+};
+
 @interface Example20ViewModel : XZMocoaViewModel
 
 @property (nonatomic, strong) XZMocoaTableViewModel *tableViewModel;
 
-@property (nonatomic, setter=setHeaderRefreshing:) BOOL isHeaderRefreshing XZ_MOCOA_KEY("isHeaderRefreshing");
-@property (nonatomic, setter=setFooterRefreshing:) BOOL isFooterRefreshing XZ_MOCOA_KEY("isFooterRefreshing");
+@property (nonatomic) Example20State state XZ_MOCOA_KEY();
+@property (nonatomic, setter=setHeaderRefreshing:) BOOL isHeaderRefreshing XZ_MOCOA_KEY();
+@property (nonatomic, setter=setFooterRefreshing:) BOOL isFooterRefreshing XZ_MOCOA_KEY();
 
-- (void)headerDidBeginRefreshing;
-- (void)footerDidBeginRefreshing;
+- (void)refreshingHeaderDidBeginAnimating;
+- (void)refreshingFooterDidBeginAnimating;
 
 @end
 
