@@ -39,7 +39,6 @@
     
     self.tableView.contentView.xz_headerRefreshingView.delegate = self;
     self.tableView.contentView.xz_footerRefreshingView.delegate = self;
-    self.tableView.delegate = self;
     
     Example20ViewModel *viewModel = [[Example20ViewModel alloc] initWithModel:nil ready:YES];
     self.viewModel = viewModel;
