@@ -9,11 +9,13 @@ project '../Example/Example.xcodeproj'
 target 'Example' do
   pod 'XZMocoa/Debug', :path => '../'
   
-  pod 'SDWebImage'
-  pod 'YYModel'
   pod 'XZPageView'
   pod 'XZPageControl'
   pod 'XZExtensions'
+  pod 'XZRefreshing'
+  
+  pod 'SDWebImage'
+  pod 'YYModel'
   
   target 'ExampleTests' do
     inherit! :search_paths

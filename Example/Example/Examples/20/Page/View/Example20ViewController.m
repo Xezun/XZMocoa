@@ -7,8 +7,10 @@
 
 #import "Example20ViewController.h"
 #import "Example20ViewModel.h"
+@import XZRefreshing;
+@import XZExtensions;
 
-@interface Example20ViewController () <XZMocoaView>
+@interface Example20ViewController () <XZMocoaView, XZRefreshingDelegate>
 
 @property (weak, nonatomic) IBOutlet XZMocoaTableView *tableView;
 
@@ -35,9 +37,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIRefreshControl *refresh = [[UIRefreshControl alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
-    [refresh addTarget:self action:@selector(refreshControlAction:) forControlEvents:(UIControlEventValueChanged)];
-    self.tableView.contentView.refreshControl = refresh;
+    self.tableView.contentView.xz_headerRefreshingView.delegate = self;
+    self.tableView.contentView.xz_footerRefreshingView.delegate = self;
+    self.tableView.delegate = self;
     
     Example20ViewModel *viewModel = [[Example20ViewModel alloc] initWithModel:nil ready:YES];
     self.viewModel = viewModel;
@@ -47,25 +49,30 @@
     [viewModel addTarget:self action:@selector(footerRefreshingChanged:) forKeyEvents:@"isFooterRefreshing"];
 }
 
-- (void)refreshControlAction:(UIRefreshControl *)sender {
-    Example20ViewModel *viewModel = self.viewModel;
-    [viewModel headerDidBeginRefreshing];
-}
-
 - (void)headerRefreshingChanged:(Example20ViewModel *)viewModel {
     if (viewModel.isHeaderRefreshing) {
-        [self.tableView.contentView.refreshControl beginRefreshing];
+        [self.tableView.contentView.xz_headerRefreshingView beginAnimating];
     } else {
-        [self.tableView.contentView.refreshControl endRefreshing];
+        [self.tableView.contentView.xz_headerRefreshingView endAnimating];
     }
 }
 
 - (void)footerRefreshingChanged:(Example20ViewModel *)viewModel {
     if (viewModel.isFooterRefreshing) {
-        [self.tableView.contentView.refreshControl beginRefreshing];
+        [self.tableView.contentView.xz_footerRefreshingView beginAnimating];
     } else {
-        [self.tableView.contentView.refreshControl endRefreshing];
+        [self.tableView.contentView.xz_footerRefreshingView endAnimating];
     }
+}
+
+- (void)scrollView:(UIScrollView *)scrollView headerRefreshingViewDidBeginAnimating:(XZRefreshingView *)headerRefreshingView {
+    Example20ViewModel *viewModel = self.viewModel;
+    [viewModel refreshingHeaderDidBeginAnimating];
+}
+
+- (void)scrollView:(UIScrollView *)scrollView footerRefreshingViewDidBeginAnimating:(XZRefreshingView *)footerRefreshingView {
+    Example20ViewModel *viewModel = self.viewModel;
+    [viewModel refreshingFooterDidBeginAnimating];
 }
 
 @end
