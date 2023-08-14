@@ -1,35 +1,36 @@
 # XZMocoa
 
-[![CI Status](https://img.shields.io/travis/sweetyxia/XZMocoa.svg?style=flat)](https://travis-ci.org/sweetyxia/XZMocoa)
+[![CI Status](https://img.shields.io/travis/xezun/XZMocoa.svg?style=flat)](https://travis-ci.org/xezun/XZMocoa)
 [![Version](https://img.shields.io/cocoapods/v/XZMocoa.svg?style=flat)](https://cocoapods.org/pods/XZMocoa)
 [![License](https://img.shields.io/cocoapods/l/XZMocoa.svg?style=flat)](https://cocoapods.org/pods/XZMocoa)
 [![Platform](https://img.shields.io/cocoapods/p/XZMocoa.svg?style=flat)](https://cocoapods.org/pods/XZMocoa)
 
-## Example
+## 示例
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+在拉取代码后，运行示例工程前，请先在`Pods`目录下执行`pod install`命令。
 
-## Requirements
+## 版本需求
 
-## Installation
+iOS 11.0+，Xcode 14.0+
 
-XZMocoa is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+## 安装
+
+使用[CocoaPods](https://cocoapods.org)安装 XZMocoa 只需在你的`Podfile`文件中添加下面这行代码。
 
 ```ruby
 pod 'XZMocoa'
 ```
 
-## 背景
+## 设计背景
 
-MVVM设计模式已经不是新鲜事物，但是在iOS开发中，却不是很常见。原因一，大概时是因为Apple为开发者提供了一套基本完善的MVC架构开发体系。原因二，则可能是由于Objective-C的语言特性，基于MVVM设计模式的开发框架，与其它平台相比，相差太多，而且大部分对于原生开发者，有一定的入门成本。
-随着代码量的日益增长，原生框架已难以满足开发需求，不管是从维护成本，还是开发效率，都面临巨大考验。而目前流行的MVVM框架，虽然能满足要求，但是切换成本、学习成本、维护成本，并不是很理想，鉴于此，设计一款上手简单且贴近原生开发模式的MVVM框架，已变的非常必要。因此，在遵循MVVM设计模式和原生开发方式的基础上，Mocoa框架应运而生。
+随着业务发展，原生的MVC设计模式，让代码变得越来越难以维护，而现有的MVVM框架，都有着不小的学习、迁移、后期维护成本，因此我们需要一款上手简单、无缝迁移、贴近原生开发模式的MVVM基础框架。
 
 ## 基本结构
 
 1. 模块
 
 在Mocoa中，每一个`Model-View-ViewModel`单元都被称为一个`module`模块。模块可以是一个页面，也可以是一个组件。在开发中，我们尽量把逻辑上独立的部分，封装为一个MVVM模块。大部分情况下，一个页面就是一个模块，但是页面很复杂，比如`UITableView`页面，我们又可以将Cell作为一个个子模块，然后建立上下级关系进行交互。
+
 在Mocoa中，`XZMocoaTableView`是对`UITableView`的封装，可以在无感知的情况下，管理Cell子模块，类似的`UICollectionView`也有`XZMocoaCollectionView`可以使用。
 
 2. 解藕
