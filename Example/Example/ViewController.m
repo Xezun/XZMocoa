@@ -8,6 +8,7 @@
 #import "ViewController.h"
 @import XZMocoa;
 @import ObjectiveC;
+@import XZML;
 
 @interface ViewController () <XZMocoaView>
 

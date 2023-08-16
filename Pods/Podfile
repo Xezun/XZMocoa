@@ -13,6 +13,7 @@ target 'Example' do
   pod 'XZPageControl'
   pod 'XZExtensions'
   pod 'XZRefreshing'
+  pod 'XZML'
   
   pod 'SDWebImage'
   pod 'YYModel'
