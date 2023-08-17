@@ -22,15 +22,15 @@
     self.frame = frame;
 }
 
-- (void)wasSelectedInTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 }
 
-- (void)willBeDisplayedInTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayRowAtIndexPath:(NSIndexPath *)indexPath {
 
 }
 
-- (void)didEndBeingDisplayedInTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didEndDisplayingRowAtIndexPath:(NSIndexPath *)indexPath {
 
 }
 

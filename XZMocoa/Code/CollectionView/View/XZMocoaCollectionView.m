@@ -148,23 +148,23 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell<XZMocoaCollectionCell> *cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell wasSelectedInCollectionView:self atIndexPath:indexPath];
+    [cell collectionView:self didSelectItemAtIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell<XZMocoaCollectionCell> *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    [cell willBeDisplayedInCollectionView:self atIndexPath:indexPath];
+    [cell collectionView:self willDisplayItemAtIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell<XZMocoaCollectionCell> *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    [cell didEndBeingDisplayedInCollectionView:self atIndexPath:indexPath];
+    [cell collectionView:self didEndDisplayingItemAtIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView<XZMocoaCollectionSectionSupplementaryView> *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    [view willBeDisplayedInCollectionView:self atIndexPath:indexPath];
+    [view collectionView:self willDisplaySupplementaryViewAtIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView<XZMocoaCollectionSectionSupplementaryView> *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    [view didEndBeingDisplayedInCollectionView:self atIndexPath:indexPath];
+    [view collectionView:self didEndDisplayingSupplementaryViewAtIndexPath:indexPath];
 }
 
 @end
