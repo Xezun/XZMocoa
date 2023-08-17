@@ -48,7 +48,7 @@
     [self sendActionsForKeyEvents:emition.name];
 }
 
-- (void)wasSelectedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/21/editor");
     UIViewController<XZMocoaView> *nextVC = [module instantiateViewControllerWithOptions:@{
         @"model": self.model
