@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param style 属性`tableView`的样式
 - (instancetype)initWithTableViewClass:(Class)tableViewClass style:(UITableViewStyle)style NS_DESIGNATED_INITIALIZER;
 
+/// 支持在 IB 中使用，添加 UITableView 作为子视图并 outlet 关联到 contentView 属性即可。
 - (instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 
 /// 便利方法，使用`UITableView`作为初始化类型。

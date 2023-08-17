@@ -28,17 +28,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// 当前 Cell 的点击事件。
 /// @param collectionView 当前 Cell 所属的 XZMocoaCollectionView 对象
 /// @param indexPath 当前 Cell 的当前所在的位置
-- (void)wasSelectedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
+- (void)collectionView:(XZMocoaCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 
 /// 当前 Cell 将要被展示在指定位置。
 /// @param collectionView 当前 Cell 所属的 UICollectionView 对象
 /// @param indexPath 当前 Cell 的将要展示的位置
-- (void)willBeDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath;
+- (void)collectionView:(XZMocoaCollectionView *)collectionView willDisplayItemAtIndexPath:(NSIndexPath *)indexPath;
 
 /// 当前 Cell 已结束在指定位置的展示。
 /// @param collectionView 当前 Cell 所属的 XZMocoaCollectionView 对象
 /// @param indexPath 当前 Cell 的当前所在的位置
-- (void)didEndBeingDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath*)indexPath;
+- (void)collectionView:(XZMocoaCollectionView *)collectionView didEndDisplayingItemAtIndexPath:(NSIndexPath*)indexPath;
 
 @end
 
