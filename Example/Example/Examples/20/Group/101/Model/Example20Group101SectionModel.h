@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Example20Group101SectionModel : XZMocoaTableSectionModel <YYModel>
+@property (nonatomic, copy) NSString *gid;
 @property (nonatomic, copy) NSArray *items;
 @end
 

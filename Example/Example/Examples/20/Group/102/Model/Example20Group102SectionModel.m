@@ -14,6 +14,12 @@
     XZMocoa(@"https://mocoa.xezun.com/examples/20/list/102/").modelClass = self;
 }
 
+- (BOOL)isEqual:(Example20Group102SectionModel *)object {
+    if (self == object) return YES;
+    if (![object isKindOfClass:[Example20Group102SectionModel class]]) return NO;
+    return [self.gid isEqual:object.gid];
+}
+
 + (NSDictionary<NSString *,id> *)modelContainerPropertyGenericClass {
     return @{
         @"items": [Example20Group102CellModel class]

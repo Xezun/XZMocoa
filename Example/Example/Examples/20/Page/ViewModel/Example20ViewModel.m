@@ -13,10 +13,6 @@
     NSInteger _cursor;
 }
 
-- (instancetype)initWithModel:(id)model {
-    return [super initWithModel:[[Example20Model alloc] init]];
-}
-
 - (void)prepare {
     _isHeaderRefreshing = NO;
     _isFooterRefreshing = NO;
@@ -95,38 +91,48 @@
 /// 模拟网络加载
 - (void)loadData:(NSInteger)page completion:(void (^)(NSArray *data))completion {
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-        Example20Model *model = self.model;
-        if (model.data.count == 0) {
-            NSURL *url = [NSBundle.mainBundle URLForResource:@"Example20Model" withExtension:@"json"];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            [model yy_modelSetWithDictionary:dict];
-        }
-        
-        NSMutableArray *array = [NSMutableArray arrayWithCapacity:6];
+        // 模拟后端查询数据
+        NSURL          *database = [NSBundle.mainBundle URLForResource:@"Example20Model" withExtension:@"json"];
+        NSData         *data     = [NSData dataWithContentsOfURL:database];
+        NSDictionary   *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSArray        *items    = response[@"data"];
+        NSMutableArray *array    = [NSMutableArray arrayWithCapacity:8];
         if (page == 0) { // 下拉刷新
             if (self->_cursor > 1) {
-                self->_cursor = MAX(self->_cursor - arc4random_uniform(3) - 1, 1);
-                [array addObject:model.data.firstObject];
-                NSArray *subArray = [model.data subarrayWithRange:NSMakeRange(self->_cursor, 5)];
+                self->_cursor = MAX(self->_cursor - arc4random_uniform(2) - 1, 1);
+                [array addObject:items.firstObject];
+                NSArray *subArray = [items subarrayWithRange:NSMakeRange(self->_cursor, 7)];
                 [array addObjectsFromArray:subArray];
             } else {
                 // no more new data
             }
         } else {
-            NSInteger count = model.data.count;
+            NSInteger count = items.count;
             NSInteger index = self->_cursor + page;
             if (index < count) {
-                NSArray *subArray = [model.data subarrayWithRange:NSMakeRange(index, MIN(count - index, 6))];;
+                NSArray *subArray = [items subarrayWithRange:NSMakeRange(index, MIN(count - index, 8))];;
                 [array addObjectsFromArray:subArray];
             } else {
                 // no more history data
             }
         }
         
+        // 模拟网络模块处理数据
+        XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/20/list/");
+        NSMutableArray *list = [NSMutableArray arrayWithCapacity:array.count];
+        for (NSDictionary *dict in array) {
+            XZMocoaName name = dict[@"group"];
+            if (!name) continue;
+            XZMocoaModule *submodule = [module sectionForName:name];
+            id item = [submodule.modelClass yy_modelWithDictionary:dict];
+            if (item) {
+                [list addObject:item];
+            }
+        }
+        
         NSTimeInterval delay = arc4random_uniform(2000) / 1000.0 + 0.5;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            completion(array);
+            completion(list);
         });
     });
 }

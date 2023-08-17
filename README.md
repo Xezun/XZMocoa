@@ -5,21 +5,94 @@
 [![License](https://img.shields.io/cocoapods/l/XZMocoa.svg?style=flat)](https://cocoapods.org/pods/XZMocoa)
 [![Platform](https://img.shields.io/cocoapods/p/XZMocoa.svg?style=flat)](https://cocoapods.org/pods/XZMocoa)
 
-## 示例
+## 示例项目
 
-在拉取代码后，运行示例工程前，请先在`Pods`目录下执行`pod install`命令。
+要运行示例工程，请在拉取代码后，先在`Pods`目录下执行`pod install`命令。
 
 ## 版本需求
 
 iOS 11.0+，Xcode 14.0+
 
-## 安装
+## 如何安装
 
-使用[CocoaPods](https://cocoapods.org)安装 XZMocoa 只需在你的`Podfile`文件中添加下面这行代码。
+推荐使用 [CocoaPods](https://cocoapods.org) 安装 XZMocoa 框架，在`Podfile`文件中添加下面这行代码即可。
+
+XZMocoa is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'XZMocoa'
 ```
+
+## 如何使用
+
+Mocoa 是对原生框架的拓展，是为开发者更方便地使用原生框架编写 MVVM 设计模式的代码而设计。
+
+在 MVVM 中，`UIViewController`的角色是`View`，所以 Mocoa 给`UIView`增加了方法，用以获取控制器。
+
+```objc
+UIView<XZMocoaView> *view;
+[view.navigationController pushViewController:nextVC animated:YES];
+```
+
+Mocoa 在设计上尽量使用协议，而不是`Category`或子类，以避免与原生混淆，因为只有在 MVVM 代码中，才需要声明 Mocoa 相关的协议。
+比如在上面的代码中，如果使用的是`Category`，那么在 MVC 结构中，也有开发者可能会访问这个方法，这就破坏了 MVC 结构的一致性。
+
+
+
+## 模块化
+
+
+
+## 解藕
+
+Mocoa 是一款 MVVM 基础框架，因此在 Mocoa 中，原生类可能会有些与传统不同的使用方式，比如`UIView`可以直接打开新的页面，例如。
+
+
+
+即在 Mocoa 体系中，`UIViewController`与`UIView`同等对待的，不过大部分情况下 Mocoa 不会像上面这样打开新的页面，例如。
+
+```objc
+NSURL *url = [NSURL URLWithString:@"https://xezun.com/main/"];
+[view.viewController presentViewControllerWithMocoaURL:url animated:YES completion:nil];
+[view.navigationController pushViewControllerWithMocoaURL:url animated:YES];
+```
+
+即在 Mocoa 体系中，打开页面只需要页面的`MocoaURL`，而不必知晓页面具体类型。
+
+这么做的好处也显而易见，页面可能会根据业务需要，进行不同的改造升级，但是`URL`却可以保持不变，其它相关页面就不需要额外进行适配。
+
+通过`MocoaURL`可以打开页面，是因为页面已经被定义为 Mocoa 中的模块，所以可以通过模块的地址`MocoaURL`找到并打开它。
+
+除了页面，列表中分块的独立视图，也可以封装为模块。
+
+比如`UITableView`的`cell`视图，定义为模块后，就可以通过`MocoaURL`找到它，那么我们就可以根据后端下发的标识，
+通过`MocoaURL`找到对应`cell`，解除了列表`UITableView`对具体`cell`类型的依赖。
+
+### 定义模块
+
+Mocoa 将每一个`Model-View-ViewModel`单元都视为模块。
+
+1、页面模块
+
+大部分情况下，一个独立的页面，就可以成为一个模块，要注册这个模块，最简单的方式是在`+load`方法中。
+
+```objc
++ (void)load {
+    XZMocoa(@"https://mocoa.xezun.com/main/").viewClass = self;
+}
+```
+
+页面模块，不论是MVC设计模式还是MVVM设计模式，视图控制器都是模块的入口，只不过控制器在两种设计模式中的角色不同，一个是`Controller`，一个是`View`。
+
+
+### 1、使用 MVVM 设计模式。
+
+Mocoa 建议你使用 MVVM 设计模式进行开发，以充分利用 Mocoa 提供的特性。使用 MVVM 设计模式的目的，可以很好的
+
+提到 MVVM 我们可能会想到响应式编程，但是 Mocoa 不要求开发者必须在 MVVM 模块中使用响应式技术，而仅仅遵循 MVVM 基本要求即可。
+
+
+
 
 ## 设计背景
 

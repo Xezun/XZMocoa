@@ -32,4 +32,10 @@
     return [self.items objectAtIndex:index];
 }
 
+- (BOOL)isEqual:(Example20Group100SectionModel *)object {
+    if (self == object) return YES;
+    if (![object isKindOfClass:[Example20Group100SectionModel class]]) return NO;
+    return [self.gid isEqual:object.gid];
+}
+
 @end

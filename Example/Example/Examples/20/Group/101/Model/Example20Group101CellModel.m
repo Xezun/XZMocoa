@@ -13,4 +13,11 @@
     XZMocoa(@"https://mocoa.xezun.com/examples/20/list/101/:/").modelClass = self;
 }
 
+
+- (BOOL)isEqual:(Example20Group101CellModel *)object {
+    if (object == self) return YES;
+    if (![object isKindOfClass:[Example20Group101CellModel class]]) return NO;
+    return [self.nid isEqualToString:object.nid];
+}
+
 @end
