@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol XZMocoaModuleProvider;
+@protocol XZMocoaDomainModuleProvider;
 
 /// 一种基于 URL 的模块管理方式。
 @interface XZMocoaDomain : NSObject
@@ -39,11 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setModule:(id)newModule forPath:(NSString *)path;
 
 /// 模块由外部提供懒加载。
-@property (nonatomic, strong, nullable) id<XZMocoaModuleProvider> provider;
+@property (nonatomic, strong, nullable) id<XZMocoaDomainModuleProvider> provider;
 
 @end
 
-@protocol XZMocoaModuleProvider <NSObject>
+@protocol XZMocoaDomainModuleProvider <NSObject>
 - (nullable id)domain:(XZMocoaDomain *)domain moduleForName:(NSString *)name atPath:(NSString *)path;
 @end
 

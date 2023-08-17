@@ -66,7 +66,7 @@ static BOOL isValidPath(NSString *path) {
         return module;
     }
     
-    id<XZMocoaModuleProvider> provider = self.provider;
+    id<XZMocoaDomainModuleProvider> provider = self.provider;
     if (provider == nil) {
         return nil;
     }
