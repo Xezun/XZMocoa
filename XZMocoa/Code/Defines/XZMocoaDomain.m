@@ -10,6 +10,7 @@
 
 static NSMutableDictionary<NSString *, XZMocoaDomain *> *_domainTable = nil;
 
+#if DEBUG
 static BOOL isValidPath(NSString *path) {
     if ([path isEqualToString:@"/"]) {
         return YES;
@@ -19,6 +20,7 @@ static BOOL isValidPath(NSString *path) {
     NSRange const range = [reg rangeOfFirstMatchInString:path options:0 range:NSMakeRange(0, path.length)];
     return range.location == 0 && range.length == path.length;
 }
+#endif
 
 @implementation XZMocoaDomain {
     // TODO: 缓存过期功能
@@ -69,10 +71,12 @@ static BOOL isValidPath(NSString *path) {
         return nil;
     }
     
+#if DEBUG
     if (!isValidPath(path)) {
         XZLog(@"参数 path 不合法：%@", path);
         return nil;
     }
+#endif
     
     module = [self.provider domain:self moduleForName:self.name atPath:path];
     _keyedModules[path] = module;
@@ -80,10 +84,12 @@ static BOOL isValidPath(NSString *path) {
 }
 
 - (void)setModule:(id)module forPath:(NSString *)path {
+#if DEBUG
     if (!isValidPath(path)) {
         XZLog(@"参数 path 不合法：%@", path);
         return;
     }
+#endif
     _keyedModules[path] = module;
 }
 
