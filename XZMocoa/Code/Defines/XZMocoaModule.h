@@ -251,7 +251,7 @@ FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName _Nullable 
     return [NSString stringWithFormat:@"%@-%@-%@", section ?: XZMocoaNameNone, kind ?: XZMocoaKindNone, name ?: XZMocoaNameNone];
 }
 
-@interface XZMocoaModuleProvider : NSObject <XZMocoaModuleProvider>
+@interface XZMocoaModuleProvider : NSObject <XZMocoaDomainModuleProvider>
 /// 子类可以通过此方法构造统一格式的 URL 对象。
 /// - Parameters:
 ///   - name: 域名
