@@ -30,21 +30,21 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 
 + (void)load {
     Class const cls = UICollectionViewCell.class;
-    mocoa_copyMethod(cls, @selector(wasSelectedInCollectionView:atIndexPath:), @selector(mocoa_wasSelectedInCollectionView:atIndexPath:));
-    mocoa_copyMethod(cls, @selector(willBeDisplayedInCollectionView:atIndexPath:), @selector(mocoa_willBeDisplayedInCollectionView:atIndexPath:));
-    mocoa_copyMethod(cls, @selector(didEndBeingDisplayedInCollectionView:atIndexPath:), @selector(mocoa_didEndBeingDisplayedInCollectionView:atIndexPath:));
+    mocoa_copyMethod(cls, @selector(collectionView:didSelectItemAtIndexPath:), @selector(mocoa_collectionView:didSelectItemAtIndexPath:));
+    mocoa_copyMethod(cls, @selector(collectionView:willDisplayItemAtIndexPath:), @selector(mocoa_collectionView:willDisplayItemAtIndexPath:));
+    mocoa_copyMethod(cls, @selector(collectionView:didEndDisplayingItemAtIndexPath:), @selector(mocoa_collectionView:didEndDisplayingItemAtIndexPath:));
 }
 
-- (void)mocoa_wasSelectedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel wasSelectedInCollectionView:collectionView atIndexPath:indexPath];
+- (void)mocoa_collectionView:(XZMocoaCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel collectionView:collectionView didSelectItemAtIndexPath:indexPath];
 }
 
-- (void)mocoa_willBeDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel willBeDisplayedInCollectionView:collectionView atIndexPath:indexPath];
+- (void)mocoa_collectionView:(XZMocoaCollectionView *)collectionView willDisplayItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel collectionView:collectionView willDisplayItemAtIndexPath:indexPath];
 }
 
-- (void)mocoa_didEndBeingDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel didEndBeingDisplayedInCollectionView:collectionView atIndexPath:indexPath];
+- (void)mocoa_collectionView:(XZMocoaCollectionView *)collectionView didEndDisplayingItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel collectionView:collectionView didEndDisplayingItemAtIndexPath:indexPath];
 }
 
 @end

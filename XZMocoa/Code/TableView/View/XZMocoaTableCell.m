@@ -10,7 +10,6 @@
 #import "XZMocoaModule.h"
 #import "XZMocoaDefines.h"
 
-
 @implementation XZMocoaTableCell
 @dynamic viewModel;
 @end
@@ -32,21 +31,21 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 
 + (void)load {
     Class const cls = UITableViewCell.class;
-    mocoa_copyMethod(cls, @selector(wasSelectedInTableView:atIndexPath:), @selector(mocoa_wasSelectedInTableView:atIndexPath:));
-    mocoa_copyMethod(cls, @selector(willBeDisplayedInTableView:atIndexPath:), @selector(mocoa_willBeDisplayedInTableView:atIndexPath:));
-    mocoa_copyMethod(cls, @selector(didEndBeingDisplayedInTableView:atIndexPath:), @selector(mocoa_didEndBeingDisplayedInTableView:atIndexPath:));
+    mocoa_copyMethod(cls, @selector(tableView:didSelectRowAtIndexPath:), @selector(mocoa_tableView:didSelectRowAtIndexPath:));
+    mocoa_copyMethod(cls, @selector(tableView:willDisplayRowAtIndexPath:), @selector(mocoa_tableView:willDisplayRowAtIndexPath:));
+    mocoa_copyMethod(cls, @selector(tableView:didEndDisplayingRowAtIndexPath:), @selector(mocoa_tableView:didEndDisplayingRowAtIndexPath:));
 }
 
-- (void)mocoa_wasSelectedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel wasSelectedInTableView:tableView atIndexPath:indexPath];
+- (void)mocoa_tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
-- (void)mocoa_willBeDisplayedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel willBeDisplayedInTableView:tableView atIndexPath:indexPath];
+- (void)mocoa_tableView:(XZMocoaTableView *)tableView willDisplayRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel tableView:tableView willDisplayRowAtIndexPath:indexPath];
 }
 
-- (void)mocoa_didEndBeingDisplayedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel didEndBeingDisplayedInTableView:tableView atIndexPath:indexPath];
+- (void)mocoa_tableView:(XZMocoaTableView *)tableView didEndDisplayingRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel tableView:tableView didEndDisplayingRowAtIndexPath:indexPath];
 }
 
 @end
