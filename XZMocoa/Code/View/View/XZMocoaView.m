@@ -176,6 +176,19 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
     return [[ViewController alloc] initWithMocoaOptions:options nibName:nibName bundle:bundle];
 }
 
+- (__kindof UIView *)instantiateViewWithFrame:(CGRect)frame {
+    if (self.viewNibName) {
+        UINib *nib = [UINib nibWithNibName:self.viewNibName bundle:self.viewNibBundle];
+        for (UIView *object in [nib instantiateWithOwner:nil options:nil]) {
+            if ([object isKindOfClass:self.viewNibClass]) {
+                object.frame = frame;
+                return object;
+            };
+        }
+    }
+    return [[self.viewClass alloc] initWithFrame:frame];
+}
+
 @end
 
 

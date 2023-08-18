@@ -53,7 +53,10 @@ typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 /// 实例化控制器。
 /// - Parameter options: 实例化参数，传递给控制器的初始化参数
 - (nullable __kindof UIViewController *)instantiateViewControllerWithOptions:(nullable XZMocoaOptions)options;
+/// 实例化视图。
+- (nullable __kindof UIView *)instantiateViewWithFrame:(CGRect)frame;
 @end
+
 
 @interface UIViewController (XZMocoaModuleSupporting)
 
