@@ -26,6 +26,200 @@ XZMocoa is available through [CocoaPods](https://cocoapods.org). To install it, 
 pod 'XZMocoa'
 ```
 
+## 如何使用
+
+### 1、编写 MVVM 模块
+
+1. 定义 View、ViewModel 和 Model
+
+`View`就是产品最终呈现的样子，不论是纯代码，还是 xib/storyboard 都可以。
+
+```objc
+@interface ExampleView : UIView <XZMocoaView>
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@end
+```
+
+`ViewModel`对`View`提供直接用于展示的数据。
+
+```objc
+@interface ExampleViewModel : XZMocoaViewModel
+@property (nonatomic, copy) NSString *name;
+@end
+```
+
+`Model`是包含展示元素的数据，一般需要经过`ViewModel`的处理。
+
+```objc
+@interface ExampleModel : NSObject
+@property (nonatomic, copy) NSString *firstName;
+@property (nonatomic, copy) NSString *lastName;
+@end
+```
+
+2. 处理数据
+
+`ViewModel`处理原始数据。
+
+```objc
+@implementation ExampleViewModel
+- (void)prepare {
+    [super prepare];
+    
+    ExampleModel *data = self.model;
+    self.name = [NSString stringWithFormat:@"%@ %@", data.firstName, data.lastName];
+}
+@end
+```
+
+3. 渲染视图
+
+`View`根据`ViewModel`进行展示。
+
+```objc
+@implementation ExampleView
+- (void)viewModelDidChange {
+    ExampleViewModel *viewModel = self.viewModel;
+    
+    self.nameLabel.text = viewModel.name;
+}
+@end
+```
+
+### 2、注册 MVVM 模块
+
+```objc
+@implementation ExampleModel
++ (void)load {
+    XZMocoa(@"https://mocoa.xezun.com/example/").modelClass = self;
+}
+@end
+
+@implementation ExampleView
++ (void)load {
+    XZMocoa(@"https://mocoa.xezun.com/example/").viewNibClass = self;
+}
+@end
+
+@implementation ExampleView
++ (void)load {
+    XZMocoa(@"https://mocoa.xezun.com/example/").viewModelClass = self;
+}
+@end
+```
+
+### 3、使用 MVVM 模块
+
+```objc
+NSDictionary *data;
+XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/example/");
+
+id                    model     = [module.modelClass yy_modelWithDictionary:data];
+id                    viewModel = [[module.viewModelClass alloc] initWithModel:model ready:YES];
+UIView<XZMocoaView> * view      = [module instantiateViewWithFrame:CGRectMake(0, 0, 100, 100)];
+view.viewModel = viewModel;
+[self.view addSubview:view]
+```
+
+### 4、具名的模块
+
+如果页面中，由多个不同类型的视图模块组成，那么应该为每中类型的视图取一个名字，然后通过数据的`mocoaName`属性，我们能取到这个名字。
+
+```objc
+@implementation ExampleModel
+- (NSString *)mocoaName {
+    return @"name";
+}
+@end
+```
+
+对应的`View`模块，按名字应该注册为子模块。
+
+```objc
+// URL 中路径的下一级，即是子模块
+XZMocoa(@"https://mocoa.xezun.com/example/name/").viewClass = self;
+```
+
+根据数据`mocoaName`读取子模块，然后渲染页面。
+
+```objc
+XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/example/");
+
+CGFloat y = 0;
+for (id<XZMocoaModel> data in _dataArray) {
+    XZMocoaModule *submodule = [module submoduleForName:data.mocoaName];
+
+    id model = [submodule.modelClass yy_modelWithDictionary:data];
+    id viewModel = [[submodule.viewModelClass alloc] initWithModel:model ready:YES];
+    UIView<XZMocoaView> * view = [submodule instantiateViewWithFrame:CGRectMake(0, y, 100, 50)];
+    view.viewModel = viewModel;
+    [self.view addSubview:view];
+
+    y += 60;
+}
+```
+
+如果是固定模块的页面，不使用`mocoaName`，而直接使用视图模块`URL`也是可以的，因为`mocoaName`只是方便从注册关系中获取子模块而已。
+
+### 5、渲染列表
+
+使用`XZMocoaTableView`或`XZMocoaCollectionView`渲染列表。
+
+```objc
+// model
+NSArray<XZMocoaTableModel> *dataArray;
+// viewModel
+XZMocoaTableViewModel *tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:dataArray];
+tableViewModel.module = XZMocoa(@"https://mocoa.xezun.com/list/");
+[tableViewModel ready];
+// view
+XZMocoaTableView *tableView = [[XZMocoaTableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
+tableView.viewModel = tableViewModel;
+[self.view addSubview:tableView];
+```
+
+与`UITableView`或`UICollectionView`相比，使用`XZMocoaTableView`或`XZMocoaCollectionView`不用注册`cell`也不用编写`delegate`或`dataSource`方法。
+当然能这么做的前提是，各个`cell`模块已经注册成为`XZMocoaTableView`或`XZMocoaCollectionView`的子模块。
+
+由于在`tableView`中，有`section`逻辑层，`cell`并不是`tableView`的直接子模块，而是`section`的直接子模块，所以注册如下。
+
+```objc
++ (void)load {
+    XZMocoa(@"https://mocoa.xezun.com/list/{sectionName}/{cellName}/").viewModelClass = self;
+}
+```
+
+在多`section`多`cell`的情况下，你需要为不同类型的`section`和`cell`取一个`mocoaName`进行区分。
+编写`cell`模块的编写，与编写普通的`UIView`模块相同，只是如何使用`cell`模块，已经由`XZMocoaTableView`在内部实现了，我们需要做的就是实现`cell`模块的功能，并注册它。
+
+所以在 Mocoa 框架下，每个`cell`都是独立的 MVVM 模块，添加到任何`tableView`的子模块中，都可以直接使用。
+
+另外，作为`XZMocoaTableView`的数据，需要遵循以下两个协议。
+
+```objc
+@protocol XZMocoaListityModel <XZMocoaModel>
+@property (nonatomic, readonly) NSInteger numberOfSectionModels;
+- (nullable id<XZMocoaListitySectionModel>)modelForSectionAtIndex:(NSInteger)index;
+@end
+
+@protocol XZMocoaListitySectionModel <XZMocoaModel>
+@optional
+@property (nonatomic, readonly) NSInteger numberOfCellModels;
+- (nullable id)modelForCellAtIndex:(NSInteger)index;
+
+@property (nonatomic, readonly) NSArray<XZMocoaKind> *supplementaryKinds;
+- (NSInteger)numberOfModelsForSupplementaryKind:(XZMocoaKind)kind;
+- (nullable id)modelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
+@end
+```
+
+*`ListityView`是`TableView`和`CollectionView`在逻辑上的抽象。*
+
+这两个协议只是为了方便`tableView`和`colletionView`任何获取对应视图数据，`NSArray`是天然的`XZMocoaTableView`的数据，可以直接使用。
+严格来讲，应该由`ViewModel`实现，数据模型不应实现任何方法。
+但很明显，这些方法可以算，也可以不算是业务逻辑，由数据模型实现更方便维护。
+
+
 ## 模块化
 
 不论采用何种设计模式，都应该让你的代码模块化。这样在更新维护时，变动就可以控制在模块内，从而避免牵一发而动全身。
@@ -106,7 +300,7 @@ NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/main"];
 @end
 ```
 
-## MVVM 设计模式
+## Mocoa MVVM
 
 Mocoa 建议使用 MVVM 模式设计您的代码，包括控制器，而且列表页面中，每一个区块视图`cell`也应该设计为独立的 MVVM 模块。
 
@@ -267,30 +461,7 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 
 `XZMocoaTableView`和`XZMocoaCollectionView`是适配化后的列表视图，仅对`UITableView`和`UICollectionView`进行了一次简单的封装。
 
-1. 定义了列表数据要实现的方法。
-
-从理论上严格来讲，数据不应实现任何方法，而实际上，这些方法也是`ViewModel`应该处理的。但很明显，这些方法可以不算是业务逻辑，也足够简单，放在数据上不影响整体结构，也方便维护。
-
-```objc
-@protocol XZMocoaListityModel <XZMocoaModel>
-@property (nonatomic, readonly) NSInteger numberOfSectionModels;
-- (nullable id<XZMocoaListitySectionModel>)modelForSectionAtIndex:(NSInteger)index;
-@end
-
-@protocol XZMocoaListitySectionModel <XZMocoaModel>
-@optional
-@property (nonatomic, readonly) NSInteger numberOfCellModels;
-- (nullable id)modelForCellAtIndex:(NSInteger)index;
-
-@property (nonatomic, readonly) NSArray<XZMocoaKind> *supplementaryKinds;
-- (NSInteger)numberOfModelsForSupplementaryKind:(XZMocoaKind)kind;
-- (nullable id)modelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
-@end
-```
-
-`ListityView`是`TableView`和`CollectionView`在逻辑上行抽象，即代表它们。
-
-2. 通过`ViewModel`管理`cell`的高度。
+1. 通过`ViewModel`管理`cell`的高度。
 
 ```objc
 @interface XZMocoaTableCellViewModel : XZMocoaListityCellViewModel
@@ -299,7 +470,7 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 @end
 ```
 
-3. 列表事件，重新转发给`cell`，并再转发给`ViewModel`处理。
+2. 列表事件，重新转发给`cell`，并再转发给`ViewModel`处理。
 
 ```objc
 @interface XZMocoaTableCellViewModel : XZMocoaListityCellViewModel
@@ -312,7 +483,7 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 
 Mocoa 目前默认只转发了基本的三个事件，如需要更多事件，需要开发者重写或在`Category`中自行实现。
 
-4. 同步更新视图。
+3. 同步更新视图。
 
 当数据变化后，调用`ViewModel`相应的方法，即可更新视图。
 
@@ -321,7 +492,7 @@ Mocoa 目前默认只转发了基本的三个事件，如需要更多事件，�
 [_tableViewModel deleteSectionAtIndex:0];
 ``` 
 
-5. 批量更新及自动差异分析。
+4. 批量更新及自动差异分析。
 
 在传统的列表展示页面中，由于数据是通过服务端请求的，我们很少分析数据进行局部更新，而是在获取到数据后，直接`reloadData`刷新页面。
 
