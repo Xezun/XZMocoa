@@ -28,16 +28,16 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 
 + (void)load {
     Class const cls = UICollectionReusableView.class;
-    mocoa_copyMethod(cls, @selector(willBeDisplayedInCollectionView:atIndexPath:), @selector(mocoa_willBeDisplayedInCollectionView:atIndexPath:));
-    mocoa_copyMethod(cls, @selector(didEndBeingDisplayedInCollectionView:atIndexPath:), @selector(mocoa_didEndBeingDisplayedInCollectionView:atIndexPath:));
+    mocoa_copyMethod(cls, @selector(collectionView:willDisplaySupplementaryViewAtIndexPath:), @selector(mocoa_collectionView:willDisplaySupplementaryViewAtIndexPath:));
+    mocoa_copyMethod(cls, @selector(collectionView:didEndDisplayingSupplementaryViewAtIndexPath:), @selector(mocoa_collectionView:didEndDisplayingSupplementaryViewAtIndexPath:));
 }
 
-- (void)mocoa_willBeDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel willBeDisplayedInCollectionView:collectionView atIndexPath:indexPath];
+- (void)mocoa_collectionView:(XZMocoaCollectionView *)collectionView willDisplaySupplementaryViewAtIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel collectionView:collectionView willDisplaySupplementaryViewAtIndexPath:indexPath];
 }
 
-- (void)mocoa_didEndBeingDisplayedInCollectionView:(XZMocoaCollectionView *)collectionView atIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel didEndBeingDisplayedInCollectionView:collectionView atIndexPath:indexPath];
+- (void)mocoa_collectionView:(XZMocoaCollectionView *)collectionView didEndDisplayingSupplementaryViewAtIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel collectionView:collectionView didEndDisplayingSupplementaryViewAtIndexPath:indexPath];
 }
 
 @end

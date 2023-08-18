@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example20Model : XZMocoaModel <YYModel>
+@interface Example20Model : NSObject <XZMocoaModel, YYModel>
 
 @property (nonatomic) NSInteger code;
 @property (nonatomic, copy) NSString *message;
