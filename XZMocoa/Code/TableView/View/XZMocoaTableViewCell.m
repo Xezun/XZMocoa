@@ -1,16 +1,16 @@
 //
-//  XZMocoaTableCell.m
+//  XZMocoaTableViewCell.m
 //  XZMocoa
 //
 //  Created by Xezun on 2021/1/13.
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import "XZMocoaTableCell.h"
+#import "XZMocoaTableViewCell.h"
 #import "XZMocoaModule.h"
 #import "XZMocoaDefines.h"
 
-@implementation XZMocoaTableCell
+@implementation XZMocoaTableViewCell
 @dynamic viewModel;
 @end
 
@@ -22,7 +22,7 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
     XZLog(@"为协议 XZMocoaTableCell 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
 }
 
-@interface UITableViewCell (XZMocoaTableCell) <XZMocoaTableCell>
+@interface UITableViewCell (XZMocoaTableCell) <XZMocoaTableViewCell>
 @end
 
 @implementation UITableViewCell (XZMocoaTableCell)

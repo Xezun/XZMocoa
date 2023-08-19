@@ -1,5 +1,5 @@
 //
-//  XZMocoaTableCell.h
+//  XZMocoaTableViewCell.h
 //  XZMocoa
 //
 //  Created by Xezun on 2021/1/13.
@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 使用 Mocoa 时，UITableViewCell 应遵循本协议。
 /// @note
 /// UITableViewCell 已默认实现了本协议，如需使用仅需声明遵循协议即可。
-@protocol XZMocoaTableCell <XZMocoaView>
+@protocol XZMocoaTableViewCell <XZMocoaView>
 
 @optional
 /// ViewModel 对象。
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 因一致性而提供，非必须基类。
 /// @note 任何 UITableViewCell 对象都可以作为 Mocoa 的 View 实例，而非必须基于此类。
-@interface XZMocoaTableCell : UITableViewCell <XZMocoaTableCell>
+@interface XZMocoaTableViewCell : UITableViewCell <XZMocoaTableViewCell>
 @end
 
 NS_ASSUME_NONNULL_END
