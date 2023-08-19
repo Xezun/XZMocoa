@@ -560,32 +560,13 @@
 #pragma mark - 子类重写
 
 - (XZMocoaListityCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
-    id<XZMocoaModel> const model   = [self.model modelForCellAtIndex:index];
-    XZMocoaName      const name    = model.mocoaName;
-    XZMocoaModule *  const module  = [self.module cellForName:name];
-    Class            const VMClass = module.viewModelClass ?: [XZMocoaListityCellViewModel class];
-    
-    XZMocoaListityCellViewModel *vm = [[VMClass alloc] initWithModel:model];
-    vm.index      = index;
-    vm.module     = module;
-    vm.identifier = XZMocoaReuseIdentifier(self.model.mocoaName, XZMocoaKindCell, name);
-    return vm;
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }
 
 - (XZMocoaListitySectionSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
-    id<XZMocoaModel> model = [self.model modelForSupplementaryKind:kind atIndex:index];
-    if (model == nil) {
-        return nil;
-    }
-    XZMocoaName     const name    = model.mocoaName;
-    XZMocoaModule * const module  = [self.module submoduleForKind:kind forName:name];
-    Class           const VMClass = module.viewModelClass ?: [XZMocoaListitySectionSupplementaryViewModel class];
-    
-    XZMocoaListitySectionSupplementaryViewModel *vm = [[VMClass alloc] initWithModel:model];
-    vm.index      = index;
-    vm.module     = module;
-    vm.identifier = XZMocoaReuseIdentifier(self.model.mocoaName, kind, name);
-    return vm;
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }
 
 @end
