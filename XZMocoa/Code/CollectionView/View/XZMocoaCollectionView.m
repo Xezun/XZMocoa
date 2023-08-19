@@ -198,7 +198,7 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     XZMocoaKind const mocoaKind = XZMocoaKindFromElementKind(kind);
     
-    XZMocoaListitySupplementaryViewModel *viewModel = [[self.viewModel sectionViewModelAtIndex:indexPath.section] viewModelForSupplementaryKind:mocoaKind atIndex:indexPath.item];
+    XZMocoaListityViewSupplementaryViewModel *viewModel = [[self.viewModel sectionViewModelAtIndex:indexPath.section] viewModelForSupplementaryKind:mocoaKind atIndex:indexPath.item];
     if (viewModel == nil) {
         return nil;
     }

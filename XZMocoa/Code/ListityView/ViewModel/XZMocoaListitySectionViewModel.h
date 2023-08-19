@@ -9,7 +9,7 @@
 #import <XZMocoa/XZMocoaViewModel.h>
 #import <XZMocoa/XZMocoaListityBatchUpdatable.h>
 #import <XZMocoa/XZMocoaListitySectionModel.h>
-#import <XZMocoa/XZMocoaListitySupplementaryViewModel.h>
+#import <XZMocoa/XZMocoaListityViewSupplementaryViewModel.h>
 #import <XZMocoa/XZMocoaListityCellViewModel.h>
 
 @class XZMocoaListityViewModel;
@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition;
 
 /// 所有 cell 视图模型。这是一个计算属性，除非遍历所有 cell 对象，请尽量避免直接使用。
-- (nullable __kindof XZMocoaListitySupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
+- (nullable __kindof XZMocoaListityViewSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 @property (nonatomic, copy, readonly) NSArray<CellViewModelType> *cellViewModels;
 
 /// 返回 YES 表示 header/cell/footer 都没有。
@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 // MARK: 子类必须重写的方法
 
 - (CellViewModelType)loadViewModelForCellAtIndex:(NSInteger)index;
-- (nullable __kindof XZMocoaListitySupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
+- (nullable __kindof XZMocoaListityViewSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END
