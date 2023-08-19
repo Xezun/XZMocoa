@@ -1,5 +1,5 @@
 //
-//  XZMocoaCollectionSectionSupplementaryViewModel.h
+//  XZMocoaCollectionViewSupplementaryViewModel.h
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/9.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaCollectionSectionSupplementaryViewModel : XZMocoaListityViewSupplementaryViewModel
+@interface XZMocoaCollectionViewSupplementaryViewModel : XZMocoaListityViewSupplementaryViewModel
 
 @property (nonatomic) CGSize size;
 

@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example22GroupTextSectionViewModel : XZMocoaCollectionSectionViewModel
+@interface Example22GroupTextSectionViewModel : XZMocoaCollectionViewSectionViewModel
 
 @end
 

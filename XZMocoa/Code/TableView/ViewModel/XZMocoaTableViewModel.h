@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface XZMocoaTableViewModel : XZMocoaListityViewModel<XZMocoaTableViewCellViewModel *, XZMocoaTableSectionViewModel *>
+@interface XZMocoaTableViewModel : XZMocoaListityViewModel<XZMocoaTableViewCellViewModel *, XZMocoaTableViewSectionViewModel *>
 
 /// 在进行批量更新或局部更新时，视图更新的动画效果，默认为 UITableViewRowAnimationAutomatic 自动选择合适的动画效果。
 @property (nonatomic) UITableViewRowAnimation rowAnimation;
