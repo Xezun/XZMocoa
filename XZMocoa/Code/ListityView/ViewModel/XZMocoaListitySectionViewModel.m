@@ -75,7 +75,7 @@
         }
         // 附加视图更新事件
         for (NSString *key in _supplementaryViewModels) {
-            for (XZMocoaListitySectionSupplementaryViewModel *vm in _supplementaryViewModels[key]) {
+            for (XZMocoaListitySupplementaryViewModel *vm in _supplementaryViewModels[key]) {
                 if (subViewModel == vm) {
                     return [self didReloadData];
                 }
@@ -505,7 +505,7 @@
     for (XZMocoaKind kind in model.supplementaryKinds) {
         NSInteger const count = [model numberOfModelsForSupplementaryKind:kind];
         for (NSInteger index = 0; index < count; index++) {
-            XZMocoaListitySectionSupplementaryViewModel *vm = [self loadViewModelForSupplementaryKind:kind atIndex:index];
+            XZMocoaListitySupplementaryViewModel *vm = [self loadViewModelForSupplementaryKind:kind atIndex:index];
             if (vm) {
                 if (_supplementaryViewModels[kind]) {
                     [_supplementaryViewModels[kind] addObject:vm];
@@ -564,7 +564,7 @@
     @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }
 
-- (XZMocoaListitySectionSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+- (XZMocoaListitySupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
     NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
     @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }

@@ -47,7 +47,7 @@
     return viewModel;
 }
 
-- (__kindof XZMocoaListitySectionSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+- (__kindof XZMocoaListitySupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
     NSAssert(index == 0, @"UITableView 仅支持一个 %@ 类型的附加视图", kind);
     id<XZMocoaModel> const model = [self.model modelForSupplementaryKind:kind atIndex:index];
     
@@ -59,7 +59,7 @@
     XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:kind forName:name];
     Class           const ViewModel = module.viewModelClass;
     
-    XZMocoaListitySectionSupplementaryViewModel *viewModel = nil;
+    XZMocoaListitySupplementaryViewModel *viewModel = nil;
     if (ViewModel == Nil) {
         viewModel = [[XZMocoaTableSectionHeaderFooterViewModel alloc] initWithModel:model];
         viewModel.index      = index;

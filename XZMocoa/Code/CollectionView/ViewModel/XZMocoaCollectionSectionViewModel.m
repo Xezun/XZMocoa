@@ -34,7 +34,7 @@
     return viewModel;
 }
 
-- (__kindof XZMocoaListitySectionSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+- (__kindof XZMocoaListitySupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
     id<XZMocoaModel> model = [self.model modelForSupplementaryKind:kind atIndex:index];
     if (model == nil) {
         return nil;
