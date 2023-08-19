@@ -1,14 +1,14 @@
 //
-//  XZMocoaTableSectionPlaceholderHeaderFooter.m
+//  XZMocoaTableViewPlaceholderHeaderFooterView.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/19.
 //
 
-#import "XZMocoaTableSectionPlaceholderHeaderFooter.h"
+#import "XZMocoaTableViewPlaceholderHeaderFooterView.h"
 
 #if DEBUG
-@implementation XZMocoaTableSectionPlaceholderHeaderFooter {
+@implementation XZMocoaTableViewPlaceholderHeaderFooterView {
     UILabel *_textLabel;
 }
 

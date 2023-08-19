@@ -10,7 +10,7 @@
 #import "XZMocoaDefines.h"
 #import "XZMocoaTableViewCell.h"
 #import "XZMocoaTableViewHeaderFooterView.h"
-#import "XZMocoaTableSectionPlaceholderHeaderFooter.h"
+#import "XZMocoaTableViewPlaceholderHeaderFooterView.h"
 #import "XZMocoaTableViewPlaceholderCell.h"
 
 @interface XZMocoaTableView ()
@@ -102,10 +102,10 @@
         [tableView registerClass:[XZMocoaTableViewPlaceholderCell class] forCellReuseIdentifier:identifier];
         
         identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindHeader, XZMocoaNameNone);
-        [tableView registerClass:[XZMocoaTableSectionPlaceholderHeaderFooter class] forHeaderFooterViewReuseIdentifier:identifier];
+        [tableView registerClass:[XZMocoaTableViewPlaceholderHeaderFooterView class] forHeaderFooterViewReuseIdentifier:identifier];
         
         identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindFooter, XZMocoaNameNone);
-        [tableView registerClass:[XZMocoaTableSectionPlaceholderHeaderFooter class] forHeaderFooterViewReuseIdentifier:identifier];
+        [tableView registerClass:[XZMocoaTableViewPlaceholderHeaderFooterView class] forHeaderFooterViewReuseIdentifier:identifier];
     }
     
     [module enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName section, BOOL *stop) {
@@ -133,7 +133,7 @@
                 } else if (submodule.viewClass != Nil) {
                     [tableView registerClass:submodule.viewClass forHeaderFooterViewReuseIdentifier:identifier];
                 } else {
-                    Class const aClass = [XZMocoaTableSectionPlaceholderHeaderFooter class];
+                    Class const aClass = [XZMocoaTableViewPlaceholderHeaderFooterView class];
                     [tableView registerClass:aClass forHeaderFooterViewReuseIdentifier:identifier];
                 }
             }
