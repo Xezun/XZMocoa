@@ -19,7 +19,7 @@
     /// @note 在批量更新时，任一更新操作被调用，都会标记此值为 NO
     BOOL _needsDifferenceBatchUpdates;
     /// 记录 cell 视图模型的数组。
-    NSMutableOrderedSet<XZMocoaListityCellViewModel *> *_cellViewModels;
+    NSMutableOrderedSet<XZMocoaListityViewCellViewModel *> *_cellViewModels;
     NSMutableDictionary<XZMocoaKind, NSMutableArray<XZMocoaViewModel *> *> *_supplementaryViewModels;
 }
 @end
@@ -108,11 +108,11 @@
     return _cellViewModels.count;
 }
 
-- (__kindof XZMocoaListityCellViewModel *)cellViewModelAtIndex:(NSInteger)index {
+- (__kindof XZMocoaListityViewCellViewModel *)cellViewModelAtIndex:(NSInteger)index {
     return [_cellViewModels objectAtIndex:index];
 }
 
-- (NSInteger)indexOfCellViewModel:(XZMocoaListityCellViewModel *)cellModel {
+- (NSInteger)indexOfCellViewModel:(XZMocoaListityViewCellViewModel *)cellModel {
     return [_cellViewModels indexOfObject:cellModel];
 }
 
@@ -166,7 +166,7 @@
     if (self.isPerformingBatchUpdates) {
         NSMutableIndexSet * const oldRows = [NSMutableIndexSet indexSet];
         [rows enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
+            XZMocoaListityViewCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
             NSInteger const oldRow = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
             [oldRows addIndex:oldRow];
             [oldViewModel removeFromSuperViewModel];
@@ -177,7 +177,7 @@
         [self didReloadCellsAtIndexes:oldRows];
     } else {
         [rows enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityCellViewModel * const oldViewModel = _cellViewModels[row];
+            XZMocoaListityViewCellViewModel * const oldViewModel = _cellViewModels[row];
             [oldViewModel removeFromSuperViewModel]; // 由 -didRemoveSubViewModel: 执行清理
             
             id const newViewModel = [self loadViewModelForCellAtIndex:row];
@@ -220,7 +220,7 @@
     if (self.isPerformingBatchUpdates) {
         NSMutableIndexSet * const oldRows = [NSMutableIndexSet indexSet];
         [rows enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
+            XZMocoaListityViewCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
             NSInteger const oldRow = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
             [oldRows addIndex:oldRow];
             
@@ -229,7 +229,7 @@
         [self didDeleteCellsAtIndexes:oldRows];
     } else {
         [rows enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
+            XZMocoaListityViewCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
             [oldViewModel removeFromSuperViewModel];
         }];
         [self didDeleteCellsAtIndexes:rows];
@@ -312,7 +312,7 @@
 - (void)cleanupBatchUpdates {
     _isPerformingBatchUpdates = nil;
     
-    for (XZMocoaListityDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
+    for (XZMocoaListityViewDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
         batchUpdates(self);
     }
     _delayedBatchUpdates = nil;
@@ -374,7 +374,7 @@
     NSArray      * const oldDataModels = [NSMutableArray arrayWithCapacity:oldCount];
     NSOrderedSet * const oldViewModels = _isPerformingBatchUpdates.copy;
     for (NSInteger i = 0; i < oldCount; i++) {
-        XZMocoaListityCellViewModel * const viewModel = oldViewModels[i];
+        XZMocoaListityViewCellViewModel * const viewModel = oldViewModels[i];
         
         id dataModel = viewModel.model;
         if (dataModel == nil) {
@@ -443,7 +443,7 @@
         
         NSMutableDictionary *newViewModels = [NSMutableDictionary dictionaryWithCapacity:inserts.count];
         [inserts enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityCellViewModel * const newViewModel = [self loadViewModelForCellAtIndex:row];
+            XZMocoaListityViewCellViewModel * const newViewModel = [self loadViewModelForCellAtIndex:row];
             [self _insertCellViewModel:newViewModel atIndex:row];
             newViewModels[@(row)] = newViewModel;
         }];
@@ -480,12 +480,12 @@
 
 #pragma mark - 私有方法
 
-- (void)_addCellViewModel:(XZMocoaListityCellViewModel *)cellViewModel {
+- (void)_addCellViewModel:(XZMocoaListityViewCellViewModel *)cellViewModel {
     [_cellViewModels addObject:cellViewModel];
     [self addSubViewModel:cellViewModel];
 }
 
-- (void)_insertCellViewModel:(XZMocoaListityCellViewModel *)cellViewModel atIndex:(NSInteger)index {
+- (void)_insertCellViewModel:(XZMocoaListityViewCellViewModel *)cellViewModel atIndex:(NSInteger)index {
     [_cellViewModels insertObject:cellViewModel atIndex:index];
     [self addSubViewModel:cellViewModel];
 }
@@ -519,7 +519,7 @@
     
     NSInteger const count = model.numberOfCellModels;
     for (NSInteger index = 0; index < count; index++) {
-        XZMocoaListityCellViewModel *viewModel = [self loadViewModelForCellAtIndex:index];
+        XZMocoaListityViewCellViewModel *viewModel = [self loadViewModelForCellAtIndex:index];
         [self _addCellViewModel:viewModel];
     }
 }
@@ -559,7 +559,7 @@
 
 #pragma mark - 子类重写
 
-- (XZMocoaListityCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
+- (XZMocoaListityViewCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
     NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
     @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }

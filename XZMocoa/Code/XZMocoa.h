@@ -19,8 +19,8 @@
 #import <XZMocoa/XZMocoaListityModel.h>
 #import <XZMocoa/XZMocoaListitySectionModel.h>
 #import <XZMocoa/XZMocoaListityView.h>
-#import <XZMocoa/XZMocoaListityBatchUpdatable.h>
-#import <XZMocoa/XZMocoaListityCellViewModel.h>
+#import <XZMocoa/XZMocoaListityViewBatchUpdatable.h>
+#import <XZMocoa/XZMocoaListityViewCellViewModel.h>
 #import <XZMocoa/XZMocoaListityViewSupplementaryViewModel.h>
 #import <XZMocoa/XZMocoaListityViewSectionViewModel.h>
 #import <XZMocoa/XZMocoaListityViewModel.h>

@@ -26,13 +26,13 @@
     return height;
 }
 
-- (XZMocoaListityCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
+- (XZMocoaListityViewCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
     id<XZMocoaModel> const model     = [self.model modelForCellAtIndex:index];
     XZMocoaName      const name      = model.mocoaName;
     XZMocoaModule *  const module    = [self.module submoduleIfLoadedForKind:XZMocoaKindCell forName:name];
     Class            const ViewModel = module.viewModelClass;
     
-    XZMocoaListityCellViewModel *viewModel = nil;
+    XZMocoaListityViewCellViewModel *viewModel = nil;
     if (ViewModel == Nil) {
         viewModel = [[XZMocoaTableViewCellViewModel alloc] initWithModel:model];
         viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);

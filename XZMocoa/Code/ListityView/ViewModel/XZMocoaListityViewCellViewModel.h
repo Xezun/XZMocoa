@@ -1,5 +1,5 @@
 //
-//  XZMocoaListityCellViewModel.h
+//  XZMocoaListityViewCellViewModel.h
 //  XZMocoa
 //
 //  Created by Xezun on 2021/1/13.
@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// cell 视图模型基类。
-@interface XZMocoaListityCellViewModel : XZMocoaViewModel
+@interface XZMocoaListityViewCellViewModel : XZMocoaViewModel
 /// 重用标识符。
 @property (nonatomic, copy, XZ_READONLY) NSString *identifier;
 /// 修改属性不会发送事件，以避免发送事件太频繁。

@@ -13,7 +13,7 @@
     return [super viewModelForSupplementaryKind:kind atIndex:index];
 }
 
-- (XZMocoaListityCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
+- (XZMocoaListityViewCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
     id<XZMocoaModel> const model   = [self.model modelForCellAtIndex:index];
     XZMocoaName      const name    = model.mocoaName;
     XZMocoaModule *  const module  = [self.module cellForName:name];

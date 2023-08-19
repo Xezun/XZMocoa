@@ -8,9 +8,9 @@
 
 #import <XZMocoa/XZMocoaViewModel.h>
 #import <XZMocoa/XZMocoaListityViewSectionViewModel.h>
-#import <XZMocoa/XZMocoaListityCellViewModel.h>
+#import <XZMocoa/XZMocoaListityViewCellViewModel.h>
 #import <XZMocoa/XZMocoaListityModel.h>
-#import <XZMocoa/XZMocoaListityBatchUpdatable.h>
+#import <XZMocoa/XZMocoaListityViewBatchUpdatable.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 具有列表形式视图的一般视图模型。
 /// @attention 由于需要管理子视图，因此需要设置 module 属性才能正常工作。
-@interface XZMocoaListityViewModel<__covariant CellViewModelType: XZMocoaListityCellViewModel *, __covariant SectionViewModelType: XZMocoaListityViewSectionViewModel *> : XZMocoaViewModel <XZMocoaListityBatchUpdatable>
+@interface XZMocoaListityViewModel<__covariant CellViewModelType: XZMocoaListityViewCellViewModel *, __covariant SectionViewModelType: XZMocoaListityViewSectionViewModel *> : XZMocoaViewModel <XZMocoaListityViewBatchUpdatable>
 
 /// 接收来自下级的 XZMocoaEmitUpdate 事件，并刷新视图，如果在批量更新的过程中，视图刷新可能会延迟。
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition;
