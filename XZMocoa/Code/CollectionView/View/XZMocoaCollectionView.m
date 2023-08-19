@@ -8,6 +8,8 @@
 #import "XZMocoaCollectionView.h"
 #import "XZMocoaCollectionCell.h"
 #import "XZMocoaCollectionSectionSupplementaryView.h"
+#import "XZMocoaCollectionPlaceholderCell.h"
+#import "XZMocoaCollectionSectionPlaceholderSupplementaryView.h"
 
 static XZMocoaKind XZMocoaKindFromElementKind(NSString *kind) {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) return XZMocoaKindHeader;
@@ -104,7 +106,7 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
     }
     { // 注册一个默认的 Cell
         NSString * const identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
-        [collectionView registerClass:UICollectionViewCell.class forCellWithReuseIdentifier:identifier];
+        [collectionView registerClass:[XZMocoaCollectionPlaceholderCell class] forCellWithReuseIdentifier:identifier];
     }
     
     [module enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName section, BOOL *stop) {
@@ -120,6 +122,9 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
                     [collectionView registerNib:viewNib forCellWithReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
                     [collectionView registerClass:submodule.viewClass forCellWithReuseIdentifier:identifier];
+                } else {
+                    Class const aClass = [XZMocoaCollectionPlaceholderCell class];
+                    [collectionView registerClass:aClass forCellWithReuseIdentifier:identifier];
                 }
             } else {
                 NSString * const identifier = XZMocoaReuseIdentifier(section, mocoakind, name);
@@ -129,6 +134,9 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
                     [collectionView registerNib:viewNib forSupplementaryViewOfKind:kind withReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
                     [collectionView registerClass:submodule.viewClass forSupplementaryViewOfKind:kind withReuseIdentifier:identifier];
+                } else {
+                    Class const aClass = [XZMocoaCollectionSectionPlaceholderSupplementaryView class];
+                    [collectionView registerClass:aClass forSupplementaryViewOfKind:kind withReuseIdentifier:identifier];
                 }
             }
         }];

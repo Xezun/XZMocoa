@@ -172,7 +172,7 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 
 - (XZMocoaModule *)submoduleIfLoadedForKind:(XZMocoaKind)kind forName:(XZMocoaName)name {
     if (kind == nil) kind = XZMocoaKindNone;
-    if (name == nil) kind = XZMocoaNameNone;
+    if (name == nil) name = XZMocoaNameNone;
     return _submodules[kind][name];
 }
 
