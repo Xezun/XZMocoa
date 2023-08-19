@@ -9,7 +9,7 @@
 #import "XZMocoaTableView.h"
 #import "XZMocoaDefines.h"
 #import "XZMocoaTableCell.h"
-#import "XZMocoaTableSectionHeaderFooter.h"
+#import "XZMocoaTableViewHeaderFooterView.h"
 #import "XZMocoaTableSectionHeaderFooter.h"
 #import "XZMocoaTableSectionPlaceholderHeaderFooter.h"
 #import "XZMocoaTablePlaceholderCell.h"
@@ -188,7 +188,7 @@
     if (viewModel == nil) {
         return nil;
     }
-    UITableViewHeaderFooterView<XZMocoaTableSectionHeaderFooter> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
+    UITableViewHeaderFooterView<XZMocoaTableViewHeaderFooterView> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
     view.viewModel = viewModel;
     return view;
 }
@@ -206,7 +206,7 @@
     if (viewModel == nil) {
         return nil;
     }
-    UITableViewHeaderFooterView<XZMocoaTableSectionHeaderFooter> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
+    UITableViewHeaderFooterView<XZMocoaTableViewHeaderFooterView> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
     view.viewModel = viewModel;
     return view;
 }

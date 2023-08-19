@@ -31,7 +31,7 @@
 #import <XZMocoa/XZMocoaTableCellModel.h>
 #import <XZMocoa/XZMocoaTableView.h>
 #import <XZMocoa/XZMocoaTableCell.h>
-#import <XZMocoa/XZMocoaTableSectionHeaderFooter.h>
+#import <XZMocoa/XZMocoaTableViewHeaderFooterView.h>
 #import <XZMocoa/XZMocoaTableCellViewModel.h>
 #import <XZMocoa/XZMocoaTableSectionHeaderFooterViewModel.h>
 #import <XZMocoa/XZMocoaTableSectionViewModel.h>
