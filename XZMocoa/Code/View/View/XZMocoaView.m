@@ -16,10 +16,11 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
     XZLog(@"为协议 XZMocoaView 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
 }
 
-#pragma mark - XZMocoaView 协议
+#pragma mark - XZMocoaView 协议默认实现
 
 @interface UIResponder (XZMocoaView) <XZMocoaView>
 @end
+
 @implementation UIResponder (XZMocoaView)
 
 + (void)load {

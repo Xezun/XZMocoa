@@ -13,8 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - XZMocoaView 协议
 
-/// 任何 UIView 及子类，声明遵循此协议，即可获得协议中定义的方法。
-/// @note 由于运行时特性，Mocoa 的方法实现可能会被类目或子类覆盖，需要开发者自行注意。
+/// 作为 Mocoa MVVM 中的 View 元素，需要实现的协议。
+/// @discussion 任何 UIResponder 及子类，默认都是 Mocoa MVVM 中的 View 元素，声明遵循此协议，即可获得协议中定义的属性和方法。
+/// @discussion 用此协议标记类，用来表明该类为 Mocoa MVVM 的 View 元素，与其它设计模式的类进行简单区分。
+/// @discussion 由于运行时特性，协议的默认实现可能会被类目或子类覆盖，需要开发者自行注意。
 @protocol XZMocoaView <NSObject>
 
 @optional
@@ -36,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 当前视图所属栏目控制器。
 @property (nonatomic, readonly, nullable) __kindof UITabBarController *tabBarController;
 
-/// 控制器分发过来的 IB 转场事件。
+/// 控制器分发过来的 IB 转场事件，默认返回 YES 值。
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier;
 
 /// 控制器分发过来的 IB 转场事件。
@@ -54,6 +56,7 @@ typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 /// - Parameter options: 实例化参数，传递给控制器的初始化参数
 - (nullable __kindof UIViewController *)instantiateViewControllerWithOptions:(nullable XZMocoaOptions)options;
 /// 实例化视图。
+/// - Parameter frame: frame
 - (nullable __kindof UIView *)instantiateViewWithFrame:(CGRect)frame;
 @end
 
@@ -94,6 +97,7 @@ typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 /// @discussion 如果没有找到 XZMocoaURL 对应的控制器，那么将调用 -init 方法进行初始化。
 /// @param url XZMocoaURL
 - (instancetype)initWithRootViewControllerWithMocoaURL:(nullable NSURL *)url;
+
 /// 通过 XZMocoaURL 压栈子控制器。
 /// @discussion 如果 XZMocoaURL 没有对应的控制器，那么此方法将不产生任何效果。
 /// @param url XZMocoaURL
@@ -103,11 +107,13 @@ typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 @end
 
 @interface UITabBarController (XZMocoaModuleSupporting)
+
 /// 通过 XZMocoaURLs 设置子控制器。
 /// @discussion 如果某个 XZMocoaURL 没有对应的控制器，那么该 XZMocoaURL 会被忽略。
 /// @param urls XZMocoaURLs
 /// @param animated 是否动画
 - (nullable NSArray<__kindof UIViewController *> *)setViewControllersWithMocoaURLs:(nullable NSArray<NSURL *> *)urls animated:(BOOL)animated;
+
 @end
 
 
