@@ -24,7 +24,7 @@
 }
 
 - (void)viewModelDidChange {
-    XZMocoaTableCellViewModel *vm = self.viewModel;
+    XZMocoaTableViewCellViewModel *vm = self.viewModel;
     
     if (vm.module == nil) {
         self.textLabel.text = @"模块未注册";

@@ -8,7 +8,7 @@
 #import <XZMocoa/XZMocoaListityViewModel.h>
 #import <XZMocoa/XZMocoaTableSectionViewModel.h>
 #import <XZMocoa/XZMocoaTableSectionHeaderFooterViewModel.h>
-#import <XZMocoa/XZMocoaTableCellViewModel.h>
+#import <XZMocoa/XZMocoaTableViewCellViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface XZMocoaTableViewModel : XZMocoaListityViewModel<XZMocoaTableCellViewModel *, XZMocoaTableSectionViewModel *>
+@interface XZMocoaTableViewModel : XZMocoaListityViewModel<XZMocoaTableViewCellViewModel *, XZMocoaTableSectionViewModel *>
 
 /// 在进行批量更新或局部更新时，视图更新的动画效果，默认为 UITableViewRowAnimationAutomatic 自动选择合适的动画效果。
 @property (nonatomic) UITableViewRowAnimation rowAnimation;

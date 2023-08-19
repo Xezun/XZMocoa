@@ -19,7 +19,7 @@
 
 - (CGFloat)height {
     CGFloat height = self.headerViewModel.height;
-    for (XZMocoaTableCellViewModel *cellViewModel in self.cellViewModels) {
+    for (XZMocoaTableViewCellViewModel *cellViewModel in self.cellViewModels) {
         height += cellViewModel.height;
     }
     height += self.footerViewModel.height;
@@ -34,7 +34,7 @@
     
     XZMocoaListityCellViewModel *viewModel = nil;
     if (ViewModel == Nil) {
-        viewModel = [[XZMocoaTableCellViewModel alloc] initWithModel:model];
+        viewModel = [[XZMocoaTableViewCellViewModel alloc] initWithModel:model];
         viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
         viewModel.index      = index;
         viewModel.module     = module;

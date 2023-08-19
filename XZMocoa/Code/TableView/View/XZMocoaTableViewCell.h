@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XZMocoa/XZMocoaView.h>
-#import <XZMocoa/XZMocoaTableCellViewModel.h>
+#import <XZMocoa/XZMocoaTableViewCellViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// ViewModel 对象。
 /// @note 监听此属性，子类不需要重写，直接方法 -viewModelDidUpdate 中操作即可。
 /// @note 在设置新值时，将先从移除旧的 viewModel 上绑定的事件。
-@property (nonatomic, strong, nullable) __kindof XZMocoaTableCellViewModel *viewModel;
+@property (nonatomic, strong, nullable) __kindof XZMocoaTableViewCellViewModel *viewModel;
 
 // MARK: - 由当前 Cell 所在的 UITableView 传递回来的事件
 

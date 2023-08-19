@@ -6,12 +6,12 @@
 //
 
 #import <XZMocoa/XZMocoaListitySectionViewModel.h>
-#import <XZMocoa/XZMocoaTableCellViewModel.h>
+#import <XZMocoa/XZMocoaTableViewCellViewModel.h>
 #import <XZMocoa/XZMocoaTableSectionHeaderFooterViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaTableSectionViewModel : XZMocoaListitySectionViewModel<XZMocoaTableCellViewModel *>
+@interface XZMocoaTableSectionViewModel : XZMocoaListitySectionViewModel<XZMocoaTableViewCellViewModel *>
 
 @property (nonatomic, readonly, nullable) XZMocoaTableSectionHeaderFooterViewModel *headerViewModel;
 @property (nonatomic, readonly, nullable) XZMocoaTableSectionHeaderFooterViewModel *footerViewModel;
