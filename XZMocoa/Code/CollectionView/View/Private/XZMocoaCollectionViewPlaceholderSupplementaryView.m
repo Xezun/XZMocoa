@@ -1,17 +1,17 @@
 //
-//  XZMocoaCollectionViewPlaceholderCell.m
+//  XZMocoaCollectionViewPlaceholderSupplementaryView.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/19.
 //
 
-#import "XZMocoaCollectionViewPlaceholderCell.h"
+#import "XZMocoaCollectionViewPlaceholderSupplementaryView.h"
 
 #if DEBUG
-@implementation XZMocoaCollectionViewPlaceholderCell
+@implementation XZMocoaCollectionViewPlaceholderSupplementaryView
 
 - (void)viewModelDidChange {
-    XZMocoaCollectionViewCellViewModel * const viewModel = self.viewModel;
+    XZMocoaCollectionViewSupplementaryViewModel * const viewModel = self.viewModel;
     XZMocoaCollectionViewSectionViewModel * const superViewModel = viewModel.superViewModel;
     
     XZMocoaName const section = ((id<XZMocoaModel>)superViewModel.model).mocoaName ?: XZMocoaNameNone;
@@ -26,7 +26,7 @@
         reason = @"模块缺少 ViewModel 组件";
     }
     
-    NSLog(@"%@ section: %@, cell: %@", reason, section, cell);
+    NSLog(@"%@ section: %@, supplementary: %@", reason, section, cell);
 }
 
 @end
