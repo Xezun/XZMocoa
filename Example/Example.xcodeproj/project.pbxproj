@@ -37,14 +37,11 @@
 		29914F152A6D6D8800D0ACF3 /* Example20ViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914F142A6D6D8800D0ACF3 /* Example20ViewModel.m */; };
 		29914F1C2A6D8F6100D0ACF3 /* Example20Group101Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914F1B2A6D8F6100D0ACF3 /* Example20Group101Cell.m */; };
 		29914F1F2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914F1E2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m */; };
-		29914F222A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914F212A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m */; };
 		2996C8722A71930B00A77E2F /* Example20Group100Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8702A71930B00A77E2F /* Example20Group100Cell.m */; };
 		2996C8732A71930B00A77E2F /* Example20Group100Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2996C8712A71930B00A77E2F /* Example20Group100Cell.xib */; };
 		2996C8752A7208BA00A77E2F /* Example20Group101Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2996C8742A7208BA00A77E2F /* Example20Group101Cell.xib */; };
 		2996C87B2A72110E00A77E2F /* Example20Group102Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8792A72110E00A77E2F /* Example20Group102Cell.m */; };
 		2996C87C2A72110E00A77E2F /* Example20Group102Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2996C87A2A72110E00A77E2F /* Example20Group102Cell.xib */; };
-		2996C87F2A7213C200A77E2F /* Example20Group100SectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C87E2A7213C200A77E2F /* Example20Group100SectionViewModel.m */; };
-		2996C8832A7213FA00A77E2F /* Example20Group102SectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8822A7213FA00A77E2F /* Example20Group102SectionViewModel.m */; };
 		2996C8862A72141300A77E2F /* Example20Group100CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8852A72141300A77E2F /* Example20Group100CellViewModel.m */; };
 		2996C8892A72142700A77E2F /* Example20Group102CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C8882A72142700A77E2F /* Example20Group102CellViewModel.m */; };
 		2996C88D2A72145C00A77E2F /* Example20Group102SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2996C88C2A72145C00A77E2F /* Example20Group102SectionModel.m */; };
@@ -151,8 +148,6 @@
 		29914F1B2A6D8F6100D0ACF3 /* Example20Group101Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101Cell.m; sourceTree = "<group>"; };
 		29914F1D2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101CellViewModel.h; sourceTree = "<group>"; };
 		29914F1E2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101CellViewModel.m; sourceTree = "<group>"; };
-		29914F202A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group101SectionViewModel.h; sourceTree = "<group>"; };
-		29914F212A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group101SectionViewModel.m; sourceTree = "<group>"; };
 		2996C86F2A71930B00A77E2F /* Example20Group100Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group100Cell.h; sourceTree = "<group>"; };
 		2996C8702A71930B00A77E2F /* Example20Group100Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group100Cell.m; sourceTree = "<group>"; };
 		2996C8712A71930B00A77E2F /* Example20Group100Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example20Group100Cell.xib; sourceTree = "<group>"; };
@@ -160,10 +155,6 @@
 		2996C8782A72110E00A77E2F /* Example20Group102Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group102Cell.h; sourceTree = "<group>"; };
 		2996C8792A72110E00A77E2F /* Example20Group102Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group102Cell.m; sourceTree = "<group>"; };
 		2996C87A2A72110E00A77E2F /* Example20Group102Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example20Group102Cell.xib; sourceTree = "<group>"; };
-		2996C87D2A7213C200A77E2F /* Example20Group100SectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group100SectionViewModel.h; sourceTree = "<group>"; };
-		2996C87E2A7213C200A77E2F /* Example20Group100SectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group100SectionViewModel.m; sourceTree = "<group>"; };
-		2996C8812A7213FA00A77E2F /* Example20Group102SectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group102SectionViewModel.h; sourceTree = "<group>"; };
-		2996C8822A7213FA00A77E2F /* Example20Group102SectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group102SectionViewModel.m; sourceTree = "<group>"; };
 		2996C8842A72141300A77E2F /* Example20Group100CellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group100CellViewModel.h; sourceTree = "<group>"; };
 		2996C8852A72141300A77E2F /* Example20Group100CellViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20Group100CellViewModel.m; sourceTree = "<group>"; };
 		2996C8872A72142700A77E2F /* Example20Group102CellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example20Group102CellViewModel.h; sourceTree = "<group>"; };
@@ -550,8 +541,6 @@
 		29914F192A6D8F3300D0ACF3 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				29914F202A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.h */,
-				29914F212A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m */,
 				29914F1D2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.h */,
 				29914F1E2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m */,
 			);
@@ -592,8 +581,6 @@
 		2996C86E2A7191AB00A77E2F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				2996C87D2A7213C200A77E2F /* Example20Group100SectionViewModel.h */,
-				2996C87E2A7213C200A77E2F /* Example20Group100SectionViewModel.m */,
 				2996C8842A72141300A77E2F /* Example20Group100CellViewModel.h */,
 				2996C8852A72141300A77E2F /* Example20Group100CellViewModel.m */,
 			);
@@ -623,8 +610,6 @@
 		2996C8802A7213D900A77E2F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				2996C8812A7213FA00A77E2F /* Example20Group102SectionViewModel.h */,
-				2996C8822A7213FA00A77E2F /* Example20Group102SectionViewModel.m */,
 				2996C8872A72142700A77E2F /* Example20Group102CellViewModel.h */,
 				2996C8882A72142700A77E2F /* Example20Group102CellViewModel.m */,
 			);
@@ -1184,7 +1169,6 @@
 				29914EE62A6CEF3800D0ACF3 /* Example11Model.m in Sources */,
 				2996C8A52A7219DC00A77E2F /* Example20Group101CellModel.m in Sources */,
 				29B3EBC62A7898B50008E65B /* Example21ContactCellViewModel.m in Sources */,
-				2996C87F2A7213C200A77E2F /* Example20Group100SectionViewModel.m in Sources */,
 				2996C8722A71930B00A77E2F /* Example20Group100Cell.m in Sources */,
 				29B3EBC22A7898B50008E65B /* Example21ContactBook.m in Sources */,
 				29914F1F2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m in Sources */,
@@ -1192,9 +1176,7 @@
 				29914EB82A6CE3D800D0ACF3 /* main.m in Sources */,
 				29914EF82A6D0F9100D0ACF3 /* Example10Contact.m in Sources */,
 				29914EAA2A6CE3D700D0ACF3 /* SceneDelegate.m in Sources */,
-				2996C8832A7213FA00A77E2F /* Example20Group102SectionViewModel.m in Sources */,
 				2996C8862A72141300A77E2F /* Example20Group100CellViewModel.m in Sources */,
-				29914F222A6D9BE500D0ACF3 /* Example20Group101SectionViewModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

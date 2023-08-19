@@ -13,7 +13,7 @@
 @implementation Example20Group100CellViewModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/100/:/").viewModelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/100/:/").viewModelClass = self;
 }
 
 - (void)prepare {

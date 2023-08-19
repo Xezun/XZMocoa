@@ -16,7 +16,7 @@
 @implementation Example20Group102Cell
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/102/:/").viewNibClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/102/:/").viewNibClass = self;
 }
 
 @dynamic viewModel;
