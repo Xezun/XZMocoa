@@ -17,7 +17,7 @@
 
 // ListityView
 #import <XZMocoa/XZMocoaListityModel.h>
-#import <XZMocoa/XZMocoaListitySectionModel.h>
+#import <XZMocoa/XZMocoaListityViewSectionModel.h>
 #import <XZMocoa/XZMocoaListityView.h>
 #import <XZMocoa/XZMocoaListityViewBatchUpdatable.h>
 #import <XZMocoa/XZMocoaListityViewCellViewModel.h>

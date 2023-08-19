@@ -209,10 +209,10 @@ tableView.viewModel = tableViewModel;
 ```objc
 @protocol XZMocoaListityModel <XZMocoaModel>
 @property (nonatomic, readonly) NSInteger numberOfSectionModels;
-- (nullable id<XZMocoaListitySectionModel>)modelForSectionAtIndex:(NSInteger)index;
+- (nullable id<XZMocoaListityViewSectionModel>)modelForSectionAtIndex:(NSInteger)index;
 @end
 
-@protocol XZMocoaListitySectionModel <XZMocoaModel>
+@protocol XZMocoaListityViewSectionModel <XZMocoaModel>
 @optional
 @property (nonatomic, readonly) NSInteger numberOfCellModels;
 - (nullable id)modelForCellAtIndex:(NSInteger)index;

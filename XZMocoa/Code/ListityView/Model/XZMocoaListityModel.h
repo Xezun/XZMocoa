@@ -6,7 +6,7 @@
 //
 
 #import <XZMocoa/XZMocoaModel.h>
-#import <XZMocoa/XZMocoaListitySectionModel.h>
+#import <XZMocoa/XZMocoaListityViewSectionModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSInteger numberOfSectionModels;
 /// section 的数据。
 /// - Parameter index: section 的位置
-- (nullable id<XZMocoaListitySectionModel>)modelForSectionAtIndex:(NSInteger)index;
+- (nullable id<XZMocoaListityViewSectionModel>)modelForSectionAtIndex:(NSInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END
