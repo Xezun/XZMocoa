@@ -30,7 +30,9 @@ pod 'XZMocoa'
 
 ### 1、编写 MVVM 模块
 
-1. 定义 View、ViewModel 和 Model
+Mocoa 对如何实现模块没有具体要求，按照 MVVM 的基本要求编写即可。
+
+1.1 定义 View、ViewModel、Model
 
 `View`就是产品最终呈现的样子，不论是纯代码，还是 xib/storyboard 都可以。
 
@@ -57,9 +59,9 @@ pod 'XZMocoa'
 @end
 ```
 
-2. 处理数据
+1.2 处理数据
 
-`ViewModel`处理原始数据。
+`ViewModel`将数据处理为`View`展示所需的类型。
 
 ```objc
 @implementation ExampleViewModel
@@ -72,9 +74,9 @@ pod 'XZMocoa'
 @end
 ```
 
-3. 渲染视图
+1.3 渲染视图
 
-`View`根据`ViewModel`进行展示。
+`View`根据`ViewModel`提供的数据进行展示。
 
 ```objc
 @implementation ExampleView
@@ -113,34 +115,42 @@ pod 'XZMocoa'
 ```objc
 NSDictionary *data;
 XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/example/");
-
-id                    model     = [module.modelClass yy_modelWithDictionary:data];
-id                    viewModel = [[module.viewModelClass alloc] initWithModel:model ready:YES];
-UIView<XZMocoaView> * view      = [module instantiateViewWithFrame:CGRectMake(0, 0, 100, 100)];
+// Model
+id<XZMocoaModel> model = [module.modelClass yy_modelWithDictionary:data];
+// ViewModel
+XZMocoaViewModel *viewModel = [[module.viewModelClass alloc] initWithModel:model];
+[viewModel ready];
+// View
+UIView<XZMocoaView> *view = [module instantiateViewWithFrame:CGRectMake(0, 0, 100, 100)];
 view.viewModel = viewModel;
-[self.view addSubview:view]
+// show the view
+[self.view addSubview:view];
 ```
 
 ### 4、具名的模块
 
-如果页面中，由多个不同类型的视图模块组成，那么应该为每中类型的视图取一个名字，然后通过数据的`mocoaName`属性，我们能取到这个名字。
+一般情况下，一个页面模块，可能包含多个不同类型的视图模块，为了区分这些视图模块，我们应该为它们分别取一个名字。
+然后将这些视图模块，注册为页面模块的子模块。
+
+```objc
+XZMocoa(@"https://mocoa.xezun.com/page/view1/").modelClass     = view1ModelClass;
+XZMocoa(@"https://mocoa.xezun.com/page/view1/").viewClass      = view1ViewClass;
+XZMocoa(@"https://mocoa.xezun.com/page/view1/").viewModelClass = view1ViewModelClass;
+```
+
+页面的数据如果是下发的，我们需要分析数据的不同，然后找到对应视图模块，最后加载模块。
+一般情况，我们不用去分析整个数据，而是在数据中设置一个`identifier`标识符，用来表明数据对应的视图类型，且为了方便维护，我们一般会将模块的名字与标识符保持相同。
+在 Mocoa 中，这样的标识符，有一个通用的名字——`mocoaName`。
 
 ```objc
 @implementation ExampleModel
 - (NSString *)mocoaName {
-    return @"name";
+    return self.identifier; 
 }
 @end
 ```
 
-对应的`View`模块，按名字应该注册为子模块。
-
-```objc
-// URL 中路径的下一级，即是子模块
-XZMocoa(@"https://mocoa.xezun.com/example/name/").viewClass = self;
-```
-
-根据数据`mocoaName`读取子模块，然后渲染页面。
+在页面获取到数据后，我们就可以根据数据`mocoaName`读取子模块，然后渲染页面。
 
 ```objc
 XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/example/");
@@ -159,7 +169,7 @@ for (id<XZMocoaModel> data in _dataArray) {
 }
 ```
 
-如果是固定模块的页面，不使用`mocoaName`，而直接使用视图模块`URL`也是可以的，因为`mocoaName`只是方便从注册关系中获取子模块而已。
+当然，如果页面由固定模块组成，那么直接使用视图模块`URL`也是可以的，因为`mocoaName`的目的也是获得子模块。
 
 ### 5、渲染列表
 
