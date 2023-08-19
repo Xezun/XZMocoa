@@ -237,59 +237,6 @@
     }
 }
 
-#pragma mark - 事件派发
-
-- (void)didReloadData {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-- (void)didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-- (void)didInsertCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-- (void)didDeleteCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-- (void)didMoveCellAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-- (void)didReloadSectionsAtIndexes:(NSIndexSet *)sections {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-- (void)didInsertSectionsAtIndexes:(NSIndexSet *)sections {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-- (void)didDeleteSectionsAtIndexes:(NSIndexSet *)sections {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-- (void)didMoveSectionAtIndex:(NSInteger)oldSection toIndex:(NSInteger)newSection {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
-    NSString *reason = [NSString stringWithFormat:@"应该使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
-    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
-}
-
-
 #pragma mark - 批量更新
 
 - (BOOL)isPerformingBatchUpdates {
@@ -559,16 +506,59 @@
 
 #pragma mark - 子类重写
 
+- (void)didReloadData {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
+- (void)didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
+- (void)didInsertCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
+- (void)didDeleteCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
+- (void)didMoveCellAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
+- (void)didReloadSectionsAtIndexes:(NSIndexSet *)sections {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
+- (void)didInsertSectionsAtIndexes:(NSIndexSet *)sections {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
+- (void)didDeleteSectionsAtIndexes:(NSIndexSet *)sections {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
+- (void)didMoveSectionAtIndex:(NSInteger)oldSection toIndex:(NSInteger)newSection {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
+- (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
+}
+
 - (XZMocoaListitySectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {
-    id<XZMocoaListitySectionModel> const model = [self.model modelForSectionAtIndex:index];
-    XZMocoaName     const name    = model.mocoaName;
-    XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:name];
-    Class           const VMClass = module.viewModelClass ?: [XZMocoaListitySectionViewModel class];
-    
-    XZMocoaListitySectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
-    viewModel.module = module;
-    viewModel.index  = index;
-    return viewModel;
+    NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
+    @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }
 
 #pragma mark - DEBUG
@@ -584,6 +574,12 @@
     return result;
 }
 #endif
+
+
+@end
+
+
+@implementation XZMocoaListityViewModel (XZMocoaListitySectionViewModelDelegate)
 
 - (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didReloadData:(void * _Nullable)null {
     NSInteger const index = [self indexOfSectionViewModel:viewModel];
