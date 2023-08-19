@@ -11,7 +11,7 @@
 #import "XZMocoaTableViewCell.h"
 #import "XZMocoaTableViewHeaderFooterView.h"
 #import "XZMocoaTableSectionPlaceholderHeaderFooter.h"
-#import "XZMocoaTablePlaceholderCell.h"
+#import "XZMocoaTableViewPlaceholderCell.h"
 
 @interface XZMocoaTableView ()
 @end
@@ -99,7 +99,7 @@
     
     { // 注册默认视图
         NSString *identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
-        [tableView registerClass:[XZMocoaTablePlaceholderCell class] forCellReuseIdentifier:identifier];
+        [tableView registerClass:[XZMocoaTableViewPlaceholderCell class] forCellReuseIdentifier:identifier];
         
         identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindHeader, XZMocoaNameNone);
         [tableView registerClass:[XZMocoaTableSectionPlaceholderHeaderFooter class] forHeaderFooterViewReuseIdentifier:identifier];
@@ -122,7 +122,7 @@
                 } else if (submodule.viewClass != Nil) {
                     [tableView registerClass:submodule.viewClass forCellReuseIdentifier:identifier];
                 } else { // 未注册 View 的模块，获得一个占位视图
-                    Class const aClass = [XZMocoaTablePlaceholderCell class];
+                    Class const aClass = [XZMocoaTableViewPlaceholderCell class];
                     [tableView registerClass:aClass forCellReuseIdentifier:identifier];
                 }
             } else if ([kind isEqualToString:XZMocoaKindHeader] || [kind isEqualToString:XZMocoaKindFooter]) {

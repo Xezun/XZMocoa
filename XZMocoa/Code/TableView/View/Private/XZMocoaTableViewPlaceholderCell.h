@@ -1,5 +1,5 @@
 //
-//  XZMocoaTablePlaceholderCell.h
+//  XZMocoaTableViewPlaceholderCell.h
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/19.
@@ -10,10 +10,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if DEBUG
-@interface XZMocoaTablePlaceholderCell : XZMocoaTableViewCell
+@interface XZMocoaTableViewPlaceholderCell : XZMocoaTableViewCell
 @end
 #else
-typedef XZMocoaTableCell XZMocoaTablePlaceholderCell;
+typedef XZMocoaTableCell XZMocoaTableViewPlaceholderCell;
 #endif
 
 NS_ASSUME_NONNULL_END
