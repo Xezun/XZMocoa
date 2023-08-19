@@ -11,8 +11,7 @@
 #import "XZMocoaTableCell.h"
 #import "XZMocoaTableSectionHeaderFooter.h"
 #import "XZMocoaTableSectionHeaderFooter.h"
-#import "XZMocoaTableSectionPlaceholderHeader.h"
-#import "XZMocoaTableSectionPlaceholderFooter.h"
+#import "XZMocoaTableSectionPlaceholderHeaderFooter.h"
 #import "XZMocoaTablePlaceholderCell.h"
 
 @interface XZMocoaTableView ()
@@ -99,9 +98,15 @@
         return;
     }
     
-    { // 注册默认的 cell 视图
+    { // 注册默认视图
         NSString *identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
         [tableView registerClass:[XZMocoaTablePlaceholderCell class] forCellReuseIdentifier:identifier];
+        
+        identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindHeader, XZMocoaNameNone);
+        [tableView registerClass:[XZMocoaTableSectionPlaceholderHeaderFooter class] forHeaderFooterViewReuseIdentifier:identifier];
+        
+        identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindFooter, XZMocoaNameNone);
+        [tableView registerClass:[XZMocoaTableSectionPlaceholderHeaderFooter class] forHeaderFooterViewReuseIdentifier:identifier];
     }
     
     [module enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName section, BOOL *stop) {
@@ -121,26 +126,15 @@
                     Class const aClass = [XZMocoaTablePlaceholderCell class];
                     [tableView registerClass:aClass forCellReuseIdentifier:identifier];
                 }
-            } else if ([kind isEqualToString:XZMocoaKindHeader]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
+            } else if ([kind isEqualToString:XZMocoaKindHeader] || [kind isEqualToString:XZMocoaKindFooter]) {
+                NSString * const identifier = XZMocoaReuseIdentifier(section, kind, name);
                 if (submodule.viewNibName != nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
                     [tableView registerNib:viewNib forHeaderFooterViewReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
                     [tableView registerClass:submodule.viewClass forHeaderFooterViewReuseIdentifier:identifier];
                 } else {
-                    Class const aClass = [XZMocoaTableSectionPlaceholderHeader class];
-                    [tableView registerClass:aClass forHeaderFooterViewReuseIdentifier:identifier];
-                }
-            } else if ([kind isEqualToString:XZMocoaKindFooter]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
-                if (submodule.viewNibName != nil) {
-                    UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
-                    [tableView registerNib:viewNib forHeaderFooterViewReuseIdentifier:identifier];
-                } else if (submodule.viewClass != Nil) {
-                    [tableView registerClass:submodule.viewClass forHeaderFooterViewReuseIdentifier:identifier];
-                } else {
-                    Class const aClass = [XZMocoaTableSectionPlaceholderFooter class];
+                    Class const aClass = [XZMocoaTableSectionPlaceholderHeaderFooter class];
                     [tableView registerClass:aClass forHeaderFooterViewReuseIdentifier:identifier];
                 }
             }

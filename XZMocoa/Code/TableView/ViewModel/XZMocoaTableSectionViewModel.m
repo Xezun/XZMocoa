@@ -57,16 +57,16 @@
     
     XZMocoaName     const name    = model.mocoaName;
     XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:kind forName:name];
-    Class           const VMClass = module.viewModelClass;
+    Class           const ViewModel = module.viewModelClass;
     
     XZMocoaListitySectionSupplementaryViewModel *viewModel = nil;
-    if (module == nil) {
+    if (ViewModel == Nil) {
         viewModel = [[XZMocoaTableSectionHeaderFooterViewModel alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
         viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, kind, XZMocoaNameNone);
     } else {
-        viewModel = [[VMClass alloc] initWithModel:model];
+        viewModel = [[ViewModel alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
         viewModel.identifier = XZMocoaReuseIdentifier(self.model.mocoaName, kind, name);

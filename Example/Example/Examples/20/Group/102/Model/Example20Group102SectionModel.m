@@ -38,4 +38,8 @@
     return self.items;
 }
 
+- (id)modelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+    return @"";
+}
+
 @end
