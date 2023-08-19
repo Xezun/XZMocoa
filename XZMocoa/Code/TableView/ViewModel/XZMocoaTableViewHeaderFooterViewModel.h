@@ -5,11 +5,11 @@
 //  Created by Xezun on 2023/8/9.
 //
 
-#import <XZMocoa/XZMocoaListitySupplementaryViewModel.h>
+#import <XZMocoa/XZMocoaListityViewSupplementaryViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaTableViewHeaderFooterViewModel : XZMocoaListitySupplementaryViewModel
+@interface XZMocoaTableViewHeaderFooterViewModel : XZMocoaListityViewSupplementaryViewModel
 @property (nonatomic) CGFloat height;
 @end
 
