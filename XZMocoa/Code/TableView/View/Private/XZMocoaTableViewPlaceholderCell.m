@@ -1,14 +1,14 @@
 //
-//  XZMocoaTablePlaceholderCell.m
+//  XZMocoaTableViewPlaceholderCell.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/19.
 //
 
-#import "XZMocoaTablePlaceholderCell.h"
+#import "XZMocoaTableViewPlaceholderCell.h"
 
 #if DEBUG
-@implementation XZMocoaTablePlaceholderCell
+@implementation XZMocoaTableViewPlaceholderCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
