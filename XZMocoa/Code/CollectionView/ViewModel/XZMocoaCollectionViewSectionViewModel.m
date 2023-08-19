@@ -24,7 +24,7 @@
         viewModel = [[XZMocoaCollectionViewCellViewModel alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
-        viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
+        viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindPlaceholder, XZMocoaNamePlaceholder);
     } else {
         viewModel = [[VMClass alloc] initWithModel:model];
         viewModel.index      = index;
@@ -49,13 +49,7 @@
         viewModel = [[XZMocoaCollectionViewSupplementaryViewModel alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
-        
-        // 由于只为 header/footer 注册了默认视图，所以将其它的 kind 类型，作为 header 处理。
-        if ([kind isEqualToString:XZMocoaKindHeader] || [kind isEqualToString:XZMocoaKindFooter]) {
-            viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, kind, XZMocoaNameNone);
-        } else {
-            viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindHeader, XZMocoaNameNone);
-        }
+        viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindPlaceholder, XZMocoaNamePlaceholder);
     } else {
         viewModel = [[VMClass alloc] initWithModel:model];
         viewModel.index      = index;

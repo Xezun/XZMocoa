@@ -104,6 +104,10 @@
     return _supplementaryViewModels[kind][index];
 }
 
+- (NSDictionary<XZMocoaKind,NSArray<XZMocoaViewModel *> *> *)supplementaryViewModels {
+    return _supplementaryViewModels;
+}
+
 - (NSInteger)numberOfCells {
     return _cellViewModels.count;
 }
