@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if DEBUG
-@interface XZMocoaTablePlaceholderCell : XZMocoaTableCell
+@interface XZMocoaTablePlaceholderCell : XZMocoaTableViewCell
 @end
 #else
 typedef XZMocoaTableCell XZMocoaTablePlaceholderCell;

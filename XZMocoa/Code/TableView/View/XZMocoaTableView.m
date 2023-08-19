@@ -8,9 +8,8 @@
 
 #import "XZMocoaTableView.h"
 #import "XZMocoaDefines.h"
-#import "XZMocoaTableCell.h"
+#import "XZMocoaTableViewCell.h"
 #import "XZMocoaTableViewHeaderFooterView.h"
-#import "XZMocoaTableSectionHeaderFooter.h"
 #import "XZMocoaTableSectionPlaceholderHeaderFooter.h"
 #import "XZMocoaTablePlaceholderCell.h"
 
@@ -163,7 +162,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XZMocoaTableCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
     
-    UITableViewCell<XZMocoaTableCell> *cell = [tableView dequeueReusableCellWithIdentifier:viewModel.identifier forIndexPath:indexPath];
+    UITableViewCell<XZMocoaTableViewCell> *cell = [tableView dequeueReusableCellWithIdentifier:viewModel.identifier forIndexPath:indexPath];
     cell.viewModel = viewModel;
     
     return cell;
@@ -219,16 +218,16 @@
     return viewModel.height;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableView<XZMocoaTableCell> *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableView<XZMocoaTableViewCell> *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     [cell tableView:self willDisplayRowAtIndexPath:indexPath];
 }
 
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableView<XZMocoaTableCell> *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableView<XZMocoaTableViewCell> *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
     [cell tableView:self didEndDisplayingRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableView<XZMocoaTableCell> *cell = (id)[tableView cellForRowAtIndexPath:indexPath];
+    UITableView<XZMocoaTableViewCell> *cell = (id)[tableView cellForRowAtIndexPath:indexPath];
     [cell tableView:self didSelectRowAtIndexPath:indexPath];
 }
 

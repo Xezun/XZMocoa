@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example20Group101Cell : UITableViewCell <XZMocoaTableCell>
+@interface Example20Group101Cell : UITableViewCell <XZMocoaTableViewCell>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *imageViews;
