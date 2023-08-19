@@ -1,19 +1,19 @@
 //
-//  XZMocoaTableSectionViewModel.m
+//  XZMocoaTableViewSectionViewModel.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/7/22.
 //
 
-#import "XZMocoaTableSectionViewModel.h"
+#import "XZMocoaTableViewSectionViewModel.h"
 
-@implementation XZMocoaTableSectionViewModel
+@implementation XZMocoaTableViewSectionViewModel
 
-- (XZMocoaTableSectionHeaderFooterViewModel *)headerViewModel {
+- (XZMocoaTableViewHeaderFooterViewModel *)headerViewModel {
     return [self viewModelForSupplementaryKind:XZMocoaKindHeader atIndex:0];
 }
 
-- (XZMocoaTableSectionHeaderFooterViewModel *)footerViewModel {
+- (XZMocoaTableViewHeaderFooterViewModel *)footerViewModel {
     return [self viewModelForSupplementaryKind:XZMocoaKindFooter atIndex:0];
 }
 
@@ -61,7 +61,7 @@
     
     XZMocoaListitySupplementaryViewModel *viewModel = nil;
     if (ViewModel == Nil) {
-        viewModel = [[XZMocoaTableSectionHeaderFooterViewModel alloc] initWithModel:model];
+        viewModel = [[XZMocoaTableViewHeaderFooterViewModel alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
         viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, kind, XZMocoaNameNone);

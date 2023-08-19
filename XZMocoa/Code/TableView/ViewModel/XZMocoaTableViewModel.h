@@ -6,8 +6,8 @@
 //
 
 #import <XZMocoa/XZMocoaListityViewModel.h>
-#import <XZMocoa/XZMocoaTableSectionViewModel.h>
-#import <XZMocoa/XZMocoaTableSectionHeaderFooterViewModel.h>
+#import <XZMocoa/XZMocoaTableViewSectionViewModel.h>
+#import <XZMocoa/XZMocoaTableViewHeaderFooterViewModel.h>
 #import <XZMocoa/XZMocoaTableViewCellViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN

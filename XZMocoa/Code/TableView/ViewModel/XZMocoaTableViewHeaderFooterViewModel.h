@@ -1,5 +1,5 @@
 //
-//  XZMocoaTableSectionHeaderFooterViewModel.h
+//  XZMocoaTableViewHeaderFooterViewModel.h
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/9.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaTableSectionHeaderFooterViewModel : XZMocoaListitySupplementaryViewModel
+@interface XZMocoaTableViewHeaderFooterViewModel : XZMocoaListitySupplementaryViewModel
 @property (nonatomic) CGFloat height;
 @end
 

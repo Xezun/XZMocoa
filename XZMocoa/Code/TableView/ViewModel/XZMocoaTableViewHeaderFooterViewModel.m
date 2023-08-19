@@ -1,13 +1,13 @@
 //
-//  XZMocoaTableSectionHeaderFooterViewModel.m
+//  XZMocoaTableViewHeaderFooterViewModel.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/9.
 //
 
-#import "XZMocoaTableSectionHeaderFooterViewModel.h"
+#import "XZMocoaTableViewHeaderFooterViewModel.h"
 
-@implementation XZMocoaTableSectionHeaderFooterViewModel
+@implementation XZMocoaTableViewHeaderFooterViewModel
 
 - (instancetype)initWithModel:(id)model {
     self = [super initWithModel:model];
