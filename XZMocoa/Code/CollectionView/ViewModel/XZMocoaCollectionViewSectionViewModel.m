@@ -40,18 +40,18 @@
         return nil;
     }
     
-    XZMocoaName     const name      = model.mocoaName;
-    XZMocoaModule * const module    = [self.module submoduleForKind:kind forName:name];
-    Class           const ViewModel = module.viewModelClass;
+    XZMocoaName     const name    = model.mocoaName;
+    XZMocoaModule * const module  = [self.module submoduleForKind:kind forName:name];
+    Class           const VMClass = module.viewModelClass;
     
     XZMocoaCollectionViewSupplementaryViewModel *viewModel = nil;
-    if (module == nil) {
+    if (VMClass == Nil) {
         viewModel = [[XZMocoaCollectionViewSupplementaryViewModel alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
         viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, kind, XZMocoaNameNone);
     } else {
-        viewModel = [[ViewModel alloc] initWithModel:model];
+        viewModel = [[VMClass alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
         viewModel.identifier = XZMocoaReuseIdentifier(self.model.mocoaName, kind, name);
