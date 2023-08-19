@@ -169,15 +169,15 @@ for (id<XZMocoaModel> data in _dataArray) {
 }
 ```
 
-当然，如果页面由固定模块组成，那么直接使用视图模块`URL`也是可以的，因为`mocoaName`的目的也是获得子模块。
+当然，如果页面由固定模块组成，那么直接使用视图模块`URL`也是可以的，因为`mocoaName`的目的也是获取子模块。
 
 ### 5、渲染列表
 
-使用`XZMocoaTableView`或`XZMocoaCollectionView`渲染列表。
+在 Mocoa 中，可以使用`XZMocoaTableView`或`XZMocoaCollectionView`渲染列表。
 
 ```objc
 // model
-NSArray<XZMocoaTableModel> *dataArray;
+id<XZMocoaTableModel> *dataArray;
 // viewModel
 XZMocoaTableViewModel *tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:dataArray];
 tableViewModel.module = XZMocoa(@"https://mocoa.xezun.com/list/");
@@ -188,7 +188,18 @@ tableView.viewModel = tableViewModel;
 [self.view addSubview:tableView];
 ```
 
-与`UITableView`或`UICollectionView`相比，使用`XZMocoaTableView`或`XZMocoaCollectionView`不用注册`cell`也不用编写`delegate`或`dataSource`方法。
+与直接使用`UITableView`或`UICollectionView`渲染列表相比，使用 Mocoa 渲染列表：
+
+- 不用编写`delegate`或`dataSource`方法。
+- 不用先编写`cell`，Mocoa 会先用占位视图替代，直到`cell`模块编写完成。
+- 编写`cell`后，仅注册模块即可，不需要在`tableView`或`collectionView`中注册。
+
+
+
+
+
+
+
 当然能这么做的前提是，各个`cell`模块已经注册成为`XZMocoaTableView`或`XZMocoaCollectionView`的子模块。
 
 由于在`tableView`中，有`section`逻辑层，`cell`并不是`tableView`的直接子模块，而是`section`的直接子模块，所以注册如下。
@@ -209,10 +220,10 @@ tableView.viewModel = tableViewModel;
 ```objc
 @protocol XZMocoaListityModel <XZMocoaModel>
 @property (nonatomic, readonly) NSInteger numberOfSectionModels;
-- (nullable id<XZMocoaListityViewSectionModel>)modelForSectionAtIndex:(NSInteger)index;
+- (nullable id<XZMocoaListitySectionModel>)modelForSectionAtIndex:(NSInteger)index;
 @end
 
-@protocol XZMocoaListityViewSectionModel <XZMocoaModel>
+@protocol XZMocoaListitySectionModel <XZMocoaModel>
 @optional
 @property (nonatomic, readonly) NSInteger numberOfCellModels;
 - (nullable id)modelForCellAtIndex:(NSInteger)index;
@@ -474,7 +485,7 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 1. 通过`ViewModel`管理`cell`的高度。
 
 ```objc
-@interface XZMocoaTableViewCellViewModel : XZMocoaListityViewCellViewModel
+@interface XZMocoaTableCellViewModel : XZMocoaListityCellViewModel
 @optional
 @property (nonatomic) CGFloat height;
 @end
@@ -483,7 +494,7 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 2. 列表事件，重新转发给`cell`，并再转发给`ViewModel`处理。
 
 ```objc
-@interface XZMocoaTableViewCellViewModel : XZMocoaListityViewCellViewModel
+@interface XZMocoaTableCellViewModel : XZMocoaListityCellViewModel
 @optional
 - (void)tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(XZMocoaTableView *)tableView willDisplayRowAtIndexPath:(NSIndexPath *)indexPath;
