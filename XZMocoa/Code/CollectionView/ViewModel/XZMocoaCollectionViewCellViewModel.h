@@ -1,5 +1,5 @@
 //
-//  XZMocoaCollectionCellViewModel.h
+//  XZMocoaCollectionViewCellViewModel.h
 //  XZMocoa
 //
 //  Created by Xezun on 2023/7/22.
@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// UICollectionViewCell 视图模型基类。
-@interface XZMocoaCollectionCellViewModel : XZMocoaListityViewCellViewModel
+@interface XZMocoaCollectionViewCellViewModel : XZMocoaListityViewCellViewModel
 
 @property (nonatomic) CGSize size;
 

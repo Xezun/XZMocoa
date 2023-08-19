@@ -68,7 +68,7 @@
     id<XZMocoaListityViewSectionModel> const model = [self.model modelForSectionAtIndex:index];
     XZMocoaName     const name    = model.mocoaName;
     XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:name];
-    Class           const VMClass = module.viewModelClass ?: [XZMocoaCollectionSectionViewModel class];
+    Class           const VMClass = module.viewModelClass ?: [XZMocoaCollectionViewSectionViewModel class];
     
     XZMocoaListityViewSectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
     viewModel.module = module;

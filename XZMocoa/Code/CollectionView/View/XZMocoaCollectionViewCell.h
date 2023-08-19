@@ -1,12 +1,12 @@
 //
-//  XZMocoaCollectionCell.h
+//  XZMocoaCollectionViewCell.h
 //  XZMocoa
 //
 //  Created by Xezun on 2023/7/23.
 //
 
 #import <XZMocoa/XZMocoaView.h>
-#import <XZMocoa/XZMocoaCollectionCellViewModel.h>
+#import <XZMocoa/XZMocoaCollectionViewCellViewModel.h>
 
 @class XZMocoaCollectionView;
 
@@ -15,13 +15,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// 使用 Mocoa 时，UICollectionViewCell 应遵循本协议。
 /// @note
 /// UICollectionViewCell 已默认实现了本协议，如需使用仅需声明遵循协议即可。
-@protocol XZMocoaCollectionCell <XZMocoaView>
+@protocol XZMocoaCollectionViewCell <XZMocoaView>
 
 @optional
 /// ViewModel 对象。
 /// @note 监听此属性，子类不需要重写，直接方法 -viewModelDidUpdate 中操作即可。
 /// @note 在设置新值时，将先从移除旧的 viewModel 上绑定的事件。
-@property (nonatomic, strong, nullable) __kindof XZMocoaCollectionCellViewModel *viewModel;
+@property (nonatomic, strong, nullable) __kindof XZMocoaCollectionViewCellViewModel *viewModel;
 
 // MARK: - 由当前 Cell 所在的 UICollectionViewCell 传递回来的事件
 
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 因一致性而提供，非必须基类。
 /// @note 任何 UICollectionViewCell 对象都可以作为 Mocoa 的 View 实例，而非必须基于此类。
-@interface XZMocoaCollectionCell : UICollectionViewCell <XZMocoaCollectionCell>
+@interface XZMocoaCollectionViewCell : UICollectionViewCell <XZMocoaCollectionViewCell>
 @end
 
 @class UICollectionReusableView;

@@ -1,13 +1,13 @@
 //
-//  XZMocoaCollectionCellViewModel.m
+//  XZMocoaCollectionViewCellViewModel.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/7/22.
 //
 
-#import "XZMocoaCollectionCellViewModel.h"
+#import "XZMocoaCollectionViewCellViewModel.h"
 
-@implementation XZMocoaCollectionCellViewModel
+@implementation XZMocoaCollectionViewCellViewModel
 
 - (CGSize)size {
     return self.frame.size;

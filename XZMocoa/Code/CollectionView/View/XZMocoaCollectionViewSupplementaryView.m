@@ -1,13 +1,13 @@
 //
-//  XZMocoaCollectionSectionSupplementaryView.m
+//  XZMocoaCollectionViewSupplementaryView.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/9.
 //
 
-#import "XZMocoaCollectionSectionSupplementaryView.h"
+#import "XZMocoaCollectionViewSupplementaryView.h"
 
-@implementation XZMocoaCollectionSectionSupplementaryView
+@implementation XZMocoaCollectionViewSupplementaryView
 @dynamic viewModel;
 @end
 
@@ -16,13 +16,13 @@
 
 static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source) {
     if (xz_objc_class_copyMethod(cls, target, source)) return;
-    XZLog(@"为协议 XZMocoaCollectionSectionSupplementaryView 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
+    XZLog(@"为协议 XZMocoaCollectionViewSupplementaryView 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
 }
 
-@interface UICollectionReusableView (XZMocoaCollectionSectionSupplementaryView) <XZMocoaCollectionSectionSupplementaryView>
+@interface UICollectionReusableView (XZMocoaCollectionViewSupplementaryView) <XZMocoaCollectionViewSupplementaryView>
 @end
 
-@implementation UICollectionReusableView (XZMocoaCollectionSectionSupplementaryView)
+@implementation UICollectionReusableView (XZMocoaCollectionViewSupplementaryView)
 
 @dynamic viewModel;
 

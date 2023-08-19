@@ -1,16 +1,16 @@
 //
-//  XZMocoaCollectionCell.m
+//  XZMocoaCollectionViewCell.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/7/23.
 //
 
-#import "XZMocoaCollectionCell.h"
+#import "XZMocoaCollectionViewCell.h"
 #import "XZMocoaModule.h"
 #import "XZMocoaDefines.h"
 
 
-@implementation XZMocoaCollectionCell
+@implementation XZMocoaCollectionViewCell
 @dynamic viewModel;
 @end
 
@@ -18,13 +18,13 @@
 
 static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source) {
     if (xz_objc_class_copyMethod(cls, target, source)) return;
-    XZLog(@"为协议 XZMocoaCollectionCell 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
+    XZLog(@"为协议 XZMocoaCollectionViewCell 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
 }
 
-@interface UICollectionViewCell (XZMocoaCollectionCell) <XZMocoaCollectionCell>
+@interface UICollectionViewCell (XZMocoaCollectionViewCell) <XZMocoaCollectionViewCell>
 @end
 
-@implementation UICollectionViewCell (XZMocoaCollectionCell)
+@implementation UICollectionViewCell (XZMocoaCollectionViewCell)
 
 @dynamic viewModel;
 

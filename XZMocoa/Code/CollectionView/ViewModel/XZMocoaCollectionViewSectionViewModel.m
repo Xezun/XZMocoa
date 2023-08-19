@@ -1,15 +1,15 @@
 //
-//  XZMocoaCollectionSectionViewModel.m
+//  XZMocoaCollectionViewSectionViewModel.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/7/22.
 //
 
-#import "XZMocoaCollectionSectionViewModel.h"
+#import "XZMocoaCollectionViewSectionViewModel.h"
 
-@implementation XZMocoaCollectionSectionViewModel
+@implementation XZMocoaCollectionViewSectionViewModel
 
-- (__kindof XZMocoaCollectionSectionSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+- (__kindof XZMocoaCollectionViewSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
     return [super viewModelForSupplementaryKind:kind atIndex:index];
 }
 
@@ -19,9 +19,9 @@
     XZMocoaModule *  const module  = [self.module cellForName:name];
     Class            const VMClass = module.viewModelClass;
     
-    XZMocoaCollectionCellViewModel *viewModel = nil;
+    XZMocoaCollectionViewCellViewModel *viewModel = nil;
     if (VMClass == Nil) {
-        viewModel = [[XZMocoaCollectionCellViewModel alloc] initWithModel:model];
+        viewModel = [[XZMocoaCollectionViewCellViewModel alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
         viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
@@ -44,9 +44,9 @@
     XZMocoaModule * const module    = [self.module submoduleForKind:kind forName:name];
     Class           const ViewModel = module.viewModelClass;
     
-    XZMocoaCollectionSectionSupplementaryViewModel *viewModel = nil;
+    XZMocoaCollectionViewSupplementaryViewModel *viewModel = nil;
     if (module == nil) {
-        viewModel = [[XZMocoaCollectionSectionSupplementaryViewModel alloc] initWithModel:model];
+        viewModel = [[XZMocoaCollectionViewSupplementaryViewModel alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
         viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, kind, XZMocoaNameNone);

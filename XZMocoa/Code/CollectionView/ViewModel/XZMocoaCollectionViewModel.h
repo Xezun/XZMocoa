@@ -6,8 +6,8 @@
 //
 
 #import <XZMocoa/XZMocoaListityViewModel.h>
-#import <XZMocoa/XZMocoaCollectionCellViewModel.h>
-#import <XZMocoa/XZMocoaCollectionSectionViewModel.h>
+#import <XZMocoa/XZMocoaCollectionViewCellViewModel.h>
+#import <XZMocoa/XZMocoaCollectionViewSectionViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface XZMocoaCollectionViewModel : XZMocoaListityViewModel <XZMocoaCollectionCellViewModel *, XZMocoaCollectionSectionViewModel *>
+@interface XZMocoaCollectionViewModel : XZMocoaListityViewModel <XZMocoaCollectionViewCellViewModel *, XZMocoaCollectionViewSectionViewModel *>
 @property (nonatomic, weak) id<XZMocoaCollectionViewModelDelegate> delegate;
 @end
 
