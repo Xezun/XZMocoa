@@ -1,5 +1,5 @@
 //
-//  XZMocoaListityBatchUpdatable.h
+//  XZMocoaListityViewBatchUpdatable.h
 //  XZMocoa
 //
 //  Created by Xezun on 2021/9/1.
@@ -13,10 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// 在批量更新的过程中，同一元素只能应用一个操作，但是在 MVVM 结构中，
 /// 数据变化也可能会引起刷新操作，为了避免多个更新操作，因此会将这些操作暂存并延迟执行。
 /// Mocoa 并不能区分所有重复操作，开发者应避免。
-typedef void(^XZMocoaListityDelayedBatchUpdate)(__kindof XZMocoaViewModel *self);
+typedef void(^XZMocoaListityViewDelayedBatchUpdate)(__kindof XZMocoaViewModel *self);
 
 /// 批量更新。
-@protocol XZMocoaListityBatchUpdatable <NSObject>
+@protocol XZMocoaListityViewBatchUpdatable <NSObject>
 
 /// 是否正在批量更新。
 @property (nonatomic, readonly) BOOL isPerformingBatchUpdates;

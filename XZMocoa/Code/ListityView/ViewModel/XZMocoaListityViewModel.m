@@ -15,7 +15,7 @@
     /// 标记当前是否正处于批量更新过程中，记录了更新前的数据。
     NSOrderedSet<XZMocoaListityViewSectionViewModel *> *_isPerformingBatchUpdates;
     /// 批量更新时，被延迟的更新。
-    NSMutableArray<XZMocoaListityDelayedBatchUpdate> *_delayedBatchUpdates;
+    NSMutableArray<XZMocoaListityViewDelayedBatchUpdate> *_delayedBatchUpdates;
     /// 是否需要执行批量更新的差异分析。
     /// @note 在批量更新时，由于同一对象不能重复操作，因此任一独立更新操作被调用时，都会标记此值为NO，以关闭差异分析，避免重复操作。
     BOOL _needsDifferenceBatchUpdates;
@@ -65,7 +65,7 @@
     return _sectionViewModels[index];
 }
 
-- (__kindof XZMocoaListityCellViewModel *)cellViewModelAtIndexPath:(NSIndexPath *)indexPath {
+- (__kindof XZMocoaListityViewCellViewModel *)cellViewModelAtIndexPath:(NSIndexPath *)indexPath {
     return [_sectionViewModels[indexPath.section] cellViewModelAtIndex:indexPath.row];
 }
 
@@ -256,7 +256,7 @@
 
 - (void)cleanupBatchUpdates {
     _isPerformingBatchUpdates = nil;
-    for (XZMocoaListityDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
+    for (XZMocoaListityViewDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
         batchUpdates(self);
     }
     _delayedBatchUpdates = nil;

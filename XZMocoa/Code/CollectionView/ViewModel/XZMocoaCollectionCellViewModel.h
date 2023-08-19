@@ -5,14 +5,14 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListityCellViewModel.h>
+#import <XZMocoa/XZMocoaListityViewCellViewModel.h>
 
 @class XZMocoaCollectionView;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// UICollectionViewCell 视图模型基类。
-@interface XZMocoaCollectionCellViewModel : XZMocoaListityCellViewModel
+@interface XZMocoaCollectionCellViewModel : XZMocoaListityViewCellViewModel
 
 @property (nonatomic) CGSize size;
 
