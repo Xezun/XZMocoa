@@ -1,13 +1,13 @@
 //
-//  XZMocoaTableCellViewModel.m
+//  XZMocoaTableViewCellViewModel.m
 //  
 //
 //  Created by Xezun on 2023/7/22.
 //
 
-#import "XZMocoaTableCellViewModel.h"
+#import "XZMocoaTableViewCellViewModel.h"
 
-@implementation XZMocoaTableCellViewModel
+@implementation XZMocoaTableViewCellViewModel
 
 #if DEBUG
 - (instancetype)initWithModel:(id)model {

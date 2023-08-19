@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example20Group102CellViewModel : XZMocoaTableCellViewModel
+@interface Example20Group102CellViewModel : XZMocoaTableViewCellViewModel
 
 @property (nonatomic, copy) NSArray<NSURL *> *images;
 

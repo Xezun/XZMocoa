@@ -160,7 +160,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XZMocoaTableCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
+    XZMocoaTableViewCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
     
     UITableViewCell<XZMocoaTableViewCell> *cell = [tableView dequeueReusableCellWithIdentifier:viewModel.identifier forIndexPath:indexPath];
     cell.viewModel = viewModel;
@@ -178,7 +178,7 @@
 @implementation XZMocoaTableView (UITableViewDelegate)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XZMocoaTableCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
+    XZMocoaTableViewCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
     return viewModel.height;
 }
 
