@@ -26,6 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 所有 cell 视图模型。这是一个计算属性，除非遍历所有 cell 对象，请尽量避免直接使用。
 - (nullable __kindof XZMocoaListityViewSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
+/// 直接返回了内部对象，外部请勿修改，使用请自行 copy 。
+@property (nonatomic, readonly) NSDictionary<XZMocoaKind, NSArray<XZMocoaViewModel *> *> *supplementaryViewModels;
+
 @property (nonatomic, copy, readonly) NSArray<CellViewModelType> *cellViewModels;
 
 /// 返回 YES 表示 header/cell/footer 都没有。
