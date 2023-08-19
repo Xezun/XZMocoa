@@ -13,6 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// 作为 Mocoa MVVM 中的 ViewModel 元素，需要实现的协议。
 @protocol XZMocoaViewModel <NSObject>
 @required
 - (instancetype)initWithModel:(nullable id)model;
@@ -30,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 数据。
 @property (nonatomic, strong, readonly, nullable) id model;
 
-/// 排序。
+/// 视图在列表中的排序。
 @property (nonatomic) NSInteger index;
 
 /// 标准初始化方法。一般情况下，子类应尽量避免添加新的初始化方法，保证接口统一。
