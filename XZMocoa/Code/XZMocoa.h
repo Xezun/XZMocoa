@@ -27,7 +27,7 @@
 
 // TableView
 #import <XZMocoa/XZMocoaTableModel.h>
-#import <XZMocoa/XZMocoaTableSectionModel.h>
+#import <XZMocoa/XZMocoaTableViewSectionModel.h>
 #import <XZMocoa/XZMocoaTableViewCellModel.h>
 #import <XZMocoa/XZMocoaTableView.h>
 #import <XZMocoa/XZMocoaTableViewCell.h>

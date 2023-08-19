@@ -33,7 +33,7 @@
     return self;
 }
 
-#pragma mark - XZMocoaTableSectionModel
+#pragma mark - XZMocoaTableViewSectionModel
 
 - (id)headerModel {
     return nil;
