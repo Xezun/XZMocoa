@@ -7,7 +7,7 @@ workspace '../XZMocoa.xcworkspace'
 project '../Example/Example.xcodeproj'
 
 target 'Example' do
-  pod 'XZMocoa/Debug', :path => '../'
+  pod 'XZMocoa', :path => '../'
   
   pod 'XZPageView'
   pod 'XZPageControl'
