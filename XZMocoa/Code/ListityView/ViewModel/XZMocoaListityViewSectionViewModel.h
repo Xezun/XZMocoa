@@ -8,7 +8,7 @@
 
 #import <XZMocoa/XZMocoaViewModel.h>
 #import <XZMocoa/XZMocoaListityViewBatchUpdatable.h>
-#import <XZMocoa/XZMocoaListitySectionModel.h>
+#import <XZMocoa/XZMocoaListityViewSectionModel.h>
 #import <XZMocoa/XZMocoaListityViewSupplementaryViewModel.h>
 #import <XZMocoa/XZMocoaListityViewCellViewModel.h>
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XZMocoaListityViewSectionViewModel<__covariant CellViewModelType: XZMocoaListityViewCellViewModel *> : XZMocoaViewModel <XZMocoaListityViewBatchUpdatable>
 
-@property (nonatomic, strong, readonly, nullable) id<XZMocoaListitySectionModel> model;
+@property (nonatomic, strong, readonly, nullable) id<XZMocoaListityViewSectionModel> model;
 @property (nonatomic, readonly, nullable) __kindof XZMocoaListityViewModel *superViewModel;
 
 /// 接收来自下级的 XZMocoaEmitUpdate 事件，并刷新视图，如果在批量更新的过程中，视图刷新可能会延迟。

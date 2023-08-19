@@ -65,7 +65,7 @@
 }
 
 - (XZMocoaListityViewSectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {
-    id<XZMocoaListitySectionModel> const model = [self.model modelForSectionAtIndex:index];
+    id<XZMocoaListityViewSectionModel> const model = [self.model modelForSectionAtIndex:index];
     XZMocoaName     const name    = model.mocoaName;
     XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:name];
     Class           const VMClass = module.viewModelClass ?: [XZMocoaCollectionSectionViewModel class];

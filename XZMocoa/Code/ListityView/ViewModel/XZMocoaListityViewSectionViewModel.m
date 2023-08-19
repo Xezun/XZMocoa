@@ -354,7 +354,7 @@
     }
     _needsDifferenceBatchUpdates = NO;
     
-    id<XZMocoaListitySectionModel> const model = self.model;
+    id<XZMocoaListityViewSectionModel> const model = self.model;
     
     BOOL needsUpdateAll = NO;
     for (XZMocoaKind const kind in model.supplementaryKinds) {
@@ -500,7 +500,7 @@
 - (void)loadDataWithoutEvents {
     NSAssert(_supplementaryViewModels.count == 0 && _cellViewModels.count == 0, @"调用此方法前要清除现有的数据");
     
-    id<XZMocoaListitySectionModel> const model = self.model;
+    id<XZMocoaListityViewSectionModel> const model = self.model;
     
     for (XZMocoaKind kind in model.supplementaryKinds) {
         NSInteger const count = [model numberOfModelsForSupplementaryKind:kind];
