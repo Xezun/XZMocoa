@@ -1,5 +1,5 @@
 //
-//  XZMocoaListitySectionViewModel.h
+//  XZMocoaListityViewSectionViewModel.h
 //  XZMocoa
 //
 //  Created by Xezun on 2021/1/13.
@@ -16,7 +16,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaListitySectionViewModel<__covariant CellViewModelType: XZMocoaListityCellViewModel *> : XZMocoaViewModel <XZMocoaListityBatchUpdatable>
+@interface XZMocoaListityViewSectionViewModel<__covariant CellViewModelType: XZMocoaListityCellViewModel *> : XZMocoaViewModel <XZMocoaListityBatchUpdatable>
 
 @property (nonatomic, strong, readonly, nullable) id<XZMocoaListitySectionModel> model;
 @property (nonatomic, readonly, nullable) __kindof XZMocoaListityViewModel *superViewModel;

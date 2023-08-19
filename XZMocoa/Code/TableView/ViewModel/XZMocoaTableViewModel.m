@@ -81,13 +81,13 @@
     }
 }
 
-- (XZMocoaListitySectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {
+- (XZMocoaListityViewSectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {
     id<XZMocoaListitySectionModel> const model = [self.model modelForSectionAtIndex:index];
     XZMocoaName     const name    = model.mocoaName;
     XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:name];
     Class           const VMClass = module.viewModelClass ?: [XZMocoaTableViewSectionViewModel class];
     
-    XZMocoaListitySectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
+    XZMocoaListityViewSectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
     viewModel.module = module;
     viewModel.index  = index;
     return viewModel;

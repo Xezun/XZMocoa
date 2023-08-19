@@ -9,7 +9,7 @@
 #import "XZMocoaListityCellViewModel.h"
 #import "XZMocoaDefines.h"
 #import "XZMocoaModule.h"
-#import "XZMocoaListitySectionViewModel.h"
+#import "XZMocoaListityViewSectionViewModel.h"
 
 @interface XZMocoaListityCellViewModel ()
 @end

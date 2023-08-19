@@ -22,7 +22,7 @@
 #import <XZMocoa/XZMocoaListityBatchUpdatable.h>
 #import <XZMocoa/XZMocoaListityCellViewModel.h>
 #import <XZMocoa/XZMocoaListityViewSupplementaryViewModel.h>
-#import <XZMocoa/XZMocoaListitySectionViewModel.h>
+#import <XZMocoa/XZMocoaListityViewSectionViewModel.h>
 #import <XZMocoa/XZMocoaListityViewModel.h>
 
 // TableView
