@@ -1,20 +1,20 @@
 //
-//  XZMocoaListitySectionViewModel.m
+//  XZMocoaListityViewSectionViewModel.m
 //  XZMocoa
 //
 //  Created by Xezun on 2021/1/13.
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import "XZMocoaListitySectionViewModel.h"
+#import "XZMocoaListityViewSectionViewModel.h"
 #import "XZMocoaDefines.h"
 #import "XZMocoaListityViewModel.h"
 @import XZExtensions;
 
-@interface XZMocoaListitySectionViewModel () {
+@interface XZMocoaListityViewSectionViewModel () {
     /// 非 nil 时，表示当前正在批量更新。
     NSOrderedSet *_isPerformingBatchUpdates;
-    NSMutableArray<void (^)(XZMocoaListitySectionViewModel *self)> *_delayedBatchUpdates;
+    NSMutableArray<void (^)(XZMocoaListityViewSectionViewModel *self)> *_delayedBatchUpdates;
     /// 是否需要执行批量更新的差异分析。
     /// @note 在批量更新时，任一更新操作被调用，都会标记此值为 NO
     BOOL _needsDifferenceBatchUpdates;
@@ -24,7 +24,7 @@
 }
 @end
 
-@implementation XZMocoaListitySectionViewModel
+@implementation XZMocoaListityViewSectionViewModel
 
 @dynamic model, superViewModel;
 
@@ -68,7 +68,7 @@
     if ([emition.name isEqualToString:XZMocoaEmitUpdate]) {
         // 正在批量更新，事件被延迟
         if (self.isPerformingBatchUpdates) {
-            [_delayedBatchUpdates addObject:^void(XZMocoaListitySectionViewModel *self) {
+            [_delayedBatchUpdates addObject:^void(XZMocoaListityViewSectionViewModel *self) {
                 [self subViewModel:subViewModel didEmit:emition];
             }];
             return;
