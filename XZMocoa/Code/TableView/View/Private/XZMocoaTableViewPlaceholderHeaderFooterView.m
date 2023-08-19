@@ -32,8 +32,8 @@
 }
 
 - (void)viewModelDidChange {
-    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = self.viewModel;
-    XZMocoaTableSectionViewModel * const superViewModel = viewModel.superViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = self.viewModel;
+    XZMocoaTableViewSectionViewModel * const superViewModel = viewModel.superViewModel;
     
     XZMocoaName const section = ((id<XZMocoaModel>)superViewModel.model).mocoaName ?: XZMocoaNameNone;
     XZMocoaName const cell    = ((id<XZMocoaModel>)viewModel.model).mocoaName ?: XZMocoaNameNone;

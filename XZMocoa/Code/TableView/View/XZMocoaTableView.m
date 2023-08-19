@@ -183,7 +183,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
     if (viewModel == nil) {
         return nil;
     }
@@ -193,7 +193,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
     if (viewModel == nil) {
         return XZMocoaTableViewHeaderFooterHeight;
     }
@@ -201,7 +201,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
     if (viewModel == nil) {
         return nil;
     }
@@ -211,7 +211,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
     if (viewModel == nil) {
         return XZMocoaTableViewHeaderFooterHeight;
     }

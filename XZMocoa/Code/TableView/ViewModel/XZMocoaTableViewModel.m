@@ -21,7 +21,7 @@
 
 - (CGFloat)height {
     CGFloat height = 0;
-    for (XZMocoaTableSectionViewModel *section in self.sectionViewModels) {
+    for (XZMocoaTableViewSectionViewModel *section in self.sectionViewModels) {
         height += section.height;
     }
     return height;
@@ -85,7 +85,7 @@
     id<XZMocoaListitySectionModel> const model = [self.model modelForSectionAtIndex:index];
     XZMocoaName     const name    = model.mocoaName;
     XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:name];
-    Class           const VMClass = module.viewModelClass ?: [XZMocoaTableSectionViewModel class];
+    Class           const VMClass = module.viewModelClass ?: [XZMocoaTableViewSectionViewModel class];
     
     XZMocoaListitySectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
     viewModel.module = module;

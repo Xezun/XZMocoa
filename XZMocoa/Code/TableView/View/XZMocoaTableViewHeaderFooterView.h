@@ -7,13 +7,13 @@
 
 #import <UIKit/UIKit.h>
 #import <XZMocoa/XZMocoaView.h>
-#import <XZMocoa/XZMocoaTableSectionHeaderFooterViewModel.h>
+#import <XZMocoa/XZMocoaTableViewHeaderFooterViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol XZMocoaTableViewHeaderFooterView <XZMocoaView>
 @optional
-@property (nonatomic, strong, nullable) __kindof XZMocoaTableSectionHeaderFooterViewModel *viewModel;
+@property (nonatomic, strong, nullable) __kindof XZMocoaTableViewHeaderFooterViewModel *viewModel;
 @end
 
 /// 因一致性而提供，非必须基类。

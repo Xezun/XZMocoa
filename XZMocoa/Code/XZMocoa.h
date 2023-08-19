@@ -33,8 +33,8 @@
 #import <XZMocoa/XZMocoaTableViewCell.h>
 #import <XZMocoa/XZMocoaTableViewHeaderFooterView.h>
 #import <XZMocoa/XZMocoaTableViewCellViewModel.h>
-#import <XZMocoa/XZMocoaTableSectionHeaderFooterViewModel.h>
-#import <XZMocoa/XZMocoaTableSectionViewModel.h>
+#import <XZMocoa/XZMocoaTableViewHeaderFooterViewModel.h>
+#import <XZMocoa/XZMocoaTableViewSectionViewModel.h>
 #import <XZMocoa/XZMocoaTableViewModel.h>
 
 // CollectionView
