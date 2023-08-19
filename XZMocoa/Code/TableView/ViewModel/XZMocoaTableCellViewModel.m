@@ -9,6 +9,16 @@
 
 @implementation XZMocoaTableCellViewModel
 
+#if DEBUG
+- (instancetype)initWithModel:(id)model {
+    self = [super initWithModel:model];
+    if (self) {
+        [super setFrame:CGRectMake(0, 0, 0, 44)];
+    }
+    return self;
+}
+#endif
+
 - (CGFloat)height {
     return self.frame.size.height;
 }

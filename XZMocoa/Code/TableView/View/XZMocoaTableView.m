@@ -11,6 +11,9 @@
 #import "XZMocoaTableCell.h"
 #import "XZMocoaTableSectionHeaderFooter.h"
 #import "XZMocoaTableSectionHeaderFooter.h"
+#import "XZMocoaTableSectionPlaceholderHeader.h"
+#import "XZMocoaTableSectionPlaceholderFooter.h"
+#import "XZMocoaTablePlaceholderCell.h"
 
 @interface XZMocoaTableView ()
 @end
@@ -98,7 +101,7 @@
     
     { // 注册默认的 cell 视图
         NSString *identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
-        [tableView registerClass:UITableViewCell.class forCellReuseIdentifier:identifier];
+        [tableView registerClass:[XZMocoaTablePlaceholderCell class] forCellReuseIdentifier:identifier];
     }
     
     [module enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName section, BOOL *stop) {
@@ -114,6 +117,9 @@
                     [tableView registerNib:viewNib forCellReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
                     [tableView registerClass:submodule.viewClass forCellReuseIdentifier:identifier];
+                } else { // 未注册 View 的模块，获得一个占位视图
+                    Class const aClass = [XZMocoaTablePlaceholderCell class];
+                    [tableView registerClass:aClass forCellReuseIdentifier:identifier];
                 }
             } else if ([kind isEqualToString:XZMocoaKindHeader]) {
                 NSString * const identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
@@ -122,6 +128,9 @@
                     [tableView registerNib:viewNib forHeaderFooterViewReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
                     [tableView registerClass:submodule.viewClass forHeaderFooterViewReuseIdentifier:identifier];
+                } else {
+                    Class const aClass = [XZMocoaTableSectionPlaceholderHeader class];
+                    [tableView registerClass:aClass forHeaderFooterViewReuseIdentifier:identifier];
                 }
             } else if ([kind isEqualToString:XZMocoaKindFooter]) {
                 NSString * const identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
@@ -130,6 +139,9 @@
                     [tableView registerNib:viewNib forHeaderFooterViewReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
                     [tableView registerClass:submodule.viewClass forHeaderFooterViewReuseIdentifier:identifier];
+                } else {
+                    Class const aClass = [XZMocoaTableSectionPlaceholderFooter class];
+                    [tableView registerClass:aClass forHeaderFooterViewReuseIdentifier:identifier];
                 }
             }
         }];
@@ -157,15 +169,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XZMocoaTableCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
     
-#if DEBUG
     UITableViewCell<XZMocoaTableCell> *cell = [tableView dequeueReusableCellWithIdentifier:viewModel.identifier forIndexPath:indexPath];
-#else
-    UITableViewCell<XZMocoaTableCell> *cell = [tableView dequeueReusableCellWithIdentifier:viewModel.identifier];
-    if (cell == nil) {
-        cell = (id)[[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:viewModel.identifier];
-    }
-#endif
-    
     cell.viewModel = viewModel;
     
     return cell;
@@ -293,3 +297,4 @@
 }
 
 @end
+
