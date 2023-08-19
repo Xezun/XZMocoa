@@ -27,6 +27,10 @@ static BOOL isValidPath(NSString *path) {
     NSMutableDictionary<NSString *, id> *_keyedModules;
 }
 
++ (id)moduleForURL:(NSURL *)url {
+    return [[self doaminForName:url.host] moduleForPath:url.path];
+}
+
 + (XZMocoaDomain *)doaminForName:(NSString *)name {
     NSParameterAssert(name && name.length > 0);
     
@@ -43,15 +47,11 @@ static BOOL isValidPath(NSString *path) {
     return domain;
 }
 
-+ (id)moduleForURL:(NSURL *)url {
-    return [[self doaminForName:url.host] moduleForPath:url.path];
-}
-
 - (instancetype)initWithName:(NSString *)name {
     self = [super init];
     if (self) {
         _name = name.copy;
-        _keyedModules = [NSMutableDictionary dictionary]; // dict
+        _keyedModules = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -78,7 +78,7 @@ static BOOL isValidPath(NSString *path) {
     }
 #endif
     
-    module = [self.provider domain:self moduleForName:self.name atPath:path];
+    module = [self.provider domain:self moduleForPath:path];
     _keyedModules[path] = module;
     return module;
 }
