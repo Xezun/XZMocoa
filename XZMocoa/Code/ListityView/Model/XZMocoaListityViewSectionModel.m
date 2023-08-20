@@ -29,6 +29,22 @@
 }
 
 - (id)modelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+    if (index == 0) {
+        if ([kind isEqualToString:XZMocoaKindHeader]) {
+            return self.headerModel;
+        }
+        if ([kind isEqualToString:XZMocoaKindFooter]) {
+            return self.footerModel;
+        }
+    }
+    return nil;
+}
+
+- (id)headerModel {
+    return nil;
+}
+
+- (id)footerModel {
     return nil;
 }
 

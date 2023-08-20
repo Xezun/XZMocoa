@@ -15,6 +15,14 @@
 
 @implementation Example30ViewController
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Example 30";
+    }
+    return self;
+}
+
 + (void)load {
     XZMocoa(@"https://mocoa.xezun.com/examples/30/").viewClass = self;
 }

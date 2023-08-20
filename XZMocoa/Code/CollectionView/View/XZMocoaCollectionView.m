@@ -105,7 +105,7 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
     { // 注册一个默认的视图
         NSString * const identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindPlaceholder, XZMocoaNamePlaceholder);
         [collectionView registerClass:[XZMocoaCollectionViewPlaceholderCell class] forCellWithReuseIdentifier:identifier];
-        [collectionView registerClass:[XZMocoaCollectionViewPlaceholderSupplementaryView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:identifier];
+        [collectionView registerClass:[XZMocoaCollectionViewPlaceholderSupplementaryView class] forSupplementaryViewOfKind:XZMocoaKindPlaceholder withReuseIdentifier:identifier];
     }
     
     [module enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName section, BOOL *stop) {
