@@ -101,9 +101,7 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
 
 - (void)registerModule:(XZMocoaModule *)module {
     UICollectionView * const collectionView = self.contentView;
-    if (!module || !collectionView) {
-        return;
-    }
+    
     { // 注册一个默认的视图
         NSString * const identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindPlaceholder, XZMocoaNamePlaceholder);
         [collectionView registerClass:[XZMocoaCollectionViewPlaceholderCell class] forCellWithReuseIdentifier:identifier];

@@ -37,8 +37,8 @@
 }
 
 - (void)prepare {
-    [self _loadDataWithoutEvents];
     [super prepare];
+    [self _loadDataWithoutEvents];
 }
 
 - (void)didRemoveSubViewModel:(__kindof XZMocoaViewModel *)viewModel {

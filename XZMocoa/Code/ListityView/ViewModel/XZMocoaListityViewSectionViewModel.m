@@ -39,8 +39,8 @@
 }
 
 - (void)prepare {
-    [self loadDataWithoutEvents];
     [super prepare];
+    [self _loadDataWithoutEvents];
 }
 
 - (void)didRemoveSubViewModel:(__kindof XZMocoaViewModel *)viewModel {
@@ -142,7 +142,7 @@
         }
     }
     // 加载新数据
-    [self loadDataWithoutEvents];
+    [self _loadDataWithoutEvents];
     
     // 发送事件
     [self didReloadData];
@@ -501,7 +501,7 @@
     [_cellViewModels insertObject:viewModel atIndex:newRow];
 }
 
-- (void)loadDataWithoutEvents {
+- (void)_loadDataWithoutEvents {
     NSAssert(_supplementaryViewModels.count == 0 && _cellViewModels.count == 0, @"调用此方法前要清除现有的数据");
     
     id<XZMocoaListityViewSectionModel> const model = self.model;
