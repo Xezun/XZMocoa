@@ -29,6 +29,8 @@
             [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/"],
             [NSURL URLWithString:@"https://mocoa.xezun.com/examples/21/"],
             [NSURL URLWithString:@"https://mocoa.xezun.com/examples/22/"]
+        ], @[
+            [NSURL URLWithString:@"https://mocoa.xezun.com/examples/30/"],
         ]
     ];
 }
