@@ -9,6 +9,16 @@
 
 @implementation XZMocoaCollectionViewCellViewModel
 
+#if DEBUG
+- (instancetype)initWithModel:(id)model {
+    self = [super initWithModel:model];
+    if (self) {
+        [super setFrame:CGRectMake(0, 0, 375.0, 44.0)];
+    }
+    return self;
+}
+#endif
+
 - (CGSize)size {
     return self.frame.size;
 }

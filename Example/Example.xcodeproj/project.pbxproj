@@ -13,6 +13,7 @@
 		29391AC72A74FEFB009E49C7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29391AC62A74FEFB009E49C7 /* WebKit.framework */; };
 		294CBE272A91A89300051402 /* Example30ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 294CBE262A91A89300051402 /* Example30ViewController.m */; };
 		294CBE2A2A91A9E800051402 /* Example30ViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 294CBE292A91A9E800051402 /* Example30ViewModel.m */; };
+		294CBE2D2A91C94E00051402 /* Example30Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 294CBE2C2A91C94E00051402 /* Example30Model.m */; };
 		298480B62A6FB3AD00757DBB /* Example10ContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 298480B52A6FB3AD00757DBB /* Example10ContentView.m */; };
 		298480B92A6FC36400757DBB /* Example10RootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 298480B82A6FC36400757DBB /* Example10RootView.m */; };
 		29914EA72A6CE3D700D0ACF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EA62A6CE3D700D0ACF3 /* AppDelegate.m */; };
@@ -64,6 +65,56 @@
 		29B3EBC92A7898B50008E65B /* Example21ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBB72A7898B50008E65B /* Example21ContactCell.m */; };
 		29B3EBCA2A7898B50008E65B /* Example21ContactEditorViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBBB2A7898B50008E65B /* Example21ContactEditorViewModel.m */; };
 		29B3EBCB2A7898B50008E65B /* Example21ContactEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */; };
+		29C974A02A91CDA000515B9E /* Example30Group100SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C9749F2A91CDA000515B9E /* Example30Group100SectionModel.m */; };
+		29C974A72A91D04900515B9E /* Example30Group100CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974A62A91D04900515B9E /* Example30Group100CellModel.m */; };
+		29C974AA2A91D08800515B9E /* Example30Group100Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974A92A91D08800515B9E /* Example30Group100Cell.m */; };
+		29C974AD2A91D0B800515B9E /* Example30Group100CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974AC2A91D0B800515B9E /* Example30Group100CellViewModel.m */; };
+		29C975022A91D37000515B9E /* Example30Group101CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974B02A91D36F00515B9E /* Example30Group101CellViewModel.m */; };
+		29C975032A91D37000515B9E /* Example30Group101CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974B52A91D36F00515B9E /* Example30Group101CellModel.m */; };
+		29C975042A91D37000515B9E /* Example30Group101SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974B62A91D36F00515B9E /* Example30Group101SectionModel.m */; };
+		29C975052A91D37000515B9E /* Example30Group101Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974B92A91D36F00515B9E /* Example30Group101Cell.m */; };
+		29C975062A91D37000515B9E /* Example30Group102CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974BC2A91D36F00515B9E /* Example30Group102CellViewModel.m */; };
+		29C975072A91D37000515B9E /* Example30Group102CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974BF2A91D36F00515B9E /* Example30Group102CellModel.m */; };
+		29C975082A91D37000515B9E /* Example30Group102SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974C22A91D36F00515B9E /* Example30Group102SectionModel.m */; };
+		29C975092A91D37000515B9E /* Example30Group102Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974C52A91D36F00515B9E /* Example30Group102Cell.m */; };
+		29C9750A2A91D37000515B9E /* Example30Group103CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974C82A91D36F00515B9E /* Example30Group103CellViewModel.m */; };
+		29C9750B2A91D37000515B9E /* Example30Group103SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974CC2A91D36F00515B9E /* Example30Group103SectionModel.m */; };
+		29C9750C2A91D37000515B9E /* Example30Group103CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974CD2A91D36F00515B9E /* Example30Group103CellModel.m */; };
+		29C9750D2A91D37000515B9E /* Example30Group103Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974D12A91D36F00515B9E /* Example30Group103Cell.m */; };
+		29C9750E2A91D37000515B9E /* Example30Group105CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974D42A91D36F00515B9E /* Example30Group105CellViewModel.m */; };
+		29C9750F2A91D37000515B9E /* Example30Group105CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974D72A91D36F00515B9E /* Example30Group105CellModel.m */; };
+		29C975102A91D37000515B9E /* Example30Group105SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974DA2A91D36F00515B9E /* Example30Group105SectionModel.m */; };
+		29C975112A91D37000515B9E /* Example30Group105Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974DD2A91D36F00515B9E /* Example30Group105Cell.m */; };
+		29C975122A91D37000515B9E /* Example30Group107CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974E02A91D36F00515B9E /* Example30Group107CellViewModel.m */; };
+		29C975132A91D37000515B9E /* Example30Group107CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974E32A91D36F00515B9E /* Example30Group107CellModel.m */; };
+		29C975142A91D37000515B9E /* Example30Group107SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974E42A91D36F00515B9E /* Example30Group107SectionModel.m */; };
+		29C975152A91D37000515B9E /* Example30Group107Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974E92A91D36F00515B9E /* Example30Group107Cell.m */; };
+		29C975162A91D37000515B9E /* Example30Group104CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974EC2A91D36F00515B9E /* Example30Group104CellViewModel.m */; };
+		29C975172A91D37000515B9E /* Example30Group104SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974EF2A91D36F00515B9E /* Example30Group104SectionModel.m */; };
+		29C975182A91D37000515B9E /* Example30Group104CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974F22A91D36F00515B9E /* Example30Group104CellModel.m */; };
+		29C975192A91D37000515B9E /* Example30Group104Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974F52A91D36F00515B9E /* Example30Group104Cell.m */; };
+		29C9751A2A91D37000515B9E /* Example30Group106CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974F82A91D37000515B9E /* Example30Group106CellViewModel.m */; };
+		29C9751B2A91D37000515B9E /* Example30Group106CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974FD2A91D37000515B9E /* Example30Group106CellModel.m */; };
+		29C9751C2A91D37000515B9E /* Example30Group106SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C974FE2A91D37000515B9E /* Example30Group106SectionModel.m */; };
+		29C9751D2A91D37000515B9E /* Example30Group106Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975012A91D37000515B9E /* Example30Group106Cell.m */; };
+		29C9752A2A92758A00515B9E /* Example30Group108CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975202A92758A00515B9E /* Example30Group108CellViewModel.m */; };
+		29C9752B2A92758A00515B9E /* Example30Group108CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975242A92758A00515B9E /* Example30Group108CellModel.m */; };
+		29C9752C2A92758A00515B9E /* Example30Group108SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975252A92758A00515B9E /* Example30Group108SectionModel.m */; };
+		29C9752D2A92758A00515B9E /* Example30Group108Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975282A92758A00515B9E /* Example30Group108Cell.m */; };
+		29C9753A2A927EB800515B9E /* Example30Group109CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975302A927EB800515B9E /* Example30Group109CellViewModel.m */; };
+		29C9753B2A927EB800515B9E /* Example30Group109SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975332A927EB800515B9E /* Example30Group109SectionModel.m */; };
+		29C9753C2A927EB800515B9E /* Example30Group109CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975362A927EB800515B9E /* Example30Group109CellModel.m */; };
+		29C9753D2A927EB800515B9E /* Example30Group109Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975382A927EB800515B9E /* Example30Group109Cell.m */; };
+		29C975402A927F6E00515B9E /* Example30Group109HeaderViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C9753F2A927F6E00515B9E /* Example30Group109HeaderViewModel.m */; };
+		29C975432A92805400515B9E /* Example30Group109FooterViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975422A92805400515B9E /* Example30Group109FooterViewModel.m */; };
+		29C975542A92817C00515B9E /* Example30Group110FooterViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975462A92817C00515B9E /* Example30Group110FooterViewModel.m */; };
+		29C975552A92817C00515B9E /* Example30Group110CellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975472A92817C00515B9E /* Example30Group110CellViewModel.m */; };
+		29C975562A92817C00515B9E /* Example30Group110HeaderViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C9754B2A92817C00515B9E /* Example30Group110HeaderViewModel.m */; };
+		29C975572A92817C00515B9E /* Example30Group110SectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C9754D2A92817C00515B9E /* Example30Group110SectionModel.m */; };
+		29C975582A92817C00515B9E /* Example30Group110CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975502A92817C00515B9E /* Example30Group110CellModel.m */; };
+		29C975592A92817C00515B9E /* Example30Group110Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C975522A92817C00515B9E /* Example30Group110Cell.m */; };
+		29C9755C2A9281F400515B9E /* Example30Group110HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C9755B2A9281F400515B9E /* Example30Group110HeaderView.m */; };
+		29C9755F2A92822300515B9E /* Example30Group110FooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C9755E2A92822300515B9E /* Example30Group110FooterView.m */; };
 		29FBDA172A8120A9006BBB66 /* Example20Model.json in Resources */ = {isa = PBXBuildFile; fileRef = 29FBDA162A8120A9006BBB66 /* Example20Model.json */; };
 		29FBDA432A82482A006BBB66 /* Example21ContactEditorInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA422A82482A006BBB66 /* Example21ContactEditorInputView.m */; };
 		29FBDA792A83A09F006BBB66 /* Example22ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29FBDA772A83A09F006BBB66 /* Example22ViewController.m */; };
@@ -108,6 +159,8 @@
 		294CBE262A91A89300051402 /* Example30ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30ViewController.m; sourceTree = "<group>"; };
 		294CBE282A91A9E800051402 /* Example30ViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30ViewModel.h; sourceTree = "<group>"; };
 		294CBE292A91A9E800051402 /* Example30ViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30ViewModel.m; sourceTree = "<group>"; };
+		294CBE2B2A91C94E00051402 /* Example30Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30Model.h; sourceTree = "<group>"; };
+		294CBE2C2A91C94E00051402 /* Example30Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30Model.m; sourceTree = "<group>"; };
 		298480B42A6FB3AD00757DBB /* Example10ContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10ContentView.h; sourceTree = "<group>"; };
 		298480B52A6FB3AD00757DBB /* Example10ContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10ContentView.m; sourceTree = "<group>"; };
 		298480B72A6FC36400757DBB /* Example10RootView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10RootView.h; sourceTree = "<group>"; };
@@ -200,6 +253,106 @@
 		29B3EBBC2A7898B50008E65B /* Example21ContactEditorViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditorViewModel.h; sourceTree = "<group>"; };
 		29B3EBBE2A7898B50008E65B /* Example21ContactEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditor.h; sourceTree = "<group>"; };
 		29B3EBC02A7898B50008E65B /* Example21ContactEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example21ContactEditor.m; sourceTree = "<group>"; };
+		29C9749E2A91CDA000515B9E /* Example30Group100SectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30Group100SectionModel.h; sourceTree = "<group>"; };
+		29C9749F2A91CDA000515B9E /* Example30Group100SectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30Group100SectionModel.m; sourceTree = "<group>"; };
+		29C974A52A91D04900515B9E /* Example30Group100CellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30Group100CellModel.h; sourceTree = "<group>"; };
+		29C974A62A91D04900515B9E /* Example30Group100CellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30Group100CellModel.m; sourceTree = "<group>"; };
+		29C974A82A91D08800515B9E /* Example30Group100Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30Group100Cell.h; sourceTree = "<group>"; };
+		29C974A92A91D08800515B9E /* Example30Group100Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30Group100Cell.m; sourceTree = "<group>"; };
+		29C974AB2A91D0B800515B9E /* Example30Group100CellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30Group100CellViewModel.h; sourceTree = "<group>"; };
+		29C974AC2A91D0B800515B9E /* Example30Group100CellViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30Group100CellViewModel.m; sourceTree = "<group>"; };
+		29C974B02A91D36F00515B9E /* Example30Group101CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group101CellViewModel.m; sourceTree = "<group>"; };
+		29C974B12A91D36F00515B9E /* Example30Group101CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group101CellViewModel.h; sourceTree = "<group>"; };
+		29C974B32A91D36F00515B9E /* Example30Group101CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group101CellModel.h; sourceTree = "<group>"; };
+		29C974B42A91D36F00515B9E /* Example30Group101SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group101SectionModel.h; sourceTree = "<group>"; };
+		29C974B52A91D36F00515B9E /* Example30Group101CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group101CellModel.m; sourceTree = "<group>"; };
+		29C974B62A91D36F00515B9E /* Example30Group101SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group101SectionModel.m; sourceTree = "<group>"; };
+		29C974B82A91D36F00515B9E /* Example30Group101Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group101Cell.h; sourceTree = "<group>"; };
+		29C974B92A91D36F00515B9E /* Example30Group101Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group101Cell.m; sourceTree = "<group>"; };
+		29C974BC2A91D36F00515B9E /* Example30Group102CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group102CellViewModel.m; sourceTree = "<group>"; };
+		29C974BD2A91D36F00515B9E /* Example30Group102CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group102CellViewModel.h; sourceTree = "<group>"; };
+		29C974BF2A91D36F00515B9E /* Example30Group102CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group102CellModel.m; sourceTree = "<group>"; };
+		29C974C02A91D36F00515B9E /* Example30Group102SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group102SectionModel.h; sourceTree = "<group>"; };
+		29C974C12A91D36F00515B9E /* Example30Group102CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group102CellModel.h; sourceTree = "<group>"; };
+		29C974C22A91D36F00515B9E /* Example30Group102SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group102SectionModel.m; sourceTree = "<group>"; };
+		29C974C42A91D36F00515B9E /* Example30Group102Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group102Cell.h; sourceTree = "<group>"; };
+		29C974C52A91D36F00515B9E /* Example30Group102Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group102Cell.m; sourceTree = "<group>"; };
+		29C974C82A91D36F00515B9E /* Example30Group103CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group103CellViewModel.m; sourceTree = "<group>"; };
+		29C974C92A91D36F00515B9E /* Example30Group103CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group103CellViewModel.h; sourceTree = "<group>"; };
+		29C974CB2A91D36F00515B9E /* Example30Group103CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group103CellModel.h; sourceTree = "<group>"; };
+		29C974CC2A91D36F00515B9E /* Example30Group103SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group103SectionModel.m; sourceTree = "<group>"; };
+		29C974CD2A91D36F00515B9E /* Example30Group103CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group103CellModel.m; sourceTree = "<group>"; };
+		29C974CE2A91D36F00515B9E /* Example30Group103SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group103SectionModel.h; sourceTree = "<group>"; };
+		29C974D02A91D36F00515B9E /* Example30Group103Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group103Cell.h; sourceTree = "<group>"; };
+		29C974D12A91D36F00515B9E /* Example30Group103Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group103Cell.m; sourceTree = "<group>"; };
+		29C974D42A91D36F00515B9E /* Example30Group105CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group105CellViewModel.m; sourceTree = "<group>"; };
+		29C974D52A91D36F00515B9E /* Example30Group105CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group105CellViewModel.h; sourceTree = "<group>"; };
+		29C974D72A91D36F00515B9E /* Example30Group105CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group105CellModel.m; sourceTree = "<group>"; };
+		29C974D82A91D36F00515B9E /* Example30Group105SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group105SectionModel.h; sourceTree = "<group>"; };
+		29C974D92A91D36F00515B9E /* Example30Group105CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group105CellModel.h; sourceTree = "<group>"; };
+		29C974DA2A91D36F00515B9E /* Example30Group105SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group105SectionModel.m; sourceTree = "<group>"; };
+		29C974DC2A91D36F00515B9E /* Example30Group105Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group105Cell.h; sourceTree = "<group>"; };
+		29C974DD2A91D36F00515B9E /* Example30Group105Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group105Cell.m; sourceTree = "<group>"; };
+		29C974E02A91D36F00515B9E /* Example30Group107CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group107CellViewModel.m; sourceTree = "<group>"; };
+		29C974E12A91D36F00515B9E /* Example30Group107CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group107CellViewModel.h; sourceTree = "<group>"; };
+		29C974E32A91D36F00515B9E /* Example30Group107CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group107CellModel.m; sourceTree = "<group>"; };
+		29C974E42A91D36F00515B9E /* Example30Group107SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group107SectionModel.m; sourceTree = "<group>"; };
+		29C974E52A91D36F00515B9E /* Example30Group107CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group107CellModel.h; sourceTree = "<group>"; };
+		29C974E62A91D36F00515B9E /* Example30Group107SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group107SectionModel.h; sourceTree = "<group>"; };
+		29C974E82A91D36F00515B9E /* Example30Group107Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group107Cell.h; sourceTree = "<group>"; };
+		29C974E92A91D36F00515B9E /* Example30Group107Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group107Cell.m; sourceTree = "<group>"; };
+		29C974EC2A91D36F00515B9E /* Example30Group104CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group104CellViewModel.m; sourceTree = "<group>"; };
+		29C974ED2A91D36F00515B9E /* Example30Group104CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group104CellViewModel.h; sourceTree = "<group>"; };
+		29C974EF2A91D36F00515B9E /* Example30Group104SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group104SectionModel.m; sourceTree = "<group>"; };
+		29C974F02A91D36F00515B9E /* Example30Group104CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group104CellModel.h; sourceTree = "<group>"; };
+		29C974F12A91D36F00515B9E /* Example30Group104SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group104SectionModel.h; sourceTree = "<group>"; };
+		29C974F22A91D36F00515B9E /* Example30Group104CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group104CellModel.m; sourceTree = "<group>"; };
+		29C974F42A91D36F00515B9E /* Example30Group104Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group104Cell.h; sourceTree = "<group>"; };
+		29C974F52A91D36F00515B9E /* Example30Group104Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group104Cell.m; sourceTree = "<group>"; };
+		29C974F82A91D37000515B9E /* Example30Group106CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group106CellViewModel.m; sourceTree = "<group>"; };
+		29C974F92A91D37000515B9E /* Example30Group106CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group106CellViewModel.h; sourceTree = "<group>"; };
+		29C974FB2A91D37000515B9E /* Example30Group106CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group106CellModel.h; sourceTree = "<group>"; };
+		29C974FC2A91D37000515B9E /* Example30Group106SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group106SectionModel.h; sourceTree = "<group>"; };
+		29C974FD2A91D37000515B9E /* Example30Group106CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group106CellModel.m; sourceTree = "<group>"; };
+		29C974FE2A91D37000515B9E /* Example30Group106SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group106SectionModel.m; sourceTree = "<group>"; };
+		29C975002A91D37000515B9E /* Example30Group106Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group106Cell.h; sourceTree = "<group>"; };
+		29C975012A91D37000515B9E /* Example30Group106Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group106Cell.m; sourceTree = "<group>"; };
+		29C975202A92758A00515B9E /* Example30Group108CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group108CellViewModel.m; sourceTree = "<group>"; };
+		29C975212A92758A00515B9E /* Example30Group108CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group108CellViewModel.h; sourceTree = "<group>"; };
+		29C975232A92758A00515B9E /* Example30Group108SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group108SectionModel.h; sourceTree = "<group>"; };
+		29C975242A92758A00515B9E /* Example30Group108CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group108CellModel.m; sourceTree = "<group>"; };
+		29C975252A92758A00515B9E /* Example30Group108SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group108SectionModel.m; sourceTree = "<group>"; };
+		29C975262A92758A00515B9E /* Example30Group108CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group108CellModel.h; sourceTree = "<group>"; };
+		29C975282A92758A00515B9E /* Example30Group108Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group108Cell.m; sourceTree = "<group>"; };
+		29C975292A92758A00515B9E /* Example30Group108Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group108Cell.h; sourceTree = "<group>"; };
+		29C975302A927EB800515B9E /* Example30Group109CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group109CellViewModel.m; sourceTree = "<group>"; };
+		29C975312A927EB800515B9E /* Example30Group109CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group109CellViewModel.h; sourceTree = "<group>"; };
+		29C975332A927EB800515B9E /* Example30Group109SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group109SectionModel.m; sourceTree = "<group>"; };
+		29C975342A927EB800515B9E /* Example30Group109CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group109CellModel.h; sourceTree = "<group>"; };
+		29C975352A927EB800515B9E /* Example30Group109SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group109SectionModel.h; sourceTree = "<group>"; };
+		29C975362A927EB800515B9E /* Example30Group109CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group109CellModel.m; sourceTree = "<group>"; };
+		29C975382A927EB800515B9E /* Example30Group109Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group109Cell.m; sourceTree = "<group>"; };
+		29C975392A927EB800515B9E /* Example30Group109Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group109Cell.h; sourceTree = "<group>"; };
+		29C9753E2A927F6E00515B9E /* Example30Group109HeaderViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30Group109HeaderViewModel.h; sourceTree = "<group>"; };
+		29C9753F2A927F6E00515B9E /* Example30Group109HeaderViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30Group109HeaderViewModel.m; sourceTree = "<group>"; };
+		29C975412A92805400515B9E /* Example30Group109FooterViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30Group109FooterViewModel.h; sourceTree = "<group>"; };
+		29C975422A92805400515B9E /* Example30Group109FooterViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30Group109FooterViewModel.m; sourceTree = "<group>"; };
+		29C975462A92817C00515B9E /* Example30Group110FooterViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group110FooterViewModel.m; sourceTree = "<group>"; };
+		29C975472A92817C00515B9E /* Example30Group110CellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group110CellViewModel.m; sourceTree = "<group>"; };
+		29C975482A92817C00515B9E /* Example30Group110HeaderViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group110HeaderViewModel.h; sourceTree = "<group>"; };
+		29C975492A92817C00515B9E /* Example30Group110FooterViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group110FooterViewModel.h; sourceTree = "<group>"; };
+		29C9754A2A92817C00515B9E /* Example30Group110CellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group110CellViewModel.h; sourceTree = "<group>"; };
+		29C9754B2A92817C00515B9E /* Example30Group110HeaderViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group110HeaderViewModel.m; sourceTree = "<group>"; };
+		29C9754D2A92817C00515B9E /* Example30Group110SectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group110SectionModel.m; sourceTree = "<group>"; };
+		29C9754E2A92817C00515B9E /* Example30Group110CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group110CellModel.h; sourceTree = "<group>"; };
+		29C9754F2A92817C00515B9E /* Example30Group110SectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group110SectionModel.h; sourceTree = "<group>"; };
+		29C975502A92817C00515B9E /* Example30Group110CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group110CellModel.m; sourceTree = "<group>"; };
+		29C975522A92817C00515B9E /* Example30Group110Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example30Group110Cell.m; sourceTree = "<group>"; };
+		29C975532A92817C00515B9E /* Example30Group110Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example30Group110Cell.h; sourceTree = "<group>"; };
+		29C9755A2A9281F400515B9E /* Example30Group110HeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30Group110HeaderView.h; sourceTree = "<group>"; };
+		29C9755B2A9281F400515B9E /* Example30Group110HeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30Group110HeaderView.m; sourceTree = "<group>"; };
+		29C9755D2A92822300515B9E /* Example30Group110FooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30Group110FooterView.h; sourceTree = "<group>"; };
+		29C9755E2A92822300515B9E /* Example30Group110FooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30Group110FooterView.m; sourceTree = "<group>"; };
 		29FBDA162A8120A9006BBB66 /* Example20Model.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Example20Model.json; sourceTree = "<group>"; };
 		29FBDA412A82482A006BBB66 /* Example21ContactEditorInputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example21ContactEditorInputView.h; sourceTree = "<group>"; };
 		29FBDA422A82482A006BBB66 /* Example21ContactEditorInputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example21ContactEditorInputView.m; sourceTree = "<group>"; };
@@ -292,9 +445,8 @@
 		294CBE212A91A84500051402 /* 30 */ = {
 			isa = PBXGroup;
 			children = (
-				294CBE242A91A86000051402 /* ViewModel */,
-				294CBE232A91A85B00051402 /* View */,
-				294CBE222A91A85300051402 /* Model */,
+				294CBE2E2A91CBE000051402 /* Page */,
+				29C9749B2A91CD5300515B9E /* Group */,
 			);
 			path = 30;
 			sourceTree = "<group>";
@@ -302,6 +454,8 @@
 		294CBE222A91A85300051402 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				294CBE2B2A91C94E00051402 /* Example30Model.h */,
+				294CBE2C2A91C94E00051402 /* Example30Model.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -322,6 +476,16 @@
 				294CBE292A91A9E800051402 /* Example30ViewModel.m */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		294CBE2E2A91CBE000051402 /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				294CBE242A91A86000051402 /* ViewModel */,
+				294CBE232A91A85B00051402 /* View */,
+				294CBE222A91A85300051402 /* Model */,
+			);
+			path = Page;
 			sourceTree = "<group>";
 		};
 		298480B32A6FB37A00757DBB /* Content */ = {
@@ -813,6 +977,465 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		29C9749B2A91CD5300515B9E /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				29C9749C2A91CD6700515B9E /* 100 */,
+				29C974AE2A91D36F00515B9E /* 101 */,
+				29C974BA2A91D36F00515B9E /* 102 */,
+				29C974C62A91D36F00515B9E /* 103 */,
+				29C974EA2A91D36F00515B9E /* 104 */,
+				29C974D22A91D36F00515B9E /* 105 */,
+				29C974F62A91D37000515B9E /* 106 */,
+				29C974DE2A91D36F00515B9E /* 107 */,
+				29C9751E2A92758A00515B9E /* 108 */,
+				29C9752E2A927EB800515B9E /* 109 */,
+				29C975442A92817C00515B9E /* 110 */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		29C9749C2A91CD6700515B9E /* 100 */ = {
+			isa = PBXGroup;
+			children = (
+				29C974A42A91CFEB00515B9E /* ViewModel */,
+				29C974A32A91CFE600515B9E /* View */,
+				29C9749D2A91CD7D00515B9E /* Model */,
+			);
+			path = 100;
+			sourceTree = "<group>";
+		};
+		29C9749D2A91CD7D00515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C9749E2A91CDA000515B9E /* Example30Group100SectionModel.h */,
+				29C9749F2A91CDA000515B9E /* Example30Group100SectionModel.m */,
+				29C974A52A91D04900515B9E /* Example30Group100CellModel.h */,
+				29C974A62A91D04900515B9E /* Example30Group100CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C974A32A91CFE600515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C974A82A91D08800515B9E /* Example30Group100Cell.h */,
+				29C974A92A91D08800515B9E /* Example30Group100Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C974A42A91CFEB00515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C974AB2A91D0B800515B9E /* Example30Group100CellViewModel.h */,
+				29C974AC2A91D0B800515B9E /* Example30Group100CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C974AE2A91D36F00515B9E /* 101 */ = {
+			isa = PBXGroup;
+			children = (
+				29C974AF2A91D36F00515B9E /* ViewModel */,
+				29C974B22A91D36F00515B9E /* Model */,
+				29C974B72A91D36F00515B9E /* View */,
+			);
+			path = 101;
+			sourceTree = "<group>";
+		};
+		29C974AF2A91D36F00515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C974B12A91D36F00515B9E /* Example30Group101CellViewModel.h */,
+				29C974B02A91D36F00515B9E /* Example30Group101CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C974B22A91D36F00515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C974B42A91D36F00515B9E /* Example30Group101SectionModel.h */,
+				29C974B62A91D36F00515B9E /* Example30Group101SectionModel.m */,
+				29C974B32A91D36F00515B9E /* Example30Group101CellModel.h */,
+				29C974B52A91D36F00515B9E /* Example30Group101CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C974B72A91D36F00515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C974B82A91D36F00515B9E /* Example30Group101Cell.h */,
+				29C974B92A91D36F00515B9E /* Example30Group101Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C974BA2A91D36F00515B9E /* 102 */ = {
+			isa = PBXGroup;
+			children = (
+				29C974BB2A91D36F00515B9E /* ViewModel */,
+				29C974BE2A91D36F00515B9E /* Model */,
+				29C974C32A91D36F00515B9E /* View */,
+			);
+			path = 102;
+			sourceTree = "<group>";
+		};
+		29C974BB2A91D36F00515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C974BD2A91D36F00515B9E /* Example30Group102CellViewModel.h */,
+				29C974BC2A91D36F00515B9E /* Example30Group102CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C974BE2A91D36F00515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C974C02A91D36F00515B9E /* Example30Group102SectionModel.h */,
+				29C974C22A91D36F00515B9E /* Example30Group102SectionModel.m */,
+				29C974C12A91D36F00515B9E /* Example30Group102CellModel.h */,
+				29C974BF2A91D36F00515B9E /* Example30Group102CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C974C32A91D36F00515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C974C42A91D36F00515B9E /* Example30Group102Cell.h */,
+				29C974C52A91D36F00515B9E /* Example30Group102Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C974C62A91D36F00515B9E /* 103 */ = {
+			isa = PBXGroup;
+			children = (
+				29C974C72A91D36F00515B9E /* ViewModel */,
+				29C974CA2A91D36F00515B9E /* Model */,
+				29C974CF2A91D36F00515B9E /* View */,
+			);
+			path = 103;
+			sourceTree = "<group>";
+		};
+		29C974C72A91D36F00515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C974C92A91D36F00515B9E /* Example30Group103CellViewModel.h */,
+				29C974C82A91D36F00515B9E /* Example30Group103CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C974CA2A91D36F00515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C974CE2A91D36F00515B9E /* Example30Group103SectionModel.h */,
+				29C974CC2A91D36F00515B9E /* Example30Group103SectionModel.m */,
+				29C974CB2A91D36F00515B9E /* Example30Group103CellModel.h */,
+				29C974CD2A91D36F00515B9E /* Example30Group103CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C974CF2A91D36F00515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C974D02A91D36F00515B9E /* Example30Group103Cell.h */,
+				29C974D12A91D36F00515B9E /* Example30Group103Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C974D22A91D36F00515B9E /* 105 */ = {
+			isa = PBXGroup;
+			children = (
+				29C974D32A91D36F00515B9E /* ViewModel */,
+				29C974D62A91D36F00515B9E /* Model */,
+				29C974DB2A91D36F00515B9E /* View */,
+			);
+			path = 105;
+			sourceTree = "<group>";
+		};
+		29C974D32A91D36F00515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C974D52A91D36F00515B9E /* Example30Group105CellViewModel.h */,
+				29C974D42A91D36F00515B9E /* Example30Group105CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C974D62A91D36F00515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C974D82A91D36F00515B9E /* Example30Group105SectionModel.h */,
+				29C974DA2A91D36F00515B9E /* Example30Group105SectionModel.m */,
+				29C974D92A91D36F00515B9E /* Example30Group105CellModel.h */,
+				29C974D72A91D36F00515B9E /* Example30Group105CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C974DB2A91D36F00515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C974DC2A91D36F00515B9E /* Example30Group105Cell.h */,
+				29C974DD2A91D36F00515B9E /* Example30Group105Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C974DE2A91D36F00515B9E /* 107 */ = {
+			isa = PBXGroup;
+			children = (
+				29C974DF2A91D36F00515B9E /* ViewModel */,
+				29C974E22A91D36F00515B9E /* Model */,
+				29C974E72A91D36F00515B9E /* View */,
+			);
+			path = 107;
+			sourceTree = "<group>";
+		};
+		29C974DF2A91D36F00515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C974E12A91D36F00515B9E /* Example30Group107CellViewModel.h */,
+				29C974E02A91D36F00515B9E /* Example30Group107CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C974E22A91D36F00515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C974E62A91D36F00515B9E /* Example30Group107SectionModel.h */,
+				29C974E42A91D36F00515B9E /* Example30Group107SectionModel.m */,
+				29C974E52A91D36F00515B9E /* Example30Group107CellModel.h */,
+				29C974E32A91D36F00515B9E /* Example30Group107CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C974E72A91D36F00515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C974E82A91D36F00515B9E /* Example30Group107Cell.h */,
+				29C974E92A91D36F00515B9E /* Example30Group107Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C974EA2A91D36F00515B9E /* 104 */ = {
+			isa = PBXGroup;
+			children = (
+				29C974EB2A91D36F00515B9E /* ViewModel */,
+				29C974EE2A91D36F00515B9E /* Model */,
+				29C974F32A91D36F00515B9E /* View */,
+			);
+			path = 104;
+			sourceTree = "<group>";
+		};
+		29C974EB2A91D36F00515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C974ED2A91D36F00515B9E /* Example30Group104CellViewModel.h */,
+				29C974EC2A91D36F00515B9E /* Example30Group104CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C974EE2A91D36F00515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C974F12A91D36F00515B9E /* Example30Group104SectionModel.h */,
+				29C974EF2A91D36F00515B9E /* Example30Group104SectionModel.m */,
+				29C974F02A91D36F00515B9E /* Example30Group104CellModel.h */,
+				29C974F22A91D36F00515B9E /* Example30Group104CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C974F32A91D36F00515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C974F42A91D36F00515B9E /* Example30Group104Cell.h */,
+				29C974F52A91D36F00515B9E /* Example30Group104Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C974F62A91D37000515B9E /* 106 */ = {
+			isa = PBXGroup;
+			children = (
+				29C974F72A91D37000515B9E /* ViewModel */,
+				29C974FA2A91D37000515B9E /* Model */,
+				29C974FF2A91D37000515B9E /* View */,
+			);
+			path = 106;
+			sourceTree = "<group>";
+		};
+		29C974F72A91D37000515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C974F92A91D37000515B9E /* Example30Group106CellViewModel.h */,
+				29C974F82A91D37000515B9E /* Example30Group106CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C974FA2A91D37000515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C974FC2A91D37000515B9E /* Example30Group106SectionModel.h */,
+				29C974FE2A91D37000515B9E /* Example30Group106SectionModel.m */,
+				29C974FB2A91D37000515B9E /* Example30Group106CellModel.h */,
+				29C974FD2A91D37000515B9E /* Example30Group106CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C974FF2A91D37000515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C975002A91D37000515B9E /* Example30Group106Cell.h */,
+				29C975012A91D37000515B9E /* Example30Group106Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C9751E2A92758A00515B9E /* 108 */ = {
+			isa = PBXGroup;
+			children = (
+				29C9751F2A92758A00515B9E /* ViewModel */,
+				29C975222A92758A00515B9E /* Model */,
+				29C975272A92758A00515B9E /* View */,
+			);
+			path = 108;
+			sourceTree = "<group>";
+		};
+		29C9751F2A92758A00515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C975212A92758A00515B9E /* Example30Group108CellViewModel.h */,
+				29C975202A92758A00515B9E /* Example30Group108CellViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C975222A92758A00515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C975232A92758A00515B9E /* Example30Group108SectionModel.h */,
+				29C975252A92758A00515B9E /* Example30Group108SectionModel.m */,
+				29C975262A92758A00515B9E /* Example30Group108CellModel.h */,
+				29C975242A92758A00515B9E /* Example30Group108CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C975272A92758A00515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C975292A92758A00515B9E /* Example30Group108Cell.h */,
+				29C975282A92758A00515B9E /* Example30Group108Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C9752E2A927EB800515B9E /* 109 */ = {
+			isa = PBXGroup;
+			children = (
+				29C9752F2A927EB800515B9E /* ViewModel */,
+				29C975322A927EB800515B9E /* Model */,
+				29C975372A927EB800515B9E /* View */,
+			);
+			path = 109;
+			sourceTree = "<group>";
+		};
+		29C9752F2A927EB800515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C975312A927EB800515B9E /* Example30Group109CellViewModel.h */,
+				29C975302A927EB800515B9E /* Example30Group109CellViewModel.m */,
+				29C9753E2A927F6E00515B9E /* Example30Group109HeaderViewModel.h */,
+				29C9753F2A927F6E00515B9E /* Example30Group109HeaderViewModel.m */,
+				29C975412A92805400515B9E /* Example30Group109FooterViewModel.h */,
+				29C975422A92805400515B9E /* Example30Group109FooterViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C975322A927EB800515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C975352A927EB800515B9E /* Example30Group109SectionModel.h */,
+				29C975332A927EB800515B9E /* Example30Group109SectionModel.m */,
+				29C975342A927EB800515B9E /* Example30Group109CellModel.h */,
+				29C975362A927EB800515B9E /* Example30Group109CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C975372A927EB800515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C975392A927EB800515B9E /* Example30Group109Cell.h */,
+				29C975382A927EB800515B9E /* Example30Group109Cell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		29C975442A92817C00515B9E /* 110 */ = {
+			isa = PBXGroup;
+			children = (
+				29C975452A92817C00515B9E /* ViewModel */,
+				29C9754C2A92817C00515B9E /* Model */,
+				29C975512A92817C00515B9E /* View */,
+			);
+			path = 110;
+			sourceTree = "<group>";
+		};
+		29C975452A92817C00515B9E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				29C975482A92817C00515B9E /* Example30Group110HeaderViewModel.h */,
+				29C9754B2A92817C00515B9E /* Example30Group110HeaderViewModel.m */,
+				29C9754A2A92817C00515B9E /* Example30Group110CellViewModel.h */,
+				29C975472A92817C00515B9E /* Example30Group110CellViewModel.m */,
+				29C975492A92817C00515B9E /* Example30Group110FooterViewModel.h */,
+				29C975462A92817C00515B9E /* Example30Group110FooterViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		29C9754C2A92817C00515B9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				29C9754F2A92817C00515B9E /* Example30Group110SectionModel.h */,
+				29C9754D2A92817C00515B9E /* Example30Group110SectionModel.m */,
+				29C9754E2A92817C00515B9E /* Example30Group110CellModel.h */,
+				29C975502A92817C00515B9E /* Example30Group110CellModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		29C975512A92817C00515B9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29C9755A2A9281F400515B9E /* Example30Group110HeaderView.h */,
+				29C9755B2A9281F400515B9E /* Example30Group110HeaderView.m */,
+				29C975532A92817C00515B9E /* Example30Group110Cell.h */,
+				29C975522A92817C00515B9E /* Example30Group110Cell.m */,
+				29C9755D2A92822300515B9E /* Example30Group110FooterView.h */,
+				29C9755E2A92822300515B9E /* Example30Group110FooterView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		29FBDA402A8226B9006BBB66 /* Contact */ = {
 			isa = PBXGroup;
 			children = (
@@ -1174,51 +1797,102 @@
 			buildActionMask = 2147483647;
 			files = (
 				29914EFB2A6D0FBA00D0ACF3 /* Example10ContactViewModel.m in Sources */,
+				29C975572A92817C00515B9E /* Example30Group110SectionModel.m in Sources */,
+				29C975182A91D37000515B9E /* Example30Group104CellModel.m in Sources */,
 				2996C8892A72142700A77E2F /* Example20Group102CellViewModel.m in Sources */,
+				29C9750A2A91D37000515B9E /* Example30Group103CellViewModel.m in Sources */,
+				29C975092A91D37000515B9E /* Example30Group102Cell.m in Sources */,
 				29914EEB2A6D0E3A00D0ACF3 /* Example10ViewController.m in Sources */,
 				29FBDA792A83A09F006BBB66 /* Example22ViewController.m in Sources */,
+				29C975172A91D37000515B9E /* Example30Group104SectionModel.m in Sources */,
 				29B3EBCB2A7898B50008E65B /* Example21ContactEditor.m in Sources */,
 				29FBDA902A83A9FD006BBB66 /* Example22TextModel.m in Sources */,
+				29C975022A91D37000515B9E /* Example30Group101CellViewModel.m in Sources */,
 				29FBDA7D2A83A122006BBB66 /* Example22ViewModel.m in Sources */,
+				29C9750D2A91D37000515B9E /* Example30Group103Cell.m in Sources */,
 				29B3EBCA2A7898B50008E65B /* Example21ContactEditorViewModel.m in Sources */,
 				29B3EBC72A7898B50008E65B /* Example21Contact.m in Sources */,
+				29C9750B2A91D37000515B9E /* Example30Group103SectionModel.m in Sources */,
 				29914F152A6D6D8800D0ACF3 /* Example20ViewModel.m in Sources */,
+				29C9751D2A91D37000515B9E /* Example30Group106Cell.m in Sources */,
+				29C975032A91D37000515B9E /* Example30Group101CellModel.m in Sources */,
 				29914F0C2A6D6ABB00D0ACF3 /* Example20ViewController.m in Sources */,
 				2996C8972A72149A00A77E2F /* Example20Group100CellModel.m in Sources */,
+				29C975582A92817C00515B9E /* Example30Group110CellModel.m in Sources */,
+				29C975042A91D37000515B9E /* Example30Group101SectionModel.m in Sources */,
+				29C975112A91D37000515B9E /* Example30Group105Cell.m in Sources */,
 				29914F012A6D2BC200D0ACF3 /* Example11ViewController.m in Sources */,
 				2996C8A22A7219B300A77E2F /* Example20Group101SectionModel.m in Sources */,
+				29C9752D2A92758A00515B9E /* Example30Group108Cell.m in Sources */,
 				29FBDA862A83A905006BBB66 /* Example22TextCell.m in Sources */,
+				29C974A02A91CDA000515B9E /* Example30Group100SectionModel.m in Sources */,
 				29914EF22A6D0F5C00D0ACF3 /* Example10ContactView.m in Sources */,
+				29C974AD2A91D0B800515B9E /* Example30Group100CellViewModel.m in Sources */,
 				2996C87B2A72110E00A77E2F /* Example20Group102Cell.m in Sources */,
+				29C9752A2A92758A00515B9E /* Example30Group108CellViewModel.m in Sources */,
+				29C9753B2A927EB800515B9E /* Example30Group109SectionModel.m in Sources */,
+				29C9753A2A927EB800515B9E /* Example30Group109CellViewModel.m in Sources */,
 				2996C8A82A721C7F00A77E2F /* Example20Model.m in Sources */,
+				29C975142A91D37000515B9E /* Example30Group107SectionModel.m in Sources */,
 				29B3EBC32A7898B50008E65B /* Example21ContactBookViewController.m in Sources */,
+				29C975052A91D37000515B9E /* Example30Group101Cell.m in Sources */,
+				29C9753C2A927EB800515B9E /* Example30Group109CellModel.m in Sources */,
+				29C975432A92805400515B9E /* Example30Group109FooterViewModel.m in Sources */,
 				2996C8942A72148C00A77E2F /* Example20Group100SectionModel.m in Sources */,
 				29391AC42A74F821009E49C7 /* Example20ContentViewController.m in Sources */,
 				29FBDA8A2A83A93A006BBB66 /* Example22TextViewModel.m in Sources */,
+				29C975152A91D37000515B9E /* Example30Group107Cell.m in Sources */,
+				29C975072A91D37000515B9E /* Example30Group102CellModel.m in Sources */,
 				294CBE272A91A89300051402 /* Example30ViewController.m in Sources */,
+				294CBE2D2A91C94E00051402 /* Example30Model.m in Sources */,
+				29C975062A91D37000515B9E /* Example30Group102CellViewModel.m in Sources */,
+				29C974A72A91D04900515B9E /* Example30Group100CellModel.m in Sources */,
+				29C9751B2A91D37000515B9E /* Example30Group106CellModel.m in Sources */,
+				29C9750F2A91D37000515B9E /* Example30Group105CellModel.m in Sources */,
 				2996C88D2A72145C00A77E2F /* Example20Group102SectionModel.m in Sources */,
 				29914EE32A6CED7200D0ACF3 /* Example11ViewModel.m in Sources */,
 				298480B92A6FC36400757DBB /* Example10RootView.m in Sources */,
 				29914EAD2A6CE3D700D0ACF3 /* ViewController.m in Sources */,
 				2996C8902A72146800A77E2F /* Example20Group102CellModel.m in Sources */,
+				29C975132A91D37000515B9E /* Example30Group107CellModel.m in Sources */,
+				29C975402A927F6E00515B9E /* Example30Group109HeaderViewModel.m in Sources */,
 				29FBDA432A82482A006BBB66 /* Example21ContactEditorInputView.m in Sources */,
+				29C9751C2A91D37000515B9E /* Example30Group106SectionModel.m in Sources */,
+				29C9751A2A91D37000515B9E /* Example30Group106CellViewModel.m in Sources */,
 				29B3EBC92A7898B50008E65B /* Example21ContactCell.m in Sources */,
 				298480B62A6FB3AD00757DBB /* Example10ContentView.m in Sources */,
+				29C975102A91D37000515B9E /* Example30Group105SectionModel.m in Sources */,
 				29914F1C2A6D8F6100D0ACF3 /* Example20Group101Cell.m in Sources */,
 				29AA8BE32A6ED88C00D36758 /* Example10Model.m in Sources */,
+				29C975562A92817C00515B9E /* Example30Group110HeaderViewModel.m in Sources */,
 				29B3EBC52A7898B50008E65B /* Example21ContactBookTestViewController.m in Sources */,
+				29C975192A91D37000515B9E /* Example30Group104Cell.m in Sources */,
+				29C975162A91D37000515B9E /* Example30Group104CellViewModel.m in Sources */,
+				29C9755C2A9281F400515B9E /* Example30Group110HeaderView.m in Sources */,
 				29FBDADD2A84E502006BBB66 /* Example22GroupTextSectionViewModel.m in Sources */,
+				29C975552A92817C00515B9E /* Example30Group110CellViewModel.m in Sources */,
 				29914EA72A6CE3D700D0ACF3 /* AppDelegate.m in Sources */,
+				29C9753D2A927EB800515B9E /* Example30Group109Cell.m in Sources */,
+				29C9750E2A91D37000515B9E /* Example30Group105CellViewModel.m in Sources */,
 				29914EE62A6CEF3800D0ACF3 /* Example11Model.m in Sources */,
+				29C9752B2A92758A00515B9E /* Example30Group108CellModel.m in Sources */,
 				2996C8A52A7219DC00A77E2F /* Example20Group101CellModel.m in Sources */,
+				29C975122A91D37000515B9E /* Example30Group107CellViewModel.m in Sources */,
 				29B3EBC62A7898B50008E65B /* Example21ContactCellViewModel.m in Sources */,
 				2996C8722A71930B00A77E2F /* Example20Group100Cell.m in Sources */,
 				29B3EBC22A7898B50008E65B /* Example21ContactBook.m in Sources */,
 				29914F1F2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m in Sources */,
 				294CBE2A2A91A9E800051402 /* Example30ViewModel.m in Sources */,
+				29C975592A92817C00515B9E /* Example30Group110Cell.m in Sources */,
+				29C975542A92817C00515B9E /* Example30Group110FooterViewModel.m in Sources */,
+				29C9750C2A91D37000515B9E /* Example30Group103CellModel.m in Sources */,
 				29B3EBC12A7898B50008E65B /* Example21ContactBookViewModel.m in Sources */,
+				29C974AA2A91D08800515B9E /* Example30Group100Cell.m in Sources */,
+				29C975082A91D37000515B9E /* Example30Group102SectionModel.m in Sources */,
 				29914EB82A6CE3D800D0ACF3 /* main.m in Sources */,
+				29C9755F2A92822300515B9E /* Example30Group110FooterView.m in Sources */,
 				29914EF82A6D0F9100D0ACF3 /* Example10Contact.m in Sources */,
+				29C9752C2A92758A00515B9E /* Example30Group108SectionModel.m in Sources */,
 				29914EAA2A6CE3D700D0ACF3 /* SceneDelegate.m in Sources */,
 				2996C8862A72141300A77E2F /* Example20Group100CellViewModel.m in Sources */,
 			);

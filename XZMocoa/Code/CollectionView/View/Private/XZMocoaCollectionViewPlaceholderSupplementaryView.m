@@ -6,9 +6,27 @@
 //
 
 #import "XZMocoaCollectionViewPlaceholderSupplementaryView.h"
+#import "XZMocoaTableViewPlaceholderCell.h"
 
 #if DEBUG
-@implementation XZMocoaCollectionViewPlaceholderSupplementaryView
+@implementation XZMocoaCollectionViewPlaceholderSupplementaryView {
+    NSString *_reason;
+    NSString *_detail;
+    UILabel *_textLabel;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = UIColor.purpleColor;
+        
+        _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
+        _textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _textLabel.textColor = UIColor.whiteColor;
+        [self addSubview:_textLabel];
+    }
+    return self;
+}
 
 - (void)viewModelDidChange {
     XZMocoaCollectionViewSupplementaryViewModel * const viewModel = self.viewModel;
@@ -17,16 +35,15 @@
     XZMocoaName const section = ((id<XZMocoaModel>)superViewModel.model).mocoaName ?: XZMocoaNameNone;
     XZMocoaName const cell    = ((id<XZMocoaModel>)viewModel.model).mocoaName ?: XZMocoaNameNone;
     
-    NSString *reason = nil;
-    if (viewModel.module == nil) {
-        reason = @"模块未注册";
-    } else if (viewModel.module.viewClass == Nil) {
-        reason = @"模块缺少 View 组件";
-    } else {
-        reason = @"模块缺少 ViewModel 组件";
-    }
+    _reason = [XZMocoaTableViewPlaceholderCell reasonByCheckingModule:viewModel.module];
+    [superViewModel.supplementaryViewModels enumerateKeysAndObjectsUsingBlock:^(XZMocoaKind kind, NSArray<XZMocoaViewModel *> *obj, BOOL * _Nonnull stop) {
+        if ([obj containsObject:viewModel]) {
+            _detail = [NSString stringWithFormat:@"section: %@, %@: %@", section, kind, cell];
+            *stop = YES;
+        }
+    }];
     
-    NSLog(@"%@ section: %@, supplementary: %@", reason, section, cell);
+    _textLabel.text = [NSString stringWithFormat:@"%@ %@", _reason, _detail];
 }
 
 @end

@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if DEBUG
 @interface XZMocoaTableViewPlaceholderCell : XZMocoaTableViewCell
++ (NSString *)reasonByCheckingModule:(nullable XZMocoaModule *)module;
++ (void)showAlertForView:(id<XZMocoaView>)view model:(id)model reason:(NSString *)reason detail:(NSString *)detail;
 @end
 #else
 typedef XZMocoaTableCell XZMocoaTableViewPlaceholderCell;

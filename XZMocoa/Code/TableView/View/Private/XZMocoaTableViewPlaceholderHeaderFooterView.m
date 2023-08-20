@@ -6,21 +6,29 @@
 //
 
 #import "XZMocoaTableViewPlaceholderHeaderFooterView.h"
+#import "XZMocoaTableViewPlaceholderCell.h"
 
 #if DEBUG
 @implementation XZMocoaTableViewPlaceholderHeaderFooterView {
+    NSString *_reason;
+    NSString *_detail;
     UILabel *_textLabel;
 }
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-        self.contentView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
+        UIView *backgroundView = [[UIView alloc] initWithFrame:self.bounds];
+        backgroundView.backgroundColor = UIColor.purpleColor;
+        self.backgroundView = backgroundView;
         
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
         _textLabel.font  = [UIFont systemFontOfSize:14.0];
-        _textLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+        _textLabel.textColor = UIColor.whiteColor;
         [self.contentView addSubview:_textLabel];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+        [self.contentView addGestureRecognizer:tap];
     }
     return self;
 }
@@ -32,26 +40,25 @@
 }
 
 - (void)viewModelDidChange {
-    XZMocoaTableViewHeaderFooterViewModel * const viewModel = self.viewModel;
-    XZMocoaTableViewSectionViewModel * const superViewModel = viewModel.superViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel      = self.viewModel;
+    XZMocoaTableViewSectionViewModel      * const superViewModel = viewModel.superViewModel;
     
     XZMocoaName const section = ((id<XZMocoaModel>)superViewModel.model).mocoaName ?: XZMocoaNameNone;
     XZMocoaName const cell    = ((id<XZMocoaModel>)viewModel.model).mocoaName ?: XZMocoaNameNone;
     
-    NSString *reason = nil;
-    if (viewModel.module == nil) {
-        reason = @"模块未注册";
-    } else if (viewModel.module.viewClass == Nil) {
-        reason = @"模块缺少 View 组件";
-    } else {
-        reason = @"模块缺少 ViewModel 组件";
-    }
+    _reason = [XZMocoaTableViewPlaceholderCell reasonByCheckingModule:viewModel.module];
     
     if (superViewModel.headerViewModel == viewModel) {
-        _textLabel.text = [NSString stringWithFormat:@"%@ section: %@, header: %@", reason, section, cell];
+        _detail = [NSString stringWithFormat:@"section: %@, header: %@", section, cell];
     } else {
-        _textLabel.text = [NSString stringWithFormat:@"%@ section: %@, footer: %@", reason, section, cell];
+        _detail = [NSString stringWithFormat:@"section: %@, footer: %@", section, cell];
     }
+    
+    _textLabel.text = [NSString stringWithFormat:@"模块%@ %@", _reason, _detail];
+}
+
+- (void)tapAction:(id)sender {
+    [XZMocoaTableViewPlaceholderCell showAlertForView:self model:self.viewModel.model reason:_reason detail:_detail];
 }
 
 @end

@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///   - index: 附加视图的位置
 - (nullable id)modelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 
+@property (nonatomic, readonly, nullable) id headerModel;
+@property (nonatomic, readonly, nullable) id footerModel;
+
 @end
 
 NS_ASSUME_NONNULL_END
