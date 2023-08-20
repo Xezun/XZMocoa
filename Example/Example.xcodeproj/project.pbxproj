@@ -11,6 +11,8 @@
 		29391AC42A74F821009E49C7 /* Example20ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29391AC22A74F821009E49C7 /* Example20ContentViewController.m */; };
 		29391AC52A74F821009E49C7 /* Example20ContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29391AC32A74F821009E49C7 /* Example20ContentViewController.xib */; };
 		29391AC72A74FEFB009E49C7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29391AC62A74FEFB009E49C7 /* WebKit.framework */; };
+		294CBE272A91A89300051402 /* Example30ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 294CBE262A91A89300051402 /* Example30ViewController.m */; };
+		294CBE2A2A91A9E800051402 /* Example30ViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 294CBE292A91A9E800051402 /* Example30ViewModel.m */; };
 		298480B62A6FB3AD00757DBB /* Example10ContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 298480B52A6FB3AD00757DBB /* Example10ContentView.m */; };
 		298480B92A6FC36400757DBB /* Example10RootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 298480B82A6FC36400757DBB /* Example10RootView.m */; };
 		29914EA72A6CE3D700D0ACF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29914EA62A6CE3D700D0ACF3 /* AppDelegate.m */; };
@@ -102,6 +104,10 @@
 		29391AC22A74F821009E49C7 /* Example20ContentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example20ContentViewController.m; sourceTree = "<group>"; };
 		29391AC32A74F821009E49C7 /* Example20ContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Example20ContentViewController.xib; sourceTree = "<group>"; };
 		29391AC62A74FEFB009E49C7 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		294CBE252A91A89300051402 /* Example30ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30ViewController.h; sourceTree = "<group>"; };
+		294CBE262A91A89300051402 /* Example30ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30ViewController.m; sourceTree = "<group>"; };
+		294CBE282A91A9E800051402 /* Example30ViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example30ViewModel.h; sourceTree = "<group>"; };
+		294CBE292A91A9E800051402 /* Example30ViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example30ViewModel.m; sourceTree = "<group>"; };
 		298480B42A6FB3AD00757DBB /* Example10ContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10ContentView.h; sourceTree = "<group>"; };
 		298480B52A6FB3AD00757DBB /* Example10ContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example10ContentView.m; sourceTree = "<group>"; };
 		298480B72A6FC36400757DBB /* Example10RootView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example10RootView.h; sourceTree = "<group>"; };
@@ -283,6 +289,41 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		294CBE212A91A84500051402 /* 30 */ = {
+			isa = PBXGroup;
+			children = (
+				294CBE242A91A86000051402 /* ViewModel */,
+				294CBE232A91A85B00051402 /* View */,
+				294CBE222A91A85300051402 /* Model */,
+			);
+			path = 30;
+			sourceTree = "<group>";
+		};
+		294CBE222A91A85300051402 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		294CBE232A91A85B00051402 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				294CBE252A91A89300051402 /* Example30ViewController.h */,
+				294CBE262A91A89300051402 /* Example30ViewController.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		294CBE242A91A86000051402 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				294CBE282A91A9E800051402 /* Example30ViewModel.h */,
+				294CBE292A91A9E800051402 /* Example30ViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		298480B32A6FB37A00757DBB /* Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,6 +399,7 @@
 				29914F082A6D6A6E00D0ACF3 /* 20 */,
 				29B3EB992A7898B50008E65B /* 21 */,
 				29FBDA6C2A83A048006BBB66 /* 22 */,
+				294CBE212A91A84500051402 /* 30 */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -1153,6 +1195,7 @@
 				2996C8942A72148C00A77E2F /* Example20Group100SectionModel.m in Sources */,
 				29391AC42A74F821009E49C7 /* Example20ContentViewController.m in Sources */,
 				29FBDA8A2A83A93A006BBB66 /* Example22TextViewModel.m in Sources */,
+				294CBE272A91A89300051402 /* Example30ViewController.m in Sources */,
 				2996C88D2A72145C00A77E2F /* Example20Group102SectionModel.m in Sources */,
 				29914EE32A6CED7200D0ACF3 /* Example11ViewModel.m in Sources */,
 				298480B92A6FC36400757DBB /* Example10RootView.m in Sources */,
@@ -1172,6 +1215,7 @@
 				2996C8722A71930B00A77E2F /* Example20Group100Cell.m in Sources */,
 				29B3EBC22A7898B50008E65B /* Example21ContactBook.m in Sources */,
 				29914F1F2A6D9BC400D0ACF3 /* Example20Group101CellViewModel.m in Sources */,
+				294CBE2A2A91A9E800051402 /* Example30ViewModel.m in Sources */,
 				29B3EBC12A7898B50008E65B /* Example21ContactBookViewModel.m in Sources */,
 				29914EB82A6CE3D800D0ACF3 /* main.m in Sources */,
 				29914EF82A6D0F9100D0ACF3 /* Example10Contact.m in Sources */,

@@ -14,6 +14,7 @@
 }
 
 - (void)prepare {
+    [super prepare];
     _isHeaderRefreshing = NO;
     _isFooterRefreshing = NO;
     
@@ -25,8 +26,6 @@
     _tableViewModel.rowAnimation = UITableViewRowAnimationFade;
     _tableViewModel.module = module;
     [self addSubViewModel:_tableViewModel];
-    
-    [super prepare];
     
     [self refreshingHeaderDidBeginAnimating];
 }

@@ -31,14 +31,14 @@ typedef NS_ENUM(NSUInteger, Example21ContactBookTestAction) {
 }
 
 - (void)prepare {
+    [super prepare];
+    
     _contactBook = [[Example21ContactBook alloc] init];
     
     _tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:_contactBook];
     _tableViewModel.module = XZMocoa(@"https://mocoa.xezun.com/examples/21/");
     _tableViewModel.rowAnimation = UITableViewRowAnimationFade;
     [self addSubViewModel:_tableViewModel];
-    
-    [super prepare];
 }
 
 - (NSArray<NSString *> *)testActions {
