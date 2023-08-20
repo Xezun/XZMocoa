@@ -68,11 +68,6 @@
     contentView.estimatedSectionFooterHeight = 0;
     contentView.estimatedSectionHeaderHeight = 0;
     
-    if (@available(iOS 11.0, *)) {
-        contentView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    } else {
-        // Fallback on earlier versions
-    }
     contentView.delegate   = self;
     contentView.dataSource = self;
 }
@@ -93,9 +88,6 @@
 
 - (void)registerModule:(XZMocoaModule *)module {
     UITableView * const tableView = self.contentView;
-    if (!module || !self.contentView) {
-        return;
-    }
     
     { // 注册默认视图
         NSString * const identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindPlaceholder, XZMocoaNamePlaceholder);
