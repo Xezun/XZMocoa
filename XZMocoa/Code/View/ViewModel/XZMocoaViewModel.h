@@ -38,12 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param model 数据
 - (instancetype)initWithModel:(nullable id)model NS_DESIGNATED_INITIALIZER;
 
-/// 是否已完成初始化。
-@property (nonatomic, readonly) BOOL isReady;
-
-/// 若 isReady == NO 则调用 -prepare 方法，否则不执行任何操作。
-- (void)ready;
-
 /// 便利初始化方法：先调用 -initWithModel: 初始化，然后执行 -ready 方法。
 /// @note
 /// 一般用于根模块的 ViewModel 初始化。在层级关系中，子模块初始化，由上级模块管理。
@@ -51,11 +45,31 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param synchronously YES，立即同步执行 ready 方法；NO，在 -[NSRunLoop performBlock:] 中异步执行 ready 方法。
 - (instancetype)initWithModel:(nullable id)model ready:(BOOL)synchronously;
 
-/// 默认向所有 subViewModels 发送 -ready 消息。
-/// @discussion 开发者应在此方法中，处理视图模型的初始化逻辑。
-/// @discussion 子类重写应根据需要，在合适的时机调用`super`实现。
-/// @discussion 此方法仅为自定义初始化流程用，开发者不应该直接调用此方法。
-/// @discussion 在此方法中，视图模型处于 isReady = NO 的状态。
+/// 是否已完成初始化。
+/// @discussion
+/// 关于 ready 机制
+/// @discussion
+/// 1、延迟初始化时机。
+/// 2、使用 ready/prepare 方法组合，可以避免初始化逻辑反复执行。
+/// 3、视图模型在使用前，必须处于`isReady == YES`状态。
+@property (nonatomic, readonly) BOOL isReady;
+
+/// 视图模型在使用前，应调用此方法，以初始化视图模型。
+/// @discussion
+/// 在层级关系中，上层视图模型会自动向下层视图模型发送`-ready`消息，所以一般只需要顶层视图模式调用此方法。
+/// @discussion
+/// 重复调用此方法，不会重复初始化。
+- (void)ready;
+
+/// 开发者应在此方法中，处理视图模型的初始化逻辑。
+/// @discussion
+/// 默认该方法不执行任何操作，建议子类调用`super`以向后兼容。
+/// @discussion
+/// 开发者不应该直接调用此方法，而是调用`-ready`方法。
+/// @discussion
+/// 在此方法中，视图模型处于 isReady = NO 的状态。
+/// @discussion
+/// 在此方法中创建添加下级模块，不需要发送`-ready`消息。
 - (void)prepare;
 
 @end
