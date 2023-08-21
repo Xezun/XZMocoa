@@ -115,6 +115,10 @@ tableView.viewModel = tableViewModel;
     ExampleModel *data = self.model;
     self.name = [NSString stringWithFormat:@"%@ %@", data.firstName, data.lastName];
 }
+
+- (void)tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    /// 处理 cell 的点击事件
+}
 @end
 ```
 
@@ -248,6 +252,25 @@ NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/main"];
 - (nullable id)domain:(XZMocoaDomain *)domain moduleForName:(NSString *)name atPath:(NSString *)path;
 @end
 ```
+
+在层级关系中，子模块的路径，一般就是它的名字，比如：
+
+- `https://mocoa.xezun.com/table/`: `table`模块
+- `https://mocoa.xezun.com/table/name1/`: `name1`是`table`模块的子模块
+- `https://mocoa.xezun.com/table/name1/name2/`: `name2`是`name1`模块的子模块，`name1`是`table`模块的子模块
+
+如果子模块有分类，使用`:`分隔，比如：
+
+- `https://mocoa.xezun.com/table/header:name1/`: `name1`是`table`模块的`header`子模块
+- `https://mocoa.xezun.com/table/footer:name2/`: `name2`是`table`模块的`footer`子模块
+
+模块也可以没有名字和分类，但是在路径中，没有分类可以省略`:`，没有名字不能省略`:`，比如：
+
+- `https://mocoa.xezun.com/table/name/`:        合法
+- `https://mocoa.xezun.com/table/kind:name/`:   合法
+- `https://mocoa.xezun.com/table/kind:/`:       合法
+- `https://mocoa.xezun.com/table/:/`:           合法
+- `https://mocoa.xezun.com/table/kind/`:        不合法
 
 ## Mocoa MVVM
 

@@ -33,9 +33,9 @@
     [super viewDidLoad];
     
     NSArray *data = @[
-        @{ @"firstName": @"张", @"lastName": @"三" },
-        @{ @"firstName": @"李", @"lastName": @"四" },
-        @{ @"firstName": @"王", @"lastName": @"五" }
+        @{ @"firstName": @"张", @"lastName": @"三", @"phone": @"138-8888-1111" },
+        @{ @"firstName": @"李", @"lastName": @"四", @"phone": @"138-8888-2222" },
+        @{ @"firstName": @"王", @"lastName": @"五", @"phone": @"138-8888-3333" }
     ];
     
     XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/12/table/");
