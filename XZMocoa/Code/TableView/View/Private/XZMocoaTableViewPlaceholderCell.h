@@ -5,7 +5,7 @@
 //  Created by Xezun on 2023/8/19.
 //
 
-#import <XZMocoa/XZMocoa.h>
+#import <XZMocoa/XZMocoaTableViewCell.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)showAlertForView:(id<XZMocoaView>)view model:(id)model reason:(NSString *)reason detail:(NSString *)detail;
 @end
 #else
-typedef XZMocoaTableCell XZMocoaTableViewPlaceholderCell;
+typedef XZMocoaTableViewCell XZMocoaTableViewPlaceholderCell;
 #endif
 
 NS_ASSUME_NONNULL_END

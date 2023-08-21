@@ -5,7 +5,7 @@
 //  Created by Xezun on 2023/8/19.
 //
 
-#import <XZMocoa/XZMocoa.h>
+#import <XZMocoa/XZMocoaCollectionViewSupplementaryView.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

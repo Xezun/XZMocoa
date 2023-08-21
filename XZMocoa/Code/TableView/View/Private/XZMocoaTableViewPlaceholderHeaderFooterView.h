@@ -5,7 +5,7 @@
 //  Created by Xezun on 2023/8/19.
 //
 
-#import <XZMocoa/XZMocoa.h>
+#import <XZMocoa/XZMocoaTableViewHeaderFooterView.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XZMocoaTableViewPlaceholderHeaderFooterView : XZMocoaTableViewHeaderFooterView
 @end
 #else
-typedef XZMocoaTableSectionHeaderFooter XZMocoaTableViewPlaceholderHeaderFooterView;
+typedef XZMocoaTableViewHeaderFooterView XZMocoaTableViewPlaceholderHeaderFooterView;
 #endif
 
 NS_ASSUME_NONNULL_END
