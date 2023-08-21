@@ -35,8 +35,8 @@ pod 'XZMocoa'
 
 1、设计数据
 
-将数据设计成符合`UITableView`两层数据结构的形式，肯定会大大的简化数据处理的过程。
-Mocoa 为`UITableView`的数据设计了两个标准协议`XZMocoaTableModel`和`XZMocoaTableViewSectionModel`，以增加数据的通用性。
+将数据设计成符合`UITableView`两层数据结构的形式，肯定会大大的简化数据处理的过程，但实际开发过程中，肯定有各种各样的数据格式。
+因此 Mocoa 为`UITableView`的数据设计了`XZMocoaTableModel`和`XZMocoaTableViewSectionModel`数据标准协议，以增加数据的通用性。
 
 ```objc
 @protocol XZMocoaTableModel <XZMocoaModel>
@@ -62,7 +62,7 @@ Mocoa 为`UITableView`的数据设计了两个标准协议`XZMocoaTableModel`和
 2、创建列表
 
 ```objc
-// model
+// model, replace it with real data
 NSArray *dataArray;
 // viewModel
 XZMocoaTableViewModel *tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:dataArray];
@@ -74,11 +74,12 @@ tableView.viewModel = tableViewModel;
 [self.view addSubview:tableView];
 ```
 
-在创建`cell`前，你就可以渲染列表了，在 DEBUG 环境下，Mocoa 会使用“占位视图”渲染目标`cell`，这样你就可以提前验证数据格式是否设计的正确了。
+现在，你就可以运行代码，渲染列表了，虽然我们并没有创建`cell`，但是在 DEBUG 环境下，Mocoa 会使用“占位视图”渲染目标`cell`。
+“占位视图”不能可以帮我们提前验证数据格式是否设计正确，还可以帮我们防止`UITableView`数据源带来的各种`crash`问题。
 
 3、开发`cell`模块
 
-使用 Mocoa 你可以将每一个`cell`都看作是完全独立的模块进行开发，然后注册到想要展示的`tableView`模块中即可使用。
+使用 Mocoa 你可以将每一个`cell`都看作是完全独立的模块进行开发，然后注册到需要展示的`tableView`模块中即可。
 
 开发`cell`模块，与开发普通 MVVM 模块的过程基本一样，仅需要按照 MVVM 的基本要求编写即可。
 
@@ -99,7 +100,7 @@ tableView.viewModel = tableViewModel;
 @end
 ```
 
-除了`ViewModel`需要使用 Mocoa 提供的基类外，`View`和`Model`是完全自由的，协议`XZMocoaTableViewCell`和`XZMocoaTableViewCellModel`都提供了默认实现，可以直接使用。
+除了`ViewModel`需要使用 Mocoa 提供的基类外，`View`和`Model`是完全自由的，协议`XZMocoaTableViewCell`和`XZMocoaTableViewCellModel`提供了默认实现，可以直接使用。
 
 3.2 处理数据
 
@@ -162,16 +163,17 @@ tableView.viewModel = tableViewModel;
 @end
 ```
 
-在这个示例中，我们只有一种类型的`section`和`cell`，不需要具名，所以直接使用`.section.cell`注册。
-当`cell`模块注册后，我们在运行代码，我们就可以看到列表已经渲染成功了。
+至此，使用`XZMocoaTableView`渲染列表的一个简单示例就完成了，再运行代码，就可以看到效果。
 
-至此，使用`XZMocoaTableView`渲染列表的一个简单示例就完成了，与使用原生的`UITableView`相比：
+在这个示例中，我们只有一种类型的`section`和`cell`，不需要具名，所以直接使用`.section.cell`注册，更多详细用法，可参考“Example”示例工程。
+
+使用 Mocoa 渲染列表，与使用原生的`UITableView`相比：
 
 - 不用编写`delegate`或`dataSource`方法。
 - 不用先编写`cell`，Mocoa 会先用占位视图替代，直到`cell`模块编写完成。
 - `cell`模块完全独立，编写`cell`后，仅需注册模块，不需在`tableView`或`collectionView`中注册。
 
-还有，再也不用一遍遍地触发原生的`Crash`来调试`UITableView`了。
+还有，我们再也不用一遍遍地触发`UITableView`的`Crash`去调试数据、列表、cell的连通性了。
 
 ## 模块化
 
@@ -255,22 +257,22 @@ NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/main"];
 
 在层级关系中，子模块的路径，一般就是它的名字，比如：
 
-- `https://mocoa.xezun.com/table/`: `table`模块
-- `https://mocoa.xezun.com/table/name1/`: `name1`是`table`模块的子模块
-- `https://mocoa.xezun.com/table/name1/name2/`: `name2`是`name1`模块的子模块，`name1`是`table`模块的子模块
+- `https://mocoa.xezun.com/table/` `table`模块
+- `https://mocoa.xezun.com/table/name1/` `name1`是`table`模块的子模块
+- `https://mocoa.xezun.com/table/name1/name2/` `name2`是`name1`模块的子模块，`name1`是`table`模块的子模块
 
 如果子模块有分类，使用`:`分隔，比如：
 
-- `https://mocoa.xezun.com/table/header:name1/`: `name1`是`table`模块的`header`子模块
-- `https://mocoa.xezun.com/table/footer:name2/`: `name2`是`table`模块的`footer`子模块
+- `https://mocoa.xezun.com/table/section/header:name1/` `name1`是`section`模块的`header`子模块
+- `https://mocoa.xezun.com/table/section/footer:name2/` `name2`是`section`模块的`footer`子模块
 
 模块也可以没有名字和分类，但是在路径中，没有分类可以省略`:`，没有名字不能省略`:`，比如：
 
-- `https://mocoa.xezun.com/table/name/`:        合法
-- `https://mocoa.xezun.com/table/kind:name/`:   合法
-- `https://mocoa.xezun.com/table/kind:/`:       合法
-- `https://mocoa.xezun.com/table/:/`:           合法
-- `https://mocoa.xezun.com/table/kind/`:        不合法
+- `https://mocoa.xezun.com/table/name/`        合法
+- `https://mocoa.xezun.com/table/kind:name/`   合法
+- `https://mocoa.xezun.com/table/kind:/`       合法
+- `https://mocoa.xezun.com/table/:/`           合法
+- `https://mocoa.xezun.com/table/kind/`        不合法
 
 ## Mocoa MVVM
 
