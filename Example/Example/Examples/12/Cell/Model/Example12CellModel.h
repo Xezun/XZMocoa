@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Example12CellModel : NSObject <XZMocoaTableViewCellModel>
 @property (nonatomic, copy) NSString *firstName;
 @property (nonatomic, copy) NSString *lastName;
+@property (nonatomic, copy) NSString *phone;
 @end
 
 NS_ASSUME_NONNULL_END
