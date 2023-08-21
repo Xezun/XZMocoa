@@ -9,3 +9,11 @@
 
 CGFloat const XZMocoaTableViewHeaderFooterHeight = 0.00001;
 
+XZMocoaName const XZMocoaNameNone    = @"";
+XZMocoaKind const XZMocoaKindNone    = @"";
+XZMocoaKind const XZMocoaKindHeader  = @"header";
+XZMocoaKind const XZMocoaKindFooter  = @"footer";
+XZMocoaKind const XZMocoaKindSection = @"";
+XZMocoaKind const XZMocoaKindCell    = @"";
+
+XZMocoaName const XZMocoaNamePlaceholder = @"XZMocoaNamePlaceholder";

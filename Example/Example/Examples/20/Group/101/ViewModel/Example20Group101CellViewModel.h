@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example20Group101CellViewModel : XZMocoaTableCellViewModel
+@interface Example20Group101CellViewModel : XZMocoaTableViewCellViewModel
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *details;

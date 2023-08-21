@@ -7,10 +7,10 @@
 //
 
 #import <XZMocoa/XZMocoaViewModel.h>
-#import <XZMocoa/XZMocoaListitySectionViewModel.h>
-#import <XZMocoa/XZMocoaListityCellViewModel.h>
+#import <XZMocoa/XZMocoaListityViewSectionViewModel.h>
+#import <XZMocoa/XZMocoaListityViewCellViewModel.h>
 #import <XZMocoa/XZMocoaListityModel.h>
-#import <XZMocoa/XZMocoaListityBatchUpdatable.h>
+#import <XZMocoa/XZMocoaListityViewBatchUpdatable.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 具有列表形式视图的一般视图模型。
 /// @attention 由于需要管理子视图，因此需要设置 module 属性才能正常工作。
-@interface XZMocoaListityViewModel<__covariant CellViewModelType: XZMocoaListityCellViewModel *, __covariant SectionViewModelType: XZMocoaListitySectionViewModel *> : XZMocoaViewModel <XZMocoaListityBatchUpdatable>
+@interface XZMocoaListityViewModel<__covariant CellViewModelType: XZMocoaListityViewCellViewModel *, __covariant SectionViewModelType: XZMocoaListityViewSectionViewModel *> : XZMocoaViewModel <XZMocoaListityViewBatchUpdatable>
+
+/// 所支持的附加视图的类型，默认为 @[XZMocoaKindHeader, XZMocoaKindFooter] 两种。
+/// @discussion 请在使用 viewModel 前设置此属性。
+@property (nonatomic, copy) NSArray<XZMocoaKind> *supportedSupplementaryKinds;
 
 /// 接收来自下级的 XZMocoaEmitUpdate 事件，并刷新视图，如果在批量更新的过程中，视图刷新可能会延迟。
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition;
@@ -39,7 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSInteger numberOfSections;
 - (NSInteger)numberOfCellsInSection:(NSInteger)section;
 - (CellViewModelType)cellViewModelAtIndexPath:(NSIndexPath *)indexPath;
-
 
 // MARK: - 局部更新
 
@@ -75,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param newSection 移动后的位置
 - (void)moveSectionAtIndex:(NSInteger)section toIndex:(NSInteger)newSection;
 
-// MARK: - 子类重写，用以更新视图
+// MARK: - 子类重写
 
 - (void)didReloadData;
 - (void)didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
@@ -88,24 +91,24 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didMoveSectionAtIndex:(NSInteger)section toIndex:(NSInteger)newSection;
 - (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
 
-// MARK: 子类必须重写的方法
-
 /// 子类应该重写此方法，并返回所需的 SectionViewModel 对象。
 - (SectionViewModelType)loadViewModelForSectionAtIndex:(NSInteger)index;
 
-/// section 发送的 Section 重载事件，以刷新视图。
-- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didReloadData:(void * _Nullable)null;
-/// section 发送的 Cell 重载事件，以刷新视图。
-- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didReloadCellsAtIndexes:(NSIndexSet *)rows;
-/// section 发送的 Cell 插入事件，以刷新视图。
-- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didInsertCellsAtIndexes:(NSIndexSet *)rows;
-/// section 发送的 Cell 删除事件，以刷新视图。
-- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didDeleteCellsAtIndexes:(NSIndexSet *)rows;
-/// section 发送的 Cell 移动事件，以刷新视图。
-- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didMoveCellAtIndex:(NSInteger)row toIndex:(NSInteger)newRow;
-/// section 发送的批量更新事件，以刷新视图。
-- (void)sectionViewModel:(XZMocoaListitySectionViewModel *)viewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion;
+@end
 
+@interface XZMocoaListityViewModel (XZMocoaListityViewSectionViewModelDelegate)
+/// section 发送的 Section 重载事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didReloadData:(void * _Nullable)null;
+/// section 发送的 Cell 重载事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didReloadCellsAtIndexes:(NSIndexSet *)rows;
+/// section 发送的 Cell 插入事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didInsertCellsAtIndexes:(NSIndexSet *)rows;
+/// section 发送的 Cell 删除事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didDeleteCellsAtIndexes:(NSIndexSet *)rows;
+/// section 发送的 Cell 移动事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didMoveCellAtIndex:(NSInteger)row toIndex:(NSInteger)newRow;
+/// section 发送的批量更新事件，以刷新视图。
+- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion;
 @end
 
 NS_ASSUME_NONNULL_END

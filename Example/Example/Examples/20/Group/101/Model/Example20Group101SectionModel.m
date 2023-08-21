@@ -11,7 +11,7 @@
 @implementation Example20Group101SectionModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/101/").modelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/101/").modelClass = self;
 }
 
 - (BOOL)isEqual:(Example20Group101SectionModel *)object {

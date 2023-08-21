@@ -8,9 +8,10 @@
 
 #import "XZMocoaTableView.h"
 #import "XZMocoaDefines.h"
-#import "XZMocoaTableCell.h"
-#import "XZMocoaTableSectionHeaderFooter.h"
-#import "XZMocoaTableSectionHeaderFooter.h"
+#import "XZMocoaTableViewCell.h"
+#import "XZMocoaTableViewHeaderFooterView.h"
+#import "XZMocoaTableViewPlaceholderHeaderFooterView.h"
+#import "XZMocoaTableViewPlaceholderCell.h"
 
 @interface XZMocoaTableView ()
 @end
@@ -67,11 +68,6 @@
     contentView.estimatedSectionFooterHeight = 0;
     contentView.estimatedSectionHeaderHeight = 0;
     
-    if (@available(iOS 11.0, *)) {
-        contentView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    } else {
-        // Fallback on earlier versions
-    }
     contentView.delegate   = self;
     contentView.dataSource = self;
 }
@@ -92,13 +88,16 @@
 
 - (void)registerModule:(XZMocoaModule *)module {
     UITableView * const tableView = self.contentView;
-    if (!module || !self.contentView) {
-        return;
-    }
     
-    { // 注册默认的 cell 视图
-        NSString *identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
-        [tableView registerClass:UITableViewCell.class forCellReuseIdentifier:identifier];
+    { // 注册默认视图
+        NSString *identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindCell, XZMocoaNamePlaceholder);
+        [tableView registerClass:[XZMocoaTableViewPlaceholderCell class] forCellReuseIdentifier:identifier];
+        
+        identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindHeader, XZMocoaNamePlaceholder);
+        [tableView registerClass:[XZMocoaTableViewPlaceholderHeaderFooterView class] forHeaderFooterViewReuseIdentifier:identifier];
+        
+        identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindFooter, XZMocoaNamePlaceholder);
+        [tableView registerClass:[XZMocoaTableViewPlaceholderHeaderFooterView class] forHeaderFooterViewReuseIdentifier:identifier];
     }
     
     [module enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName section, BOOL *stop) {
@@ -114,22 +113,20 @@
                     [tableView registerNib:viewNib forCellReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
                     [tableView registerClass:submodule.viewClass forCellReuseIdentifier:identifier];
+                } else { // 未注册 View 的模块，获得一个占位视图
+                    Class const aClass = [XZMocoaTableViewPlaceholderCell class];
+                    [tableView registerClass:aClass forCellReuseIdentifier:identifier];
                 }
-            } else if ([kind isEqualToString:XZMocoaKindHeader]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
+            } else if ([kind isEqualToString:XZMocoaKindHeader] || [kind isEqualToString:XZMocoaKindFooter]) {
+                NSString * const identifier = XZMocoaReuseIdentifier(section, kind, name);
                 if (submodule.viewNibName != nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
                     [tableView registerNib:viewNib forHeaderFooterViewReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
                     [tableView registerClass:submodule.viewClass forHeaderFooterViewReuseIdentifier:identifier];
-                }
-            } else if ([kind isEqualToString:XZMocoaKindFooter]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
-                if (submodule.viewNibName != nil) {
-                    UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
-                    [tableView registerNib:viewNib forHeaderFooterViewReuseIdentifier:identifier];
-                } else if (submodule.viewClass != Nil) {
-                    [tableView registerClass:submodule.viewClass forHeaderFooterViewReuseIdentifier:identifier];
+                } else {
+                    Class const aClass = [XZMocoaTableViewPlaceholderHeaderFooterView class];
+                    [tableView registerClass:aClass forHeaderFooterViewReuseIdentifier:identifier];
                 }
             }
         }];
@@ -155,17 +152,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XZMocoaTableCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
+    XZMocoaTableViewCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
     
-#if DEBUG
-    UITableViewCell<XZMocoaTableCell> *cell = [tableView dequeueReusableCellWithIdentifier:viewModel.identifier forIndexPath:indexPath];
-#else
-    UITableViewCell<XZMocoaTableCell> *cell = [tableView dequeueReusableCellWithIdentifier:viewModel.identifier];
-    if (cell == nil) {
-        cell = (id)[[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:viewModel.identifier];
-    }
-#endif
-    
+    UITableViewCell<XZMocoaTableViewCell> *cell = [tableView dequeueReusableCellWithIdentifier:viewModel.identifier forIndexPath:indexPath];
     cell.viewModel = viewModel;
     
     return cell;
@@ -181,22 +170,22 @@
 @implementation XZMocoaTableView (UITableViewDelegate)
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XZMocoaTableCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
+    XZMocoaTableViewCellViewModel * const viewModel = [self.viewModel cellViewModelAtIndexPath:indexPath];
     return viewModel.height;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
     if (viewModel == nil) {
         return nil;
     }
-    UITableViewHeaderFooterView<XZMocoaTableSectionHeaderFooter> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
+    UITableViewHeaderFooterView<XZMocoaTableViewHeaderFooterView> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
     view.viewModel = viewModel;
     return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
     if (viewModel == nil) {
         return XZMocoaTableViewHeaderFooterHeight;
     }
@@ -204,33 +193,33 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
     if (viewModel == nil) {
         return nil;
     }
-    UITableViewHeaderFooterView<XZMocoaTableSectionHeaderFooter> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
+    UITableViewHeaderFooterView<XZMocoaTableViewHeaderFooterView> *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:viewModel.identifier];
     view.viewModel = viewModel;
     return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    XZMocoaTableSectionHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
     if (viewModel == nil) {
         return XZMocoaTableViewHeaderFooterHeight;
     }
     return viewModel.height;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableView<XZMocoaTableCell> *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableView<XZMocoaTableViewCell> *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     [cell tableView:self willDisplayRowAtIndexPath:indexPath];
 }
 
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableView<XZMocoaTableCell> *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableView<XZMocoaTableViewCell> *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
     [cell tableView:self didEndDisplayingRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableView<XZMocoaTableCell> *cell = (id)[tableView cellForRowAtIndexPath:indexPath];
+    UITableView<XZMocoaTableViewCell> *cell = (id)[tableView cellForRowAtIndexPath:indexPath];
     [cell tableView:self didSelectRowAtIndexPath:indexPath];
 }
 
@@ -293,3 +282,4 @@
 }
 
 @end
+

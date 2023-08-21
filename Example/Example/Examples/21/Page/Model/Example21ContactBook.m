@@ -29,11 +29,11 @@
     return 1;
 }
 
-- (id<XZMocoaListitySectionModel>)modelForSectionAtIndex:(NSInteger)index {
+- (id<XZMocoaListityViewSectionModel>)modelForSectionAtIndex:(NSInteger)index {
     return self;
 }
 
-#pragma mark - XZMocoaTableSectionModel
+#pragma mark - XZMocoaTableViewSectionModel
 
 - (id)headerModel {
     return nil;
