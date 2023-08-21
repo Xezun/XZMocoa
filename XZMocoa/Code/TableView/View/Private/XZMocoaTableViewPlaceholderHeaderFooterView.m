@@ -7,6 +7,7 @@
 
 #import "XZMocoaTableViewPlaceholderHeaderFooterView.h"
 #import "XZMocoaTableViewPlaceholderCell.h"
+#import "XZMocoaTableViewSectionViewModel.h"
 
 #if DEBUG
 @implementation XZMocoaTableViewPlaceholderHeaderFooterView {
