@@ -14,19 +14,18 @@
 }
 
 - (void)prepare {
+    [super prepare];
     _isHeaderRefreshing = NO;
     _isFooterRefreshing = NO;
     
     _cursor = 100;
     _dataArray = [NSMutableArray array];
     
-    XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/20/list/");
+    XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/20/table/");
     _tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:_dataArray];
     _tableViewModel.rowAnimation = UITableViewRowAnimationFade;
     _tableViewModel.module = module;
     [self addSubViewModel:_tableViewModel];
-    
-    [super prepare];
     
     [self refreshingHeaderDidBeginAnimating];
 }
@@ -118,7 +117,7 @@
         }
         
         // 模拟网络模块处理数据
-        XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/20/list/");
+        XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/20/table/");
         NSMutableArray *list = [NSMutableArray arrayWithCapacity:array.count];
         for (NSDictionary *dict in array) {
             XZMocoaName name = dict[@"group"];
