@@ -38,7 +38,7 @@
     XZMocoaName const section = ((id<XZMocoaModel>)viewModel.superViewModel.model).mocoaName ?: XZMocoaNameNone;
     _detail = [NSString stringWithFormat:@"section: %@, cell: %@", section, cell];
     
-    self.textLabel.text = _reason;
+    self.textLabel.text = [NSString stringWithFormat:@"模块%@", _reason];
     self.detailTextLabel.text = _detail;
 }
 
