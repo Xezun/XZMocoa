@@ -27,8 +27,11 @@
                 @"title": @"10. 普通 MVVM 模块",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/10/"]
             }, @{
-                @"title": @"10. 控制器 MVVM 模块",
+                @"title": @"11. 控制器 MVVM 模块",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/11/"]
+            }, @{
+                @"title": @"12. 渲染列表简单示例",
+                @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/12/"]
             }
         ], @[
             @{
