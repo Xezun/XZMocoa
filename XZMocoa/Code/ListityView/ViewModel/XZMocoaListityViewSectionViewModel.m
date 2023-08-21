@@ -361,7 +361,7 @@
     id<XZMocoaListityViewSectionModel> const model = self.model;
     
     BOOL needsUpdateAll = NO;
-    for (XZMocoaKind const kind in model.supplementaryKinds) {
+    for (XZMocoaKind const kind in self.superViewModel.supportedSupplementaryKinds) {
         NSInteger const count = [model numberOfModelsForSupplementaryKind:kind];
         for (NSInteger index = 0; index < count; index++) {
             id newModel = [model modelForSupplementaryKind:kind atIndex:index];
@@ -506,7 +506,7 @@
     
     id<XZMocoaListityViewSectionModel> const model = self.model;
     
-    for (XZMocoaKind kind in model.supplementaryKinds) {
+    for (XZMocoaKind kind in self.superViewModel.supportedSupplementaryKinds) {
         NSInteger const count = [model numberOfModelsForSupplementaryKind:kind];
         for (NSInteger index = 0; index < count; index++) {
             XZMocoaListityViewSupplementaryViewModel *vm = [self loadViewModelForSupplementaryKind:kind atIndex:index];

@@ -173,11 +173,15 @@ for (id<XZMocoaModel> data in _dataArray) {
 
 ### 5、渲染列表
 
-在 Mocoa 中，可以使用`XZMocoaTableView`或`XZMocoaCollectionView`渲染列表。
+在 Mocoa 中，使用`XZMocoaTableView`或`XZMocoaCollectionView`渲染列表，与直接使用`UITableView`或`UICollectionView`渲染列表相比，Mocoa 渲染列表：
+
+- 不用编写`delegate`或`dataSource`方法。
+- 不用先编写`cell`，Mocoa 会先用占位视图替代，直到`cell`模块编写完成。
+- `cell`模块完全独立，编写`cell`后，仅需注册模块，不需在`tableView`或`collectionView`中注册。
 
 ```objc
 // model
-id<XZMocoaTableModel> *dataArray;
+NSArray *dataArray;
 // viewModel
 XZMocoaTableViewModel *tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:dataArray];
 tableViewModel.module = XZMocoa(@"https://mocoa.xezun.com/list/");
@@ -188,58 +192,19 @@ tableView.viewModel = tableViewModel;
 [self.view addSubview:tableView];
 ```
 
-与直接使用`UITableView`或`UICollectionView`渲染列表相比，使用 Mocoa 渲染列表：
+使用 Mocoa 渲染列表，第一步可以先构造数据，然后直接创建列表。数据如果不是`NSArray`类型，仅需实现`XZMocoaTableModel`协议即可。
 
-- 不用编写`delegate`或`dataSource`方法。
-- 不用先编写`cell`，Mocoa 会先用占位视图替代，直到`cell`模块编写完成。
-- 编写`cell`后，仅注册模块即可，不需要在`tableView`或`collectionView`中注册。
+即使在未实现任何`cell`的情况下，`XZMocoaTableView`也不会崩溃，而是使用“占位视图”提醒，当然占位视图只在`DEBUG`环境下才展示。
 
+编写`cell`模块，与编写普通的视图模块相同，除`ViewModel`需使用 Mocoa 提供的基类外，`Model`和`View`可以任意选择基类。
 
-
-
-
-
-
-当然能这么做的前提是，各个`cell`模块已经注册成为`XZMocoaTableView`或`XZMocoaCollectionView`的子模块。
-
-由于在`tableView`中，有`section`逻辑层，`cell`并不是`tableView`的直接子模块，而是`section`的直接子模块，所以注册如下。
+不过，由于在`tableView`或`collectionView`中，存在`section`逻辑层，所以`cell`并不是`tableView`的直接子模块，而是`section`的直接子模块，注册时如下。
 
 ```objc
 + (void)load {
     XZMocoa(@"https://mocoa.xezun.com/list/{sectionName}/{cellName}/").viewModelClass = self;
 }
 ```
-
-在多`section`多`cell`的情况下，你需要为不同类型的`section`和`cell`取一个`mocoaName`进行区分。
-编写`cell`模块的编写，与编写普通的`UIView`模块相同，只是如何使用`cell`模块，已经由`XZMocoaTableView`在内部实现了，我们需要做的就是实现`cell`模块的功能，并注册它。
-
-所以在 Mocoa 框架下，每个`cell`都是独立的 MVVM 模块，添加到任何`tableView`的子模块中，都可以直接使用。
-
-另外，作为`XZMocoaTableView`的数据，需要遵循以下两个协议。
-
-```objc
-@protocol XZMocoaListityModel <XZMocoaModel>
-@property (nonatomic, readonly) NSInteger numberOfSectionModels;
-- (nullable id<XZMocoaListitySectionModel>)modelForSectionAtIndex:(NSInteger)index;
-@end
-
-@protocol XZMocoaListitySectionModel <XZMocoaModel>
-@optional
-@property (nonatomic, readonly) NSInteger numberOfCellModels;
-- (nullable id)modelForCellAtIndex:(NSInteger)index;
-
-@property (nonatomic, readonly) NSArray<XZMocoaKind> *supplementaryKinds;
-- (NSInteger)numberOfModelsForSupplementaryKind:(XZMocoaKind)kind;
-- (nullable id)modelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
-@end
-```
-
-*`ListityView`是`TableView`和`CollectionView`在逻辑上的抽象。*
-
-这两个协议只是为了方便`tableView`和`colletionView`任何获取对应视图数据，`NSArray`是天然的`XZMocoaTableView`的数据，可以直接使用。
-严格来讲，应该由`ViewModel`实现，数据模型不应实现任何方法。
-但很明显，这些方法可以算，也可以不算是业务逻辑，由数据模型实现更方便维护。
-
 
 ## 模块化
 

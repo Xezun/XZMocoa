@@ -17,7 +17,7 @@
     self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-        backgroundView.backgroundColor = UIColor.brownColor;
+        backgroundView.backgroundColor = [UIColor colorWithRed:0xf2 / 255.0 green:0x3d / 255.0 blue:0x3a / 255.0 alpha:1.0];
         self.backgroundView = backgroundView;
         
         self.selectionStyle              = UITableViewCellSelectionStyleNone;

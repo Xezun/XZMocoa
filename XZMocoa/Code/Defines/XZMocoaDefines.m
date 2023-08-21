@@ -17,4 +17,3 @@ XZMocoaKind const XZMocoaKindSection = @"";
 XZMocoaKind const XZMocoaKindCell    = @"";
 
 XZMocoaName const XZMocoaNamePlaceholder = @"XZMocoaNamePlaceholder";
-XZMocoaKind const XZMocoaKindPlaceholder = @"XZMocoaKindPlaceholder";

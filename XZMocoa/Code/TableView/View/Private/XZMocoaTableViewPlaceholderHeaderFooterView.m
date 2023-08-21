@@ -19,7 +19,7 @@
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-        backgroundView.backgroundColor = UIColor.purpleColor;
+        backgroundView.backgroundColor = [UIColor colorWithRed:0xf8 / 255.0 green:0x5d / 255.0 blue:0x75 / 255.0 alpha:1.0];
         self.backgroundView = backgroundView;
         
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
