@@ -42,8 +42,6 @@ FOUNDATION_EXPORT XZMocoaKind const XZMocoaKindCell;
 
 /// 占位视图的名称。
 FOUNDATION_EXPORT XZMocoaName const XZMocoaNamePlaceholder;
-/// 占位视图的类型。
-FOUNDATION_EXPORT XZMocoaKind const XZMocoaKindPlaceholder;
 
 /// 构造重用标识符。
 /// - Parameters:

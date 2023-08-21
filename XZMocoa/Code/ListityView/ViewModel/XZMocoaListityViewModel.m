@@ -32,6 +32,7 @@
     if (self) {
         _isPerformingBatchUpdates = nil;
         _sectionViewModels = [NSMutableOrderedSet orderedSet];
+        _supportedSupplementaryKinds = @[XZMocoaKindHeader, XZMocoaKindFooter];
     }
     return self;
 }

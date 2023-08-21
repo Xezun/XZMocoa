@@ -20,10 +20,6 @@
     return self;
 }
 
-- (NSArray<XZMocoaKind> *)supplementaryKinds {
-    return @[XZMocoaKindHeader, XZMocoaKindFooter];
-}
-
 - (NSInteger)numberOfModelsForSupplementaryKind:(XZMocoaKind)kind {
     return 1;
 }

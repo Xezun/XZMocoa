@@ -20,9 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param index 在 section 中 cell 的位置
 - (nullable id)modelForCellAtIndex:(NSInteger)index;
 
-/// 附加视图的类型，默认 XZMocoaKindHeader、XZMocoaKindFooter 两种。
-@property (nonatomic, readonly) NSArray<XZMocoaKind> *supplementaryKinds;
-/// 附加视图的数量，默认1。
+/// 附加视图的数量，默认 1 。
 /// - Parameter kind: 附加视图的类型
 - (NSInteger)numberOfModelsForSupplementaryKind:(XZMocoaKind)kind;
 /// 附加视图的数据。
@@ -31,7 +29,11 @@ NS_ASSUME_NONNULL_BEGIN
 ///   - index: 附加视图的位置
 - (nullable id)modelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 
+/// Header 数据。
+/// @discussion 这是一个便利属性，重写`modelForSupplementaryKind:atIndex:`方法，可能使此属性失效。
 @property (nonatomic, readonly, nullable) id headerModel;
+/// Footer 数据。
+/// @discussion 这是一个便利属性，重写`modelForSupplementaryKind:atIndex:`方法，可能使此属性失效。
 @property (nonatomic, readonly, nullable) id footerModel;
 
 @end

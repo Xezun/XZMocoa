@@ -18,14 +18,22 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = UIColor.purpleColor;
+        self.backgroundColor = [UIColor colorWithRed:0xf8 / 255.0 green:0x5d / 255.0 blue:0x75 / 255.0 alpha:1.0];
         
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
-        _textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _textLabel.textColor = UIColor.whiteColor;
         [self addSubview:_textLabel];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+        [self addGestureRecognizer:tap];
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    _textLabel.frame = UIEdgeInsetsInsetRect(self.bounds, self.layoutMargins);
 }
 
 - (void)viewModelDidChange {
@@ -44,6 +52,10 @@
     }];
     
     _textLabel.text = [NSString stringWithFormat:@"%@ %@", _reason, _detail];
+}
+
+- (void)tapAction:(id)sender {
+    [XZMocoaTableViewPlaceholderCell showAlertForView:self model:self.viewModel.model reason:_reason detail:_detail];
 }
 
 @end

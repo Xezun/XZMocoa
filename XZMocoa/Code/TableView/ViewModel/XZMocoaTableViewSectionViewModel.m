@@ -35,7 +35,7 @@
     XZMocoaListityViewCellViewModel *viewModel = nil;
     if (VMClass == Nil) {
         viewModel = [[XZMocoaTableViewCellViewModel alloc] initWithModel:model];
-        viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindPlaceholder, XZMocoaNamePlaceholder);
+        viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindCell, XZMocoaNamePlaceholder);
         viewModel.index      = index;
         viewModel.module     = module;
     } else {
@@ -64,7 +64,7 @@
         viewModel = [[XZMocoaTableViewHeaderFooterViewModel alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
-        viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindPlaceholder, XZMocoaNamePlaceholder);
+        viewModel.identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, kind, XZMocoaNamePlaceholder);
     } else {
         viewModel = [[VMClass alloc] initWithModel:model];
         viewModel.index      = index;
