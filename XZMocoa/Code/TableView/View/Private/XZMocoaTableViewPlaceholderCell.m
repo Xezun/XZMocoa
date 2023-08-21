@@ -6,6 +6,7 @@
 //
 
 #import "XZMocoaTableViewPlaceholderCell.h"
+#import "XZMocoaTableView.h"
 
 #if DEBUG
 @implementation XZMocoaTableViewPlaceholderCell {
