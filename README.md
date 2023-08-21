@@ -41,10 +41,10 @@ pod 'XZMocoa'
 ```objc
 @protocol XZMocoaTableModel <XZMocoaModel>
 @property (nonatomic, readonly) NSInteger numberOfSectionModels;
-- (nullable id<XZMocoaTableSectionModel>)modelForSectionAtIndex:(NSInteger)index;
+- (nullable id<XZMocoaTableViewSectionModel>)modelForSectionAtIndex:(NSInteger)index;
 @end
 
-@protocol XZMocoaTableSectionModel <XZMocoaModel>
+@protocol XZMocoaTableViewSectionModel <XZMocoaModel>
 @optional
 @property (nonatomic, readonly) NSInteger numberOfCellModels;
 - (nullable id)modelForCellAtIndex:(NSInteger)index;
