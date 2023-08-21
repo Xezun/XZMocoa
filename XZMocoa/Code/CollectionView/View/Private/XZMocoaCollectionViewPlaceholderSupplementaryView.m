@@ -7,6 +7,7 @@
 
 #import "XZMocoaCollectionViewPlaceholderSupplementaryView.h"
 #import "XZMocoaTableViewPlaceholderCell.h"
+#import "XZMocoaCollectionViewSectionViewModel.h"
 
 #if DEBUG
 @implementation XZMocoaCollectionViewPlaceholderSupplementaryView {
