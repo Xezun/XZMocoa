@@ -6,6 +6,7 @@
 //
 
 #import "XZMocoaCollectionViewSectionViewModel.h"
+#import "XZMocoaListityViewModel.h"
 
 @implementation XZMocoaCollectionViewSectionViewModel
 
@@ -14,10 +15,18 @@
 }
 
 - (XZMocoaListityViewCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
+    XZMocoaName section = self.model.mocoaName;
+    
     id<XZMocoaModel> const model   = [self.model modelForCellAtIndex:index];
     XZMocoaName      const name    = model.mocoaName;
-    XZMocoaModule *  const module  = [self.module cellForName:name];
-    Class            const VMClass = module.viewModelClass;
+    
+    XZMocoaModule *module = [self.module submoduleIfLoadedForKind:XZMocoaKindCell forName:XZMocoaNameNone];
+    if (module == nil && section.length > 0) {
+        module = [self.superViewModel.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameNone];
+        module = [module submoduleIfLoadedForKind:XZMocoaKindCell forName:name];
+        section = XZMocoaNameNone;
+    }
+    Class const VMClass = module.viewModelClass;
     
     XZMocoaCollectionViewCellViewModel *viewModel = nil;
     if (VMClass == Nil) {
@@ -29,7 +38,7 @@
         viewModel = [[VMClass alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
-        viewModel.identifier = XZMocoaReuseIdentifier(self.model.mocoaName, XZMocoaKindCell, name);
+        viewModel.identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
     }
     return viewModel;
 }
@@ -40,9 +49,16 @@
         return nil;
     }
     
-    XZMocoaName     const name    = model.mocoaName;
-    XZMocoaModule * const module  = [self.module submoduleForKind:kind forName:name];
-    Class           const VMClass = module.viewModelClass;
+    XZMocoaName section = self.model.mocoaName;
+    XZMocoaName const name = model.mocoaName;
+    
+    XZMocoaModule *module = [self.module submoduleIfLoadedForKind:kind forName:name];
+    if (module == nil && section.length > 0) {
+        module = [self.superViewModel.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameNone];
+        module = [module submoduleIfLoadedForKind:kind forName:name];
+        section = XZMocoaNameNone;
+    }
+    Class const VMClass = module.viewModelClass;
     
     XZMocoaCollectionViewSupplementaryViewModel *viewModel = nil;
     if (VMClass == Nil) {
@@ -54,7 +70,7 @@
         viewModel = [[VMClass alloc] initWithModel:model];
         viewModel.index      = index;
         viewModel.module     = module;
-        viewModel.identifier = XZMocoaReuseIdentifier(self.model.mocoaName, kind, name);
+        viewModel.identifier = XZMocoaReuseIdentifier(section, kind, name);
     }
     return viewModel;
 }
