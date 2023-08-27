@@ -48,8 +48,8 @@ FOUNDATION_EXPORT XZMocoaName const XZMocoaNamePlaceholder;
 ///   - section: 要构造标识符对象的上级
 ///   - kind: 要构造标识符对象的分类
 ///   - name: 要构造标识符对象的名字
-FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName _Nullable section, XZMocoaKind _Nullable kind, XZMocoaName _Nullable name) XZATTR_OVERLOAD {
-    return [NSString stringWithFormat:@"%@-%@-%@", section ?: XZMocoaNameNone, kind ?: XZMocoaKindNone, name ?: XZMocoaNameNone];
+FOUNDATION_STATIC_INLINE NSString *XZMocoaReuseIdentifier(XZMocoaName _Nullable section, XZMocoaKind _Nullable kind, XZMocoaName _Nullable name) {
+    return [NSString stringWithFormat:@"%@:%@:%@", (section ?: XZMocoaNameNone), (kind ?: XZMocoaKindNone), (name ?: XZMocoaNameNone)];
 }
 
 NS_ASSUME_NONNULL_END
