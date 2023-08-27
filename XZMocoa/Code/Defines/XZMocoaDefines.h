@@ -18,16 +18,16 @@ UIKIT_EXTERN CGFloat const XZMocoaTableViewHeaderFooterHeight;
 
 
 /// 模块的名称。
-/// @seealso XZMocoaModule
-/// @attention 请仅用数字、字母（区分大小写）组成的名称。
+/// @attention 字符`:`、`/`为保留字符，不可在 XZMocoaName 中使用。
 typedef NSString *XZMocoaName;
 
-/// 模块所属的分类。
-/// @seealso XZMocoaModule
-/// @attention 请仅用数字、字母（区分大小写）组成的名称。
+/// 模块的分类。
+/// @attention 字符`:`、`/`为保留字符，不可在 XZMocoaKind 中使用。
 typedef NSString *XZMocoaKind;
 
 /// 默认名称，或者没有名称。
+/// @discussion
+/// 在 tableView/collectionView 中，具名的 section 在查询 cell 子模块时，会查询 XZMocoaNameNone 的 section 模块。
 FOUNDATION_EXPORT XZMocoaName const XZMocoaNameNone;
 /// 默认分类，或者没有分类。
 FOUNDATION_EXPORT XZMocoaKind const XZMocoaKindNone;
