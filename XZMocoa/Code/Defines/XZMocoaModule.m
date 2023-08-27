@@ -25,7 +25,6 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 @end
 
 @interface XZMocoaModule () {
-    /// 懒加载。
     NSMutableDictionary<XZMocoaKind, id<XZMocoaModuleNamedSubscripting>> *_submodules;
 }
 @end
@@ -74,20 +73,6 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
     return self;
 }
 
-- (XZMocoaModule *)submoduleForPath:(NSString *)path {
-    XZMocoaModule *submodule = self;
-    for (NSString * const subpath in [path componentsSeparatedByString:@"/"]) {
-        if (subpath.length == 0) {
-            continue; // 忽略空白的
-        }
-        XZMocoaKind kind = nil;
-        XZMocoaName name = nil;
-        XZMocoaPathParser(subpath, &kind, &name);
-        submodule = [submodule submoduleForKind:kind forName:name];
-    }
-    return submodule;
-}
-
 - (void)setViewClass:(Class)viewClass {
     _viewClass = viewClass;
     _viewNibName = nil;
@@ -134,7 +119,7 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
     XZMocoaModule *submodule = namedModules[name];
     if (submodule == nil) {
         NSURL * const submoduleURL = [self.url URLByAppendingPathComponent:XZMocoaPathCreate(kind, name)];
-        submodule = [[XZMocoaModule alloc] initWithURL:submoduleURL]; // [XZMocoaModule moduleForURL:url];
+        submodule = [[XZMocoaModule alloc] initWithURL:submoduleURL];
         namedModules[name] = submodule;
         // 在 domain 中注册新创建的 module
         XZMocoaDomain *domain = [XZMocoaDomain doaminForName:submoduleURL.host];
@@ -200,19 +185,18 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
     return namedModules;
 }
 
-- (void)setObject:(id<XZMocoaModuleNamedSubscripting>)newNamedModules forKeyedSubscript:(XZMocoaKind)kind {
-    if (kind == nil) kind = XZMocoaKindNone;
-    if (newNamedModules == nil) {
-        if (_submodules == nil) {
-            return;
+- (XZMocoaModule *)submoduleForPath:(NSString *)path {
+    XZMocoaModule *submodule = self;
+    for (NSString * const subpath in [path componentsSeparatedByString:@"/"]) {
+        if (subpath.length == 0) {
+            continue; // 忽略空白的
         }
-        [_submodules removeObjectForKey:kind];
-    } else if (_submodules == nil) {
-        _submodules = [NSMutableDictionary dictionary];
-        _submodules[kind] = newNamedModules;
-    } else {
-        _submodules[kind] = newNamedModules;
+        XZMocoaKind kind = nil;
+        XZMocoaName name = nil;
+        XZMocoaPathParser(subpath, &kind, &name);
+        submodule = [submodule submoduleForKind:kind forName:name];
     }
+    return submodule;
 }
 
 #pragma mark - DEBUG

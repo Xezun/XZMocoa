@@ -29,7 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @endcode
 @protocol XZMocoaModuleKindedSubscripting <NSObject>
 - (id<XZMocoaModuleNamedSubscripting>)objectForKeyedSubscript:(nullable XZMocoaKind)kind;
-- (void)setObject:(nullable id<XZMocoaModuleNamedSubscripting>)newModules forKeyedSubscript:(nullable XZMocoaKind)kind;
 @end
 
 /// 记录了 Mocoa MVVM 模块信息的对象。
@@ -71,10 +70,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 推荐使用 XZMocoa(stringOrURL) 函数，获取模块对象。
 /// - Parameter urlString: 模块地址
 + (nullable XZMocoaModule *)moduleForURLString:(nullable NSString *)urlString;
-
-/// 获取指定路径的子模块，这是一个懒加载方法。
-/// @param path 子模块的路径
-- (XZMocoaModule *)submoduleForPath:(NSString *)path;
 
 #pragma mark - MVVM 基本结构
 
@@ -135,6 +130,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param name 名称
 - (void)setSubmodule:(nullable XZMocoaModule *)newSubmodule forName:(nullable XZMocoaName)name;
 
+/// 获取指定路径的子模块，这是一个懒加载方法。
+/// @param path 子模块的路径
+- (XZMocoaModule *)submoduleForPath:(NSString *)path;
+
 @end
 
 @interface XZMocoaModule (XZMocoaExtendedModule)
@@ -158,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @discussion
 /// 此方法等同于`[table submoduleForName:name forKind:XZMocoaKindNone]`。
 /// @param name 模块名称
-- (XZMocoaModule *)sectionForName:(XZMocoaName)name;
+- (XZMocoaModule *)sectionForName:(nullable XZMocoaName)name;
 
 /// 设置 section 模块为 UITableView 或 UICollectionView 模块的下级模块。
 /// @discussion
@@ -169,7 +168,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 此方法等同于`[table setSubmodule:section forKind:XZMocoaKindNone forName:name]`。
 /// @param section 模块对象
 /// @param name 模块名称
-- (void)setSection:(nullable XZMocoaModule *)section forName:(XZMocoaName)name;
+- (void)setSection:(nullable XZMocoaModule *)section forName:(nullable XZMocoaName)name;
 
 /// UITableView 或 UICollectionView 的 Section 模块的默认的 Header 模块。
 /// @discussion
@@ -188,7 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @discussion
 /// 此方法等同于`[section submoduleForKind:XZMocoaKindHeader forName:name]`。
 /// @param name 下级的名称
-- (XZMocoaModule *)headerForName:(XZMocoaName)name;
+- (XZMocoaModule *)headerForName:(nullable XZMocoaName)name;
 
 /// 设置 UITableView 或 UICollectionView 的 Section 模块的指定名称的 Header 模块。
 /// @discussion
@@ -199,7 +198,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 此方法等同于`[section setSubmodule:header forKind:XZMocoaKindHeader forName:name]`。
 /// @param header 模块对象
 /// @param name 模块名称
-- (void)setHeader:(nullable XZMocoaModule *)header forName:(XZMocoaName)name;
+- (void)setHeader:(nullable XZMocoaModule *)header forName:(nullable XZMocoaName)name;
 
 /// UITableView 或 UICollectionView 的 Section 模块的默认的 Cell 模块。
 /// @discussion
@@ -218,7 +217,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @discussion
 /// 此属性等同于`[section submoduleForKind:XZMocoaKindCell forName:name]`。
 /// @param name 模块名称
-- (XZMocoaModule *)cellForName:(XZMocoaName)name;
+- (XZMocoaModule *)cellForName:(nullable XZMocoaName)name;
 
 /// 设置 UITableView 或 UICollectionView 的 Section 模块的指定名称的 Cell 模块。
 /// @discussion
@@ -228,7 +227,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @discussion
 /// 此属性等同于`[section setSubmodule:cell forKind:XZMocoaKindCell forName:name]`。
 /// @param name 模块名称
-- (void)setCell:(nullable XZMocoaModule *)cell forName:(XZMocoaName)name;
+- (void)setCell:(nullable XZMocoaModule *)cell forName:(nullable XZMocoaName)name;
 
 /// UITableView 或 UICollectionView 的 Section 模块的默认的 Footer 模块。
 /// @discussion
@@ -246,7 +245,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @discussion
 /// 此方法等同于`[section submoduleForKind:XZMocoaKindFooter forName:name]`。
 /// @param name 模块名称
-- (XZMocoaModule *)footerForName:(XZMocoaName)name;
+- (XZMocoaModule *)footerForName:(nullable XZMocoaName)name;
 
 /// 设置 UITableView 或 UICollectionView 的 Section 模块的指定名称的 Footer 模块。
 /// @discussion
@@ -257,7 +256,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 此方法等同于`[section setSubmodule:footer forKind:XZMocoaKindFooter forName:name]`。
 /// @param footer 模块对象
 /// @param name 模块名称
-- (void)setFooter:(nullable XZMocoaModule *)footer forName:(XZMocoaName)name;
+- (void)setFooter:(nullable XZMocoaModule *)footer forName:(nullable XZMocoaName)name;
 
 @end
 
