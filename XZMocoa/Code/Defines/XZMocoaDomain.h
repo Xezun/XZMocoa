@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// - Parameters:
 ///   - newModule: 模块对象
 ///   - path: 模块路径
-- (void)setModule:(id)newModule forPath:(NSString *)path;
+- (void)setModule:(nullable id)newModule forPath:(NSString *)path;
 
 /// 模块由外部提供懒加载，强引用。
 @property (nonatomic, strong, nullable) id<XZMocoaDomainModuleProvider> provider;
