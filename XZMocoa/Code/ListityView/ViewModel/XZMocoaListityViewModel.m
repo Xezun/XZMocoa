@@ -145,7 +145,7 @@
             [oldSections addIndex:oldSection];
             [oldViewModel removeFromSuperViewModel];
             
-            id const newViewModel = [self loadViewModelForSectionAtIndex:idx];
+            id const newViewModel = [self _loadViewModelForSectionAtIndex:idx];
             [self _insertSectionViewModel:newViewModel atIndex:idx];
         }];
         
@@ -155,7 +155,7 @@
             XZMocoaListityViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
             [oldViewModel removeFromSuperViewModel];
             
-            XZMocoaListityViewSectionViewModel *newViewModel = [self loadViewModelForSectionAtIndex:section];
+            XZMocoaListityViewSectionViewModel *newViewModel = [self _loadViewModelForSectionAtIndex:section];
             [self _insertSectionViewModel:newViewModel atIndex:section];
         }];
         
@@ -172,7 +172,7 @@
     
     // 添加元素，正向遍历：只有前面的元素正确了，后面的才能正确。
     [sections enumerateIndexesUsingBlock:^(NSUInteger section, BOOL * _Nonnull stop) {
-        id const newViewModel = [self loadViewModelForSectionAtIndex:section];
+        id const newViewModel = [self _loadViewModelForSectionAtIndex:section];
         [self _insertSectionViewModel:newViewModel atIndex:section];
     }];
     
@@ -406,7 +406,7 @@
     // 添加元素，正向遍历：按位置记录下新添加的元素，以便在后续排序时，查找该位置上的元素。
     NSMutableDictionary * const insertedViewModels = [NSMutableDictionary dictionaryWithCapacity:inserts.count];
     [inserts enumerateIndexesUsingBlock:^(NSUInteger section, BOOL * _Nonnull stop) {
-        XZMocoaListityViewSectionViewModel * const newViewModel = [self loadViewModelForSectionAtIndex:section];
+        XZMocoaListityViewSectionViewModel * const newViewModel = [self _loadViewModelForSectionAtIndex:section];
         [self _insertSectionViewModel:newViewModel atIndex:section];
         insertedViewModels[@(section)] = newViewModel;
     }];
@@ -480,7 +480,7 @@
     NSInteger const count = model.numberOfSectionModels;
     
     for (NSInteger section = 0; section < count; section++) {
-        XZMocoaListityViewSectionViewModel *viewModel = [self loadViewModelForSectionAtIndex:section];
+        XZMocoaListityViewSectionViewModel *viewModel = [self _loadViewModelForSectionAtIndex:section];
         [self _addSectionViewModel:viewModel];
     }
 }
@@ -503,6 +503,31 @@
     }
     
     [self didMoveSectionAtIndex:oldSection toIndex:newSection];
+}
+
+- (XZMocoaListityViewSectionViewModel *)_loadViewModelForSectionAtIndex:(NSInteger)index {
+    id<XZMocoaListityViewSectionModel> const model = [self.model modelForSectionAtIndex:index];
+    XZMocoaName     const name   = model.mocoaName;
+    XZMocoaModule * const module = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:name];
+    
+    // 查找 VMClass
+    Class VMClass = module.viewModelClass;
+    if (VMClass) {
+        // 1、使用当前 section 模块的视图模型
+    } else if (name.length > 0) {
+        // 2、使用默认 section 模块的视图模型
+        XZMocoaModule *defaultModule = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameNone];
+        VMClass = defaultModule.viewModelClass;
+    }
+    if (VMClass == Nil) {
+        // 3、使用占位视图模型
+        VMClass = [self placeholderViewModelClassForSectionAtIndex:index];
+    }
+    
+    XZMocoaListityViewSectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
+    viewModel.module = module;
+    viewModel.index  = index;
+    return viewModel;
 }
 
 #pragma mark - 子类重写
@@ -557,10 +582,11 @@
     @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }
 
-- (XZMocoaListityViewSectionViewModel *)loadViewModelForSectionAtIndex:(NSInteger)index {
+- (Class)placeholderViewModelClassForSectionAtIndex:(NSInteger)index {
     NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
     @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }
+
 
 #pragma mark - DEBUG
 

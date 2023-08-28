@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) NSInteger numberOfCells;
 - (CellViewModelType)cellViewModelAtIndex:(NSInteger)index;
-- (NSInteger)indexOfCellViewModel:(CellViewModelType)cellModel;
+- (NSInteger)indexOfCellViewModel:(XZMocoaViewModel *)cellModel;
 
 // MARK: - 局部更新
 
@@ -96,8 +96,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // MARK: 子类必须重写的方法
 
-- (CellViewModelType)loadViewModelForCellAtIndex:(NSInteger)index;
-- (nullable __kindof XZMocoaListityViewSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
+- (Class)placeholderViewModelClassForCellAtIndex:(NSInteger)index;
+- (Class)placeholderViewModelClassForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -52,6 +52,7 @@
     
     // view
     XZMocoaTableView *tableView = [[XZMocoaTableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
+    tableView.contentView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     tableView.viewModel = tableViewModel;
     [self.view addSubview:tableView];
 }
