@@ -386,7 +386,7 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name) {
     _namedModules[name] = submodule;
 }
 
-- (void)enumerateKeysAndObjectsUsingBlock:(void (^NS_NOESCAPE)(XZMocoaName _Nonnull, XZMocoaModule * _Nonnull, BOOL * _Nonnull))block {
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^NS_NOESCAPE)(XZMocoaName, XZMocoaModule *, BOOL *))block {
     [_namedModules enumerateKeysAndObjectsUsingBlock:block];
 }
 
