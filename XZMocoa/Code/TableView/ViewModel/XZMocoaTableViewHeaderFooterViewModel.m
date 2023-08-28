@@ -12,11 +12,7 @@
 - (instancetype)initWithModel:(id)model {
     self = [super initWithModel:model];
     if (self) {
-#if DEBUG
-        [super setFrame:CGRectMake(0, 0, 0, 30)];
-#else
         [super setFrame:CGRectMake(0, 0, 0, XZMocoaTableViewHeaderFooterHeight)];
-#endif
     }
     return self;
 }

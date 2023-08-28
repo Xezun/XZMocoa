@@ -61,13 +61,6 @@
     [super contentViewDidChange];
     
     UITableView *contentView = self.contentView;
-    contentView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    contentView.contentInset   = UIEdgeInsetsZero;
-    
-    contentView.estimatedRowHeight = 0;
-    contentView.estimatedSectionFooterHeight = 0;
-    contentView.estimatedSectionHeaderHeight = 0;
-    
     contentView.delegate   = self;
     contentView.dataSource = self;
 }

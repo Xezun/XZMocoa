@@ -16,6 +16,7 @@
 
 - (void)prepare {
     [super prepare];
+    self.height = 80.0;
     
     Example30Group110CellModel *model = self.model;
     self.text = model.text;
