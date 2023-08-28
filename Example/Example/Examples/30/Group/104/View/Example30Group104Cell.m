@@ -10,6 +10,10 @@
 
 @implementation Example30Group104Cell
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    return [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
@@ -23,7 +27,8 @@
 
 - (void)viewModelDidChange {
     Example30Group104CellViewModel *viewModel = self.viewModel;
-    self.textLabel.text = viewModel.text;
+    self.textLabel.text = @"Cell视图";
+    self.detailTextLabel.text = viewModel.text;
 }
 
 @end

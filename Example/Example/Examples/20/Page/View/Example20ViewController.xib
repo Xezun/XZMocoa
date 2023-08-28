@@ -22,7 +22,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Byl-oJ-Z6x" customClass="XZMocoaTableView">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kX7-S7-Asf">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kX7-S7-Asf">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
