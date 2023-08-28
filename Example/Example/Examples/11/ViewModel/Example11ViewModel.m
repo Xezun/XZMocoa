@@ -26,21 +26,19 @@
 }
 
 - (void)loadData {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSDictionary *dict = @{
-            @"card": @"contact",
-            @"firstName": @"Foo",
-            @"lastName": @"Bar",
-            @"photo": @"https://developer.apple.com/assets/elements/icons/xcode/xcode-64x64_2x.png",
-            @"phone": @"13923459876",
-            @"address": @"北京市海淀区人民路幸福里小区7号楼6单元503室",
-            @"title": @"示例说明",
-            @"content": @"本示例演示了，如何使用 MVVM 设计模式，基于 ViewController 进行业务开发。"
-        };
-        [self.model yy_modelSetWithDictionary:dict];
-        
-        [self dataDidChange];
-    });
+    NSDictionary *dict = @{
+        @"card": @"contact",
+        @"firstName": @"Foo",
+        @"lastName": @"Bar",
+        @"photo": @"https://developer.apple.com/assets/elements/icons/xcode/xcode-64x64_2x.png",
+        @"phone": @"13923459876",
+        @"address": @"北京市海淀区人民路幸福里小区7号楼6单元503室",
+        @"title": @"示例说明",
+        @"content": @"本示例演示了，如何使用 MVVM 设计模式，基于 ViewController 进行业务开发。"
+    };
+    [self.model yy_modelSetWithDictionary:dict];
+    
+    [self dataDidChange];
 }
 
 - (void)dataDidChange {

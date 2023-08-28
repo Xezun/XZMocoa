@@ -12,6 +12,7 @@
 
 - (void)prepare {
     [super prepare];
+    self.size = CGSizeMake(UIScreen.mainScreen.bounds.size.width, 80.0);
     
     Example31Group101CellModel *model = self.model;
     self.text = model.text;

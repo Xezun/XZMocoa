@@ -9,6 +9,7 @@
 
 @interface Example31Group110HeaderView ()
 @property (nonatomic, strong) UILabel *textLabel;
+@property (nonatomic, strong) UILabel *detailTextLabel;
 @end
 
 @implementation Example31Group110HeaderView
@@ -23,21 +24,25 @@
         self.backgroundColor = UIColor.whiteColor;
         
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
-        _textLabel.font = [UIFont systemFontOfSize:14.0];
-        _textLabel.textColor = UIColor.lightGrayColor;
         [self addSubview:_textLabel];
+        
+        _detailTextLabel = [[UILabel alloc] initWithFrame:self.bounds];
+        _detailTextLabel.font = [UIFont systemFontOfSize:12.0];
+        [self addSubview:_detailTextLabel];
+        
+        _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _detailTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_textLabel]-20-|" options:NSLayoutFormatDirectionLeadingToTrailing metrics:nil views:NSDictionaryOfVariableBindings(_textLabel)]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_detailTextLabel]-20-|" options:NSLayoutFormatDirectionLeadingToTrailing metrics:nil views:NSDictionaryOfVariableBindings(_detailTextLabel)]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_textLabel attribute:(NSLayoutAttributeCenterY) relatedBy:(NSLayoutRelationEqual) toItem:self attribute:(NSLayoutAttributeCenterY) multiplier:1.0 constant:-10.0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_detailTextLabel attribute:(NSLayoutAttributeCenterY) relatedBy:(NSLayoutRelationEqual) toItem:self attribute:(NSLayoutAttributeCenterY) multiplier:1.0 constant:+10.0]];
     }
     return self;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    _textLabel.frame = UIEdgeInsetsInsetRect(self.bounds, self.layoutMargins);
-}
-
 - (void)viewModelDidChange {
-    self.textLabel.text = self.viewModel.model;
+    self.textLabel.text = @"Header视图";
+    self.detailTextLabel.text = self.viewModel.model;
 }
 
 @end

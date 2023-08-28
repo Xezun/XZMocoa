@@ -13,4 +13,10 @@
     XZMocoa(@"https://mocoa.xezun.com/examples/30/table/109/header:/").viewModelClass = self;
 }
 
+- (void)prepare {
+    [super prepare];
+    
+    self.height = 80.0;
+}
+
 @end

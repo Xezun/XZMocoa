@@ -13,4 +13,9 @@
     XZMocoa(@"https://mocoa.xezun.com/examples/31/collection/109/footer:/").viewModelClass = self;
 }
 
+- (void)prepare {
+    [super prepare];
+    self.size = CGSizeMake(UIScreen.mainScreen.bounds.size.width, 80.0);
+}
+
 @end

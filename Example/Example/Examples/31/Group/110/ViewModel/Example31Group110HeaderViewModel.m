@@ -15,8 +15,8 @@
 
 - (void)prepare {
     [super prepare];
+    self.size = CGSizeMake(UIScreen.mainScreen.bounds.size.width, 80.0);
     
-    self.size = CGSizeMake(375.0, 50.0);
 }
 
 @end
