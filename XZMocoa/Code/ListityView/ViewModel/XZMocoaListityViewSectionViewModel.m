@@ -175,7 +175,7 @@
             [oldRows addIndex:oldRow];
             [oldViewModel removeFromSuperViewModel];
             
-            id const newViewModel = [self loadViewModelForCellAtIndex:row];
+            id const newViewModel = [self _loadViewModelForCellAtIndex:row];
             [self _insertCellViewModel:newViewModel atIndex:row];
         }];
         [self didReloadCellsAtIndexes:oldRows];
@@ -184,7 +184,7 @@
             XZMocoaListityViewCellViewModel * const oldViewModel = _cellViewModels[row];
             [oldViewModel removeFromSuperViewModel]; // 由 -didRemoveSubViewModel: 执行清理
             
-            id const newViewModel = [self loadViewModelForCellAtIndex:row];
+            id const newViewModel = [self _loadViewModelForCellAtIndex:row];
             [self _insertCellViewModel:newViewModel atIndex:row];
         }];
         [self didReloadCellsAtIndexes:rows];
@@ -199,7 +199,7 @@
     }
     
     [rows enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-        id const newViewModel = [self loadViewModelForCellAtIndex:row];
+        id const newViewModel = [self _loadViewModelForCellAtIndex:row];
         [self _insertCellViewModel:newViewModel atIndex:row];
     }];
     
@@ -425,7 +425,7 @@
             id model = newDataModels[index];
             NSInteger oldIndex = [oldDataModels indexOfObject:model];
             if (oldIndex == NSNotFound) {
-                id vm = [self loadViewModelForCellAtIndex:index];
+                id vm = [self _loadViewModelForCellAtIndex:index];
                 [self _insertCellViewModel:vm atIndex:index];
             } else {
                 _cellViewModels[index] = oldViewModels[oldIndex];
@@ -447,7 +447,7 @@
         
         NSMutableDictionary *newViewModels = [NSMutableDictionary dictionaryWithCapacity:inserts.count];
         [inserts enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityViewCellViewModel * const newViewModel = [self loadViewModelForCellAtIndex:row];
+            XZMocoaListityViewCellViewModel * const newViewModel = [self _loadViewModelForCellAtIndex:row];
             [self _insertCellViewModel:newViewModel atIndex:row];
             newViewModels[@(row)] = newViewModel;
         }];
@@ -509,7 +509,7 @@
     for (XZMocoaKind kind in self.superViewModel.supportedSupplementaryKinds) {
         NSInteger const count = [model numberOfModelsForSupplementaryKind:kind];
         for (NSInteger index = 0; index < count; index++) {
-            XZMocoaListityViewSupplementaryViewModel *vm = [self loadViewModelForSupplementaryKind:kind atIndex:index];
+            XZMocoaListityViewSupplementaryViewModel *vm = [self _loadViewModelForSupplementaryKind:kind atIndex:index];
             if (vm) {
                 if (_supplementaryViewModels[kind]) {
                     [_supplementaryViewModels[kind] addObject:vm];
@@ -523,7 +523,7 @@
     
     NSInteger const count = model.numberOfCellModels;
     for (NSInteger index = 0; index < count; index++) {
-        XZMocoaListityViewCellViewModel *viewModel = [self loadViewModelForCellAtIndex:index];
+        XZMocoaListityViewCellViewModel *viewModel = [self _loadViewModelForCellAtIndex:index];
         [self _addCellViewModel:viewModel];
     }
 }
@@ -546,6 +546,107 @@
     [self didMoveCellAtIndex:oldRow toIndex:newRow];
 }
 
+- (XZMocoaListityViewCellViewModel *)_loadViewModelForCellAtIndex:(NSInteger)index {
+    XZMocoaName     const section = self.model.mocoaName;
+    id<XZMocoaModel> const model  = [self.model modelForCellAtIndex:index];
+    XZMocoaName      const name   = model.mocoaName;
+    XZMocoaModule *  const module = [self.module submoduleIfLoadedForKind:XZMocoaKindCell forName:name];
+    
+    NSString *identifier = nil;
+    Class     VMClass    = module.viewModelClass;
+    if (VMClass) {
+        // 1、使用当前 section 的具名 cell
+        identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
+    } else if (name.length > 0) {
+        // 2、使用当前 section 的默认 cell
+        XZMocoaModule *defaultModule = [self.module submoduleIfLoadedForKind:XZMocoaKindCell forName:XZMocoaNameNone];
+        VMClass = defaultModule.viewModelClass;
+        if (VMClass) {
+            identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, XZMocoaNameNone);
+        }
+    }
+    if (VMClass == Nil && section.length > 0) {
+        XZMocoaModule *sectionModule = [self.superViewModel.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameNone];
+        XZMocoaModule *cellModule = [sectionModule submoduleIfLoadedForKind:XZMocoaKindCell forName:name];
+        VMClass = cellModule.viewModelClass;
+        if (VMClass) {
+            // 3、使用默认 section 的具名 cell
+            identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, name);
+        } else if (name.length > 0) {
+            // 4、使用默认 section 的默认 cell
+            cellModule = [sectionModule submoduleIfLoadedForKind:XZMocoaKindCell forName:XZMocoaNameNone];
+            VMClass = cellModule.viewModelClass;
+            if (VMClass) {
+                identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
+            }
+        }
+    }
+    if (VMClass == Nil) {
+        // 5、使用占位视图
+        VMClass = [self placeholderViewModelClassForCellAtIndex:index];
+        identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindCell, XZMocoaNamePlaceholder);
+    }
+    
+    XZMocoaListityViewCellViewModel *viewModel = [[VMClass alloc] initWithModel:model];
+    viewModel.identifier = identifier;
+    viewModel.index      = index;
+    viewModel.module     = module;
+    return viewModel;
+}
+
+- (XZMocoaListityViewSupplementaryViewModel *)_loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+    id<XZMocoaModel> const model = [self.model modelForSupplementaryKind:kind atIndex:index];
+    
+    if (model == nil) {
+        return nil; // 没有数据，就没有 header/footer
+    }
+    
+    XZMocoaName     const section = self.model.mocoaName;
+    XZMocoaName     const name    = model.mocoaName;
+    XZMocoaModule * const module  = [self.module submoduleIfLoadedForKind:kind forName:name];
+
+    Class VMClass = module.viewModelClass;
+    NSString *identifier = nil;
+    if (VMClass) {
+        // 1、使用当前 section 的具名 supplementary
+        identifier = XZMocoaReuseIdentifier(section, kind, name);
+    } else if (name.length > 0) {
+        // 2、使用当前 section 的默认 supplementary
+        XZMocoaModule *defaultModule = [self.module submoduleIfLoadedForKind:kind forName:XZMocoaNameNone];
+        VMClass = defaultModule.viewModelClass;
+        if (VMClass) {
+            identifier = XZMocoaReuseIdentifier(section, kind, XZMocoaNameNone);
+        }
+    }
+    if (VMClass == Nil && section.length > 0) {
+        XZMocoaModule *sectionModule = [self.superViewModel.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameNone];
+        XZMocoaModule *cellModule = [sectionModule submoduleIfLoadedForKind:kind forName:name];
+        VMClass = cellModule.viewModelClass;
+        if (VMClass) {
+            // 3、使用默认 section 的具名 supplementary
+            identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, kind, name);
+        } else if (name.length > 0) {
+            // 4、使用默认 section 的默认 supplementary
+            cellModule = [sectionModule submoduleIfLoadedForKind:kind forName:XZMocoaNameNone];
+            VMClass = cellModule.viewModelClass;
+            if (VMClass) {
+                identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, kind, XZMocoaNameNone);
+            }
+        }
+    }
+    if (VMClass == Nil) {
+        // 5、使用占位视图
+        VMClass = [self placeholderViewModelClassForSupplementaryKind:kind atIndex:index];
+        identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, kind, XZMocoaNamePlaceholder);
+    }
+    
+    XZMocoaListityViewSupplementaryViewModel *viewModel = [[VMClass alloc] initWithModel:model];
+    viewModel.index      = index;
+    viewModel.module     = module;
+    viewModel.identifier = identifier;
+    return viewModel;
+}
+
 #if DEBUG
 - (NSArray *)cellDataModels {
     NSInteger const count = self.numberOfCells;
@@ -563,12 +664,12 @@
 
 #pragma mark - 子类重写
 
-- (XZMocoaListityViewCellViewModel *)loadViewModelForCellAtIndex:(NSInteger)index {
+- (Class)placeholderViewModelClassForCellAtIndex:(NSInteger)index {
     NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
     @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }
 
-- (XZMocoaListityViewSupplementaryViewModel *)loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+- (Class)placeholderViewModelClassForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
     NSString *reason = [NSString stringWithFormat:@"必须使用子类，并重 %s 方法", __PRETTY_FUNCTION__];
     @throw [NSException exceptionWithName:NSGenericException reason:reason userInfo:nil];
 }

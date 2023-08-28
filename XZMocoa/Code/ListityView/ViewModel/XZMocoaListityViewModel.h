@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
 
 /// 子类应该重写此方法，并返回所需的 SectionViewModel 对象。
-- (SectionViewModelType)loadViewModelForSectionAtIndex:(NSInteger)index;
+- (Class)placeholderViewModelClassForSectionAtIndex:(NSInteger)index;
 
 @end
 
