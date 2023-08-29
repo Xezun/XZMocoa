@@ -30,11 +30,11 @@ pod 'XZMocoa'
 
 下面以 iOS 开发中的常用的`UITableView`组件为例，介绍如何使用 Mocoa 进行开发。
 
-> 由于`UITableView`在设计上，并不是十分的符合在 MVVM 设计模式下使用，因此 Mocoa 将封装为`XZMocoaTableView`组件。封装过程，除接管了`delegate`和`dataSource`外，对`UITableView`本身未做任何处理，可以理解为将其简单地包装在`UIView`中。
+> 由于原生`UITableView`原为 MVC 设计，在 MVVM 设计模式中使用时，需要进行一点小小的改造，因此 Mocoa 将其封装为`XZMocoaTableView`组件。但是封装过程，除接管了`delegate`和`dataSource`外，Mocoa 对`UITableView`本身未做任何处理，可以理解为将其简单地包装在`UIView`中。
 
 ##### 1、设计数据
 
-合理的数据结构，会大大的简化数据处理的过程，但实际开发过程中，数据可能并非总是我们期望的样子。因此，为了让所有列表数据都能够在`XZMocoaTableView`中使用，Mocoa 设计了`XZMocoaTableModel`和`XZMocoaTableViewSectionModel`协议，任何数据只要实现该协议，就可以作为`XZMocoaTableView`的数据使用。
+合理的数据结构，会大大的简化数据处理的过程，但实际开发过程中，数据可能并非总是我们期望的样子。因此，为了让所有列表数据都能够在`XZMocoaTableView`中使用，Mocoa 设计了`XZMocoaTableModel`和`XZMocoaTableViewSectionModel`协议，任何数据只要实现这两个协议，就在`XZMocoaTableView`中使用。
 
 > 协议只是规范，并非强制要求。实际上所有数据都可以作为`XZMocoaTableView`的数据，但是如果不实现协议的话，代码可能不会按期望的方式运行。
 
@@ -74,7 +74,7 @@ tableView.viewModel = tableViewModel;
 [self.view addSubview:tableView];
 ```
 
-虽然目前我们并没有创建`cell`，但是仅仅需要上面这些代码，就可以渲染列表了，因为 Mocoa 会使用`PlaceholderCell`占位渲染，者可以帮我们提前验证数据基本格式问题，并解决原生组件关于`dataSource`的各种崩溃问题。
+虽然目前我们并没有创建`cell`，但是仅仅需要上面这些代码，就可以渲染列表了，因为 Mocoa 会使用`PlaceholderCell`占位渲染，这可以帮我们提前验证数据基本格式问题，并解决原生组件关于`dataSource`的各种崩溃问题。
 
 > `PlaceholderCell`仅在`DEBUG`环境下显示，在`Release`环境下会自动隐藏。
 
@@ -142,7 +142,7 @@ tableView.viewModel = tableViewModel;
 
 ###### 3.4 注册模块
 
-虽然`section`是逻辑层，在`UITableView`中虽然没有直接视图，但是 Mocoa 保留了它，因此`cell`是注册在`section`之下的。
+在`UITableView`中`section`没有直接视图，但却是不可少的逻辑层，所以在 Mocoa 中，你也需要将`cell`是注册在`section`之下。下面是将`cell`模块注册到`URL`为`https://mocoa.xezun.com/table/`的`tableView`模块之下的示例。
 
 ```objc
 @implementation ExampleCellModel
@@ -180,11 +180,11 @@ tableView.viewModel = tableViewModel;
 
 ## 模块化
 
-###### 1、如何管理模块
-
 不论采用何种设计模式，都应该让你的代码模块化。这样在更新维护时，变动就可以控制在模块内，从而避免牵一发而动全身。
 
 Mocoa 使用 MVVM 设计模式进行模块化，因为在 MVVM 设计模式下，视图可以通过自身的`ViewModel`管理逻辑，这样逻辑就可以分散在各个模块中，可以避免控制器变得越来越臃肿。
+
+###### 1、管理模块
 
 Mocoa 为模块提供了基于`URL`的模块管理方案 `XZMocoaDomain`，任何模块都可以通过`URL`在`XZMocoaDomain`中注册。
 
@@ -206,7 +206,7 @@ id yourModule = [XZMocoaDomain moduleForURL:@"https://mocoa.xezun.com/your/modul
 
 ###### 2、Mocoa模块
 
-Mocoa 将每一个 MVVM 单元`Model-View-ViewModel`都视为一个模块，称为 Mocoa 模块，用XZMocoaModule`对象表示。在 Mocoa 模块中，有如下约定。
+Mocoa 将每一个 MVVM 单元`Model-View-ViewModel`都视为一个模块，称为 Mocoa 模块，用`XZMocoaModule`对象表示。在 Mocoa 模块中，有如下约定。
 
 - `Model`使用`-init`作为初始化方法，或者开发者自行约定统一的初始化方法。
 - `ViewModel`使用`-initWithModel:`作为初始化方法。
@@ -228,10 +228,12 @@ MVVM 模块在注册后，我们就可以按照约定好的基本规则使用它
 ```objc
 NSDictionary *data;
 XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/view/");
-
-id<XZMocoaModel> model = [module.modelClass yy_modelWithDictionary:data]; // 这里使用了 YYModel 组件
+// 这里使用了 YYModel 组件处理模型化数据
+id<XZMocoaModel> model = [module.modelClass yy_modelWithDictionary:data]; 
+// 创建 viewModel
 XZMocoaViewModel *viewModel = [[module.viewModelClass alloc] initWithModel:model];
 [viewModel ready];
+// 创建 view
 UIView<XZMocoaView> *view = [module instantiateViewWithFrame:CGRectMake(0, 0, 100, 100)];
 view.viewModel = viewModel;
 [self.view addSubview:view];
@@ -308,10 +310,16 @@ NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/main"];
 2、为名称为`name`的`cell`模块创建`ViewModel`对象时，会按照以下顺序使用`viewModelClass`配置。
 
 - `tableView`中，当前`section`中名称为`name`的`cell`模块的`viewModelClass`
+
 - `tableView`中，当前`section`中名称为`XZMocoaNameNone`的`cell`模块的`viewModelClass`
+
 - `tableView`中，默认`section`中名称为`name`的`cell`模块的`viewModelClass`
+
 - `tableView`中，默认`section`中名称为`XZMocoaNameNone`的`cell`模块的`viewModelClass`
+
 - 使用`PlaceholderViewModelClass`
+
+  *默认`section`模块，即名称为`XZMocoaNameNone`的`section`模块。*
 
 ## Mocoa MVVM
 
@@ -532,7 +540,7 @@ Mocoa 目前默认只转发了基本的三个事件，如需要更多事件，�
 
 一般情况下，我们需要重写数据模型的`-isEqual:`方法，但是如果在数据层已经做了数据管理，比如从数据层获取的数据，同一数据始终是同一个对象，或已经做了`-isEqual:`处理，这一步就可以省略。
 
-关于局部刷新，在“示例工程”中有完整的示例可以参考。
+另外，在“示例工程”中，有使用 Mocoa 的完整的示例可以参考。
 
 ## 调试模式
 
