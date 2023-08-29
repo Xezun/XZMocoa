@@ -38,11 +38,11 @@
                 @"title": @"20. XZMocoaTableView 列表示例",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/"],
             }, @{
-                @"title": @"21. XZMocoaTableView 差异刷新",
+                @"title": @"21. XZMocoaTableView 局部刷新",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/21/"],
                 
             }, @{
-                @"title": @"22. XZMocoaTableView 差异刷新",
+                @"title": @"22. XZMocoaTableView 局部刷新",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/22/"]
             }
         ], @[
