@@ -325,12 +325,12 @@ NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/main"];
 
 Mocoa 建议使用 MVVM 模式设计您的代码，包括控制器，而且列表页面中，每一个区块视图`cell`也应该设计为独立的 MVVM 模块。
 
-> 区块视图为业务视图，而非视图组件，因为视图组件没有业务逻辑，不需要 MVVM 设计模块。
+> 区块视图为业务视图，而非视图组件，因为视图组件没有业务逻辑，不需要使用 MVVM 设计模式。
 
-Mocoa 为更好地使用 MVVM 设计模式，拓展了一些原生能力。
+为更好地使用 MVVM 设计模式，Mocoa 为原生拓展了一些能力。
 
-- `XZMocoaView`协议，Model 遵循此协议，以表明 Model 是 MVVM 中的 `Model` 元素。
-- `XZMocoaModel`协议，View 遵循此协议，以表明 View 是 MVVM 中的 `View` 元素。
+- `XZMocoaModel`协议，Model 遵循此协议，以表明 Model 是 MVVM 中的 `Model` 元素。
+- `XZMocoaView`协议，View 遵循此协议，以表明 View 是 MVVM 中的 `View` 元素，同时获得`XZMocoaView`协议提供的能力。
 - `XZMocoaViewModel`基类，`ViewModel`提供的功能要复杂的多，无法通过协议的方式呈现，因此提供了基类。
 
 Mocoa 与其说是框架，不如说是规范，通过协议规范 MVVM 的实现方法。
