@@ -106,10 +106,10 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
         if (![kind isEqualToString:XZMocoaKindSection]) {
             return; // 不是 section 的 module 不需要处理
         }
-
-        [submodule enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind mocoakind, XZMocoaName name, BOOL *stop) {
-            if ([mocoakind isEqualToString:XZMocoaKindCell]) {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, mocoakind, name);
+        
+        [submodule enumerateSubmodulesUsingBlock:^(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName name, BOOL *stop) {
+            if ([kind isEqualToString:XZMocoaKindCell]) {
+                NSString * const identifier = XZMocoaReuseIdentifier(section, kind, name);
                 if (submodule.viewNibName != nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
                     [collectionView registerNib:viewNib forCellWithReuseIdentifier:identifier];
@@ -120,16 +120,16 @@ static NSString *UIElementKindFromMocoaKind(XZMocoaKind kind) {
                     [collectionView registerClass:aClass forCellWithReuseIdentifier:identifier];
                 }
             } else {
-                NSString * const identifier = XZMocoaReuseIdentifier(section, mocoakind, name);
-                NSString * const kind       = UIElementKindFromMocoaKind(mocoakind);
+                NSString * const identifier = XZMocoaReuseIdentifier(section, kind, name);
+                NSString * const elementKind = UIElementKindFromMocoaKind(kind);
                 if (submodule.viewNibName != Nil) {
                     UINib *viewNib = [UINib nibWithNibName:submodule.viewNibName bundle:submodule.viewNibBundle];
-                    [collectionView registerNib:viewNib forSupplementaryViewOfKind:kind withReuseIdentifier:identifier];
+                    [collectionView registerNib:viewNib forSupplementaryViewOfKind:elementKind withReuseIdentifier:identifier];
                 } else if (submodule.viewClass != Nil) {
-                    [collectionView registerClass:submodule.viewClass forSupplementaryViewOfKind:kind withReuseIdentifier:identifier];
+                    [collectionView registerClass:submodule.viewClass forSupplementaryViewOfKind:elementKind withReuseIdentifier:identifier];
                 } else {
                     Class const aClass = [XZMocoaCollectionViewPlaceholderSupplementaryView class];
-                    [collectionView registerClass:aClass forSupplementaryViewOfKind:kind withReuseIdentifier:identifier];
+                    [collectionView registerClass:aClass forSupplementaryViewOfKind:elementKind withReuseIdentifier:identifier];
                 }
             }
         }];

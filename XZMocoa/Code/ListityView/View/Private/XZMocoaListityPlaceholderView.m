@@ -89,7 +89,10 @@
 
 - (void)tapAction:(id)sender {
     NSString *title = @"温馨提示";
-    NSString *message = @"这是一个占位视图，因目标视图的模块信息不全而出现，请根据提示信息，检查相关代码。\n占位视图仅在 DEBUG 环境展示。";
+    NSString *message = @""
+    "这是一个占位视图，因目标视图的模块信息不全而出现。\n"
+    "请根据提示信息或控制台输出内容，检查相关代码。\n"
+    "占位视图仅在 DEBUG 环境展示。";
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:(UIAlertControllerStyleAlert)];
     [alertVC addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:nil]];
     [self.viewController presentViewController:alertVC animated:YES completion:nil];

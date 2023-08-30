@@ -8,12 +8,6 @@
 #import "XZMocoaCollectionViewCell.h"
 #import "XZMocoaModule.h"
 #import "XZMocoaDefines.h"
-
-
-@implementation XZMocoaCollectionViewCell
-@dynamic viewModel;
-@end
-
 #import <objc/runtime.h>
 
 static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source) {
@@ -48,3 +42,9 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 }
 
 @end
+
+
+@implementation XZMocoaCollectionViewCell
+@dynamic viewModel;
+@end
+

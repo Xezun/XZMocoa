@@ -9,6 +9,14 @@
 
 @implementation XZMocoaCollectionViewCellViewModel
 
+- (instancetype)initWithModel:(id)model {
+    self = [super initWithModel:model];
+    if (self) {
+        [super setFrame:(CGRect){CGPointZero, XZMocoaCollectionViewItemSize}];
+    }
+    return self;
+}
+
 - (CGSize)size {
     return self.frame.size;
 }
