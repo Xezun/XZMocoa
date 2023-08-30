@@ -18,6 +18,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.contentView.backgroundColor = UIColor.systemTealColor;
+        
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
         [self.contentView addSubview:_textLabel];
         
