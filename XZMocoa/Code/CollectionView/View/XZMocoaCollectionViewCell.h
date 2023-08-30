@@ -8,9 +8,9 @@
 #import <XZMocoa/XZMocoaView.h>
 #import <XZMocoa/XZMocoaCollectionViewCellViewModel.h>
 
-@class XZMocoaCollectionView;
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class XZMocoaCollectionView;
 
 /// 使用 Mocoa 时，UICollectionViewCell 应遵循本协议。
 /// @note
@@ -47,5 +47,4 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XZMocoaCollectionViewCell : UICollectionViewCell <XZMocoaCollectionViewCell>
 @end
 
-@class UICollectionReusableView;
 NS_ASSUME_NONNULL_END

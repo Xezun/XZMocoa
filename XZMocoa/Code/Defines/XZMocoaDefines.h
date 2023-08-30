@@ -12,10 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// UITableView 的 Header/Footer 的默认高度，值 0.00001 。
 /// @discussion
-/// iOS14.x，在 UITableView 中，如果 Section 的 Header/Footer 高度为 CGFLOAT\_MIN 时，
+/// iOS14.x，在 UITableView 中，如果 Section 的 Header/Footer 高度为 `CGFLOAT_MIN` 时，
 /// 那么在移除 Section 的所有 cell 时，使用 -reloadSections:withRowAnimation: 更新局部视图，会触发NaN崩溃。
 UIKIT_EXTERN CGFloat const XZMocoaTableViewHeaderFooterHeight;
-
+/// UICollectionViewCell 的默认高度。
+/// @discussion
+/// 当 cell 宽度或高度为 0 或 `CGFLOAT_MIN` 时，会造成正常的 cell 不能正常展示。
+UIKIT_EXTERN CGSize  const XZMocoaCollectionViewItemSize;
 
 /// 模块的名称。
 /// @attention 字符`:`、`/`为保留字符，不可在 XZMocoaName 中使用。
