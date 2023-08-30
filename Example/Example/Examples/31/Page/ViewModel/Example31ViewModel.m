@@ -18,52 +18,52 @@
     
     NSArray *data = @[@{
         @"group": @"100",
-        @"model": @{ @"text": @"测试 cell 模块未注册 Model、View、ViewModel" }
+        @"model": @{ @"text": @"100. 测试 cell 模块未注册 Model、View、ViewModel" }
     }, @{
         @"group": @"101",
-        @"model": @{ @"text": @"测试 cell 模块未注册 View、ViewModel" }
+        @"model": @{ @"text": @"101. 测试 cell 模块未注册 View、ViewModel" }
     }, @{
         @"group": @"102",
-        @"model": @{ @"text": @"测试 cell 模块未注册 Model、ViewModel" }
+        @"model": @{ @"text": @"102. 测试 cell 模块未注册 Model、ViewModel" }
     }, @{
         @"group": @"103",
-        @"model": @{ @"text": @"测试 cell 模块未注册 Model、View" }
+        @"model": @{ @"text": @"103. 测试 cell 模块未注册 Model、View" }
     }, @{
         @"group": @"104",
-        @"model": @{ @"text": @"测试 cell 模块未注册 View" }
+        @"model": @{ @"text": @"104. 测试 cell 模块未注册 View" }
     }, @{
         @"group": @"105",
-        @"model": @{ @"text": @"测试 cell 模块未注册 Model" }
+        @"model": @{ @"text": @"105. 测试 cell 模块未注册 Model" }
     }, @{
         @"group": @"106",
-        @"model": @{ @"text": @"测试 cell 模块未注册 ViewModel" }
+        @"model": @{ @"text": @"106. 测试 cell 模块未注册 ViewModel" }
     }, @{
         @"group": @"107",
-        @"model": @{ @"text": @"测试 cell 模块正常注册" }
+        @"model": @{ @"text": @"107. 测试 cell 模块正常注册" }
     }, @{
         @"group": @"108",
-        @"title": @"测试 Header 模块未注册 Model、View、ViewModel",
-        @"model": @{ @"text": @"测试 Header、Footer 模块未注册 Model、View、ViewModel" },
-        @"notes": @"测试 Footer 模块未注册 Model、View、ViewModel"
+        @"title": @"108. 测试 Header 模块未注册 Model、View、ViewModel",
+        @"model": @{ @"text": @"108. 测试 Header、Footer 模块未注册 Model、View、ViewModel" },
+        @"notes": @"108. 测试 Footer 模块未注册 Model、View、ViewModel"
     }, @{
         @"group": @"109",
-        @"title": @"测试 Header 模块未注册 Model、View",
-        @"model": @{ @"text": @"测试 Header、Footer 模块未注册 Model、View" },
-        @"notes": @"测试 Footer 模块未注册 Model、View"
+        @"title": @"109. 测试 Header 模块未注册 Model、View",
+        @"model": @{ @"text": @"109. 测试 Header、Footer 模块未注册 Model、View" },
+        @"notes": @"109. 测试 Footer 模块未注册 Model、View"
     }, @{
         @"group": @"110",
-        @"title": @"测试 Header 模块未注册 Model",
-        @"model": @{ @"text": @"测试 Header、Footer 模块未注册 Model" },
-        @"notes": @"测试 Footer 模块未注册 Model"
+        @"title": @"110. 测试 Header 模块未注册 Model",
+        @"model": @{ @"text": @"110. 测试 Header、Footer 模块未注册 Model" },
+        @"notes": @"110. 测试 Footer 模块未注册 Model"
     }];
     NSArray *groups = [data xz_map:^id _Nonnull(NSDictionary *dict, NSInteger idx, BOOL * _Nonnull stop) {
         XZMocoaModule *submodule = [module submoduleForName:dict[@"group"]];
         return [submodule.modelClass yy_modelWithDictionary:dict];
     }];
     
-    _tableViewModel = [[XZMocoaCollectionViewModel alloc] initWithModel:groups];
-    _tableViewModel.module = module;
-    [self addSubViewModel:_tableViewModel];
+    _collectionViewModel = [[XZMocoaCollectionViewModel alloc] initWithModel:groups];
+    _collectionViewModel.module = module;
+    [self addSubViewModel:_collectionViewModel];
 }
 
 @end

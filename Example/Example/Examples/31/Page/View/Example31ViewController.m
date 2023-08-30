@@ -10,7 +10,7 @@
 @import XZMocoa;
 
 @interface Example31ViewController () <XZMocoaView>
-@property (nonatomic, strong) XZMocoaCollectionView *tableView;
+@property (nonatomic, strong) XZMocoaCollectionView *collectionView;
 @end
 
 @implementation Example31ViewController
@@ -19,6 +19,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"Example 31";
+        self.hidesBottomBarWhenPushed = YES;
     }
     return self;
 }
@@ -33,12 +34,12 @@
     Example31ViewModel *viewModel = [[Example31ViewModel alloc] init];
     self.viewModel = viewModel;
 
-    _tableView = [[XZMocoaCollectionView alloc] initWithFrame:self.view.bounds];
-    _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:_tableView];
+    _collectionView = [[XZMocoaCollectionView alloc] initWithFrame:self.view.bounds];
+    _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:_collectionView];
     
     [viewModel ready];
-    _tableView.viewModel = viewModel.tableViewModel;
+    _collectionView.viewModel = viewModel.collectionViewModel;
 }
 
 /*

@@ -1766,8 +1766,8 @@
 		29C975952A92FBB700515B9E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				29C975972A92FBB700515B9E /* Example31Group102CellViewModel.m */,
 				29C975992A92FBB700515B9E /* Example31Group102CellViewModel.h */,
+				29C975972A92FBB700515B9E /* Example31Group102CellViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1775,10 +1775,10 @@
 		29C9759A2A92FBB700515B9E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				29C975A22A92FBB700515B9E /* Example31Group102SectionModel.h */,
 				29C9759D2A92FBB700515B9E /* Example31Group102SectionModel.m */,
 				29C9759E2A92FBB700515B9E /* Example31Group102CellModel.h */,
 				29C975A12A92FBB700515B9E /* Example31Group102CellModel.m */,
-				29C975A22A92FBB700515B9E /* Example31Group102SectionModel.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1858,9 +1858,9 @@
 			isa = PBXGroup;
 			children = (
 				29C975C52A92FBB700515B9E /* Example31Group110SectionModel.h */,
-				29C975C62A92FBB700515B9E /* Example31Group110CellModel.m */,
-				29C975C72A92FBB700515B9E /* Example31Group110CellModel.h */,
 				29C975C82A92FBB700515B9E /* Example31Group110SectionModel.m */,
+				29C975C72A92FBB700515B9E /* Example31Group110CellModel.h */,
+				29C975C62A92FBB700515B9E /* Example31Group110CellModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1891,10 +1891,10 @@
 		29C975D12A92FBB700515B9E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				29C975D52A92FBB700515B9E /* Example31Group109CellViewModel.h */,
-				29C975D22A92FBB700515B9E /* Example31Group109CellViewModel.m */,
 				29C975D62A92FBB700515B9E /* Example31Group109HeaderViewModel.h */,
 				29C975D32A92FBB700515B9E /* Example31Group109HeaderViewModel.m */,
+				29C975D52A92FBB700515B9E /* Example31Group109CellViewModel.h */,
+				29C975D22A92FBB700515B9E /* Example31Group109CellViewModel.m */,
 				29C975D42A92FBB700515B9E /* Example31Group109FooterViewModel.h */,
 				29C975D72A92FBB700515B9E /* Example31Group109FooterViewModel.m */,
 			);
@@ -2060,10 +2060,10 @@
 		29C976182A92FBB700515B9E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				29C976192A92FBB700515B9E /* Example31Group101CellModel.m */,
+				29C9761C2A92FBB700515B9E /* Example31Group101SectionModel.h */,
 				29C9761A2A92FBB700515B9E /* Example31Group101SectionModel.m */,
 				29C9761B2A92FBB700515B9E /* Example31Group101CellModel.h */,
-				29C9761C2A92FBB700515B9E /* Example31Group101SectionModel.h */,
+				29C976192A92FBB700515B9E /* Example31Group101CellModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";

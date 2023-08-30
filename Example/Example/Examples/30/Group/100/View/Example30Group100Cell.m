@@ -11,7 +11,11 @@
 @implementation Example30Group100Cell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    return [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+    self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.contentView.backgroundColor = UIColor.systemTealColor;
+    }
+    return self;
 }
 
 - (void)awakeFromNib {

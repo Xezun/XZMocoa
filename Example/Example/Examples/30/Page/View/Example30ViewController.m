@@ -19,6 +19,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"Example 30";
+        self.hidesBottomBarWhenPushed = YES;
     }
     return self;
 }
@@ -34,6 +35,10 @@
     self.viewModel = viewModel;
 
     _tableView = [[XZMocoaTableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
+    _tableView.contentView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.contentView.estimatedRowHeight = 0;
+    _tableView.contentView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
+    _tableView.contentView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
     [self.view addSubview:_tableView];
     
     [viewModel ready];
