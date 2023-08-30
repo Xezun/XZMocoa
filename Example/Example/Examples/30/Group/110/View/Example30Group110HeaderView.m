@@ -20,7 +20,7 @@
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *view = [[UIView alloc] initWithFrame:self.bounds];
-        view.backgroundColor = UIColor.whiteColor;
+        view.backgroundColor = UIColor.systemIndigoColor;
         self.backgroundView = view;
         
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
