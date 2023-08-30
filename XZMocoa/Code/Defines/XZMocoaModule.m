@@ -32,6 +32,8 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 
 @implementation XZMocoaModule
 
+@dynamic viewNibClass;
+
 + (XZMocoaModule *)moduleForURL:(NSURL *)url {
     NSString *host = url.host;
     if (host == nil) {
@@ -92,6 +94,7 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 - (void)setViewNibWithClass:(Class)viewClass {
     [self setViewNibWithClass:viewClass name:NSStringFromClass(viewClass)];
 }
+
 - (void)enumerateSubmodulesUsingBlock:(void (^NS_NOESCAPE)(XZMocoaModule *submodule, XZMocoaKind kind, XZMocoaName name, BOOL *stop))block {
     [_submodules enumerateKeysAndObjectsUsingBlock:^(XZMocoaKind kind, id<XZMocoaModuleNamedSubscripting> namedModules, BOOL *stop1) {
         [namedModules enumerateKeysAndObjectsUsingBlock:^(XZMocoaName name, XZMocoaModule *module, BOOL *stop2) {

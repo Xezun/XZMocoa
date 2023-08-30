@@ -21,7 +21,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = UIColor.whiteColor;
+        self.backgroundColor = UIColor.systemIndigoColor;
         
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
         [self addSubview:_textLabel];

@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Example31ViewModel : XZMocoaViewModel
 
-@property (nonatomic, strong, readonly) XZMocoaCollectionViewModel *tableViewModel;
+@property (nonatomic, strong, readonly) XZMocoaCollectionViewModel *collectionViewModel;
 
 @end
 
