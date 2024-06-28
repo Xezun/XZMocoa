@@ -28,7 +28,7 @@
     self.pageView.userInteractionEnabled = NO;
     [self addGestureRecognizer:self.pageView.scrollView.panGestureRecognizer];
     
-    self.pageView.isLoopable = YES;
+    self.pageView.isLooped = YES;
     self.pageControl.currentIndicatorShape = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 10, 6.0) cornerRadius:3.0];
     
     self.pageView.delegate = self;
@@ -76,7 +76,7 @@
     return reusingView;
 }
 
-- (void)pageView:(XZPageView *)pageView didPageToIndex:(NSInteger)index {
+- (void)pageView:(XZPageView *)pageView didShowPageAtIndex:(NSInteger)index {
     self.pageControl.currentPage = index;
     Example20Group102CellViewModel *viewModel = self.viewModel;
     viewModel.currentIndex = index;
