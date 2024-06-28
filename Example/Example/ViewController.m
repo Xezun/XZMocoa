@@ -24,33 +24,33 @@
     self.dataArray = @[
         @[
             @{
-                @"title": @"10. 普通 MVVM 模块",
+                @"title": @"10. 普通模块",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/10/"]
             }, @{
-                @"title": @"11. 控制器 MVVM 模块",
+                @"title": @"11. 控制器模块",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/11/"]
             }, @{
-                @"title": @"12. 渲染列表简单示例",
+                @"title": @"12. 简单列表",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/12/"]
             }
         ], @[
             @{
-                @"title": @"20. XZMocoaTableView 列表示例",
+                @"title": @"20. TableView 示例",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/"],
             }, @{
-                @"title": @"21. XZMocoaTableView 局部刷新",
+                @"title": @"21. TableView 差异刷新",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/21/"],
                 
             }, @{
-                @"title": @"22. XZMocoaTableView 局部刷新",
+                @"title": @"22. CollectionView 差异刷新",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/22/"]
             }
         ], @[
             @{
-                @"title": @"30. XZMocoaTableView 防崩溃测试",
+                @"title": @"30. TableView 防崩溃测试",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/30/"],
             }, @{
-                @"title": @"31. XZMocoaCollectionView 防崩溃测试",
+                @"title": @"31. CollectionView 防崩溃测试",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/31/"],
             }
         ]

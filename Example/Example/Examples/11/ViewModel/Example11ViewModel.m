@@ -34,7 +34,10 @@
         @"phone": @"13923459876",
         @"address": @"北京市海淀区人民路幸福里小区7号楼6单元503室",
         @"title": @"示例说明",
-        @"content": @"本示例演示了，如何使用 MVVM 设计模式，基于 ViewController 进行业务开发。"
+        @"content": @"本示例演示了，如何使用MVVM设计模式，来设计基于控制器的模块开发流程。\n"
+        "1、控制器作为View和模块入口，它不需要外部参数，自行创建ViewModel处理逻辑，一般情况下，View的ViewModel由View的使用者创建和赋值。\n"
+        "2、ViewModel负责了请求数据和处理数据的逻辑。\n"
+        "3、控制器负责渲染视图，不处理任何业务逻辑。"
     };
     [self.model yy_modelSetWithDictionary:dict];
     
