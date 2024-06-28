@@ -12,7 +12,7 @@ target 'Example' do
   pod 'XZPageView'
   pod 'XZPageControl'
   pod 'XZExtensions'
-  pod 'XZRefreshing'
+  pod 'XZRefresh'
   pod 'XZML'
   
   pod 'SDWebImage'
@@ -20,13 +20,10 @@ target 'Example' do
   
   target 'ExampleTests' do
     inherit! :search_paths
-
-    
   end
 
   target 'ExampleUITests' do
     inherit! :search_paths
-
-    
   end
+  
 end
