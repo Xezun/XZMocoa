@@ -5,10 +5,10 @@
 //  Created by Xezun on 2023/7/23.
 //
 
-#import <XZMocoa/XZMocoaListityViewSectionModel.h>
+#import <XZMocoa/XZMocoaAssembleViewSectionModel.h>
 
 /// UITableView 的 section 层（抽象层）的数据模型。
-@protocol XZMocoaTableViewSectionModel <XZMocoaListityViewSectionModel>
+@protocol XZMocoaTableViewSectionModel <XZMocoaAssembleViewSectionModel>
 @end
 
 /// 因一致性而提供，非必须基类。

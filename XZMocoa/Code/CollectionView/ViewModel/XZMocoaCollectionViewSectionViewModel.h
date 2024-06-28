@@ -5,13 +5,13 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListityViewSectionViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewSectionViewModel.h>
 #import <XZMocoa/XZMocoaCollectionViewCellViewModel.h>
 #import <XZMocoa/XZMocoaCollectionViewSupplementaryViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaCollectionViewSectionViewModel : XZMocoaListityViewSectionViewModel<XZMocoaCollectionViewCellViewModel *>
+@interface XZMocoaCollectionViewSectionViewModel : XZMocoaAssembleViewSectionViewModel<XZMocoaCollectionViewCellViewModel *>
 @property (nonatomic) UIEdgeInsets insets;
 @property (nonatomic) CGFloat minimumLineSpacing;
 @property (nonatomic) CGFloat minimumInteritemSpacing;

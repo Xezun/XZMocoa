@@ -1,31 +1,31 @@
 //
-//  XZMocoaListityViewModel.m
+//  XZMocoaAssembleViewModel.m
 //  XZMocoa
 //
 //  Created by Xezun on 2021/1/23.
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import "XZMocoaListityViewModel.h"
+#import "XZMocoaAssembleViewModel.h"
 #import "XZMocoaDefines.h"
 #import "XZMocoaModule.h"
 @import XZExtensions;
 
-@interface XZMocoaListityViewModel () {
+@interface XZMocoaAssembleViewModel () {
     /// 标记当前是否正处于批量更新过程中，记录了更新前的数据。
-    NSOrderedSet<XZMocoaListityViewSectionViewModel *> *_isPerformingBatchUpdates;
+    NSOrderedSet<XZMocoaAssembleViewSectionViewModel *> *_isPerformingBatchUpdates;
     /// 批量更新时，被延迟的更新。
-    NSMutableArray<XZMocoaListityViewDelayedBatchUpdate> *_delayedBatchUpdates;
+    NSMutableArray<XZMocoaAssembleViewDelayedBatchUpdate> *_delayedBatchUpdates;
     /// 是否需要执行批量更新的差异分析。
     /// @note 在批量更新时，由于同一对象不能重复操作，因此任一独立更新操作被调用时，都会标记此值为NO，以关闭差异分析，避免重复操作。
     BOOL _needsDifferenceBatchUpdates;
     /// 保存所有 section 视图模型。
-    NSMutableOrderedSet<XZMocoaListityViewSectionViewModel *> *_sectionViewModels;
+    NSMutableOrderedSet<XZMocoaAssembleViewSectionViewModel *> *_sectionViewModels;
 }
 
 @end
 
-@implementation XZMocoaListityViewModel
+@implementation XZMocoaAssembleViewModel
 
 - (instancetype)initWithModel:(id)model {
     self = [super initWithModel:model];
@@ -46,7 +46,7 @@
     [_sectionViewModels removeObject:viewModel];
 }
 
-- (NSArray<XZMocoaListityViewSectionViewModel *> *)sectionViewModels {
+- (NSArray<XZMocoaAssembleViewSectionViewModel *> *)sectionViewModels {
     return _sectionViewModels.array;
 }
 
@@ -62,15 +62,15 @@
     return _sectionViewModels[section].numberOfCells;
 }
 
-- (__kindof XZMocoaListityViewSectionViewModel *)sectionViewModelAtIndex:(NSInteger)index {
+- (__kindof XZMocoaAssembleViewSectionViewModel *)sectionViewModelAtIndex:(NSInteger)index {
     return _sectionViewModels[index];
 }
 
-- (__kindof XZMocoaListityViewCellViewModel *)cellViewModelAtIndexPath:(NSIndexPath *)indexPath {
+- (__kindof XZMocoaAssembleViewCellViewModel *)cellViewModelAtIndexPath:(NSIndexPath *)indexPath {
     return [_sectionViewModels[indexPath.section] cellViewModelAtIndex:indexPath.row];
 }
 
-- (NSInteger)indexOfSectionViewModel:(XZMocoaListityViewSectionViewModel *)sectionModel {
+- (NSInteger)indexOfSectionViewModel:(XZMocoaAssembleViewSectionViewModel *)sectionModel {
     return [_sectionViewModels indexOfObject:sectionModel];
 }
 
@@ -79,7 +79,7 @@
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition {
     if ([emition.name isEqualToString:XZMocoaEmitUpdate]) {
         if (self.isPerformingBatchUpdates) {
-            [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+            [_delayedBatchUpdates addObject:^void(XZMocoaAssembleViewModel *self) {
                 [self subViewModel:subViewModel didEmit:emition];
             }];
             return;
@@ -140,7 +140,7 @@
         // 所以需要根据当前位置找到对应元素的原始位置，对原始位置执行 reload 操作。
         NSMutableIndexSet * const oldSections = [NSMutableIndexSet indexSet];
         [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
-            XZMocoaListityViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:idx];
+            XZMocoaAssembleViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:idx];
             NSInteger const oldSection = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
             [oldSections addIndex:oldSection];
             [oldViewModel removeFromSuperViewModel];
@@ -152,10 +152,10 @@
         [self didReloadSectionsAtIndexes:oldSections];
     } else {
         [sections enumerateIndexesUsingBlock:^(NSUInteger const section, BOOL * _Nonnull stop) {
-            XZMocoaListityViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
+            XZMocoaAssembleViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
             [oldViewModel removeFromSuperViewModel];
             
-            XZMocoaListityViewSectionViewModel *newViewModel = [self _loadViewModelForSectionAtIndex:section];
+            XZMocoaAssembleViewSectionViewModel *newViewModel = [self _loadViewModelForSectionAtIndex:section];
             [self _insertSectionViewModel:newViewModel atIndex:section];
         }];
         
@@ -196,7 +196,7 @@
     if (self.isPerformingBatchUpdates) {
         NSMutableIndexSet * const oldSections = [NSMutableIndexSet indexSet];
         [sections enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger section, BOOL *stop) {
-            XZMocoaListityViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
+            XZMocoaAssembleViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
             NSInteger const oldSection   = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
             [oldSections addIndex:oldSection];
             [oldViewModel removeFromSuperViewModel];
@@ -204,7 +204,7 @@
         [self didDeleteSectionsAtIndexes:oldSections];
     } else {
         [sections enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger section, BOOL *stop) {
-            XZMocoaListityViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
+            XZMocoaAssembleViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
             [oldViewModel removeFromSuperViewModel];
         }];
         
@@ -257,7 +257,7 @@
 
 - (void)cleanupBatchUpdates {
     _isPerformingBatchUpdates = nil;
-    for (XZMocoaListityViewDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
+    for (XZMocoaAssembleViewDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
         batchUpdates(self);
     }
     _delayedBatchUpdates = nil;
@@ -351,7 +351,7 @@
     NSArray      * const oldDataModels = [NSMutableArray arrayWithCapacity:oldCount];
     NSOrderedSet * const oldViewModels = _isPerformingBatchUpdates.copy;
     for (NSInteger i = 0; i < oldCount; i++) {
-        XZMocoaListityViewSectionViewModel * const viewModel = oldViewModels[i];
+        XZMocoaAssembleViewSectionViewModel * const viewModel = oldViewModels[i];
         id const dataModel = viewModel.model;
         [(NSMutableArray *)oldDataModels addObject:(dataModel ?: NSNull.null)];
     }
@@ -362,7 +362,7 @@
         return nil;
     }
     
-    id<XZMocoaListityModel> const model = self.model;
+    id<XZMocoaAssembleModel> const model = self.model;
     
     // 获取更新后的数据。
     NSInteger const newCount      = model.numberOfSectionModels;
@@ -397,7 +397,7 @@
 
     // 删除元素，反向遍历：从后面开始删除，不会影响前面的
     [deletes enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger section, BOOL *stop) {
-        XZMocoaListityViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
+        XZMocoaAssembleViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
         [oldViewModel removeFromSuperViewModel];
     }];
     [self didDeleteSectionsAtIndexes:deletes];
@@ -406,7 +406,7 @@
     // 添加元素，正向遍历：按位置记录下新添加的元素，以便在后续排序时，查找该位置上的元素。
     NSMutableDictionary * const insertedViewModels = [NSMutableDictionary dictionaryWithCapacity:inserts.count];
     [inserts enumerateIndexesUsingBlock:^(NSUInteger section, BOOL * _Nonnull stop) {
-        XZMocoaListityViewSectionViewModel * const newViewModel = [self _loadViewModelForSectionAtIndex:section];
+        XZMocoaAssembleViewSectionViewModel * const newViewModel = [self _loadViewModelForSectionAtIndex:section];
         [self _insertSectionViewModel:newViewModel atIndex:section];
         insertedViewModels[@(section)] = newViewModel;
     }];
@@ -423,7 +423,7 @@
             XZLog(@"【调整】%ld -> %ld, %@", (long)index, (long)to, self.sectionDataModels);
         } else if ([remains containsIndex:to]) {
             // to 位置为保持不变的元素，在 old 中找到 viewModel 然后将其移动到 to 位置上。
-            XZMocoaListityViewSectionViewModel *viewModel = oldViewModels[to];
+            XZMocoaAssembleViewSectionViewModel *viewModel = oldViewModels[to];
             NSInteger const index = [self indexOfSectionViewModel:viewModel];
             [self moveSubViewModelAtIndex:index toIndex:to];
             // 执行更新。在数据更新的过程中，由数据引发的更新已经在更新数据时被拦截下来，在这里差异分析时，不会再触发了。
@@ -453,15 +453,15 @@
 #pragma mark - 私有方法
 
 /// 将 viewModel 添加到末尾，并添加为子元素。
-- (void)_addSectionViewModel:(XZMocoaListityViewSectionViewModel *)sectionViewModel {
-    NSParameterAssert([sectionViewModel isKindOfClass:[XZMocoaListityViewSectionViewModel class]]);
+- (void)_addSectionViewModel:(XZMocoaAssembleViewSectionViewModel *)sectionViewModel {
+    NSParameterAssert([sectionViewModel isKindOfClass:[XZMocoaAssembleViewSectionViewModel class]]);
     [_sectionViewModels addObject:sectionViewModel];
     [self addSubViewModel:sectionViewModel];
 }
 
 /// 将 viewModel 插入到 index 位置，并添加为子元素。
-- (void)_insertSectionViewModel:(XZMocoaListityViewSectionViewModel *)sectionViewModel atIndex:(NSInteger)index {
-    NSParameterAssert([sectionViewModel isKindOfClass:[XZMocoaListityViewSectionViewModel class]]);
+- (void)_insertSectionViewModel:(XZMocoaAssembleViewSectionViewModel *)sectionViewModel atIndex:(NSInteger)index {
+    NSParameterAssert([sectionViewModel isKindOfClass:[XZMocoaAssembleViewSectionViewModel class]]);
     [_sectionViewModels insertObject:sectionViewModel atIndex:index];
     [self addSubViewModel:sectionViewModel];
 }
@@ -476,11 +476,11 @@
 
 /// 添加所有 section 元素，需先清理数据。
 - (void)_loadDataWithoutEvents {
-    id<XZMocoaListityModel> const model = self.model;
+    id<XZMocoaAssembleModel> const model = self.model;
     NSInteger const count = model.numberOfSectionModels;
     
     for (NSInteger section = 0; section < count; section++) {
-        XZMocoaListityViewSectionViewModel *viewModel = [self _loadViewModelForSectionAtIndex:section];
+        XZMocoaAssembleViewSectionViewModel *viewModel = [self _loadViewModelForSectionAtIndex:section];
         [self _addSectionViewModel:viewModel];
     }
 }
@@ -505,8 +505,8 @@
     [self didMoveSectionAtIndex:oldSection toIndex:newSection];
 }
 
-- (XZMocoaListityViewSectionViewModel *)_loadViewModelForSectionAtIndex:(NSInteger)index {
-    id<XZMocoaListityViewSectionModel> const model = [self.model modelForSectionAtIndex:index];
+- (XZMocoaAssembleViewSectionViewModel *)_loadViewModelForSectionAtIndex:(NSInteger)index {
+    id<XZMocoaAssembleViewSectionModel> const model = [self.model modelForSectionAtIndex:index];
     XZMocoaName     const name   = model.mocoaName;
     XZMocoaModule * const module = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:name];
     
@@ -524,7 +524,7 @@
         VMClass = [self placeholderViewModelClassForSectionAtIndex:index];
     }
     
-    XZMocoaListityViewSectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
+    XZMocoaAssembleViewSectionViewModel * const viewModel = [[VMClass alloc] initWithModel:model];
     viewModel.module = module;
     viewModel.index  = index;
     return viewModel;
@@ -606,9 +606,9 @@
 @end
 
 
-@implementation XZMocoaListityViewModel (XZMocoaListityViewSectionViewModelDelegate)
+@implementation XZMocoaAssembleViewModel (XZMocoaAssembleViewSectionViewModelDelegate)
 
-- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didReloadData:(void * _Nullable)null {
+- (void)sectionViewModel:(XZMocoaAssembleViewSectionViewModel *)viewModel didReloadData:(void * _Nullable)null {
     NSInteger const index = [self indexOfSectionViewModel:viewModel];
     if (index == NSNotFound) return;
     if (!self.isReady) return;
@@ -617,13 +617,13 @@
         NSIndexSet *indexes = [NSIndexSet indexSetWithIndex:index];
         [self didReloadSectionsAtIndexes:indexes];
     } else {
-        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+        [_delayedBatchUpdates addObject:^void(XZMocoaAssembleViewModel *self) {
             [self sectionViewModel:viewModel didReloadData:null];
         }];
     }
 }
 
-- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didReloadCellsAtIndexes:(NSIndexSet *)rows {
+- (void)sectionViewModel:(XZMocoaAssembleViewSectionViewModel *)viewModel didReloadCellsAtIndexes:(NSIndexSet *)rows {
     NSInteger const index = [self indexOfSectionViewModel:viewModel];
     if (index == NSNotFound) return;
     if (!self.isReady) return;
@@ -634,13 +634,13 @@
         }];
         [self didReloadCellsAtIndexPaths:indexPaths];
     } else {
-        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+        [_delayedBatchUpdates addObject:^void(XZMocoaAssembleViewModel *self) {
             [self sectionViewModel:viewModel didReloadCellsAtIndexes:rows];
         }];
     }
 }
 
-- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didInsertCellsAtIndexes:(NSIndexSet *)rows {
+- (void)sectionViewModel:(XZMocoaAssembleViewSectionViewModel *)viewModel didInsertCellsAtIndexes:(NSIndexSet *)rows {
     NSInteger const index = [self indexOfSectionViewModel:viewModel];
     if (index == NSNotFound) return;
     if (!self.isReady) return;
@@ -651,13 +651,13 @@
         }];
         [self didInsertCellsAtIndexPaths:indexPaths];
     } else {
-        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+        [_delayedBatchUpdates addObject:^void(XZMocoaAssembleViewModel *self) {
             [self sectionViewModel:viewModel didInsertCellsAtIndexes:rows];
         }];
     }
 }
 
-- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didDeleteCellsAtIndexes:(NSIndexSet *)rows {
+- (void)sectionViewModel:(XZMocoaAssembleViewSectionViewModel *)viewModel didDeleteCellsAtIndexes:(NSIndexSet *)rows {
     NSInteger const index = [self indexOfSectionViewModel:viewModel];
     if (index == NSNotFound) return;
     if (!self.isReady) return;
@@ -668,13 +668,13 @@
         }];
         [self didDeleteCellsAtIndexPaths:indexPaths];
     } else {
-        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+        [_delayedBatchUpdates addObject:^void(XZMocoaAssembleViewModel *self) {
             [self sectionViewModel:viewModel didDeleteCellsAtIndexes:rows];
         }];
     }
 }
 
-- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didMoveCellAtIndex:(NSInteger)row toIndex:(NSInteger)newRow {
+- (void)sectionViewModel:(XZMocoaAssembleViewSectionViewModel *)viewModel didMoveCellAtIndex:(NSInteger)row toIndex:(NSInteger)newRow {
     NSInteger const index = [self indexOfSectionViewModel:viewModel];
     if (index == NSNotFound) return;
     if (!self.isReady) return;
@@ -684,13 +684,13 @@
         NSIndexPath *to   = [NSIndexPath indexPathForRow:newRow inSection:index];
         [self didMoveCellAtIndexPath:from toIndexPath:to];
     } else {
-        [_delayedBatchUpdates addObject:^void(XZMocoaListityViewModel *self) {
+        [_delayedBatchUpdates addObject:^void(XZMocoaAssembleViewModel *self) {
             [self sectionViewModel:viewModel didMoveCellAtIndex:row toIndex:newRow];
         }];
     }
 }
 
-- (void)sectionViewModel:(XZMocoaListityViewSectionViewModel *)viewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
+- (void)sectionViewModel:(XZMocoaAssembleViewSectionViewModel *)viewModel didPerformBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL))completion {
     NSInteger const index = [self indexOfSectionViewModel:viewModel];
     if (index == NSNotFound) return;
     

@@ -1,30 +1,30 @@
 //
-//  XZMocoaListityViewSectionViewModel.m
+//  XZMocoaAssembleViewSectionViewModel.m
 //  XZMocoa
 //
 //  Created by Xezun on 2021/1/13.
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import "XZMocoaListityViewSectionViewModel.h"
+#import "XZMocoaAssembleViewSectionViewModel.h"
 #import "XZMocoaDefines.h"
-#import "XZMocoaListityViewModel.h"
+#import "XZMocoaAssembleViewModel.h"
 @import XZExtensions;
 
-@interface XZMocoaListityViewSectionViewModel () {
+@interface XZMocoaAssembleViewSectionViewModel () {
     /// 非 nil 时，表示当前正在批量更新。
     NSOrderedSet *_isPerformingBatchUpdates;
-    NSMutableArray<void (^)(XZMocoaListityViewSectionViewModel *self)> *_delayedBatchUpdates;
+    NSMutableArray<void (^)(XZMocoaAssembleViewSectionViewModel *self)> *_delayedBatchUpdates;
     /// 是否需要执行批量更新的差异分析。
     /// @note 在批量更新时，任一更新操作被调用，都会标记此值为 NO
     BOOL _needsDifferenceBatchUpdates;
     /// 记录 cell 视图模型的数组。
-    NSMutableOrderedSet<XZMocoaListityViewCellViewModel *> *_cellViewModels;
+    NSMutableOrderedSet<XZMocoaAssembleViewCellViewModel *> *_cellViewModels;
     NSMutableDictionary<XZMocoaKind, NSMutableArray<XZMocoaViewModel *> *> *_supplementaryViewModels;
 }
 @end
 
-@implementation XZMocoaListityViewSectionViewModel
+@implementation XZMocoaAssembleViewSectionViewModel
 
 @dynamic model, superViewModel;
 
@@ -68,14 +68,14 @@
     if ([emition.name isEqualToString:XZMocoaEmitUpdate]) {
         // 正在批量更新，事件被延迟
         if (self.isPerformingBatchUpdates) {
-            [_delayedBatchUpdates addObject:^void(XZMocoaListityViewSectionViewModel *self) {
+            [_delayedBatchUpdates addObject:^void(XZMocoaAssembleViewSectionViewModel *self) {
                 [self subViewModel:subViewModel didEmit:emition];
             }];
             return;
         }
         // 附加视图更新事件
         for (NSString *key in _supplementaryViewModels) {
-            for (XZMocoaListityViewSupplementaryViewModel *vm in _supplementaryViewModels[key]) {
+            for (XZMocoaAssembleViewSupplementaryViewModel *vm in _supplementaryViewModels[key]) {
                 if (subViewModel == vm) {
                     return [self didReloadData];
                 }
@@ -112,11 +112,11 @@
     return _cellViewModels.count;
 }
 
-- (__kindof XZMocoaListityViewCellViewModel *)cellViewModelAtIndex:(NSInteger)index {
+- (__kindof XZMocoaAssembleViewCellViewModel *)cellViewModelAtIndex:(NSInteger)index {
     return [_cellViewModels objectAtIndex:index];
 }
 
-- (NSInteger)indexOfCellViewModel:(XZMocoaListityViewCellViewModel *)cellModel {
+- (NSInteger)indexOfCellViewModel:(XZMocoaAssembleViewCellViewModel *)cellModel {
     return [_cellViewModels indexOfObject:cellModel];
 }
 
@@ -170,7 +170,7 @@
     if (self.isPerformingBatchUpdates) {
         NSMutableIndexSet * const oldRows = [NSMutableIndexSet indexSet];
         [rows enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityViewCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
+            XZMocoaAssembleViewCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
             NSInteger const oldRow = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
             [oldRows addIndex:oldRow];
             [oldViewModel removeFromSuperViewModel];
@@ -181,7 +181,7 @@
         [self didReloadCellsAtIndexes:oldRows];
     } else {
         [rows enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityViewCellViewModel * const oldViewModel = _cellViewModels[row];
+            XZMocoaAssembleViewCellViewModel * const oldViewModel = _cellViewModels[row];
             [oldViewModel removeFromSuperViewModel]; // 由 -didRemoveSubViewModel: 执行清理
             
             id const newViewModel = [self _loadViewModelForCellAtIndex:row];
@@ -224,7 +224,7 @@
     if (self.isPerformingBatchUpdates) {
         NSMutableIndexSet * const oldRows = [NSMutableIndexSet indexSet];
         [rows enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityViewCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
+            XZMocoaAssembleViewCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
             NSInteger const oldRow = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
             [oldRows addIndex:oldRow];
             
@@ -233,7 +233,7 @@
         [self didDeleteCellsAtIndexes:oldRows];
     } else {
         [rows enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityViewCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
+            XZMocoaAssembleViewCellViewModel * const oldViewModel = [self cellViewModelAtIndex:row];
             [oldViewModel removeFromSuperViewModel];
         }];
         [self didDeleteCellsAtIndexes:rows];
@@ -316,7 +316,7 @@
 - (void)cleanupBatchUpdates {
     _isPerformingBatchUpdates = nil;
     
-    for (XZMocoaListityViewDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
+    for (XZMocoaAssembleViewDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
         batchUpdates(self);
     }
     _delayedBatchUpdates = nil;
@@ -358,7 +358,7 @@
     }
     _needsDifferenceBatchUpdates = NO;
     
-    id<XZMocoaListityViewSectionModel> const model = self.model;
+    id<XZMocoaAssembleViewSectionModel> const model = self.model;
     
     BOOL needsUpdateAll = NO;
     for (XZMocoaKind const kind in self.superViewModel.supportedSupplementaryKinds) {
@@ -378,7 +378,7 @@
     NSArray      * const oldDataModels = [NSMutableArray arrayWithCapacity:oldCount];
     NSOrderedSet * const oldViewModels = _isPerformingBatchUpdates.copy;
     for (NSInteger i = 0; i < oldCount; i++) {
-        XZMocoaListityViewCellViewModel * const viewModel = oldViewModels[i];
+        XZMocoaAssembleViewCellViewModel * const viewModel = oldViewModels[i];
         
         id dataModel = viewModel.model;
         if (dataModel == nil) {
@@ -447,7 +447,7 @@
         
         NSMutableDictionary *newViewModels = [NSMutableDictionary dictionaryWithCapacity:inserts.count];
         [inserts enumerateIndexesUsingBlock:^(NSUInteger row, BOOL * _Nonnull stop) {
-            XZMocoaListityViewCellViewModel * const newViewModel = [self _loadViewModelForCellAtIndex:row];
+            XZMocoaAssembleViewCellViewModel * const newViewModel = [self _loadViewModelForCellAtIndex:row];
             [self _insertCellViewModel:newViewModel atIndex:row];
             newViewModels[@(row)] = newViewModel;
         }];
@@ -484,12 +484,12 @@
 
 #pragma mark - 私有方法
 
-- (void)_addCellViewModel:(XZMocoaListityViewCellViewModel *)cellViewModel {
+- (void)_addCellViewModel:(XZMocoaAssembleViewCellViewModel *)cellViewModel {
     [_cellViewModels addObject:cellViewModel];
     [self addSubViewModel:cellViewModel];
 }
 
-- (void)_insertCellViewModel:(XZMocoaListityViewCellViewModel *)cellViewModel atIndex:(NSInteger)index {
+- (void)_insertCellViewModel:(XZMocoaAssembleViewCellViewModel *)cellViewModel atIndex:(NSInteger)index {
     [_cellViewModels insertObject:cellViewModel atIndex:index];
     [self addSubViewModel:cellViewModel];
 }
@@ -504,12 +504,12 @@
 - (void)_loadDataWithoutEvents {
     NSAssert(_supplementaryViewModels.count == 0 && _cellViewModels.count == 0, @"调用此方法前要清除现有的数据");
     
-    id<XZMocoaListityViewSectionModel> const model = self.model;
+    id<XZMocoaAssembleViewSectionModel> const model = self.model;
     
     for (XZMocoaKind kind in self.superViewModel.supportedSupplementaryKinds) {
         NSInteger const count = [model numberOfModelsForSupplementaryKind:kind];
         for (NSInteger index = 0; index < count; index++) {
-            XZMocoaListityViewSupplementaryViewModel *vm = [self _loadViewModelForSupplementaryKind:kind atIndex:index];
+            XZMocoaAssembleViewSupplementaryViewModel *vm = [self _loadViewModelForSupplementaryKind:kind atIndex:index];
             if (vm) {
                 if (_supplementaryViewModels[kind]) {
                     [_supplementaryViewModels[kind] addObject:vm];
@@ -523,7 +523,7 @@
     
     NSInteger const count = model.numberOfCellModels;
     for (NSInteger index = 0; index < count; index++) {
-        XZMocoaListityViewCellViewModel *viewModel = [self _loadViewModelForCellAtIndex:index];
+        XZMocoaAssembleViewCellViewModel *viewModel = [self _loadViewModelForCellAtIndex:index];
         [self _addCellViewModel:viewModel];
     }
 }
@@ -546,7 +546,7 @@
     [self didMoveCellAtIndex:oldRow toIndex:newRow];
 }
 
-- (XZMocoaListityViewCellViewModel *)_loadViewModelForCellAtIndex:(NSInteger)index {
+- (XZMocoaAssembleViewCellViewModel *)_loadViewModelForCellAtIndex:(NSInteger)index {
     XZMocoaName     const section = self.model.mocoaName;
     id<XZMocoaModel> const model  = [self.model modelForCellAtIndex:index];
     XZMocoaName      const name   = model.mocoaName;
@@ -587,14 +587,14 @@
         identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, XZMocoaKindCell, XZMocoaNamePlaceholder);
     }
     
-    XZMocoaListityViewCellViewModel *viewModel = [[VMClass alloc] initWithModel:model];
+    XZMocoaAssembleViewCellViewModel *viewModel = [[VMClass alloc] initWithModel:model];
     viewModel.identifier = identifier;
     viewModel.index      = index;
     viewModel.module     = module;
     return viewModel;
 }
 
-- (XZMocoaListityViewSupplementaryViewModel *)_loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
+- (XZMocoaAssembleViewSupplementaryViewModel *)_loadViewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index {
     id<XZMocoaModel> const model = [self.model modelForSupplementaryKind:kind atIndex:index];
     
     if (model == nil) {
@@ -640,7 +640,7 @@
         identifier = XZMocoaReuseIdentifier(XZMocoaNamePlaceholder, kind, XZMocoaNamePlaceholder);
     }
     
-    XZMocoaListityViewSupplementaryViewModel *viewModel = [[VMClass alloc] initWithModel:model];
+    XZMocoaAssembleViewSupplementaryViewModel *viewModel = [[VMClass alloc] initWithModel:model];
     viewModel.index      = index;
     viewModel.module     = module;
     viewModel.identifier = identifier;

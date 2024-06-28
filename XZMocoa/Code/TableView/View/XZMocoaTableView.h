@@ -6,7 +6,7 @@
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import <XZMocoa/XZMocoaListityView.h>
+#import <XZMocoa/XZMocoaAssembleView.h>
 #import <XZMocoa/XZMocoaTableViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// 对 UITableView 进行了封装，以支持 MVVM 设计模式。
-@interface XZMocoaTableView : XZMocoaListityView
+@interface XZMocoaTableView : XZMocoaAssembleView
 
 @property (nonatomic, strong, nullable) __kindof XZMocoaTableViewModel *viewModel;
 

@@ -5,12 +5,12 @@
 //  Created by Xezun on 2023/7/24.
 //
 
-#import <XZMocoa/XZMocoaListityView.h>
+#import <XZMocoa/XZMocoaAssembleView.h>
 #import <XZMocoa/XZMocoaCollectionViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaCollectionView : XZMocoaListityView
+@interface XZMocoaCollectionView : XZMocoaAssembleView
 @property (nonatomic, strong, nullable) __kindof XZMocoaCollectionViewModel *viewModel;
 @property (nonatomic, strong) IBOutlet UICollectionView *contentView;
 - (instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;

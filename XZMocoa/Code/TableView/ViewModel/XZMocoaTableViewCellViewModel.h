@@ -5,14 +5,14 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListityViewCellViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewCellViewModel.h>
 
 @class XZMocoaTableView;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// UITableViewCell 视图模型基类。
-@interface XZMocoaTableViewCellViewModel : XZMocoaListityViewCellViewModel
+@interface XZMocoaTableViewCellViewModel : XZMocoaAssembleViewCellViewModel
 
 /// 视图高度。
 @property (nonatomic) CGFloat height;

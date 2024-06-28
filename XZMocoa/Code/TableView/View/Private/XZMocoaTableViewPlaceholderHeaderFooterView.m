@@ -7,17 +7,17 @@
 
 #import "XZMocoaTableViewPlaceholderHeaderFooterView.h"
 #import "XZMocoaTableViewSectionViewModel.h"
-#import "XZMocoaListityPlaceholderView.h"
+#import "XZMocoaAssemblePlaceholderView.h"
 
 #if DEBUG
 @implementation XZMocoaTableViewPlaceholderHeaderFooterView {
-    XZMocoaListityPlaceholderView *_view;
+    XZMocoaAssemblePlaceholderView *_view;
 }
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-        _view = [[XZMocoaListityPlaceholderView alloc] initWithFrame:self.bounds];
+        _view = [[XZMocoaAssemblePlaceholderView alloc] initWithFrame:self.bounds];
         _view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.contentView addSubview:_view];
     }
@@ -25,7 +25,7 @@
 }
 
 - (void)viewModelDidChange {
-    XZMocoaListityPlaceholderViewModel *viewModel = [[XZMocoaListityPlaceholderViewModel alloc] initWithModel:self.viewModel];
+    XZMocoaAssemblePlaceholderViewModel *viewModel = [[XZMocoaAssemblePlaceholderViewModel alloc] initWithModel:self.viewModel];
     [viewModel ready];
     _view.viewModel = viewModel;
 }

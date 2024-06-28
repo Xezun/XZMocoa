@@ -5,10 +5,10 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListityModel.h>
+#import <XZMocoa/XZMocoaAssembleModel.h>
 
 /// UITableView 的数据模型。
-@protocol XZMocoaTableModel <XZMocoaListityModel>
+@protocol XZMocoaTableModel <XZMocoaAssembleModel>
 @end
 
 /// 因一致性而提供，非必须基类。

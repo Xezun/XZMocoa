@@ -1,5 +1,5 @@
 //
-//  XZMocoaListityViewSectionViewModel.h
+//  XZMocoaAssembleViewSectionViewModel.h
 //  XZMocoa
 //
 //  Created by Xezun on 2021/1/13.
@@ -7,25 +7,25 @@
 //
 
 #import <XZMocoa/XZMocoaViewModel.h>
-#import <XZMocoa/XZMocoaListityViewBatchUpdatable.h>
-#import <XZMocoa/XZMocoaListityViewSectionModel.h>
-#import <XZMocoa/XZMocoaListityViewSupplementaryViewModel.h>
-#import <XZMocoa/XZMocoaListityViewCellViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewBatchUpdatable.h>
+#import <XZMocoa/XZMocoaAssembleViewSectionModel.h>
+#import <XZMocoa/XZMocoaAssembleViewSupplementaryViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewCellViewModel.h>
 
-@class XZMocoaListityViewModel;
+@class XZMocoaAssembleViewModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaListityViewSectionViewModel<__covariant CellViewModelType: XZMocoaListityViewCellViewModel *> : XZMocoaViewModel <XZMocoaListityViewBatchUpdatable>
+@interface XZMocoaAssembleViewSectionViewModel<__covariant CellViewModelType: XZMocoaAssembleViewCellViewModel *> : XZMocoaViewModel <XZMocoaAssembleViewBatchUpdatable>
 
-@property (nonatomic, strong, readonly, nullable) id<XZMocoaListityViewSectionModel> model;
-@property (nonatomic, readonly, nullable) __kindof XZMocoaListityViewModel *superViewModel;
+@property (nonatomic, strong, readonly, nullable) id<XZMocoaAssembleViewSectionModel> model;
+@property (nonatomic, readonly, nullable) __kindof XZMocoaAssembleViewModel *superViewModel;
 
 /// 接收来自下级的 XZMocoaEmitUpdate 事件，并刷新视图，如果在批量更新的过程中，视图刷新可能会延迟。
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition;
 
 /// 所有 cell 视图模型。这是一个计算属性，除非遍历所有 cell 对象，请尽量避免直接使用。
-- (nullable __kindof XZMocoaListityViewSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
+- (nullable __kindof XZMocoaAssembleViewSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 /// 直接返回了内部对象，外部请勿修改，使用请自行 copy 。
 @property (nonatomic, readonly) NSDictionary<XZMocoaKind, NSArray<XZMocoaViewModel *> *> *supplementaryViewModels;
 

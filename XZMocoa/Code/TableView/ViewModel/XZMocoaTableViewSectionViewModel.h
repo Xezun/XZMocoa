@@ -5,13 +5,13 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListityViewSectionViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewSectionViewModel.h>
 #import <XZMocoa/XZMocoaTableViewCellViewModel.h>
 #import <XZMocoa/XZMocoaTableViewHeaderFooterViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaTableViewSectionViewModel : XZMocoaListityViewSectionViewModel<XZMocoaTableViewCellViewModel *>
+@interface XZMocoaTableViewSectionViewModel : XZMocoaAssembleViewSectionViewModel<XZMocoaTableViewCellViewModel *>
 
 @property (nonatomic, readonly, nullable) XZMocoaTableViewHeaderFooterViewModel *headerViewModel;
 @property (nonatomic, readonly, nullable) XZMocoaTableViewHeaderFooterViewModel *footerViewModel;

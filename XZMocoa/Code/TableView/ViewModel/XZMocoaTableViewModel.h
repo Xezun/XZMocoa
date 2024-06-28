@@ -5,7 +5,7 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListityViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewModel.h>
 #import <XZMocoa/XZMocoaTableViewSectionViewModel.h>
 #import <XZMocoa/XZMocoaTableViewHeaderFooterViewModel.h>
 #import <XZMocoa/XZMocoaTableViewCellViewModel.h>
@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class XZMocoaTableViewModel;
-@protocol XZMocoaTableViewModelDelegate <XZMocoaListityViewModelDelegate>
+@protocol XZMocoaTableViewModelDelegate <XZMocoaAssembleViewModelDelegate>
 
 @required
 - (void)tableViewModel:(XZMocoaTableViewModel *)tableViewModel didReloadData:(void * _Nullable)null;
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface XZMocoaTableViewModel : XZMocoaListityViewModel<XZMocoaTableViewCellViewModel *, XZMocoaTableViewSectionViewModel *>
+@interface XZMocoaTableViewModel : XZMocoaAssembleViewModel<XZMocoaTableViewCellViewModel *, XZMocoaTableViewSectionViewModel *>
 
 /// 在进行批量更新或局部更新时，视图更新的动画效果，默认为 UITableViewRowAnimationAutomatic 自动选择合适的动画效果。
 @property (nonatomic) UITableViewRowAnimation rowAnimation;

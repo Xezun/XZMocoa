@@ -1,5 +1,5 @@
 //
-//  XZMocoaListityPlaceholderView.h
+//  XZMocoaAssemblePlaceholderView.h
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/28.
@@ -12,12 +12,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #if DEBUG
-@interface XZMocoaListityPlaceholderViewModel : XZMocoaViewModel
+@interface XZMocoaAssemblePlaceholderViewModel : XZMocoaViewModel
 @property (nonatomic, copy) NSString *reason;
 @property (nonatomic, copy) NSString *detail;
 @end
 
-@interface XZMocoaListityPlaceholderView : UIView <XZMocoaView>
+@interface XZMocoaAssemblePlaceholderView : UIView <XZMocoaView>
 @end
 #endif
 

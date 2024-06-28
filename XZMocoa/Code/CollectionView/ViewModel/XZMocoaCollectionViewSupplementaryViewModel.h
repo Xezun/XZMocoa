@@ -5,13 +5,13 @@
 //  Created by Xezun on 2023/8/9.
 //
 
-#import <XZMocoa/XZMocoaListityViewSupplementaryViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewSupplementaryViewModel.h>
 
 @class XZMocoaCollectionView;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaCollectionViewSupplementaryViewModel : XZMocoaListityViewSupplementaryViewModel
+@interface XZMocoaCollectionViewSupplementaryViewModel : XZMocoaAssembleViewSupplementaryViewModel
 
 @property (nonatomic) CGSize size;
 

@@ -29,7 +29,7 @@
     return 1;
 }
 
-- (id<XZMocoaListityViewSectionModel>)modelForSectionAtIndex:(NSInteger)index {
+- (id<XZMocoaAssembleViewSectionModel>)modelForSectionAtIndex:(NSInteger)index {
     return self;
 }
 

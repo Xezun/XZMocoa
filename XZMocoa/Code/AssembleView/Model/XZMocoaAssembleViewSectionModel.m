@@ -1,16 +1,16 @@
 //
-//  XZMocoaListityViewSectionModel.m
+//  XZMocoaAssembleViewSectionModel.m
 //  XZMocoa
 //
 //  Created by Xezun on 2021/8/21.
 //
 
-#import "XZMocoaListityViewSectionModel.h"
+#import "XZMocoaAssembleViewSectionModel.h"
 
-@interface NSObject (XZMocoaListityViewSectionModel) <XZMocoaListityViewSectionModel>
+@interface NSObject (XZMocoaAssembleViewSectionModel) <XZMocoaAssembleViewSectionModel>
 @end
 
-@implementation NSObject (XZMocoaListityViewSectionModel)
+@implementation NSObject (XZMocoaAssembleViewSectionModel)
 
 - (NSInteger)numberOfCellModels {
     return 1;
@@ -47,10 +47,10 @@
 @end
 
 
-@interface NSArray (XZMocoaListityViewSectionModel)
+@interface NSArray (XZMocoaAssembleViewSectionModel)
 @end
 
-@implementation NSArray (XZMocoaListityViewSectionModel)
+@implementation NSArray (XZMocoaAssembleViewSectionModel)
 
 - (NSInteger)numberOfCellModels {
     return self.count;

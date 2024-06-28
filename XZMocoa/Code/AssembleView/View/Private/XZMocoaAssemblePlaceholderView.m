@@ -1,15 +1,15 @@
 //
-//  XZMocoaListityPlaceholderView.m
+//  XZMocoaAssemblePlaceholderView.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/8/28.
 //
 
-#import "XZMocoaListityPlaceholderView.h"
-#import "XZMocoaListityViewSectionViewModel.h"
+#import "XZMocoaAssemblePlaceholderView.h"
+#import "XZMocoaAssembleViewSectionViewModel.h"
 
 #if DEBUG
-@implementation XZMocoaListityPlaceholderView {
+@implementation XZMocoaAssemblePlaceholderView {
     UILabel *_reasonLabel;
     UILabel *_detailLabel;
     UIView *_detailBackgroundView;
@@ -76,7 +76,7 @@
 }
 
 - (void)viewModelDidChange {
-    XZMocoaListityPlaceholderViewModel *viewModel = self.viewModel;
+    XZMocoaAssemblePlaceholderViewModel *viewModel = self.viewModel;
     _reasonLabel.text = viewModel.reason;
     
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
@@ -102,13 +102,13 @@
 
 @end
 
-@implementation XZMocoaListityPlaceholderViewModel
+@implementation XZMocoaAssemblePlaceholderViewModel
 
 - (void)prepare {
     [super prepare];
     
     XZMocoaViewModel * const viewModel = self.model;
-    XZMocoaListityViewSectionViewModel * const superViewModel = viewModel.superViewModel;
+    XZMocoaAssembleViewSectionViewModel * const superViewModel = viewModel.superViewModel;
     
     _reason = [self reasonByCheckingModule:viewModel.module];
     

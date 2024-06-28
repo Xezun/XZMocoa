@@ -1,20 +1,20 @@
 //
-//  XZMocoaListityViewCellViewModel.m
+//  XZMocoaAssembleViewCellViewModel.m
 //  XZMocoa
 //
 //  Created by Xezun on 2021/1/13.
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import "XZMocoaListityViewCellViewModel.h"
+#import "XZMocoaAssembleViewCellViewModel.h"
 #import "XZMocoaDefines.h"
 #import "XZMocoaModule.h"
-#import "XZMocoaListityViewSectionViewModel.h"
+#import "XZMocoaAssembleViewSectionViewModel.h"
 
-@interface XZMocoaListityViewCellViewModel ()
+@interface XZMocoaAssembleViewCellViewModel ()
 @end
 
-@implementation XZMocoaListityViewCellViewModel
+@implementation XZMocoaAssembleViewCellViewModel
 
 - (instancetype)initWithModel:(NSObject<NSObject> *)model {
     self = [super initWithModel:model];

@@ -1,17 +1,17 @@
 //
-//  XZMocoaListityView.m
+//  XZMocoaAssembleView.m
 //  XZMocoa
 //
 //  Created by Xezun on 2023/7/22.
 //
 
-#import "XZMocoaListityView.h"
+#import "XZMocoaAssembleView.h"
 
-@implementation XZMocoaListityView
+@implementation XZMocoaAssembleView
 
 #pragma mark - 属性
 
-- (void)setViewModel:(__kindof XZMocoaListityViewModel *)viewModel {
+- (void)setViewModel:(__kindof XZMocoaAssembleViewModel *)viewModel {
     if (_viewModel != viewModel) {
         [self viewModelWillChange];
         // [_viewModel ready];
@@ -21,13 +21,13 @@
 }
 
 - (void)viewModelWillChange {
-    XZMocoaListityViewModel * const viewModel = self.viewModel;
+    XZMocoaAssembleViewModel * const viewModel = self.viewModel;
     [self unregisterModule:viewModel.module];
     viewModel.delegate = nil;
 }
 
 - (void)viewModelDidChange {
-    XZMocoaListityViewModel * const viewModel = self.viewModel;
+    XZMocoaAssembleViewModel * const viewModel = self.viewModel;
     [self registerModule:viewModel.module];
     viewModel.delegate = self;
 }

@@ -5,14 +5,14 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListityViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewModel.h>
 #import <XZMocoa/XZMocoaCollectionViewCellViewModel.h>
 #import <XZMocoa/XZMocoaCollectionViewSectionViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class XZMocoaCollectionViewModel;
-@protocol XZMocoaCollectionViewModelDelegate <XZMocoaListityViewModelDelegate>
+@protocol XZMocoaCollectionViewModelDelegate <XZMocoaAssembleViewModelDelegate>
 
 @required
 - (void)collectionViewModel:(XZMocoaCollectionViewModel *)collectionViewModel didReloadData:(void * _Nullable)null;
@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface XZMocoaCollectionViewModel : XZMocoaListityViewModel <XZMocoaCollectionViewCellViewModel *, XZMocoaCollectionViewSectionViewModel *>
+@interface XZMocoaCollectionViewModel : XZMocoaAssembleViewModel <XZMocoaCollectionViewCellViewModel *, XZMocoaCollectionViewSectionViewModel *>
 @property (nonatomic, weak) id<XZMocoaCollectionViewModelDelegate> delegate;
 @end
 

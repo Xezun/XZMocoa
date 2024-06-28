@@ -15,15 +15,15 @@
 #import <XZMocoa/XZMocoaView.h>
 #import <XZMocoa/XZMocoaViewModel.h>
 
-// ListityView
-#import <XZMocoa/XZMocoaListityModel.h>
-#import <XZMocoa/XZMocoaListityViewSectionModel.h>
-#import <XZMocoa/XZMocoaListityView.h>
-#import <XZMocoa/XZMocoaListityViewBatchUpdatable.h>
-#import <XZMocoa/XZMocoaListityViewCellViewModel.h>
-#import <XZMocoa/XZMocoaListityViewSupplementaryViewModel.h>
-#import <XZMocoa/XZMocoaListityViewSectionViewModel.h>
-#import <XZMocoa/XZMocoaListityViewModel.h>
+// AssembleView
+#import <XZMocoa/XZMocoaAssembleModel.h>
+#import <XZMocoa/XZMocoaAssembleViewSectionModel.h>
+#import <XZMocoa/XZMocoaAssembleView.h>
+#import <XZMocoa/XZMocoaAssembleViewBatchUpdatable.h>
+#import <XZMocoa/XZMocoaAssembleViewCellViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewSupplementaryViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewSectionViewModel.h>
+#import <XZMocoa/XZMocoaAssembleViewModel.h>
 
 // TableView
 #import <XZMocoa/XZMocoaTableModel.h>

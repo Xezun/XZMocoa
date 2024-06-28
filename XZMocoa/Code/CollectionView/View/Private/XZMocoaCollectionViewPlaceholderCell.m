@@ -6,19 +6,19 @@
 //
 
 #import "XZMocoaCollectionViewPlaceholderCell.h"
-#import "XZMocoaListityPlaceholderView.h"
+#import "XZMocoaAssemblePlaceholderView.h"
 #import "XZMocoaCollectionViewSectionViewModel.h"
 #import "XZMocoaCollectionView.h"
 
 #if DEBUG
 @implementation XZMocoaCollectionViewPlaceholderCell {
-    XZMocoaListityPlaceholderView *_view;
+    XZMocoaAssemblePlaceholderView *_view;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        _view = [[XZMocoaListityPlaceholderView alloc] initWithFrame:self.bounds];
+        _view = [[XZMocoaAssemblePlaceholderView alloc] initWithFrame:self.bounds];
         _view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.contentView addSubview:_view];
     }
@@ -26,7 +26,7 @@
 }
 
 - (void)viewModelDidChange {
-    XZMocoaListityPlaceholderViewModel *viewModel = [[XZMocoaListityPlaceholderViewModel alloc] initWithModel:self.viewModel];
+    XZMocoaAssemblePlaceholderViewModel *viewModel = [[XZMocoaAssemblePlaceholderViewModel alloc] initWithModel:self.viewModel];
     [viewModel ready];
     _view.viewModel = viewModel;
 }
