@@ -35,14 +35,14 @@
             }
         ], @[
             @{
-                @"title": @"20. TableView 示例",
+                @"title": @"20. TableView 展示",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/"],
             }, @{
-                @"title": @"21. TableView 差异刷新",
+                @"title": @"21. TableView 差异分析与局部刷新",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/21/"],
                 
             }, @{
-                @"title": @"22. CollectionView 差异刷新",
+                @"title": @"22. CollectionView 差异分析与局部刷新",
                 @"url": [NSURL URLWithString:@"https://mocoa.xezun.com/examples/22/"]
             }
         ], @[
