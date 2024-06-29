@@ -6,6 +6,8 @@
 [![License](https://img.shields.io/cocoapods/l/XZMocoa.svg?style=flat)](https://cocoapods.org/pods/XZMocoa)
 [![Platform](https://img.shields.io/cocoapods/p/XZMocoa.svg?style=flat)](https://cocoapods.org/pods/XZMocoa)
 
+XZMocoa 是基于 Cocoa 框架设计的一款 MVVM 设计模式的基础框架，完全 Apple 风格的代码风格，可无缝接入到任意项目中。
+
 ## 示例项目
 
 要运行示例工程，请在拉取代码后，先在`Pods`目录下执行`pod install`命令。
@@ -28,15 +30,20 @@ pod 'XZMocoa'
 
 ## 如何使用
 
-下面以 iOS 开发中的常用的`UITableView`组件为例，介绍如何使用 Mocoa 进行开发。
+下面以 iOS 开发中的常用的`UITableView`组件为例，介绍如何使用 XZMocoa 进行开发。
 
-> 由于原生`UITableView`原为 MVC 设计，在 MVVM 设计模式中使用时，需要进行一点小小的改造，因此 Mocoa 将其封装为`XZMocoaTableView`组件。但是封装过程，除接管了`delegate`和`dataSource`外，Mocoa 对`UITableView`本身未做任何处理，可以理解为将其简单地包装在`UIView`中。
+由于原生`UITableView`原为 MVC 设计，在使用 MVVM 设计模式时，我们需要使用适配版本，即`XZMocoaTableView`。
+
+不过，需要注意的是，并不是不能直接使用`UITableView`，而是直接使用需要自行处理`dataSource`，而这一般是每次使用`UITableView`都会重复的代码。
+所以XZMocoa直接将这部分重复的逻辑封装起来，即`XZMocoaTableView`仅接管了`delegate`和`dataSource`代理，未对`UITableView`做任何其它处理。
 
 ##### 1、设计数据
 
-合理的数据结构，会大大的简化数据处理的过程，但实际开发过程中，数据可能并非总是我们期望的样子。因此，为了让所有列表数据都能够在`XZMocoaTableView`中使用，Mocoa 设计了`XZMocoaTableModel`和`XZMocoaTableViewSectionModel`协议，任何数据只要实现这两个协议，就在`XZMocoaTableView`中使用。
+合理的数据结构，会大大的简化数据处理的过程，但实际开发过程中，数据可能并非总是我们期望的样子。
+因此，为了让所有列表数据都能够在`XZMocoaTableView`中使用，XZMocoa设计了`XZMocoaTableModel`和`XZMocoaTableViewSectionModel`协议，来规范作为`XZMocoaTableView`数据的基本格式。而且任何数据只要实现这两个协议，就在`XZMocoaTableView`中使用。
 
-> 协议只是规范，并非强制要求。实际上所有数据都可以作为`XZMocoaTableView`的数据，但是如果不实现协议的话，代码可能不会按期望的方式运行。
+> 协议只是规范，并非强制要求。
+> 实际上，所有数据也都可以作为`XZMocoaTableView`的数据，但是如果不实现协议的话，XZMocoa不会对数据进行`section` 或`cell`的区分，实际效果就可能并非预期效果。
 
 ```objc
 @protocol XZMocoaTableModel <XZMocoaModel>
@@ -53,13 +60,17 @@ pod 'XZMocoa'
 @end
 ```
 
-严格来讲，数据不应该承担业务逻辑，但是很明显，这两个协议只是为了统一获取`UITableView`列表数据的方式，可以算也可以不算是业务逻辑，将有关于数据的标准，交由数据自身处理，维护起来也更方便。
+严格来讲，数据不应该承担业务逻辑。
 
-> Mocoa 会自动使用数组`NSArray`的中元素，而非数组本身；如果是二维数组，一维元素作为`section`数据，二维元素作为`cell`数据。
+但是一般情况下，数据的结构，与数据类型是紧密相关的，即它们是一对一的关系，将它们一起处理，维护起来也是最方便的。
+
+上述这两个协议，其实本质就是XZMocoa获取数据结构的一种方式而已，并非限定了数据的格式，通常情况下，可以在Category中实现这个协议，而不必影响数据本身。
+
+> 数组天然是符合`XZMocoaTableView`规范的数据，即数组一维中的元素，会作为`section`数据，数组二维中的元素，会作为`cell`数据。
 
 ##### 2、创建列表
 
-`XZMocoaTableView`是标准的 Mocoa 模块，可以通过`URL`的方式加载（参见“模块化”部分），也可以直接使用。
+`XZMocoaTableView`是标准的 XZMocoa 模块，可以直接使用，可以通过`URL`的方式加载（参见“模块化”部分）。
 
 ```objc
 // model, replace it with real data
@@ -74,13 +85,14 @@ tableView.viewModel = tableViewModel;
 [self.view addSubview:tableView];
 ```
 
-虽然目前我们并没有创建`cell`，但是仅仅需要上面这些代码，就可以渲染列表了，因为 Mocoa 会使用`PlaceholderCell`占位渲染，这可以帮我们提前验证数据基本格式问题，并解决原生组件关于`dataSource`的各种崩溃问题。
+虽然目前我们并没有创建`cell`，但是仅仅需要上面这些代码，就可以渲染列表了，因为XZMocoa会使用`PlaceholderCell`占位渲染。
+这可以帮我们提前验证数据基本格式问题，并解决原生组件关于`dataSource`的各种崩溃问题。
 
 > `PlaceholderCell`仅在`DEBUG`环境下显示，在`Release`环境下会自动隐藏。
 
 ##### 3、开发`cell`模块
 
-使用 Mocoa 你可以将每一个`cell`都看作是完全独立的模块进行开发，然后注册到相应的`tableView`模块中即可展示。
+使用 XZMocoa 你可以将每一个`cell`都看作是完全独立的模块进行开发，然后注册到相应的`tableView`模块中即可展示。
 
 > 开发`cell`模块，与开发普通 MVVM 模块的过程基本一样，仅需要按照 MVVM 的基本要求编写即可。
 
@@ -101,7 +113,9 @@ tableView.viewModel = tableViewModel;
 @end
 ```
 
-除了`ViewModel`需要使用 Mocoa 提供的基类外，`View`和`Model`是完全自由的，协议`XZMocoaTableViewCell`和`XZMocoaTableViewCellModel`提供了默认实现，可以直接使用。
+除了`ViewModel`需要使用 Mocoa 提供的基类外，`View`和`Model`是完全自由的。
+
+协议`XZMocoaTableViewCell`和`XZMocoaTableViewCellModel`是辅助协议，不需要实现，而是声明遵循后，即可使用协议方法的协议。
 
 ###### 3.2 处理数据
 
@@ -124,6 +138,8 @@ tableView.viewModel = tableViewModel;
 @end
 ```
 
+ViewModel向View提供稳定的API，这可以减少View层改动，同时也能屏蔽数据的细节差异，帮助我们在实现View时，可以脱离具体的数据。
+
 ###### 3.3 渲染视图
 
 `View`根据`ViewModel`提供的数据进行展示。
@@ -142,7 +158,9 @@ tableView.viewModel = tableViewModel;
 
 ###### 3.4 注册模块
 
-在`UITableView`中`section`没有直接视图，但却是不可少的逻辑层，所以在 Mocoa 中，你也需要将`cell`是注册在`section`之下。下面是将`cell`模块注册到`URL`为`https://mocoa.xezun.com/table/`的`tableView`模块之下的示例。
+将`cell`模块注册到`tableView`模块中，就可以在`tableView`中展示了。在下面的例子中，`tableView`模块为`URL`为`https://mocoa.xezun.com/table/`的模块。
+
+> 在`UITableView`中`section`没有直接视图，但却是不可少的逻辑层，所以在XZMocoa中，需要将`cell`是注册在`section`之下，而非直接在`tableView`之下。
 
 ```objc
 @implementation ExampleCellModel
@@ -174,19 +192,22 @@ tableView.viewModel = tableViewModel;
 
 - 不用编写`delegate`或`dataSource`方法。
 - 不用先编写`cell`，Mocoa 会先用占位视图替代，直到`cell`模块编写完成。
-- `cell`模块完全独立，编写`cell`后，仅需注册模块，不需在`tableView`或`collectionView`中注册。
+- 模块`cell`完全独立，编写`cell`后，仅需注册模块，不需在`tableView`或`collectionView`中注册。
 
-还有，我们再也不用担心`dataSource`导致的`Crash`问题了。
+还有，我们再也不用担心`dataSource`导致的Crash问题了。
 
 ## 模块化
 
 不论采用何种设计模式，都应该让你的代码模块化。这样在更新维护时，变动就可以控制在模块内，从而避免牵一发而动全身。
 
-Mocoa 使用 MVVM 设计模式进行模块化，因为在 MVVM 设计模式下，视图可以通过自身的`ViewModel`管理逻辑，这样逻辑就可以分散在各个模块中，可以避免控制器变得越来越臃肿。
+XZMocoa使用MVVM设计模式进行模块化，因为在MVVM设计模式下，视图可以通过自身的`ViewModel`管理逻辑，
+这样页面就可以通过划分模块的方式，将逻辑就可以分散在各个子模块中，从而避免单个页面变得臃肿。
+
+> 即在MVVM模式下，页面从视图的集合，变成了模块的集合，页面从管理自视图的，变为管理子模块。
 
 ###### 1、管理模块
 
-Mocoa 为模块提供了基于`URL`的模块管理方案 `XZMocoaDomain`，任何模块都可以通过`URL`在`XZMocoaDomain`中注册。
+XZMocoa为模块提供了基于`URL`的模块管理方案`XZMocoaDomain`，任何模块都可以通过`URL`在`XZMocoaDomain`中注册。
 
 ```objc
 [[XZMocoaDomain doaminForName:@"mocoa.xezun.com"] setModule:yourModule forPath:@"your/module/path"];
@@ -201,32 +222,39 @@ id yourModule = [XZMocoaDomain moduleForURL:@"https://mocoa.xezun.com/your/modul
 `XZMocoaDomain`其实就是简单地使用`NSMutableDictionary`管理模块，所以你不必担心它的性能问题。
 
 在实际开发中，有些提供了各种各样方法的“模块”，通过上面注册的方式拿到一个匿名的`id`类型，似乎显得多次一举。
-但是在 Mocoa 看来，这样的“模块”并不是真正的模块，而只是一个组件或提供方法的工具类，因为真正的模块应该是能独自完成功能的，不需要或者仅需要少量简单明了的参数。
-比如每个 App 实际上就是一个独立的模块，`void main(int, char *)`是它们统一入口函数。
+但是在XZMocoa看来，这样的“模块”并不是真正的模块，而只是一个组件，或提供方法的工具类，因为真正的模块应该是能独自完成功能的，不需要或者仅需要少量基本数据作为参数。
+比如，每个App就可以看作是一个独立的模块，`void main(int, char *)`是它们统一入口函数。
 
-###### 2、Mocoa模块
+###### 2、XZMocoa模块
 
-Mocoa 将每一个 MVVM 单元`Model-View-ViewModel`都视为一个模块，称为 Mocoa 模块，用`XZMocoaModule`对象表示。在 Mocoa 模块中，有如下约定。
+XZMocoa将每一个MVVM单元`Model-View-ViewModel`都视为一个模块，称为Mocoa模块，用`XZMocoaModule`对象表示。在Mocoa模块中，有如下约定。
 
 - `Model`使用`-init`作为初始化方法，或者开发者自行约定统一的初始化方法。
 - `ViewModel`使用`-initWithModel:`作为初始化方法。
 - `View`中的`UIViewController`使用`-initWithNibName:bundle:`作为初始化方法
 - `View`中的`UIView`一般使用`-initWithFrame:`作为初始化方法，像`UITableViewCell`等被管理的视图，则它们自身决定。
 
-然后，我们就可以在 Mocoa 中注册 MVVM 模块的`View`、`Model`、`ViewModel`三个部分了。
+上面这些约定，其实就是原生已有的方法，如果我们按照原生风格进行编码，这些基本不需要额外工作量。
+
+> 推荐使用原生风格进行编码，可以有效降低维护成本、学习成本。
+
+在Mocoa中注册MVVM模块的`View`、`Model`、`ViewModel`三个部分。
 
 ```objc
-XZMocoa(@"https://mocoa.xezun.com/module/").modelClass     = Model.class;
-XZMocoa(@"https://mocoa.xezun.com/module/").viewClass      = View.class;
-XZMocoa(@"https://mocoa.xezun.com/module/").viewModelClass = ViewModel.class;
+XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/module/");
+module.modelClass     = Model.class;
+module.viewClass      = View.class;
+module.viewModelClass = ViewModel.class;
 ```
 
 *注：函数`XZMocoa(url)`是`+[XZMocoaModule moduleForURL:]`的便利写法。*
 
-MVVM 模块在注册后，我们就可以按照约定好的基本规则使用它们了，比如对于一个普通的视图模块，我们在拿到数据后，可以像下面这样使用它。
+模块在注册后，我们就可以按照约定好的基本规则使用它们了，比如对于一个普通的视图模块，我们在拿到数据后，可以像下面这样使用它。
 
 ```objc
+// 拿到了模块的原始数据
 NSDictionary *data;
+// 获取到模块。 
 XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/view/");
 // 这里使用了 YYModel 组件处理模型化数据
 id<XZMocoaModel> model = [module.modelClass yy_modelWithDictionary:data]; 
@@ -239,7 +267,7 @@ view.viewModel = viewModel;
 [self.view addSubview:view];
 ```
 
-对于页面`UIViewController`模块，Mocoa 认为它是一个独立模块，所以在启动页面时，提供了便利方法。
+对于页面`UIViewController`模块，Mocoa认为它是一个独立模块，所以在启动页面时，提供了便利方法。
 
 ```objc
 UIView<XZMocoaView> *view;
@@ -249,7 +277,7 @@ NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/main"];
 
 即，我们可以通过页面模块的`URL`直接打开页面。
 
-> 使用`View`打开控制器，在 MVC 设计模式中是不合理的，但是在 MVVM 设计模式中，`UIViewController`仅仅是特殊的`View`而已。
+> 使用`View`打开控制器，在MVC设计模式中是不合理的，但是在MVVM设计模式中，`UIViewController`仅仅是特殊的`View`而已。
 
 ###### 3、模块注册方式
 
