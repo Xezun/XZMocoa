@@ -80,6 +80,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // MARK: - 子类重写
 
+// 如下 -did 方法，表示对应的事件已经发生，需要更新视图对应的视图了。
+// 子类应该重新下面的方法，并更新视图。
+
 - (void)didReloadData;
 - (void)didReloadCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 - (void)didInsertCellsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;

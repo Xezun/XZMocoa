@@ -57,7 +57,7 @@ typedef void(^XZMocoaAssembleViewDelayedBatchUpdate)(__kindof XZMocoaViewModel *
 /// @discussion
 /// 手动分析的更新逻辑由开发者控制，性能更好，能提高大批量数据情形下的性能，请以实际体验采用合适的方式。
 /// @attention
-/// 批量更新状态不可重入，上级进入批量更新状态，所有下级也会进入批量更新状态，即不能批量更新中，嵌套执行上级的批量更新方法。
+/// 批量更新状态不可重入，上级进入批量更新状态，所有下级也会进入批量更新状态，即，不能在批量更新时，嵌套执行上级的批量更新方法。
 /// @param batchUpdates 执行数据更新的块函数
 - (void)performBatchUpdates:(void (^NS_NOESCAPE)(void))batchUpdates completion:(void (^ _Nullable)(BOOL finished))completion;
 

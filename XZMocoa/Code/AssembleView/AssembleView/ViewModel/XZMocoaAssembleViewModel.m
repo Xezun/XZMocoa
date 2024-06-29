@@ -12,7 +12,7 @@
 @import XZExtensions;
 
 @interface XZMocoaAssembleViewModel () {
-    /// 标记当前是否正处于批量更新过程中，记录了更新前的数据。
+    /// 记录了批量更新前的数据，如果不为空，则表示当前处于批量更新过程中。
     NSOrderedSet<XZMocoaAssembleViewSectionViewModel *> *_dataBeforeBatchUpdates;
     /// 批量更新时，被延迟的更新。
     NSMutableArray<XZMocoaAssembleViewDelayedBatchUpdate> *_delayedBatchUpdates;
@@ -79,6 +79,11 @@
 - (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition {
     if ([emition.name isEqualToString:XZMocoaEmitUpdate]) {
         if (self.isPerformingBatchUpdates) {
+            // 正在进行批量更新，刷新操作将被延迟到批量更新之后。
+            // 主要原因是：
+            // 1、不确定批量更新是否会与当前的刷新操作重复。
+            // 2、即使当前是操作与批量更新没有重复，可能依然会存在崩溃的可能。
+            // 3、批量更新之后，当前操作的对象，可能已经不存在了。
             [_delayedBatchUpdates addObject:^void(XZMocoaAssembleViewModel *self) {
                 [self subViewModel:subViewModel didEmit:emition];
             }];
@@ -284,8 +289,12 @@
     
     void (^const tableViewBatchUpdates)(void) = ^{
         completionFlag += 1;
+        // 批量更新开始，默认标记需进行差异分析，并开始拦截需要延迟的操作。
         [self setNeedsDifferenceBatchUpdates];
+        // 执行批量更新。这其中如果有独立更新的操作，会关闭差异分析。
+        // 在此过程中，如果有 cell 模块，因为交互或事件，需要刷新视图，则操作会被延迟。
         batchUpdates();
+        // 执行差异分析，并返回
         forwardIndexes = [self differenceBatchUpdatesIfNeeded];
     };
     void (^const tableViewCompletion)(BOOL) = ^(BOOL finished){
@@ -295,19 +304,25 @@
         if (completion) completion(finished);
     };
     
-    // 批量事件
+    // 批量事件，block 会传递到 view 到 -[tableView performBatchUpdates:completion:] 方法中执行。
     [self didPerformBatchUpdates:tableViewBatchUpdates completion:tableViewCompletion];
     
-    // 清理批量更新环境，并执行延迟的事件
+    // 当前的批量操作已完成，清理批量更新环境，并执行延迟的事件
     [self cleanupBatchUpdates];
     
-    // 后更新 index 以避免因 index 改变而发生视图刷新时，当前的事件还没有派发。
+    // 因为某些模块，可能会根据 index 来处理逻辑，所以在批量更新的过程设置 index 可能会造成视图刷新。
+    // 所以将更新 index 的操作，放到了批量更新之后进行。
     NSInteger const count = self.numberOfSections;
     for (NSInteger section = 0; section < count; section++) {
         [self sectionViewModelAtIndex:section].index = section;
     }
     
     // 传递事件给保留的下级
+    // 当前批量更新的数据变化监测，只针对的是 section 层级，而 section 的 cells 也可能发生了更新。
+    // 因此在 section 检测完更新之后，我们向保留的 section 发送批量更新消息，让 section 去检查其
+    // 内部的 cell 数据是否发生了更新。
+    // section 的 delete/reload/insert 操作，影响的是整个 section 模块，很明显，批量更新时，如
+    // 果只是 section 内的某个 cell 发生了更新，不应该视为它的整个 section 发生了刷新。
     if (forwardIndexes.count > 0) {
         void (^const tableViewBatchUpdates)(void) = ^{
             completionFlag += 1;
