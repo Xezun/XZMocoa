@@ -78,7 +78,13 @@
     NSDictionary *dict = @{
         @"content": @{
             @"title": @"示例说明",
-            @"content": @"本示例演示了MVVM模块的开发，以及如何在MVC结构中使用MVVM模块。\n1、控制器为MVC结构的。\n2、ContentView为传统的View视图，数据在 VC中装载。\n3、ContactView为MVVM模块，示例演示了如何在MVC中使用它。"
+            @"content": @"本示例演示了MVVM模块的开发，以及如何在MVC结构中使用MVVM模块。\n"
+            "1、控制器为MVC结构的。\n"
+            "2、ContentView为传统的View视图，数据在控制器中渲染（这里的渲染指的是设置text/image等操作，并非CALayer渲染）。\n"
+            "3、ContactView为MVVM模块，在MVC中使用它时，我们不需要数据关心细节，直接使用数据构造ViewModel，然后由View根据ViewModel进行渲染即可。\n"
+            "4、关于mvvm模块的渲染流程，还有另外一种方式，即在创建view时，同时创建model和viewModel对象，利用绑定监听数据变化，然后更新视图。"
+            "但是在大部分业务场景中，数据在渲染后并不会更新。即使在tableView/collectionView中，cell在呈现的过程中，数据也大概不会变动。"
+            "对于cell视图的重用，只是减少了创建视图的成本，并不是单纯的数据变化，即重用的cell应与新创建的cell一视同仁。"
         },
         @"contact": @{
             @"card": @"contact",

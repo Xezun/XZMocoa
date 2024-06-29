@@ -10,6 +10,10 @@
 @import XZRefresh;
 @import XZExtensions;
 
+// 当前示例展示了：
+// 1、控制器展示下拉刷新、列表、上拉加载
+// 2、
+
 @interface Example20ViewController () <XZMocoaView, XZRefreshDelegate>
 
 @property (weak, nonatomic) IBOutlet XZMocoaTableView *tableView;
@@ -44,6 +48,7 @@
     self.viewModel = viewModel;
     self.tableView.viewModel = viewModel.tableViewModel;
     
+    // 刷新状态，通过监听 isHeaderRefreshing/isFooterRefreshing 来更新。
     [viewModel addTarget:self action:@selector(headerRefreshingChanged:) forKeyEvents:@"isHeaderRefreshing"];
     [viewModel addTarget:self action:@selector(footerRefreshingChanged:) forKeyEvents:@"isFooterRefreshing"];
 }

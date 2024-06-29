@@ -38,6 +38,11 @@
         @{ @"firstName": @"王", @"lastName": @"五", @"phone": @"138-8888-3333" }
     ];
     
+    // 在这个示例中，我们将 tableView 视为一个 mvvm 视图模块，这与示例 10 中，将 ContactView 作为一个视图模块是一样的。
+    // 但是由于 tableView 是一个管理了 cell 子模块的超级模块，而且这里我们直接使用的是基类，而不是自定义的视图，
+    // 即它是一个普通视图模块，不属于任何模块，所以我们需要通过 URL 获取这个模块的 XZMocoaModule 对象，即下面的 module 对象，
+    // 然后将这个一般模块，设置为 module 模块。
+    
     XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/12/table/");
     
     // Model

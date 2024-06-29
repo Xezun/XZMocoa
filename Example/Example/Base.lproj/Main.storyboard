@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Mocoa-->
+        <!--XZMocoa-->
         <scene sceneID="MtF-I1-ISa">
             <objects>
                 <tableViewController id="Gvo-3Z-5Tb" customClass="ViewController" sceneMemberID="viewController">
@@ -40,7 +40,7 @@
                             <outlet property="delegate" destination="Gvo-3Z-5Tb" id="XgD-yN-hSZ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Mocoa" id="3uZ-Re-1vy">
+                    <navigationItem key="navigationItem" title="XZMocoa" id="3uZ-Re-1vy">
                         <barButtonItem key="backBarButtonItem" title="返回" id="gcA-pa-HwG"/>
                     </navigationItem>
                 </tableViewController>
@@ -48,11 +48,11 @@
             </objects>
             <point key="canvasLocation" x="2696.9465648854962" y="-31.690140845070424"/>
         </scene>
-        <!--Mocoa-->
+        <!--XZMocoa-->
         <scene sceneID="M0R-PN-lKC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="43b-7P-inB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Mocoa" id="gHs-MI-oKR"/>
+                    <tabBarItem key="tabBarItem" title="XZMocoa" image="icon-tab-home" selectedImage="icon-tab-home" id="gHs-MI-oKR"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="eB9-5y-6NR">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -87,6 +87,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon-tab-home" width="25" height="25"/>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
