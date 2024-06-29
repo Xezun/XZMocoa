@@ -13,7 +13,7 @@
 
 @interface XZMocoaAssembleViewModel () {
     /// 标记当前是否正处于批量更新过程中，记录了更新前的数据。
-    NSOrderedSet<XZMocoaAssembleViewSectionViewModel *> *_isPerformingBatchUpdates;
+    NSOrderedSet<XZMocoaAssembleViewSectionViewModel *> *_dataBeforeBatchUpdates;
     /// 批量更新时，被延迟的更新。
     NSMutableArray<XZMocoaAssembleViewDelayedBatchUpdate> *_delayedBatchUpdates;
     /// 是否需要执行批量更新的差异分析。
@@ -30,7 +30,7 @@
 - (instancetype)initWithModel:(id)model {
     self = [super initWithModel:model];
     if (self) {
-        _isPerformingBatchUpdates = nil;
+        _dataBeforeBatchUpdates = nil;
         _sectionViewModels = [NSMutableOrderedSet orderedSet];
         _supportedSupplementaryKinds = @[XZMocoaKindHeader, XZMocoaKindFooter];
     }
@@ -141,7 +141,7 @@
         NSMutableIndexSet * const oldSections = [NSMutableIndexSet indexSet];
         [sections enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
             XZMocoaAssembleViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:idx];
-            NSInteger const oldSection = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
+            NSInteger const oldSection = [_dataBeforeBatchUpdates indexOfObject:oldViewModel];
             [oldSections addIndex:oldSection];
             [oldViewModel removeFromSuperViewModel];
             
@@ -197,7 +197,7 @@
         NSMutableIndexSet * const oldSections = [NSMutableIndexSet indexSet];
         [sections enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger section, BOOL *stop) {
             XZMocoaAssembleViewSectionViewModel * const oldViewModel = [self sectionViewModelAtIndex:section];
-            NSInteger const oldSection   = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
+            NSInteger const oldSection   = [_dataBeforeBatchUpdates indexOfObject:oldViewModel];
             [oldSections addIndex:oldSection];
             [oldViewModel removeFromSuperViewModel];
         }];
@@ -222,7 +222,7 @@
     if (self.isPerformingBatchUpdates) {
         // 批量更新过程中，移动 section 需要找到原始位置
         id        const oldViewModel = [self sectionViewModelAtIndex:section];
-        NSInteger const oldSection   = [_isPerformingBatchUpdates indexOfObject:oldViewModel];
+        NSInteger const oldSection   = [_dataBeforeBatchUpdates indexOfObject:oldViewModel];
         [self _moveSectionAtIndex:section fromIndex:oldSection toIndex:newSection];
     } else {
         [self _moveSectionAtIndex:section fromIndex:section toIndex:newSection];
@@ -241,22 +241,22 @@
 #pragma mark - 批量更新
 
 - (BOOL)isPerformingBatchUpdates {
-    return _isPerformingBatchUpdates != nil;
+    return _dataBeforeBatchUpdates != nil;
 }
 
 - (BOOL)prepareBatchUpdates {
-    if (_isPerformingBatchUpdates) {
+    if (_dataBeforeBatchUpdates) {
         XZLog(@"当前正在批量更新，本次操作取消");
         return NO;
     }
     
-    _isPerformingBatchUpdates = _sectionViewModels.copy;
+    _dataBeforeBatchUpdates = _sectionViewModels.copy;
     _delayedBatchUpdates = [NSMutableArray array];
     return YES;
 }
 
 - (void)cleanupBatchUpdates {
-    _isPerformingBatchUpdates = nil;
+    _dataBeforeBatchUpdates = nil;
     for (XZMocoaAssembleViewDelayedBatchUpdate batchUpdates in _delayedBatchUpdates) {
         batchUpdates(self);
     }
@@ -280,18 +280,18 @@
     // 因此对于未更新的 section 会在 table 批量更新后，执行 -performBatchUpdates:completion: 方法以进行更新。
     NSIndexSet * __block forwardIndexes = nil;
     // 由于进行了分步批量更新，需要一个标记，使 completion 在所有更新完成后再执行。
-    NSInteger    __block flagCompletion = 0;
+    NSInteger    __block completionFlag = 0;
     
     void (^const tableViewBatchUpdates)(void) = ^{
-        flagCompletion += 1;
+        completionFlag += 1;
         [self setNeedsDifferenceBatchUpdates];
         batchUpdates();
         forwardIndexes = [self differenceBatchUpdatesIfNeeded];
     };
     void (^const tableViewCompletion)(BOOL) = ^(BOOL finished){
-        XZLog(@"flagCompletion: %ld", flagCompletion);
-        flagCompletion -= 1;
-        if (flagCompletion > 0) return;
+        XZLog(@"completionFlag: %ld", completionFlag);
+        completionFlag -= 1;
+        if (completionFlag > 0) return;
         if (completion) completion(finished);
     };
     
@@ -310,7 +310,7 @@
     // 传递事件给保留的下级
     if (forwardIndexes.count > 0) {
         void (^const tableViewBatchUpdates)(void) = ^{
-            flagCompletion += 1;
+            completionFlag += 1;
             [forwardIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
                 [[self sectionViewModelAtIndex:idx] performBatchUpdates:^{
                     // section 内的更新数据已经在 batchUpdates() 执行了。
@@ -349,7 +349,7 @@
     // 记录更新前的数据。
     NSInteger      const oldCount      = self.numberOfSections;
     NSArray      * const oldDataModels = [NSMutableArray arrayWithCapacity:oldCount];
-    NSOrderedSet * const oldViewModels = _isPerformingBatchUpdates.copy;
+    NSOrderedSet * const oldViewModels = _dataBeforeBatchUpdates.copy;
     for (NSInteger i = 0; i < oldCount; i++) {
         XZMocoaAssembleViewSectionViewModel * const viewModel = oldViewModels[i];
         id const dataModel = viewModel.model;
