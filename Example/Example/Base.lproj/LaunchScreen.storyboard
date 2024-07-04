@@ -16,9 +16,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XZMocoa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qyQ-NP-4yF">
-                                <rect key="frame" x="115.66666666666669" y="725" width="162" height="43"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XZKit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIq-Kq-mhm">
+                                <rect key="frame" x="139" y="159" width="115.33333333333331" height="57.333333333333343"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XZMocoa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7S-gM-B9p">
+                                <rect key="frame" x="145.66666666666666" y="689" width="101.66666666666666" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -26,8 +32,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qyQ-NP-4yF" secondAttribute="bottom" constant="50" id="Xja-Hh-SKW"/>
-                            <constraint firstItem="qyQ-NP-4yF" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="aTJ-6u-iJC"/>
+                            <constraint firstItem="OIq-Kq-mhm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="Jni-ZL-aaF"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Z7S-gM-B9p" secondAttribute="bottom" constant="100" id="d2v-tv-ElZ"/>
+                            <constraint firstItem="OIq-Kq-mhm" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="peP-24-KCq"/>
+                            <constraint firstItem="Z7S-gM-B9p" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="w2p-Hw-RaH"/>
                         </constraints>
                     </view>
                 </viewController>

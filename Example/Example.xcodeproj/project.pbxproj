@@ -2866,7 +2866,7 @@
 				DEVELOPMENT_TEAM = LWKDD4DJ6H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Example/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = XZMocoa;
+				INFOPLIST_KEY_CFBundleDisplayName = XZKit;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -2897,7 +2897,7 @@
 				DEVELOPMENT_TEAM = LWKDD4DJ6H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Example/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = XZMocoa;
+				INFOPLIST_KEY_CFBundleDisplayName = XZKit;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
