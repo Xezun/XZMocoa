@@ -53,15 +53,6 @@
     return self;
 }
 
-- (void)ready {
-    if (_isReady) {
-        return;
-    }
-    // ready/prepare 方法组合，可以避免初始化逻辑反复执行。
-    [self prepare];
-    _isReady = YES;
-}
-
 - (instancetype)initWithModel:(id)model ready:(BOOL)synchronously {
     self = [self initWithModel:model];
     if (self) {
@@ -76,10 +67,19 @@
     return self;
 }
 
-- (void)prepare {
+- (void)ready {
+    if (_isReady) {
+        return;
+    }
+    [self prepare];
+    _isReady = YES;
     for (XZMocoaViewModel *viewModel in _subViewModels) {
         [viewModel ready];
     }
+}
+
+- (void)prepare {
+    
 }
 
 - (NSString *)description {
@@ -380,7 +380,7 @@ XZMocoaKeyEvents const XZMocoaKeyEventsNone = @"";
 //void __mocoa_bind_4(XZMocoaViewModel *vm, SEL keySel, UIImageView *target, id completion) XZATTR_OVERLOAD {
 //    NSString *key = NSStringFromSelector(keySel);
 //    vm.bind(key, target, ^(id value, UIImageView<XZMocoaImageView> *self, id vm) {
-//        [self mocoa_setImageWithURL:value completion:completion];
+//        [self xz_mocoa_setImageWithURL:value completion:completion];
 //    });
 //
 //    [NSObject automaticallyNotifiesObserversForKey:nil];

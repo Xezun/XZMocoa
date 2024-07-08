@@ -12,7 +12,7 @@
 @implementation Example20Group101CellViewModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/101/:/").viewModelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/101/:/").viewModelClass = self;
 }
 
 - (void)prepare {
@@ -37,7 +37,7 @@
     }
 }
 
-- (void)wasSelectedInTableView:(XZMocoaTableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // 通过模块初始化传递参数
     Example20Group101CellModel *model = self.model;
     UIViewController *nextVC = [XZMocoa(@"https://mocoa.xezun.com/examples/20/content/") instantiateViewControllerWithOptions:@{

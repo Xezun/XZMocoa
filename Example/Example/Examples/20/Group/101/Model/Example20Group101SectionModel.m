@@ -11,7 +11,13 @@
 @implementation Example20Group101SectionModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/101/").modelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/101/").modelClass = self;
+}
+
+- (BOOL)isEqual:(Example20Group101SectionModel *)object {
+    if (self == object) return YES;
+    if (![object isKindOfClass:[Example20Group101SectionModel class]]) return NO;
+    return [self.gid isEqual:object.gid];
 }
 
 + (NSDictionary<NSString *,id> *)modelContainerPropertyGenericClass {

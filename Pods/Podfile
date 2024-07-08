@@ -7,23 +7,23 @@ workspace '../XZMocoa.xcworkspace'
 project '../Example/Example.xcodeproj'
 
 target 'Example' do
-  pod 'XZMocoa/Debug', :path => '../'
+  pod 'XZMocoa', :path => '../'
   
-  pod 'SDWebImage'
-  pod 'YYModel'
   pod 'XZPageView'
   pod 'XZPageControl'
   pod 'XZExtensions'
+  pod 'XZRefresh'
+  pod 'XZML'
+  
+  pod 'SDWebImage'
+  pod 'YYModel'
   
   target 'ExampleTests' do
     inherit! :search_paths
-
-    
   end
 
   target 'ExampleUITests' do
     inherit! :search_paths
-
-    
   end
+  
 end

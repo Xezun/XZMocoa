@@ -8,7 +8,15 @@
 #import "Example20Group102CellModel.h"
 
 @implementation Example20Group102CellModel
+
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/102/:/").modelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/102/:/").modelClass = self;
 }
+
+- (BOOL)isEqual:(Example20Group102CellModel *)object {
+    if (object == self) return YES;
+    if (![object isKindOfClass:[Example20Group102CellModel class]]) return NO;
+    return [self.nid isEqualToString:object.nid];
+}
+
 @end

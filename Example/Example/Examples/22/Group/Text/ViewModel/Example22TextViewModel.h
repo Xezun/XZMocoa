@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example22TextViewModel : XZMocoaCollectionCellViewModel
+@interface Example22TextViewModel : XZMocoaCollectionViewCellViewModel
 @property (nonatomic, copy, readonly) NSString *name  XZ_MOCOA_KEY(name);
 @property (nonatomic, copy, readonly) NSString *phone XZ_MOCOA_KEY(phone);
 @end

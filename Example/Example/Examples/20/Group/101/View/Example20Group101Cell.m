@@ -12,7 +12,7 @@
 @implementation Example20Group101Cell
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/101/:").viewNibClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/101/:/").viewNibClass = self;
 }
 
 - (void)awakeFromNib {

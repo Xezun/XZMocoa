@@ -11,34 +11,35 @@
 
 static const void * const _viewModel = &_viewModel;
 
-static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source) {
-    if (xz_objc_class_copyMethod(cls, target, source)) return;
+static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const source) {
+    if (xz_objc_class_copyMethod(cls, source, nil, target)) return;
     XZLog(@"为协议 XZMocoaView 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
 }
 
-#pragma mark - XZMocoaView 协议
+#pragma mark - XZMocoaView 协议默认实现
 
 @interface UIResponder (XZMocoaView) <XZMocoaView>
 @end
+
 @implementation UIResponder (XZMocoaView)
 
 + (void)load {
     Class const cls = UIResponder.class;
     
-    mocoa_copyMethod(cls, @selector(viewModel), @selector(mocoa_viewModel));
-    mocoa_copyMethod(cls, @selector(setViewModel:), @selector(mocoa_setViewModel:));
-    mocoa_copyMethod(cls, @selector(viewModelWillChange), @selector(mocoa_viewModelWillChange));
-    mocoa_copyMethod(cls, @selector(viewModelDidChange), @selector(mocoa_viewModelDidChange));
+    xz_mocoa_copyMethod(cls, @selector(viewModel), @selector(xz_mocoa_viewModel));
+    xz_mocoa_copyMethod(cls, @selector(setViewModel:), @selector(xz_mocoa_setViewModel:));
+    xz_mocoa_copyMethod(cls, @selector(viewModelWillChange), @selector(xz_mocoa_viewModelWillChange));
+    xz_mocoa_copyMethod(cls, @selector(viewModelDidChange), @selector(xz_mocoa_viewModelDidChange));
     
-    mocoa_copyMethod(cls, @selector(viewController), @selector(mocoa_viewController));
-    mocoa_copyMethod(cls, @selector(navigationController), @selector(mocoa_navigationController));
-    mocoa_copyMethod(cls, @selector(tabBarController), @selector(mocoa_tabBarController));
+    xz_mocoa_copyMethod(cls, @selector(viewController), @selector(xz_mocoa_viewController));
+    xz_mocoa_copyMethod(cls, @selector(navigationController), @selector(xz_mocoa_navigationController));
+    xz_mocoa_copyMethod(cls, @selector(tabBarController), @selector(xz_mocoa_tabBarController));
     
-    mocoa_copyMethod(cls, @selector(shouldPerformSegueWithIdentifier:), @selector(mocoa_shouldPerformSegueWithIdentifier:));
-    mocoa_copyMethod(cls, @selector(prepareForSegue:), @selector(mocoa_prepareForSegue:));
+    xz_mocoa_copyMethod(cls, @selector(shouldPerformSegueWithIdentifier:), @selector(xz_mocoa_shouldPerformSegueWithIdentifier:));
+    xz_mocoa_copyMethod(cls, @selector(prepareForSegue:), @selector(xz_mocoa_prepareForSegue:));
 }
 
-- (UIViewController *)mocoa_viewControllerImplementation {
+- (UIViewController *)xz_mocoa_viewControllerImplementation {
     UIViewController *viewController = (id)self.nextResponder;
     while (viewController != nil) {
         if ([viewController isKindOfClass:UIViewController.class]) {
@@ -49,23 +50,23 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
     return nil;
 }
 
-- (UIViewController *)mocoa_viewController {
-    return [self mocoa_viewControllerImplementation];
+- (UIViewController *)xz_mocoa_viewController {
+    return [self xz_mocoa_viewControllerImplementation];
 }
 
-- (UINavigationController *)mocoa_navigationController {
-    return [self mocoa_viewControllerImplementation].navigationController;
+- (UINavigationController *)xz_mocoa_navigationController {
+    return [self xz_mocoa_viewControllerImplementation].navigationController;
 }
 
-- (UITabBarController *)mocoa_tabBarController {
-    return [self mocoa_viewControllerImplementation].tabBarController;
+- (UITabBarController *)xz_mocoa_tabBarController {
+    return [self xz_mocoa_viewControllerImplementation].tabBarController;
 }
 
-- (XZMocoaViewModel *)mocoa_viewModel {
+- (XZMocoaViewModel *)xz_mocoa_viewModel {
     return objc_getAssociatedObject(self, _viewModel);
 }
 
-- (void)mocoa_setViewModel:(XZMocoaViewModel *)viewModel {
+- (void)xz_mocoa_setViewModel:(XZMocoaViewModel *)viewModel {
     XZMocoaViewModel *oldValue = objc_getAssociatedObject(self, _viewModel);
     if (oldValue == nil && viewModel == nil) {
         return;
@@ -80,19 +81,19 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
     [(id<XZMocoaView>)self viewModelDidChange];
 }
 
-- (void)mocoa_viewModelDidChange {
+- (void)xz_mocoa_viewModelDidChange {
     
 }
 
-- (void)mocoa_viewModelWillChange {
+- (void)xz_mocoa_viewModelWillChange {
     
 }
 
-- (BOOL)mocoa_shouldPerformSegueWithIdentifier:(NSString *)identifier {
+- (BOOL)xz_mocoa_shouldPerformSegueWithIdentifier:(NSString *)identifier {
     return YES;
 }
 
-- (void)mocoa_prepareForSegue:(UIStoryboardSegue *)segue {
+- (void)xz_mocoa_prepareForSegue:(UIStoryboardSegue *)segue {
     
 }
 
@@ -104,7 +105,7 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 @end
 @implementation UIViewController (XZMocoaView)
 
-- (UIViewController *)mocoa_viewControllerImplementation {
+- (UIViewController *)xz_mocoa_viewControllerImplementation {
     return self;
 }
 
@@ -116,48 +117,48 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
     
     {
         SEL const selT = @selector(shouldPerformSegueWithIdentifier:sender:);
-        SEL const selN = @selector(mocoa_new_shouldPerformSegueWithIdentifier:sender:);
-        SEL const selE = @selector(mocoa_exchange_shouldPerformSegueWithIdentifier:sender:);
-        if (xz_objc_class_addMethod(cls, selT, selN, NULL, selE)) {
+        SEL const selN = @selector(xz_mocoa_new_shouldPerformSegueWithIdentifier:sender:);
+        SEL const selE = @selector(xz_mocoa_exchange_shouldPerformSegueWithIdentifier:sender:);
+        if (xz_objc_class_addMethod(cls, selT, nil, selN, NULL, selE)) {
             XZLog(@"为 UIViewController 重载方法 %@ 失败，相关事件请手动处理", NSStringFromSelector(selT));
         }
     }
     
     {
         SEL const selT = @selector(prepareForSegue:sender:);
-        SEL const selN = @selector(mocoa_new_prepareForSegue:sender:);
-        SEL const selE = @selector(mocoa_exchange_prepareForSegue:sender:);
-        if (xz_objc_class_addMethod(cls, selT, selN, NULL, selE)) {
+        SEL const selN = @selector(xz_mocoa_new_prepareForSegue:sender:);
+        SEL const selE = @selector(xz_mocoa_exchange_prepareForSegue:sender:);
+        if (xz_objc_class_addMethod(cls, selT, nil, selN, NULL, selE)) {
             XZLog(@"为 UIViewController 重载方法 %@ 失败，相关事件请手动处理", NSStringFromSelector(selT));
         }
     }
 }
 
-- (BOOL)mocoa_new_shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+- (BOOL)xz_mocoa_new_shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     if ([sender conformsToProtocol:@protocol(XZMocoaView)]) {
         return [sender shouldPerformSegueWithIdentifier:identifier];
     }
     return YES;
 }
 
-- (BOOL)mocoa_exchange_shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+- (BOOL)xz_mocoa_exchange_shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     if ([sender conformsToProtocol:@protocol(XZMocoaView)]) {
         return [sender shouldPerformSegueWithIdentifier:identifier];
     }
-    return [self mocoa_exchange_shouldPerformSegueWithIdentifier:identifier sender:sender];;
+    return [self xz_mocoa_exchange_shouldPerformSegueWithIdentifier:identifier sender:sender];;
 }
 
-- (void)mocoa_new_prepareForSegue:(UIStoryboardSegue *)segue sender:(id<XZMocoaView>)sender {
+- (void)xz_mocoa_new_prepareForSegue:(UIStoryboardSegue *)segue sender:(id<XZMocoaView>)sender {
     if ([sender conformsToProtocol:@protocol(XZMocoaView)]) {
         [sender prepareForSegue:segue];
     }
 }
 
-- (void)mocoa_exchange_prepareForSegue:(UIStoryboardSegue *)segue sender:(id<XZMocoaView>)sender {
+- (void)xz_mocoa_exchange_prepareForSegue:(UIStoryboardSegue *)segue sender:(id<XZMocoaView>)sender {
     if ([sender conformsToProtocol:@protocol(XZMocoaView)]) {
         [sender prepareForSegue:segue];
     } else {
-        [self mocoa_exchange_prepareForSegue:segue sender:sender];
+        [self xz_mocoa_exchange_prepareForSegue:segue sender:sender];
     }
 }
 
@@ -174,6 +175,19 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
     NSString *nibName = self.viewNibName;
     NSBundle *bundle  = self.viewNibBundle;
     return [[ViewController alloc] initWithMocoaOptions:options nibName:nibName bundle:bundle];
+}
+
+- (__kindof UIView *)instantiateViewWithFrame:(CGRect)frame {
+    if (self.viewNibName) {
+        UINib *nib = [UINib nibWithNibName:self.viewNibName bundle:self.viewNibBundle];
+        for (UIView *object in [nib instantiateWithOwner:nil options:nil]) {
+            if ([object isKindOfClass:self.viewNibClass]) {
+                object.frame = frame;
+                return object;
+            };
+        }
+    }
+    return [[self.viewClass alloc] initWithFrame:frame];
 }
 
 @end

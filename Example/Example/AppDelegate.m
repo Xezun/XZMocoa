@@ -15,38 +15,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+    NSLog(@"NSCachesDirectory: %@", path);
     return YES;
 }
-
-- (void)foobar:(id)sender {
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
-    NSLog(@"path: %@", path);
-    
-    NSURL *url = [NSBundle.mainBundle URLForResource:@"data" withExtension:@"json"];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:array.count];
-    for (NSDictionary *dict in array) {
-        [result addObject:@{
-            @"group": dict[@"images"] ? @"101" : @"100",
-            @"items": @[ dict ]
-        }];
-    }
-    
-    NSData *newData = [NSJSONSerialization dataWithJSONObject:@{
-        @"code": @(0),
-        @"message": @"success",
-        @"data": result
-    } options:0 error:nil];
-    
-    NSString *filePath = [NSString stringWithFormat:@"%@/Example20Model.json", path];
-    [NSFileManager.defaultManager createFileAtPath:filePath contents:newData attributes:nil];
-    [result removeAllObjects];
-}
-
 
 #pragma mark - UISceneSession lifecycle
 

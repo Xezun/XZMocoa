@@ -11,7 +11,7 @@
 @implementation Example20Group100SectionModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/list/100/").modelClass = self;
+    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/100/").modelClass = self;
 }
 
 + (NSDictionary<NSString *,id> *)modelContainerPropertyGenericClass {
@@ -30,6 +30,12 @@
 
 - (id)modelForCellAtIndex:(NSInteger)index {
     return [self.items objectAtIndex:index];
+}
+
+- (BOOL)isEqual:(Example20Group100SectionModel *)object {
+    if (self == object) return YES;
+    if (![object isKindOfClass:[Example20Group100SectionModel class]]) return NO;
+    return [self.gid isEqual:object.gid];
 }
 
 @end
