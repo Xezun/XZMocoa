@@ -23,10 +23,12 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 @dynamic viewModel;
 
 + (void)load {
-    Class const cls = UICollectionViewCell.class;
-    xz_mocoa_copyMethod(cls, @selector(collectionView:didSelectItemAtIndexPath:), @selector(xz_mocoa_collectionView:didSelectItemAtIndexPath:));
-    xz_mocoa_copyMethod(cls, @selector(collectionView:willDisplayItemAtIndexPath:), @selector(xz_mocoa_collectionView:willDisplayItemAtIndexPath:));
-    xz_mocoa_copyMethod(cls, @selector(collectionView:didEndDisplayingItemAtIndexPath:), @selector(xz_mocoa_collectionView:didEndDisplayingItemAtIndexPath:));
+    Class const aClass = UICollectionViewCell.class;
+    if (self == aClass) {
+        xz_mocoa_copyMethod(aClass, @selector(collectionView:didSelectItemAtIndexPath:), @selector(xz_mocoa_collectionView:didSelectItemAtIndexPath:));
+        xz_mocoa_copyMethod(aClass, @selector(collectionView:willDisplayItemAtIndexPath:), @selector(xz_mocoa_collectionView:willDisplayItemAtIndexPath:));
+        xz_mocoa_copyMethod(aClass, @selector(collectionView:didEndDisplayingItemAtIndexPath:), @selector(xz_mocoa_collectionView:didEndDisplayingItemAtIndexPath:));
+    }
 }
 
 - (void)xz_mocoa_collectionView:(XZMocoaCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
