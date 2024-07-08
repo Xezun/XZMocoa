@@ -380,7 +380,7 @@ XZMocoaKeyEvents const XZMocoaKeyEventsNone = @"";
 //void __mocoa_bind_4(XZMocoaViewModel *vm, SEL keySel, UIImageView *target, id completion) XZATTR_OVERLOAD {
 //    NSString *key = NSStringFromSelector(keySel);
 //    vm.bind(key, target, ^(id value, UIImageView<XZMocoaImageView> *self, id vm) {
-//        [self mocoa_setImageWithURL:value completion:completion];
+//        [self xz_mocoa_setImageWithURL:value completion:completion];
 //    });
 //
 //    [NSObject automaticallyNotifiesObserversForKey:nil];

@@ -8,8 +8,8 @@
 #import "XZMocoaCollectionViewSupplementaryView.h"
 #import <objc/runtime.h>
 
-static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source) {
-    if (xz_objc_class_copyMethod(cls, target, source)) return;
+static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const source) {
+    if (xz_objc_class_copyMethod(cls, source, nil, target)) return;
     XZLog(@"为协议 XZMocoaCollectionViewSupplementaryView 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
 }
 
@@ -22,15 +22,15 @@ static void mocoa_copyMethod(Class const cls, SEL const target, SEL const source
 
 + (void)load {
     Class const cls = UICollectionReusableView.class;
-    mocoa_copyMethod(cls, @selector(collectionView:willDisplaySupplementaryViewAtIndexPath:), @selector(mocoa_collectionView:willDisplaySupplementaryViewAtIndexPath:));
-    mocoa_copyMethod(cls, @selector(collectionView:didEndDisplayingSupplementaryViewAtIndexPath:), @selector(mocoa_collectionView:didEndDisplayingSupplementaryViewAtIndexPath:));
+    xz_mocoa_copyMethod(cls, @selector(collectionView:willDisplaySupplementaryViewAtIndexPath:), @selector(xz_mocoa_collectionView:willDisplaySupplementaryViewAtIndexPath:));
+    xz_mocoa_copyMethod(cls, @selector(collectionView:didEndDisplayingSupplementaryViewAtIndexPath:), @selector(xz_mocoa_collectionView:didEndDisplayingSupplementaryViewAtIndexPath:));
 }
 
-- (void)mocoa_collectionView:(XZMocoaCollectionView *)collectionView willDisplaySupplementaryViewAtIndexPath:(NSIndexPath *)indexPath {
+- (void)xz_mocoa_collectionView:(XZMocoaCollectionView *)collectionView willDisplaySupplementaryViewAtIndexPath:(NSIndexPath *)indexPath {
     [self.viewModel collectionView:collectionView willDisplaySupplementaryViewAtIndexPath:indexPath];
 }
 
-- (void)mocoa_collectionView:(XZMocoaCollectionView *)collectionView didEndDisplayingSupplementaryViewAtIndexPath:(NSIndexPath *)indexPath {
+- (void)xz_mocoa_collectionView:(XZMocoaCollectionView *)collectionView didEndDisplayingSupplementaryViewAtIndexPath:(NSIndexPath *)indexPath {
     [self.viewModel collectionView:collectionView didEndDisplayingSupplementaryViewAtIndexPath:indexPath];
 }
 
