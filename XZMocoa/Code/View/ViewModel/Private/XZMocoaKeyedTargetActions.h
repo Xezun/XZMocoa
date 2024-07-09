@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class XZMocoaViewModel;
 
 @interface XZMocoaKeyedTargetActions : NSObject
-@property (nonatomic, unsafe_unretained) XZMocoaViewModel *owner;
+@property (nonatomic, unsafe_unretained, readonly) XZMocoaViewModel *owner;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithOwner:(XZMocoaViewModel *)owner;
 - (void)addTarget:(id)target action:(SEL)action forKeyEvents:(NSString *)keyEvents;

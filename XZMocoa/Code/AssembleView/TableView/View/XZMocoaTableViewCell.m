@@ -30,10 +30,12 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 @dynamic viewModel;
 
 + (void)load {
-    Class const cls = UITableViewCell.class;
-    xz_mocoa_copyMethod(cls, @selector(tableView:didSelectRowAtIndexPath:), @selector(xz_mocoa_tableView:didSelectRowAtIndexPath:));
-    xz_mocoa_copyMethod(cls, @selector(tableView:willDisplayRowAtIndexPath:), @selector(xz_mocoa_tableView:willDisplayRowAtIndexPath:));
-    xz_mocoa_copyMethod(cls, @selector(tableView:didEndDisplayingRowAtIndexPath:), @selector(xz_mocoa_tableView:didEndDisplayingRowAtIndexPath:));
+    Class const aClass = UITableViewCell.class;
+    if (self == aClass) {
+        xz_mocoa_copyMethod(aClass, @selector(tableView:didSelectRowAtIndexPath:), @selector(xz_mocoa_tableView:didSelectRowAtIndexPath:));
+        xz_mocoa_copyMethod(aClass, @selector(tableView:willDisplayRowAtIndexPath:), @selector(xz_mocoa_tableView:willDisplayRowAtIndexPath:));
+        xz_mocoa_copyMethod(aClass, @selector(tableView:didEndDisplayingRowAtIndexPath:), @selector(xz_mocoa_tableView:didEndDisplayingRowAtIndexPath:));
+    }
 }
 
 - (void)xz_mocoa_tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

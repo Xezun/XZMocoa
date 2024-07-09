@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example10RootView : UIView
+@interface Example10RootView : UIScrollView
 @property (nonatomic, strong) Example10ContactView *contactView;
 @property (nonatomic, strong) Example10ContentView *contentView;
 @end

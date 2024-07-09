@@ -21,9 +21,11 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 @dynamic viewModel;
 
 + (void)load {
-    Class const cls = UICollectionReusableView.class;
-    xz_mocoa_copyMethod(cls, @selector(collectionView:willDisplaySupplementaryViewAtIndexPath:), @selector(xz_mocoa_collectionView:willDisplaySupplementaryViewAtIndexPath:));
-    xz_mocoa_copyMethod(cls, @selector(collectionView:didEndDisplayingSupplementaryViewAtIndexPath:), @selector(xz_mocoa_collectionView:didEndDisplayingSupplementaryViewAtIndexPath:));
+    Class const aClass = UICollectionReusableView.class;
+    if (self == aClass) {
+        xz_mocoa_copyMethod(aClass, @selector(collectionView:willDisplaySupplementaryViewAtIndexPath:), @selector(xz_mocoa_collectionView:willDisplaySupplementaryViewAtIndexPath:));
+        xz_mocoa_copyMethod(aClass, @selector(collectionView:didEndDisplayingSupplementaryViewAtIndexPath:), @selector(xz_mocoa_collectionView:didEndDisplayingSupplementaryViewAtIndexPath:));
+    }
 }
 
 - (void)xz_mocoa_collectionView:(XZMocoaCollectionView *)collectionView willDisplaySupplementaryViewAtIndexPath:(NSIndexPath *)indexPath {

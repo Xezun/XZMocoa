@@ -189,12 +189,17 @@ FOUNDATION_EXPORT XZMocoaKeyEvents const XZMocoaKeyEventsNone;
 @interface XZMocoaViewModel (XZMocoaViewModelKeyEvents)
 
 /// 添加 target-action 事件。
-/// @note
-/// 由于使用 -performSelector:withObject: 方法，所以 action 方法的必须没有返回值，即返回 void 值，否则可能会引起内存泄漏。
+/// @attention
+/// 绑定的 action 方法，必须无返回值，因为没有针对返回值的内存管理，可能会引起泄漏。可使用如下形式：
+/// @code
+/// - (void)doSomething;
+/// - (void)doSomething:(XZMocoaViewModel *)sender;
+/// - (void)doSomething:(XZMocoaViewModel *)sender forKeyEvents:(XZMocoaKeyEvents)keyEvents;
+/// @endcode
 /// @note
 /// 调用此方法时，target-action 会立即触发一次。
 /// @param target 接收事件的对象
-/// @param action 执行事件的方法，可接收一个参数，无返回值
+/// @param action 执行事件的方法
 /// @param keyEvents 事件，nil 表示添加默认事件
 - (void)addTarget:(id)target action:(SEL)action forKeyEvents:(nullable XZMocoaKeyEvents)keyEvents;
 /// 移除 target-action 事件。

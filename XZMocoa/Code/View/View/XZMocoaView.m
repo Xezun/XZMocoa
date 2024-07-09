@@ -24,19 +24,20 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 @implementation UIResponder (XZMocoaView)
 
 + (void)load {
-    Class const cls = UIResponder.class;
-    
-    xz_mocoa_copyMethod(cls, @selector(viewModel), @selector(xz_mocoa_viewModel));
-    xz_mocoa_copyMethod(cls, @selector(setViewModel:), @selector(xz_mocoa_setViewModel:));
-    xz_mocoa_copyMethod(cls, @selector(viewModelWillChange), @selector(xz_mocoa_viewModelWillChange));
-    xz_mocoa_copyMethod(cls, @selector(viewModelDidChange), @selector(xz_mocoa_viewModelDidChange));
-    
-    xz_mocoa_copyMethod(cls, @selector(viewController), @selector(xz_mocoa_viewController));
-    xz_mocoa_copyMethod(cls, @selector(navigationController), @selector(xz_mocoa_navigationController));
-    xz_mocoa_copyMethod(cls, @selector(tabBarController), @selector(xz_mocoa_tabBarController));
-    
-    xz_mocoa_copyMethod(cls, @selector(shouldPerformSegueWithIdentifier:), @selector(xz_mocoa_shouldPerformSegueWithIdentifier:));
-    xz_mocoa_copyMethod(cls, @selector(prepareForSegue:), @selector(xz_mocoa_prepareForSegue:));
+    Class const aClass = UIResponder.class;
+    if (self == aClass) {
+        xz_mocoa_copyMethod(aClass, @selector(viewModel), @selector(xz_mocoa_viewModel));
+        xz_mocoa_copyMethod(aClass, @selector(setViewModel:), @selector(xz_mocoa_setViewModel:));
+        xz_mocoa_copyMethod(aClass, @selector(viewModelWillChange), @selector(xz_mocoa_viewModelWillChange));
+        xz_mocoa_copyMethod(aClass, @selector(viewModelDidChange), @selector(xz_mocoa_viewModelDidChange));
+        
+        xz_mocoa_copyMethod(aClass, @selector(viewController), @selector(xz_mocoa_viewController));
+        xz_mocoa_copyMethod(aClass, @selector(navigationController), @selector(xz_mocoa_navigationController));
+        xz_mocoa_copyMethod(aClass, @selector(tabBarController), @selector(xz_mocoa_tabBarController));
+        
+        xz_mocoa_copyMethod(aClass, @selector(shouldPerformSegueWithIdentifier:), @selector(xz_mocoa_shouldPerformSegueWithIdentifier:));
+        xz_mocoa_copyMethod(aClass, @selector(prepareForSegue:), @selector(xz_mocoa_prepareForSegue:));
+    }
 }
 
 - (UIViewController *)xz_mocoa_viewControllerImplementation {
@@ -113,23 +114,22 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 // 如果 sender 为 MVVM 的视图，则将事件转发给视图 sender 处理。
 
 + (void)load {
-    Class const cls = UIViewController.class;
-    
-    {
-        SEL const selT = @selector(shouldPerformSegueWithIdentifier:sender:);
-        SEL const selN = @selector(xz_mocoa_new_shouldPerformSegueWithIdentifier:sender:);
-        SEL const selE = @selector(xz_mocoa_exchange_shouldPerformSegueWithIdentifier:sender:);
-        if (xz_objc_class_addMethod(cls, selT, nil, selN, NULL, selE)) {
-            XZLog(@"为 UIViewController 重载方法 %@ 失败，相关事件请手动处理", NSStringFromSelector(selT));
-        }
-    }
-    
-    {
-        SEL const selT = @selector(prepareForSegue:sender:);
-        SEL const selN = @selector(xz_mocoa_new_prepareForSegue:sender:);
-        SEL const selE = @selector(xz_mocoa_exchange_prepareForSegue:sender:);
-        if (xz_objc_class_addMethod(cls, selT, nil, selN, NULL, selE)) {
-            XZLog(@"为 UIViewController 重载方法 %@ 失败，相关事件请手动处理", NSStringFromSelector(selT));
+    Class const aClass = UIViewController.class;
+    if (self == aClass) {
+        {
+            SEL const selT = @selector(shouldPerformSegueWithIdentifier:sender:);
+            SEL const selN = @selector(xz_mocoa_new_shouldPerformSegueWithIdentifier:sender:);
+            SEL const selE = @selector(xz_mocoa_exchange_shouldPerformSegueWithIdentifier:sender:);
+            if (xz_objc_class_addMethod(aClass, selT, nil, selN, NULL, selE)) {
+                XZLog(@"为 UIViewController 重载方法 %@ 失败，相关事件请手动处理", NSStringFromSelector(selT));
+            }
+        } {
+            SEL const selT = @selector(prepareForSegue:sender:);
+            SEL const selN = @selector(xz_mocoa_new_prepareForSegue:sender:);
+            SEL const selE = @selector(xz_mocoa_exchange_prepareForSegue:sender:);
+            if (xz_objc_class_addMethod(aClass, selT, nil, selN, NULL, selE)) {
+                XZLog(@"为 UIViewController 重载方法 %@ 失败，相关事件请手动处理", NSStringFromSelector(selT));
+            }
         }
     }
 }

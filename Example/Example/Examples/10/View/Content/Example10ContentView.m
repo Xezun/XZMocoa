@@ -31,21 +31,21 @@
         _contentLabel.font = [UIFont systemFontOfSize:14.0];
         _contentLabel.numberOfLines = 0;
         [self addSubview:_contentLabel];
+        
+        _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _contentLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        [NSLayoutConstraint activateConstraints:@[
+            [_titleLabel.topAnchor constraintEqualToAnchor:self.topAnchor],
+            [_titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:+20],
+            [_titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-20],
+            
+            [_contentLabel.topAnchor constraintEqualToAnchor:_titleLabel.bottomAnchor constant:20],
+            [_contentLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:+20],
+            [_contentLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-20],
+        ]];
     }
     return self;
-}
-
-- (CGSize)sizeThatFits:(CGSize)size {
-    CGSize contentSize = [_contentLabel sizeThatFits:size];
-    return CGSizeMake(size.width, 30.0 + contentSize.height);
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    CGRect const bounds = self.bounds;
-    _titleLabel.frame = CGRectMake(0, 0, bounds.size.width, 20.0);
-    _contentLabel.frame = CGRectMake(0, 30, bounds.size.width, bounds.size.height - 30.0);
 }
 
 - (NSString *)title {

@@ -12,27 +12,27 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.alwaysBounceVertical = YES;
         _contactView = [Example10ContactView contactView];
         [self addSubview:_contactView];
         _contentView = [[Example10ContentView alloc] init];
         [self addSubview:_contentView];
+        
+        _contactView.translatesAutoresizingMaskIntoConstraints = NO;
+        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
+        [NSLayoutConstraint activateConstraints:@[
+            [_contactView.widthAnchor constraintEqualToAnchor:self.frameLayoutGuide.widthAnchor],
+            [_contactView.topAnchor constraintEqualToAnchor:self.contentLayoutGuide.topAnchor],
+            [_contactView.leadingAnchor constraintEqualToAnchor:self.contentLayoutGuide.leadingAnchor],
+            [_contactView.trailingAnchor constraintEqualToAnchor:self.contentLayoutGuide.trailingAnchor],
+            
+            [_contentView.topAnchor constraintEqualToAnchor:_contactView.bottomAnchor constant:20],
+            [_contentView.leadingAnchor constraintEqualToAnchor:self.contentLayoutGuide.leadingAnchor],
+            [_contentView.trailingAnchor constraintEqualToAnchor:self.contentLayoutGuide.trailingAnchor],
+            [_contentView.bottomAnchor constraintEqualToAnchor:self.contentLayoutGuide.bottomAnchor],
+        ]];
     }
     return self;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    CGRect const bounds = UIEdgeInsetsInsetRect(self.bounds, self.safeAreaInsets);
-    _contactView.frame = bounds;
-    [_contactView sizeToFit];
-    
-    _contentView.frame = bounds;
-    [_contentView sizeToFit];
-    
-    CGRect frame = _contentView.frame;
-    frame.origin.y = CGRectGetMaxY(_contactView.frame) + 20;
-    _contentView.frame = frame;
 }
 
 @end
