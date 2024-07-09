@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <XZMocoa/XZMocoaViewModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) SEL action;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithTarget:(id)target action:(SEL)action;
-- (void)sendActionWithObject:(id)object;
+- (void)sendActionWithObject:(id)object forKeyEvents:(XZMocoaKeyEvents)keyEvents;
 @end
 
 NS_ASSUME_NONNULL_END
