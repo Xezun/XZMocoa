@@ -23,12 +23,8 @@
     self.wrapperView.clipsToBounds = YES;
 }
 
-- (CGSize)sizeThatFits:(CGSize)size {
-    if (_addressLabel.text.length == 0) {
-        return CGSizeMake(size.width, 12.0);
-    }
-    CGSize addressSize = [_addressLabel sizeThatFits:CGSizeMake(size.width - 40.0, 0)];
-    return CGSizeMake(size.width, 20.0 + 80.0 + 10.0 + addressSize.height + 20.0);
+- (void)layoutSubviews {
+    [super layoutSubviews];
 }
 
 - (void)viewModelDidChange {
@@ -38,6 +34,8 @@
     [self.photoImageView sd_setImageWithURL:viewModel.photo];
     self.phoneLabel.text = viewModel.phone;
     self.addressLabel.text = viewModel.address;
+    
+    [self invalidateIntrinsicContentSize];
 }
 
 @end
