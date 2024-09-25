@@ -26,7 +26,7 @@
     
     // 解决 UIScrollView 屏蔽了 cell 的点击事件的问题
     self.pageView.userInteractionEnabled = NO;
-    [self addGestureRecognizer:self.pageView.scrollView.panGestureRecognizer];
+    [self addGestureRecognizer:self.pageView.panGestureRecognizer];
     
     self.pageView.isLooped = YES;
     self.pageControl.currentIndicatorShape = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 10, 6.0) cornerRadius:3.0];
