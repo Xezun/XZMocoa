@@ -356,28 +356,28 @@ XZMocoaKeyEvents const XZMocoaKeyEventsNone = @"";
 //
 //@end
 //
-//void __mocoa_bind_3(XZMocoaViewModel *vm, SEL keySel, UILabel *target) XZATTR_OVERLOAD {
+//void __mocoa_bind_3(XZMocoaViewModel *vm, SEL keySel, UILabel *target) XZ_ATTR_OVERLOAD {
 //    NSString *key = NSStringFromSelector(keySel);
 //    vm.bind(key, target, ^(id value, UILabel *self, id vm) {
 //        self.text = value;
 //    });
 //}
 //
-//void __mocoa_bind_3(XZMocoaViewModel *vm, SEL keySel, UIImageView *target) XZATTR_OVERLOAD {
+//void __mocoa_bind_3(XZMocoaViewModel *vm, SEL keySel, UIImageView *target) XZ_ATTR_OVERLOAD {
 //    NSString *key = NSStringFromSelector(keySel);
 //    vm.bind(key, target, ^(id value, UIImageView *self, id vm) {
 //        self.image = value;
 //    });
 //}
 //
-//void __mocoa_bind_4(XZMocoaViewModel *vm, SEL keySel, UILabel *target, id no) XZATTR_OVERLOAD {
+//void __mocoa_bind_4(XZMocoaViewModel *vm, SEL keySel, UILabel *target, id no) XZ_ATTR_OVERLOAD {
 //    NSString *key = NSStringFromSelector(keySel);
 //    vm.bind(key, target, ^(id value, UILabel *self, id vm) {
 //        self.attributedText = value;
 //    });
 //}
 //
-//void __mocoa_bind_4(XZMocoaViewModel *vm, SEL keySel, UIImageView *target, id completion) XZATTR_OVERLOAD {
+//void __mocoa_bind_4(XZMocoaViewModel *vm, SEL keySel, UIImageView *target, id completion) XZ_ATTR_OVERLOAD {
 //    NSString *key = NSStringFromSelector(keySel);
 //    vm.bind(key, target, ^(id value, UIImageView<XZMocoaImageView> *self, id vm) {
 //        [self xz_mocoa_setImageWithURL:value completion:completion];
@@ -386,7 +386,7 @@ XZMocoaKeyEvents const XZMocoaKeyEventsNone = @"";
 //    [NSObject automaticallyNotifiesObserversForKey:nil];
 //}
 //
-//void __mocoa_bind_5(XZMocoaViewModel *vm, SEL keySel, id target, SEL setter, id no) XZATTR_OVERLOAD {
+//void __mocoa_bind_5(XZMocoaViewModel *vm, SEL keySel, id target, SEL setter, id no) XZ_ATTR_OVERLOAD {
 //    NSString *key = NSStringFromSelector(keySel);
 //    vm.bind(key, target, ^(id value, NSObject *self, id vm) {
 //#pragma clang diagnostic push
@@ -396,6 +396,6 @@ XZMocoaKeyEvents const XZMocoaKeyEventsNone = @"";
 //    });
 //}
 //
-//void __mocoa_bind_5(XZMocoaViewModel *vm, SEL keySel, id target, XZMocoaAction action, id no) XZATTR_OVERLOAD {
+//void __mocoa_bind_5(XZMocoaViewModel *vm, SEL keySel, id target, XZMocoaAction action, id no) XZ_ATTR_OVERLOAD {
 //    vm.bind(NSStringFromSelector(keySel), target, action);
 //}
