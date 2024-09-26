@@ -34,7 +34,7 @@
     // 通过 url 参数传值
     Example20Group100CellModel *model = self.model;
     NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/content/"];
-    [tableView.navigationController pushViewControllerWithMocoaURL:url options:@{ @"url": model.url }];
+    [tableView.navigationController pushMocoaURL:url options:@{ @"url": model.url }];
 }
 
 @end

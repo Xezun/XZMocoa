@@ -31,7 +31,7 @@
     NSArray<Example20Group102CellModel *> *models = self.model;
     Example20Group102CellModel *model = models[self.currentIndex];
     NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/content/"];
-    [tableView.navigationController pushViewControllerWithMocoaURL:url options:@{ @"url": model.url }];
+    [tableView.navigationController pushMocoaURL:url options:@{ @"url": model.url }];
 }
 
 @end

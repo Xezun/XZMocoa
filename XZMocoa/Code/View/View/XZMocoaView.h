@@ -95,38 +95,43 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param url XZMocoaURL
 /// @param animated 是否动画
 /// @param completion 回调
-- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated completion:(void (^_Nullable)(void))completion;
-- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options completion:(void (^_Nullable)(void))completion;
-- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated;
-- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated completion:(void (^_Nullable)(void))completion;
-- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated;
-- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url completion:(void (^_Nullable)(void))completion;
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated completion:(void (^_Nullable)(void))completion;
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options completion:(void (^_Nullable)(void))completion;
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated;
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url animated:(BOOL)animated completion:(void (^_Nullable)(void))completion;
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url animated:(BOOL)animated;
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url completion:(void (^_Nullable)(void))completion;
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated completion:(void (^_Nullable)(void))completion API_DEPRECATED_WITH_REPLACEMENT("-presentMocoaURL:animated:completion:", ios(1.0, 12.0));
 
 /// 通过 XZMocoaURL 添加子控制器。
 /// @discussion 如果 XZMocoaURL 没有对应的控制器，那么此方法将不产生任何效果。
 /// @param url XZMocoaURL
-- (nullable __kindof UIViewController *)addChildViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options;
-- (nullable __kindof UIViewController *)addChildViewControllerWithMocoaURL:(nullable NSURL *)url;
-
+- (nullable __kindof UIViewController *)addChildMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options;
+- (nullable __kindof UIViewController *)addChildMocoaURL:(nullable NSURL *)url;
+- (nullable __kindof UIViewController *)addChildViewControllerWithMocoaURL:(nullable NSURL *)url API_DEPRECATED_WITH_REPLACEMENT("-addChildMocoaURL:", ios(1.0, 12.0));
 @end
+
+@class CADisplayLink;
 
 @interface UINavigationController (XZMocoaModuleSupporting)
 
 /// 通过 XZMocoaURL 创建根控制器初始化。
 /// @discussion 如果没有找到 XZMocoaURL 对应的控制器，那么将调用 -init 方法进行初始化。
 /// @param url XZMocoaURL
-- (instancetype)initWithRootViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options;
+- (instancetype)initWithRootMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options;
 /// 通过 XZMocoaURL 创建根控制器初始化。
-- (instancetype)initWithRootViewControllerWithMocoaURL:(nullable NSURL *)url;
+- (instancetype)initWithRootMocoaURL:(nullable NSURL *)url;
+- (instancetype)initWithRootViewControllerWithMocoaURL:(nullable NSURL *)url API_DEPRECATED_WITH_REPLACEMENT("-initWithRootMocoaURL:", ios(1.0, 12.0));
 
 /// 通过 XZMocoaURL 压栈子控制器。
 /// @discussion 如果 XZMocoaURL 没有对应的控制器，那么此方法将不产生任何效果。
 /// @param url XZMocoaURL
 /// @param animated 是否动画。
 /// @param options 参数
-- (nullable __kindof UIViewController *)pushViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated;
-- (nullable __kindof UIViewController *)pushViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated;
-- (nullable __kindof UIViewController *)pushViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options;
+- (nullable __kindof UIViewController *)pushMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated;
+- (nullable __kindof UIViewController *)pushMocoaURL:(nullable NSURL *)url animated:(BOOL)animated;
+- (nullable __kindof UIViewController *)pushMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options;
+- (nullable __kindof UIViewController *)pushViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated API_DEPRECATED_WITH_REPLACEMENT("-pushMocoaURL:animated:", ios(1.0, 12.0));
 
 @end
 
@@ -136,8 +141,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// @discussion 如果某个 XZMocoaURL 没有对应的控制器，那么该 XZMocoaURL 会被忽略。
 /// @param urls XZMocoaURLs
 /// @param animated 是否动画
-- (nullable NSArray<__kindof UIViewController *> *)setViewControllersWithMocoaURLs:(nullable NSArray<NSURL *> *)urls animated:(BOOL)animated;
-
+- (nullable NSArray<__kindof UIViewController *> *)setMocoaURLs:(nullable NSArray<NSURL *> *)urls animated:(BOOL)animated;
+- (nullable NSArray<__kindof UIViewController *> *)setViewControllersWithMocoaURLs:(nullable NSArray<NSURL *> *)urls animated:(BOOL)animated API_DEPRECATED_WITH_REPLACEMENT("-setMocoaURLs:animated:", ios(1.0, 12.0));
 @end
 
 NS_ASSUME_NONNULL_END

@@ -40,7 +40,7 @@
     // 通过模块初始化传递参数
     Example20Group101CellModel *model = self.model;
     NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/content/"];
-    [tableView.navigationController pushViewControllerWithMocoaURL:url options:@{ @"url": model.url } animated:YES];
+    [tableView.navigationController pushMocoaURL:url options:@{ @"url": model.url } animated:YES];
 }
 
 @end

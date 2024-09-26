@@ -272,7 +272,7 @@ view.viewModel = viewModel;
 ```objc
 UIView<XZMocoaView> *view;
 NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/main"];
-[view.navigationController pushViewControllerWithMocoaURL:url animated:YES];
+[view.navigationController pushMocoaURL:url animated:YES];
 ```
 
 即，我们可以通过页面模块的`URL`直接打开页面。
@@ -456,10 +456,10 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 
 ```objc
 // UIViewController
-- (void)presentViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)flag completion:(void (^_Nullable)(void))completion;
-- (void)addChildViewControllerWithMocoaURL:(nullable NSURL *)url;
+- (void)presentMocoaURL:(nullable NSURL *)url animated:(BOOL)flag completion:(void (^_Nullable)(void))completion;
+- (void)addChildMocoaURL:(nullable NSURL *)url;
 // UINavigationController
-- (void)pushViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated;
+- (void)pushMocoaURL:(nullable NSURL *)url animated:(BOOL)animated;
 ```
 
 #### 3、target-action
