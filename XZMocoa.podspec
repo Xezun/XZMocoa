@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XZMocoa'
-  s.version          = '1.1.4'
+  s.version          = '1.1.5'
   s.summary          = 'An iOS MVVM library.'
 
 # This description is used to generate tags and improve search results.
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-  一款轻量级的基于 Apple 原生风格的 MVVM 开源框架，上手简单好用。
+                      一款 Apple 原生风格的、轻量级的 MVVM 开源框架，上手简单好用。
                        DESC
 
   s.homepage         = 'https://github.com/Xezun/XZMocoa'
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/Xezun/XZMocoa.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '12.0'
   s.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'XZ_FRAMEWORK=1' }
   
   s.default_subspec = 'Code'

@@ -11,6 +11,7 @@
 // Model
 #import "Example10ContactViewModel.h"
 #import "Example10Model.h"
+@import XZExtensions;
 
 
 @import YYModel;
@@ -49,7 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = UIColor.systemGray6Color;
+    self.view.backgroundColor = rgb(0xEEEEEE);
     self.additionalSafeAreaInsets = UIEdgeInsetsMake(15.0, 15.0, 15.0, 15.0);
     
     [self loadData];

@@ -6,6 +6,7 @@
 //
 
 #import "Example31Group110HeaderView.h"
+@import XZExtensions;
 
 @interface Example31Group110HeaderView ()
 @property (nonatomic, strong) UILabel *textLabel;
@@ -21,7 +22,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = UIColor.systemIndigoColor;
+        self.backgroundColor = rgb(6, 82, 121);
         
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
         [self addSubview:_textLabel];
