@@ -16,6 +16,11 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
     XZLog(@"为协议 XZMocoaView 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
 }
 
+@interface XZMocoaOptions ()
+- (instancetype)initWithURL:(nonnull NSURL *)url options:(nullable NSDictionary *)options;
+@end
+
+
 #pragma mark - XZMocoaView 协议默认实现
 
 @interface UIResponder (XZMocoaView) <XZMocoaView>
@@ -164,60 +169,124 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 
 @end
 
-@implementation XZMocoaModule (UIViewControllerInstantiation)
 
-- (__kindof UIViewController *)instantiateViewControllerWithOptions:(XZMocoaOptions)options {
-    Class const ViewController = self.viewClass;
-    if (![ViewController isSubclassOfClass:UIViewController.class]) {
-        XZLog(@"当前模块 %@ 不是 UIViewController 模块，无法构造视图控制器", self);
+
+@implementation UIView (XZMocoaModuleSupporting)
+
++ (__kindof UIView *)viewWithMocoaURL:(NSURL *)url options:(NSDictionary *)options frame:(CGRect)frame {
+    XZMocoaModule * const module = [XZMocoaModule moduleForURL:url];
+    if (module == nil) {
         return nil;
     }
-    NSString *nibName = self.viewNibName;
-    NSBundle *bundle  = self.viewNibBundle;
-    return [[ViewController alloc] initWithMocoaOptions:options nibName:nibName bundle:bundle];
-}
-
-- (__kindof UIView *)instantiateViewWithFrame:(CGRect)frame {
-    if (self.viewNibName) {
-        UINib *nib = [UINib nibWithNibName:self.viewNibName bundle:self.viewNibBundle];
+    if (module.viewNibName) {
+        UINib *nib = [UINib nibWithNibName:module.viewNibName bundle:module.viewNibBundle];
         for (UIView *object in [nib instantiateWithOwner:nil options:nil]) {
-            if ([object isKindOfClass:self.viewNibClass]) {
-                object.frame = frame;
+            if ([object isKindOfClass:module.viewNibClass]) {
+                XZMocoaOptions * const mocoaOptions = [[XZMocoaOptions alloc] initWithURL:url options:options];
+                [object awakeWithMocoaOptions:mocoaOptions frame:frame];
                 return object;
-            };
+            }
         }
     }
-    return [[self.viewClass alloc] initWithFrame:frame];
+    XZMocoaOptions * const mocoaOptions = [[XZMocoaOptions alloc] initWithURL:url options:options];
+    return [[module.viewClass alloc] initWithMocoaOptions:mocoaOptions frame:frame];
+}
+
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options {
+    return [self viewWithMocoaURL:url options:options frame:CGRectZero];
+}
+
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url frame:(CGRect)frame {
+    return [self viewWithMocoaURL:url options:nil frame:frame];
+}
+
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url {
+    return [self viewWithMocoaURL:url options:nil frame:CGRectZero];
+}
+
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options frame:(CGRect)frame {
+    return [self initWithFrame:frame];
+}
+
+- (void)awakeWithMocoaOptions:(XZMocoaOptions *)options frame:(CGRect)frame {
+    self.frame = frame;
 }
 
 @end
 
-
 @implementation UIViewController (XZMocoaModuleSupporting)
 
-+ (__kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url {
-    XZMocoaOptions const options = [XZURLQuery queryForURL:url].dictionaryRepresentation;
-    return [[XZMocoaModule moduleForURL:url] instantiateViewControllerWithOptions:options];
++ (__kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options {
+    XZMocoaModule *module = [XZMocoaModule moduleForURL:url];
+    if (module == nil) {
+        return nil;
+    }
+    
+    Class const ViewController = module.viewClass;
+    if (![ViewController isSubclassOfClass:UIViewController.class]) {
+        XZLog(@"模块 %@ 不是 UIViewController 模块，无法构造视图控制器", module);
+        return nil;
+    }
+    NSString *nibName = module.viewNibName;
+    NSBundle *bundle  = module.viewNibBundle;
+    XZMocoaOptions * const mocoaOptions = [[XZMocoaOptions alloc] initWithURL:url options:options];
+    return [[ViewController alloc] initWithMocoaOptions:mocoaOptions nibName:nibName bundle:bundle];
 }
 
-- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
++ (__kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url {
+    return [self viewControllerWithMocoaURL:url options:nil];
+}
+
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
     return [self initWithNibName:nibName bundle:bundle];
 }
 
-- (__kindof UIViewController *)presentViewControllerWithMocoaURL:(NSURL *)url animated:(BOOL)flag completion:(void (^)(void))completion {
-    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url];
+- (__kindof UIViewController *)presentMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)flag completion:(void (^ _Nullable)(void))completion {
+    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url options:options];
     if (nextVC != nil) {
         [self presentViewController:nextVC animated:flag completion:completion];
     }
     return nextVC;
 }
 
-- (__kindof UIViewController *)addChildViewControllerWithMocoaURL:(NSURL *)url {
-    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url];
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options completion:(void (^_Nullable)(void))completion {
+    return [self presentMocoaURL:url options:options animated:YES completion:completion];
+}
+
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated {
+    return [self presentMocoaURL:url options:options animated:animated completion:nil];
+}
+
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url animated:(BOOL)animated completion:(void (^_Nullable)(void))completion {
+    return [self presentMocoaURL:url options:nil animated:animated completion:completion];
+}
+
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url animated:(BOOL)animated {
+    return [self presentMocoaURL:url options:nil animated:animated completion:nil];
+}
+
+- (nullable __kindof UIViewController *)presentMocoaURL:(nullable NSURL *)url completion:(void (^_Nullable)(void))completion {
+    return [self presentMocoaURL:url options:nil animated:nil completion:completion];
+}
+
+- (__kindof UIViewController *)presentViewControllerWithMocoaURL:(NSURL *)url animated:(BOOL)animated completion:(void (^)(void))completion {
+    return [self presentMocoaURL:url animated:animated completion:completion];
+}
+
+- (__kindof UIViewController *)addChildMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options {
+    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url options:options];
     if (nextVC != nil) {
         [self addChildViewController:nextVC];
     }
     return nextVC;
+}
+
+- (__kindof UIViewController *)addChildMocoaURL:(NSURL *)url {
+    return [self addChildMocoaURL:url options:nil];
+}
+
+- (__kindof UIViewController *)addChildViewControllerWithMocoaURL:(NSURL *)url {
+    return [self addChildMocoaURL:url];
 }
 
 @end
@@ -226,20 +295,40 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 
 @implementation UINavigationController (XZMocoaModuleSupporting)
 
-- (instancetype)initWithRootViewControllerWithMocoaURL:(NSURL *)url {
-    UIViewController *rootVC = [UIViewController viewControllerWithMocoaURL:url];
+- (instancetype)initWithRootMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options {
+    UIViewController *rootVC = [UIViewController viewControllerWithMocoaURL:url options:options];
     if (rootVC == nil) {
         return [self init];
     }
     return [self initWithRootViewController:rootVC];
 }
 
-- (__kindof UIViewController *)pushViewControllerWithMocoaURL:(NSURL *)url animated:(BOOL)animated {
-    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url];
+- (instancetype)initWithRootMocoaURL:(NSURL *)url {
+    return [self initWithRootMocoaURL:url options:nil];
+}
+
+- (instancetype)initWithRootViewControllerWithMocoaURL:(NSURL *)url {
+    return [self initWithRootMocoaURL:url];
+}
+
+- (__kindof UIViewController *)pushMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated {
+    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url options:options];
     if (nextVC != nil) {
         [self pushViewController:nextVC animated:animated];
     }
     return nextVC;
+}
+
+- (__kindof UIViewController *)pushMocoaURL:(NSURL *)url options:(NSDictionary *)options {
+    return [self pushMocoaURL:url options:options animated:YES];
+}
+
+- (__kindof UIViewController *)pushMocoaURL:(NSURL *)url animated:(BOOL)animated {
+    return [self pushMocoaURL:url options:nil animated:animated];
+}
+
+- (__kindof UIViewController *)pushViewControllerWithMocoaURL:(NSURL *)url animated:(BOOL)animated {
+    return [self pushMocoaURL:url animated:animated];
 }
 
 @end
@@ -248,12 +337,99 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 
 @implementation UITabBarController (XZMocoaModuleSupporting)
 
-- (NSArray<__kindof UIViewController *> *)setViewControllersWithMocoaURLs:(NSArray<NSURL *> *)urls animated:(BOOL)animated {
+- (NSArray<__kindof UIViewController *> *)setMocoaURLs:(NSArray<NSURL *> *)urls animated:(BOOL)animated {
     NSArray *viewControllers = [urls xz_compactMap:^id(NSURL *url, NSInteger idx, BOOL *stop) {
         return [UIViewController viewControllerWithMocoaURL:url];
     }];
     [self setViewControllers:viewControllers animated:animated];
     return viewControllers;
+}
+
+- (NSArray<__kindof UIViewController *> *)setViewControllersWithMocoaURLs:(NSArray<NSURL *> *)urls animated:(BOOL)animated {
+    return [self setMocoaURLs:urls animated:animated];
+}
+
+@end
+
+
+@implementation XZMocoaOptions {
+    NSURL *_url;
+    NSMutableDictionary *_options;
+    NSURLComponents *_components;
+}
+
+- (instancetype)initWithURL:(NSURL *)url options:(NSDictionary *)options {
+    self = [super init];
+    if (self) {
+        _url = url;
+        _options = options.mutableCopy;
+    }
+    return self;
+}
+
+- (NSURL *)url {
+    return _url;
+}
+
+- (NSDictionary *)options {
+    [self mergesURLQuery];
+    return _options;
+}
+
+- (BOOL)containsKey:(NSString *)aKey {
+    return self[aKey] || _options[aKey];
+}
+
+- (id)valueForKey:(NSString *)key {
+    return [self objectForKeyedSubscript:key];
+}
+
+- (id)objectForKeyedSubscript:(NSString *)key {
+    // 直接读值
+    id value = _options[key];
+    if (value != nil) {
+        return value == NSNull.null ? nil : value;
+    }
+    
+    // 合并参数
+    if ([self mergesURLQuery]) {
+        return nil;
+    }
+    
+    // 重新读值
+    value = _options[key];
+    return value == NSNull.null ? nil : value;
+}
+
+- (BOOL)mergesURLQuery {
+    if (_components) {
+        return YES;
+    }
+    _components = [NSURLComponents componentsWithURL:_url resolvingAgainstBaseURL:NO];
+    NSArray<NSURLQueryItem *> * const queryItems = _components.queryItems;
+    NSMutableDictionary *keyedValues = [NSMutableDictionary dictionaryWithCapacity:queryItems.count];
+    [queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *       const name     = obj.name;
+        id               const newValue = obj.value ?: NSNull.null;
+        NSMutableArray * const oldValue = keyedValues[name];
+        if (oldValue == nil) {
+            keyedValues[name] = newValue;
+        } else if ([oldValue isKindOfClass:NSMutableArray.class]) {
+            [oldValue addObject:newValue];
+        } else {
+            keyedValues[name] = [NSMutableArray arrayWithObjects:oldValue, newValue, nil];
+        }
+    }];
+    if (_options == nil) {
+        _options = keyedValues;
+    } else {
+        [keyedValues enumerateKeysAndObjectsUsingBlock:^(NSString *key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            if (!_options[key]) {
+                _options[key] = obj;
+            }
+        }];
+    }
+    return NO;
 }
 
 @end

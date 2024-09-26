@@ -29,7 +29,7 @@
     XZMocoa(@"https://mocoa.xezun.com/examples/11/").viewNibClass = self;
 }
 
-- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle {
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle {
     self = [super initWithMocoaOptions:options nibName:nibName bundle:bundle];
     if (self) {
         self.title = @"Example 11";

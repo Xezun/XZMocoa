@@ -8,7 +8,6 @@
 #import "Example20ContentViewController.h"
 @import XZMocoa;
 @import WebKit;
-@import XZURLQuery;
 
 @interface Example20ContentViewController ()
 
@@ -22,7 +21,7 @@
     XZMocoa(@"https://mocoa.xezun.com/examples/20/content/").viewNibClass = self;
 }
 
-- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
     self = [super initWithMocoaOptions:options nibName:nibName bundle:bundle];
     if (self) {
         self.title = @"WebView";

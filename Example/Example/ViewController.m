@@ -73,7 +73,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSURL *url = _dataArray[indexPath.section][indexPath.row][@"url"];
-    [self.navigationController pushViewControllerWithMocoaURL:url animated:YES];
+    [self.navigationController pushMocoaURL:url animated:YES];
 }
 
 @end
