@@ -40,10 +40,8 @@
 - (void)tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // 通过模块初始化传递参数
     Example20Group101CellModel *model = self.model;
-    UIViewController *nextVC = [XZMocoa(@"https://mocoa.xezun.com/examples/20/content/") instantiateViewControllerWithOptions:@{
-        @"url": model.url
-    }];
-    [tableView.navigationController pushViewController:nextVC animated:YES];
+    NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/content/"];
+    [tableView.navigationController pushViewControllerWithMocoaURL:url options:@{ @"url": model.url } animated:YES];
 }
 
 @end

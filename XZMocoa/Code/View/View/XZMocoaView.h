@@ -46,18 +46,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// @typedef
 /// 模块初始化参数。
-typedef NSDictionary<NSString *, id> *XZMocoaOptions;
+@protocol XZMocoaOptions <NSObject>
+@optional
+@property (nonatomic, readonly) NSURL *url;
+- (nullable id)objectForKeyedSubscript:(NSString *)key;
+@end
 
-@class UIStoryboard;
-@interface XZMocoaModule (UIViewControllerInstantiation)
-/// 实例化视图控制器模块中的 View 元素。
-/// - Parameter options: 实例化参数，传递给控制器的初始化参数
-- (nullable __kindof UIViewController *)instantiateViewControllerWithOptions:(nullable XZMocoaOptions)options;
-/// 实例化视图模块中的 View 元素。
-/// - Parameter frame: frame
-- (nullable __kindof UIView *)instantiateViewWithFrame:(CGRect)frame;
+/// 模块初始化参数。可像字典一样去值。
+/// @code
+/// XZMocoaOptions options;
+/// id value = options[@"value"];
+/// @endcode
+typedef id<XZMocoaOptions> XZMocoaOptions;
+
+@interface UIView (XZMocoaModuleSupporting)
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options frame:(CGRect)frame;
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options;
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url frame:(CGRect)frame;
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url;
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options frame:(CGRect)frame;
+- (void)awakeWithMocoaOptions:(XZMocoaOptions)options frame:(CGRect)frame;
 @end
 
 
@@ -67,6 +76,10 @@ typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 /// @discussion
 /// 参数 url 的 query 将作为 options 参数，调用 -viewControllerWithMocoaModule:options: 方法完成实例化控制器。
 /// @param url 模块地址
+/// @param options 额外参数
++ (nullable __kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options;
+
+/// 根据视图控制器的模块地址，构造视图控制器。
 + (nullable __kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url;
 
 /// XZMocoa 使用此方法初始化控制器。
@@ -80,13 +93,19 @@ typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 /// 通过 XZMocoaURL 弹出层控制器。
 /// @discussion 如果 XZMocoaURL 没有对应的控制器，那么此方法将不产生任何效果。
 /// @param url XZMocoaURL
-/// @param flag 是否动画
+/// @param animated 是否动画
 /// @param completion 回调
-- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)flag completion:(void (^_Nullable)(void))completion;
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated completion:(void (^_Nullable)(void))completion;
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options completion:(void (^_Nullable)(void))completion;
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated;
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated completion:(void (^_Nullable)(void))completion;
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated;
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url completion:(void (^_Nullable)(void))completion;
 
 /// 通过 XZMocoaURL 添加子控制器。
 /// @discussion 如果 XZMocoaURL 没有对应的控制器，那么此方法将不产生任何效果。
 /// @param url XZMocoaURL
+- (nullable __kindof UIViewController *)addChildViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options;
 - (nullable __kindof UIViewController *)addChildViewControllerWithMocoaURL:(nullable NSURL *)url;
 
 @end
@@ -96,13 +115,18 @@ typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 /// 通过 XZMocoaURL 创建根控制器初始化。
 /// @discussion 如果没有找到 XZMocoaURL 对应的控制器，那么将调用 -init 方法进行初始化。
 /// @param url XZMocoaURL
+- (instancetype)initWithRootViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options;
+/// 通过 XZMocoaURL 创建根控制器初始化。
 - (instancetype)initWithRootViewControllerWithMocoaURL:(nullable NSURL *)url;
 
 /// 通过 XZMocoaURL 压栈子控制器。
 /// @discussion 如果 XZMocoaURL 没有对应的控制器，那么此方法将不产生任何效果。
 /// @param url XZMocoaURL
 /// @param animated 是否动画。
+/// @param options 参数
+- (nullable __kindof UIViewController *)pushViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated;
 - (nullable __kindof UIViewController *)pushViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated;
+- (nullable __kindof UIViewController *)pushViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options;
 
 @end
 
@@ -116,6 +140,9 @@ typedef NSDictionary<NSString *, id> *XZMocoaOptions;
 
 @end
 
+
+@interface XZURLQuery (XZMocoaOptions) <XZMocoaOptions>
+@end
 
 NS_ASSUME_NONNULL_END
 

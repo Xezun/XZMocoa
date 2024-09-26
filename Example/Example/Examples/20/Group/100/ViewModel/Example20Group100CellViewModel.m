@@ -34,8 +34,8 @@
 - (void)tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // 通过 url 参数传值
     Example20Group100CellModel *model = self.model;
-    NSURL *url = [NSURL xz_URLWithFormat:@"https://mocoa.xezun.com/examples/20/content/?url=%@", model.url.xz_stringByAddingPercentEncoding];
-    [tableView.navigationController pushViewControllerWithMocoaURL:url animated:YES];
+    NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/content/"];
+    [tableView.navigationController pushViewControllerWithMocoaURL:url options:@{ @"url": model.url }];
 }
 
 @end

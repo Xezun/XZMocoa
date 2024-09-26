@@ -164,60 +164,120 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 
 @end
 
-@implementation XZMocoaModule (UIViewControllerInstantiation)
 
-- (__kindof UIViewController *)instantiateViewControllerWithOptions:(XZMocoaOptions)options {
-    Class const ViewController = self.viewClass;
-    if (![ViewController isSubclassOfClass:UIViewController.class]) {
-        XZLog(@"当前模块 %@ 不是 UIViewController 模块，无法构造视图控制器", self);
+
+@implementation UIView (XZMocoaModuleSupporting)
+
++ (__kindof UIView *)viewWithMocoaURL:(NSURL *)url options:(NSDictionary *)options frame:(CGRect)frame {
+    XZMocoaModule * const module = [XZMocoaModule moduleForURL:url];
+    if (module == nil) {
         return nil;
     }
-    NSString *nibName = self.viewNibName;
-    NSBundle *bundle  = self.viewNibBundle;
-    return [[ViewController alloc] initWithMocoaOptions:options nibName:nibName bundle:bundle];
-}
-
-- (__kindof UIView *)instantiateViewWithFrame:(CGRect)frame {
-    if (self.viewNibName) {
-        UINib *nib = [UINib nibWithNibName:self.viewNibName bundle:self.viewNibBundle];
+    XZURLQuery * const query = [XZURLQuery queryForURL:url];
+    if (options) {
+        [query setFieldsWithDictionary:options];
+    }
+    if (module.viewNibName) {
+        UINib *nib = [UINib nibWithNibName:module.viewNibName bundle:module.viewNibBundle];
         for (UIView *object in [nib instantiateWithOwner:nil options:nil]) {
-            if ([object isKindOfClass:self.viewNibClass]) {
-                object.frame = frame;
+            if ([object isKindOfClass:module.viewNibClass]) {
+                [object awakeWithMocoaOptions:query frame:frame];
                 return object;
-            };
+            }
         }
     }
-    return [[self.viewClass alloc] initWithFrame:frame];
+    return [[module.viewClass alloc] initWithMocoaOptions:query frame:frame];
+}
+
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options {
+    return [self viewWithMocoaURL:url options:options frame:CGRectZero];
+}
+
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url frame:(CGRect)frame {
+    return [self viewWithMocoaURL:url options:nil frame:frame];
+}
+
++ (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url {
+    return [self viewWithMocoaURL:url options:nil frame:CGRectZero];
+}
+
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options frame:(CGRect)frame {
+    return [self initWithFrame:frame];
+}
+
+- (void)awakeWithMocoaOptions:(XZMocoaOptions)options frame:(CGRect)frame {
+    self.frame = frame;
 }
 
 @end
 
-
 @implementation UIViewController (XZMocoaModuleSupporting)
 
++ (__kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options {
+    XZMocoaModule *module = [XZMocoaModule moduleForURL:url];
+    if (module == nil) {
+        return nil;
+    }
+    XZURLQuery * const query = [XZURLQuery queryForURL:url];
+    if (options) {
+        [query setFieldsWithDictionary:options];
+    }
+    Class const ViewController = module.viewClass;
+    if (![ViewController isSubclassOfClass:UIViewController.class]) {
+        XZLog(@"模块 %@ 不是 UIViewController 模块，无法构造视图控制器", module);
+        return nil;
+    }
+    NSString *nibName = module.viewNibName;
+    NSBundle *bundle  = module.viewNibBundle;
+    return [[ViewController alloc] initWithMocoaOptions:query nibName:nibName bundle:bundle];
+}
+
 + (__kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url {
-    XZMocoaOptions const options = [XZURLQuery queryForURL:url].dictionaryRepresentation;
-    return [[XZMocoaModule moduleForURL:url] instantiateViewControllerWithOptions:options];
+    return [self viewControllerWithMocoaURL:url options:nil];
 }
 
 - (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
     return [self initWithNibName:nibName bundle:bundle];
 }
 
-- (__kindof UIViewController *)presentViewControllerWithMocoaURL:(NSURL *)url animated:(BOOL)flag completion:(void (^)(void))completion {
-    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url];
+- (__kindof UIViewController *)presentViewControllerWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)flag completion:(void (^ _Nullable)(void))completion {
+    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url options:options];
     if (nextVC != nil) {
         [self presentViewController:nextVC animated:flag completion:completion];
     }
     return nextVC;
 }
 
-- (__kindof UIViewController *)addChildViewControllerWithMocoaURL:(NSURL *)url {
-    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url];
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options completion:(void (^_Nullable)(void))completion {
+    return [self presentViewControllerWithMocoaURL:url options:options animated:YES completion:completion];
+}
+
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated {
+    return [self presentViewControllerWithMocoaURL:url options:options animated:animated completion:nil];
+}
+
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated completion:(void (^_Nullable)(void))completion {
+    return [self presentViewControllerWithMocoaURL:url options:nil animated:animated completion:completion];
+}
+
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url animated:(BOOL)animated {
+    return [self presentViewControllerWithMocoaURL:url options:nil animated:animated completion:nil];
+}
+
+- (nullable __kindof UIViewController *)presentViewControllerWithMocoaURL:(nullable NSURL *)url completion:(void (^_Nullable)(void))completion {
+    return [self presentViewControllerWithMocoaURL:url options:nil animated:nil completion:completion];
+}
+
+- (__kindof UIViewController *)addChildViewControllerWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options {
+    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url options:options];
     if (nextVC != nil) {
         [self addChildViewController:nextVC];
     }
     return nextVC;
+}
+
+- (__kindof UIViewController *)addChildViewControllerWithMocoaURL:(NSURL *)url {
+    return [self addChildViewControllerWithMocoaURL:url options:nil];
 }
 
 @end
@@ -226,20 +286,32 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 
 @implementation UINavigationController (XZMocoaModuleSupporting)
 
-- (instancetype)initWithRootViewControllerWithMocoaURL:(NSURL *)url {
-    UIViewController *rootVC = [UIViewController viewControllerWithMocoaURL:url];
+- (instancetype)initWithRootViewControllerWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options {
+    UIViewController *rootVC = [UIViewController viewControllerWithMocoaURL:url options:options];
     if (rootVC == nil) {
         return [self init];
     }
     return [self initWithRootViewController:rootVC];
 }
 
-- (__kindof UIViewController *)pushViewControllerWithMocoaURL:(NSURL *)url animated:(BOOL)animated {
-    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url];
+- (instancetype)initWithRootViewControllerWithMocoaURL:(NSURL *)url {
+    return [self initWithRootViewControllerWithMocoaURL:url options:nil];
+}
+
+- (__kindof UIViewController *)pushViewControllerWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options animated:(BOOL)animated {
+    UIViewController *nextVC = [UIViewController viewControllerWithMocoaURL:url options:options];
     if (nextVC != nil) {
         [self pushViewController:nextVC animated:animated];
     }
     return nextVC;
+}
+
+- (__kindof UIViewController *)pushViewControllerWithMocoaURL:(NSURL *)url options:(NSDictionary *)options {
+    return [self pushViewControllerWithMocoaURL:url options:options animated:YES];
+}
+
+- (__kindof UIViewController *)pushViewControllerWithMocoaURL:(NSURL *)url animated:(BOOL)animated {
+    return [self pushViewControllerWithMocoaURL:url options:nil animated:animated];
 }
 
 @end
@@ -255,5 +327,10 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
     [self setViewControllers:viewControllers animated:animated];
     return viewControllers;
 }
+
+@end
+
+
+@implementation XZURLQuery (XZMocoaOptions)
 
 @end

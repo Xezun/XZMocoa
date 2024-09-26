@@ -8,6 +8,7 @@
 
 #import <XZMocoa/XZMocoaDefines.h>
 #import <XZMocoa/XZMocoaDomain.h>
+#import <XZURLQuery/XZURLQuery.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -260,8 +261,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
-
 @interface XZMocoaModuleProvider : NSObject <XZMocoaDomainModuleProvider>
 /// 子类可以通过此方法构造统一格式的 URL 对象。
 /// - Parameters:
@@ -270,16 +269,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURL *)moduleURLForDomain:(XZMocoaDomain *)domain atPath:(NSString *)path;
 @end
 
-/// 获取模块地址 NSURL 或 NSString 获取对应的 MVVM 模块。
-/// @param stringOrURL 模块的地址，NSString 或 NSURL 对象
-FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(NSString *stringOrURL) XZ_ATTR_OVERLOAD {
-    return [XZMocoaModule moduleForURLString:stringOrURL];
+/// 通过 URL 获取模块。
+FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(NSString *moduleURLString) XZ_ATTR_OVERLOAD {
+    return [XZMocoaModule moduleForURLString:moduleURLString];
 }
 
 /// 获取模块地址 NSURL 或 NSString 获取对应的 MVVM 模块。
-/// @param stringOrURL 模块的地址，NSString 或 NSURL 对象
-FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(NSURL *stringOrURL) XZ_ATTR_OVERLOAD {
-    return [XZMocoaModule moduleForURL:stringOrURL];
+/// @param moduleURL 模块的地址，NSString 或 NSURL 对象
+FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(NSURL *moduleURL) XZ_ATTR_OVERLOAD {
+    return [XZMocoaModule moduleForURL:moduleURL];
 }
 
 NS_ASSUME_NONNULL_END
