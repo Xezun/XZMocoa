@@ -6,6 +6,7 @@
 //
 
 #import "Example30Group110HeaderView.h"
+@import XZExtensions;
 
 @implementation Example30Group110HeaderView {
     UILabel *_textLabel;
@@ -20,7 +21,7 @@
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *view = [[UIView alloc] initWithFrame:self.bounds];
-        view.backgroundColor = UIColor.systemIndigoColor;
+        view.backgroundColor = rgb(6, 82, 121);
         self.backgroundView = view;
         
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
