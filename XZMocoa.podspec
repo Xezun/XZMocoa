@@ -37,7 +37,6 @@ Pod::Spec.new do |s|
     ss.source_files = 'XZMocoa/Code/**/*.{h,m}'
     ss.project_header_files = 'XZMocoa/Code/**/Private/*.h'
     
-    ss.dependency 'XZURLQuery', "~> 2.0.0"
     ss.dependency 'XZDefines/XZMacro'
     ss.dependency 'XZDefines/XZRuntime'
     ss.dependency 'XZExtensions/NSArray'

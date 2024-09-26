@@ -16,6 +16,11 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
     XZLog(@"为协议 XZMocoaView 的方法 %@ 提供默认实现失败", NSStringFromSelector(target));
 }
 
+@interface XZMocoaOptions ()
+- (instancetype)initWithURL:(nonnull NSURL *)url options:(nullable NSDictionary *)options;
+@end
+
+
 #pragma mark - XZMocoaView 协议默认实现
 
 @interface UIResponder (XZMocoaView) <XZMocoaView>
@@ -173,20 +178,18 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
     if (module == nil) {
         return nil;
     }
-    XZURLQuery * const query = [XZURLQuery queryForURL:url];
-    if (options) {
-        [query setFieldsWithDictionary:options];
-    }
     if (module.viewNibName) {
         UINib *nib = [UINib nibWithNibName:module.viewNibName bundle:module.viewNibBundle];
         for (UIView *object in [nib instantiateWithOwner:nil options:nil]) {
             if ([object isKindOfClass:module.viewNibClass]) {
-                [object awakeWithMocoaOptions:query frame:frame];
+                XZMocoaOptions * const mocoaOptions = [[XZMocoaOptions alloc] initWithURL:url options:options];
+                [object awakeWithMocoaOptions:mocoaOptions frame:frame];
                 return object;
             }
         }
     }
-    return [[module.viewClass alloc] initWithMocoaOptions:query frame:frame];
+    XZMocoaOptions * const mocoaOptions = [[XZMocoaOptions alloc] initWithURL:url options:options];
+    return [[module.viewClass alloc] initWithMocoaOptions:mocoaOptions frame:frame];
 }
 
 + (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options {
@@ -201,11 +204,11 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
     return [self viewWithMocoaURL:url options:nil frame:CGRectZero];
 }
 
-- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options frame:(CGRect)frame {
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options frame:(CGRect)frame {
     return [self initWithFrame:frame];
 }
 
-- (void)awakeWithMocoaOptions:(XZMocoaOptions)options frame:(CGRect)frame {
+- (void)awakeWithMocoaOptions:(XZMocoaOptions *)options frame:(CGRect)frame {
     self.frame = frame;
 }
 
@@ -218,10 +221,7 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
     if (module == nil) {
         return nil;
     }
-    XZURLQuery * const query = [XZURLQuery queryForURL:url];
-    if (options) {
-        [query setFieldsWithDictionary:options];
-    }
+    
     Class const ViewController = module.viewClass;
     if (![ViewController isSubclassOfClass:UIViewController.class]) {
         XZLog(@"模块 %@ 不是 UIViewController 模块，无法构造视图控制器", module);
@@ -229,14 +229,15 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
     }
     NSString *nibName = module.viewNibName;
     NSBundle *bundle  = module.viewNibBundle;
-    return [[ViewController alloc] initWithMocoaOptions:query nibName:nibName bundle:bundle];
+    XZMocoaOptions * const mocoaOptions = [[XZMocoaOptions alloc] initWithURL:url options:options];
+    return [[ViewController alloc] initWithMocoaOptions:mocoaOptions nibName:nibName bundle:bundle];
 }
 
 + (__kindof UIViewController *)viewControllerWithMocoaURL:(NSURL *)url {
     return [self viewControllerWithMocoaURL:url options:nil];
 }
 
-- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {
     return [self initWithNibName:nibName bundle:bundle];
 }
 
@@ -331,6 +332,84 @@ static void xz_mocoa_copyMethod(Class const cls, SEL const target, SEL const sou
 @end
 
 
-@implementation XZURLQuery (XZMocoaOptions)
+@implementation XZMocoaOptions {
+    NSURL *_url;
+    NSMutableDictionary *_options;
+    NSURLComponents *_components;
+}
+
+- (instancetype)initWithURL:(NSURL *)url options:(NSDictionary *)options {
+    self = [super init];
+    if (self) {
+        _url = url;
+        _options = options.mutableCopy;
+    }
+    return self;
+}
+
+- (NSURL *)url {
+    return _url;
+}
+
+- (NSDictionary *)options {
+    [self mergesURLQuery];
+    return _options;
+}
+
+- (BOOL)containsKey:(NSString *)aKey {
+    return self[aKey] || _options[aKey];
+}
+
+- (id)valueForKey:(NSString *)key {
+    return [self objectForKeyedSubscript:key];
+}
+
+- (id)objectForKeyedSubscript:(NSString *)key {
+    // 直接读值
+    id value = _options[key];
+    if (value != nil) {
+        return value == NSNull.null ? nil : value;
+    }
+    
+    // 合并参数
+    if ([self mergesURLQuery]) {
+        return nil;
+    }
+    
+    // 重新读值
+    value = _options[key];
+    return value == NSNull.null ? nil : value;
+}
+
+- (BOOL)mergesURLQuery {
+    if (_components) {
+        return YES;
+    }
+    _components = [NSURLComponents componentsWithURL:_url resolvingAgainstBaseURL:NO];
+    NSArray<NSURLQueryItem *> * const queryItems = _components.queryItems;
+    NSMutableDictionary *keyedValues = [NSMutableDictionary dictionaryWithCapacity:queryItems.count];
+    [queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *       const name     = obj.name;
+        id               const newValue = obj.value ?: NSNull.null;
+        NSMutableArray * const oldValue = keyedValues[name];
+        if (oldValue == nil) {
+            keyedValues[name] = newValue;
+        } else if ([oldValue isKindOfClass:NSMutableArray.class]) {
+            [oldValue addObject:newValue];
+        } else {
+            keyedValues[name] = [NSMutableArray arrayWithObjects:oldValue, newValue, nil];
+        }
+    }];
+    if (_options == nil) {
+        _options = keyedValues;
+    } else {
+        [keyedValues enumerateKeysAndObjectsUsingBlock:^(NSString *key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            if (!_options[key]) {
+                _options[key] = obj;
+            }
+        }];
+    }
+    return NO;
+}
 
 @end

@@ -8,7 +8,6 @@
 
 #import <XZMocoa/XZMocoaDefines.h>
 #import <XZMocoa/XZMocoaDomain.h>
-#import <XZURLQuery/XZURLQuery.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

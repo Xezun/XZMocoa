@@ -30,8 +30,8 @@
 - (void)tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray<Example20Group102CellModel *> *models = self.model;
     Example20Group102CellModel *model = models[self.currentIndex];
-    NSURL *url = [NSURL xz_URLWithFormat:@"https://mocoa.xezun.com/examples/20/content/?url=%@", model.url.xz_stringByAddingPercentEncoding];
-    [tableView.navigationController pushViewControllerWithMocoaURL:url animated:YES];
+    NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/examples/20/content/"];
+    [tableView.navigationController pushViewControllerWithMocoaURL:url options:@{ @"url": model.url }];
 }
 
 @end

@@ -7,7 +7,6 @@
 
 #import <UIKit/UIKit.h>
 #import <XZMocoa/XZMocoaViewModel.h>
-@import XZURLQuery;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,27 +45,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// 模块初始化参数。
-@protocol XZMocoaOptions <NSObject>
-@optional
-@property (nonatomic, readonly) NSURL *url;
-- (nullable id)objectForKeyedSubscript:(NSString *)key;
-@end
-
-/// 模块初始化参数。可像字典一样去值。
+/// 模块初始化参数。可像字典一样取值。
 /// @code
 /// XZMocoaOptions options;
 /// id value = options[@"value"];
 /// @endcode
-typedef id<XZMocoaOptions> XZMocoaOptions;
+@interface XZMocoaOptions : NSObject
+/// 原始 URL
+@property (nonatomic, readonly) NSURL *url;
+/// 合并了 URL query 参数
+@property (nonatomic, readonly) NSDictionary *options;
+- (nullable id)objectForKeyedSubscript:(NSString *)key;
+- (BOOL)containsKey:(NSString *)aKey;
+@end
+
 
 @interface UIView (XZMocoaModuleSupporting)
 + (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options frame:(CGRect)frame;
 + (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url options:(nullable NSDictionary *)options;
 + (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url frame:(CGRect)frame;
 + (nullable __kindof UIView *)viewWithMocoaURL:(NSURL *)url;
-- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options frame:(CGRect)frame;
-- (void)awakeWithMocoaOptions:(XZMocoaOptions)options frame:(CGRect)frame;
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options frame:(CGRect)frame;
+- (void)awakeWithMocoaOptions:(XZMocoaOptions *)options frame:(CGRect)frame;
 @end
 
 
@@ -88,7 +88,7 @@ typedef id<XZMocoaOptions> XZMocoaOptions;
 /// @discussion
 /// 子类可以通过重写此方法获取 options 中的参数信息，或将控制器的初始化改为其它初始化方法。
 /// @param options 初始化参数
-- (instancetype)initWithMocoaOptions:(XZMocoaOptions)options nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle;
+- (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle;
 
 /// 通过 XZMocoaURL 弹出层控制器。
 /// @discussion 如果 XZMocoaURL 没有对应的控制器，那么此方法将不产生任何效果。
@@ -138,10 +138,6 @@ typedef id<XZMocoaOptions> XZMocoaOptions;
 /// @param animated 是否动画
 - (nullable NSArray<__kindof UIViewController *> *)setViewControllersWithMocoaURLs:(nullable NSArray<NSURL *> *)urls animated:(BOOL)animated;
 
-@end
-
-
-@interface XZURLQuery (XZMocoaOptions) <XZMocoaOptions>
 @end
 
 NS_ASSUME_NONNULL_END

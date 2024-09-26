@@ -7,7 +7,6 @@
 
 #import "Example20Group100CellViewModel.h"
 #import "Example20Group100CellModel.h"
-@import XZURLQuery;
 @import XZExtensions;
 
 @implementation Example20Group100CellViewModel
