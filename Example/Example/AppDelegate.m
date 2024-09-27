@@ -17,6 +17,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSString *path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
     NSLog(@"NSCachesDirectory: %@", path);
+    
+    NSLog(@"%@", path.stringByDeletingLastPathComponent);
+    
+    NSLog(@"/path => %@", @"/path".stringByDeletingLastPathComponent);
     return YES;
 }
 

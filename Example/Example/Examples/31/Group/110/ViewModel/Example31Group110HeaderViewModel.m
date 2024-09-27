@@ -10,7 +10,7 @@
 @implementation Example31Group110HeaderViewModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/31/collection/110/header:/").viewModelClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/31/collection/110/header:/").viewModelClass = self;
 }
 
 - (void)prepare {

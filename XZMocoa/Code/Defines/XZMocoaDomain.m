@@ -10,28 +10,24 @@
 
 static NSMutableDictionary<NSString *, XZMocoaDomain *> *_domainTable = nil;
 
-#if DEBUG
-static BOOL isValidPath(NSString *path) {
-    if ([path isEqualToString:@"/"]) {
-        return YES;
-    }
-    NSString *pattern = @"^((/\\w+\\:\\w*)|(/\\w+)|(/\\:))+$";
-    NSRegularExpression *reg = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
-    NSRange const range = [reg rangeOfFirstMatchInString:path options:0 range:NSMakeRange(0, path.length)];
-    return range.location == 0 && range.length == path.length;
-}
-#endif
-
 @implementation XZMocoaDomain {
     // TODO: 缓存过期功能
     NSMutableDictionary<NSString *, id> *_keyedModules;
 }
 
 + (id)moduleForURL:(NSURL *)url {
-    return [[self doaminForName:url.host] moduleForPath:url.path];
+    NSString *path = url.path;
+    if (path == nil || path.length == 0) {
+        path = @"/";
+    }
+    return [[self doaminNamed:url.host] moduleForPath:path];
 }
 
 + (XZMocoaDomain *)doaminForName:(NSString *)name {
+    return [self doaminNamed:name];
+}
+
++ (XZMocoaDomain *)doaminNamed:(NSString *)name {
     NSParameterAssert(name && name.length > 0);
     
     static dispatch_once_t onceToken;
@@ -57,26 +53,17 @@ static BOOL isValidPath(NSString *path) {
 }
 
 - (id)moduleForPath:(NSString *)path {
-    if (path == nil || path.length == 0) {
-        path = @"/"; // path 为空，等同根路径
-    }
+    NSAssert([XZMocoaDomain isValidPath:path], @"参数 path 不合法或不规范：%@", path);
     
     id module = _keyedModules[path];
     if (module != nil) {
         return module;
     }
     
-    id<XZMocoaDomainModuleProvider> provider = self.provider;
+    id<XZMocoaModuleProvider> const provider = self.provider;
     if (provider == nil) {
         return nil;
     }
-    
-#if DEBUG
-    if (!isValidPath(path)) {
-        XZLog(@"参数 path 不合法：%@", path);
-        return nil;
-    }
-#endif
     
     module = [self.provider domain:self moduleForPath:path];
     _keyedModules[path] = module;
@@ -84,13 +71,37 @@ static BOOL isValidPath(NSString *path) {
 }
 
 - (void)setModule:(id)module forPath:(NSString *)path {
-#if DEBUG
-    if (!isValidPath(path)) {
-        XZLog(@"参数 path 不合法：%@", path);
-        return;
-    }
-#endif
+    NSAssert([XZMocoaDomain isValidPath:path], @"参数 path 不合法或不规范：%@", path);
     _keyedModules[path] = module;
+}
+
+/// 验证 path 是否合法。
+/// - Parameter path: 待验证的路径
++ (BOOL)isValidPath:(NSString *)path {
+    switch (path.length) {
+        case 0:
+            return NO;
+        case 1:
+            if ([path isEqualToString:@"/"]) {
+                return YES;
+            }
+            return NO;
+        default:
+            break;
+    }
+    
+    static NSRegularExpression *_regularExpression = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // /kind:name | /kind: | /name | /:
+        NSString *pattern = @"^((/\\w+\\:\\w*)|(/\\w+)|(/\\:))+$";
+        _regularExpression = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+    });
+    
+    NSRange range = NSMakeRange(0, path.length);
+    range = [_regularExpression rangeOfFirstMatchInString:path options:0 range:range];
+    return range.location == 0 && range.length == path.length;
 }
 
 @end

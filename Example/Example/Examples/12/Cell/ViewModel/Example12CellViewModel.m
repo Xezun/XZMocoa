@@ -11,7 +11,7 @@
 @implementation Example12CellViewModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/12/table/").section.cell.viewModelClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/12/table/").section.cell.viewModelClass = self;
 }
 
 - (void)prepare {

@@ -23,7 +23,7 @@
 @implementation Example10ViewController
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/10/").viewClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/10/").viewClass = self;
 }
 
 - (void)dealloc {

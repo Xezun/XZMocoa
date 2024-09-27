@@ -25,7 +25,7 @@
 @dynamic viewModel;
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20").viewNibClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/20").viewNibClass = self;
 }
 
 - (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options nibName:(NSString *)nibName bundle:(NSBundle *)bundle {

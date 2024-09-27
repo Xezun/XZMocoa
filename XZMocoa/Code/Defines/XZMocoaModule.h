@@ -13,14 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class XZMocoaModule;
 
-/// 为 XZMocoaModule 提供下标式访问方法的协议。
+/// 为 XZMocoaModule 提供下标式访问的协议。
 @protocol XZMocoaModuleNamedSubscripting <NSObject>
 - (nullable XZMocoaModule *)objectForKeyedSubscript:(nullable XZMocoaName)name;
 - (void)setObject:(nullable XZMocoaModule *)submodule forKeyedSubscript:(nullable XZMocoaName)name;
 - (void)enumerateKeysAndObjectsUsingBlock:(void (NS_NOESCAPE ^)(XZMocoaName name, XZMocoaModule *submodule, BOOL *stop))block;
 @end
 
-/// 为 XZMocoaModule 提供下标式访问方法的协议。
+/// 为 XZMocoaModule 提供下标式访问的协议。
 /// @code
 /// // 常规方式获取下级
 /// XZMocoaModule *submodule = [module submoduleForKind:@"header" forName:@"black"];
@@ -260,23 +260,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface XZMocoaModuleProvider : NSObject <XZMocoaDomainModuleProvider>
+@interface XZMocoaModuleProvider : NSObject <XZMocoaModuleProvider>
 /// 子类可以通过此方法构造统一格式的 URL 对象。
 /// - Parameters:
 ///   - name: 域名
-///   - path: 路径
-+ (NSURL *)moduleURLForDomain:(XZMocoaDomain *)domain atPath:(NSString *)path;
+///   - path: 路径，格式如 /path1/path2 
++ (NSURL *)URLForDomain:(XZMocoaDomain *)domain inPath:(NSString *)path;
++ (NSURL *)moduleURLForDomain:(XZMocoaDomain *)domain atPath:(NSString *)path XZ_API_RENAMED("URLForDomain:inPath:", ios(1.0, 12.0));
 @end
 
-/// 通过 URL 获取模块。
-FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(NSString *moduleURLString) XZ_ATTR_OVERLOAD {
+/// 通过 URL 字符串获取 Mocoa MVVM 模块。
+/// @param moduleURLString 模块地址
+FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZModule(NSString *moduleURLString) XZ_ATTR_OVERLOAD {
     return [XZMocoaModule moduleForURLString:moduleURLString];
 }
 
-/// 获取模块地址 NSURL 或 NSString 获取对应的 MVVM 模块。
-/// @param moduleURL 模块的地址，NSString 或 NSURL 对象
-FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(NSURL *moduleURL) XZ_ATTR_OVERLOAD {
+/// 通过 URL 获取 Mocoa MVVM 模块。
+/// @param moduleURL 模块地址
+FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZModule(NSURL *moduleURL) XZ_ATTR_OVERLOAD {
     return [XZMocoaModule moduleForURL:moduleURL];
+}
+
+FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(id url) XZ_API_RENAMED("XZModule", ios(1.0, 12.0)) {
+    if ([url isKindOfClass:NSString.class]) {
+        return XZModule((NSString *)url);
+    }
+    return XZModule((NSURL *)url);
 }
 
 NS_ASSUME_NONNULL_END

@@ -14,7 +14,7 @@
 }
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/30/table/110/footer:/").viewClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/30/table/110/footer:/").viewClass = self;
 }
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {

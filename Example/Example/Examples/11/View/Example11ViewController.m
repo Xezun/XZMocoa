@@ -26,7 +26,7 @@
 @implementation Example11ViewController
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/11/").viewNibClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/11/").viewNibClass = self;
 }
 
 - (instancetype)initWithMocoaOptions:(XZMocoaOptions *)options nibName:(nullable NSString *)nibName bundle:(nullable NSBundle *)bundle {

@@ -9,7 +9,7 @@
 
 @implementation Example31Group103SectionModel
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/31/collection/103/").modelClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/31/collection/103/").modelClass = self;
 }
 
 - (XZMocoaName)mocoaName {

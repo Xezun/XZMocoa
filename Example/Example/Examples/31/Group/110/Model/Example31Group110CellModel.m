@@ -9,7 +9,7 @@
 
 @implementation Example31Group110CellModel
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/31/collection/110/:/").modelClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/31/collection/110/:/").modelClass = self;
 }
 
 - (NSString *)description {

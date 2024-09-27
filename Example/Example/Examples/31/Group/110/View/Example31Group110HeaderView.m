@@ -16,7 +16,7 @@
 @implementation Example31Group110HeaderView
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/31/collection/110/header:/").viewClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/31/collection/110/header:/").viewClass = self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
