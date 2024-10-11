@@ -123,7 +123,7 @@
             XZMocoaName name = dict[@"group"];
             if (!name) continue;
             XZMocoaModule *submodule = [module sectionForName:name];
-            id item = [submodule.modelClass yy_modelWithDictionary:dict];
+            id item = [XZJSON decode:dict options:0 class:submodule.modelClass];
             if (item) {
                 [list addObject:item];
             }

@@ -6,11 +6,10 @@
 //
 
 #import <XZMocoa/XZMocoa.h>
-@import YYModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example20Group101CellModel : XZMocoaTableViewCellModel <YYModel>
+@interface Example20Group101CellModel : XZMocoaTableViewCellModel
 @property (nonatomic, copy) NSString *nid;
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *title;

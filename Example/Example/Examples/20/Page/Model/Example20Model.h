@@ -6,11 +6,11 @@
 //
 
 #import <XZMocoa/XZMocoa.h>
-@import YYModel;
+@import XZJSON;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example20Model : NSObject <XZMocoaModel, YYModel>
+@interface Example20Model : NSObject <XZMocoaModel>
 
 @property (nonatomic) NSInteger code;
 @property (nonatomic, copy) NSString *message;

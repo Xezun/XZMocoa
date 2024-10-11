@@ -20,7 +20,7 @@
     return [self.gid isEqual:object.gid];
 }
 
-+ (NSDictionary<NSString *,id> *)modelContainerPropertyGenericClass {
++ (NSDictionary<NSString *,id> *)mappingJSONCodingClasses {
     return @{
         @"items": [Example20Group101CellModel class]
     };

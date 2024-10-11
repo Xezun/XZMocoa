@@ -7,7 +7,7 @@
 
 #import "Example30ViewModel.h"
 @import XZExtensions;
-@import YYModel;
+@import XZJSON;
 
 @implementation Example30ViewModel
 
@@ -58,7 +58,7 @@
     }];
     NSArray *groups = [data xz_map:^id(NSDictionary *dict, NSInteger idx, BOOL * _Nonnull stop) {
         XZMocoaModule *submodule = [module submoduleForName:dict[@"group"]];
-        return [submodule.modelClass yy_modelWithDictionary:dict];
+        return [XZJSON decode:dict options:0 class:submodule.modelClass];
     }];
     
     _tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:groups];

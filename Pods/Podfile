@@ -14,9 +14,9 @@ target 'Example' do
   pod 'XZExtensions'
   pod 'XZRefresh'
   pod 'XZML'
+  pod 'XZJSON'
   
   pod 'SDWebImage'
-  pod 'YYModel'
   
   target 'ExampleTests' do
     inherit! :search_paths

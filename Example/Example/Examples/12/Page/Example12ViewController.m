@@ -8,7 +8,7 @@
 #import "Example12ViewController.h"
 @import XZMocoa;
 @import XZExtensions;
-@import YYModel;
+@import XZJSON;
 
 @interface Example12ViewController ()
 
@@ -47,7 +47,7 @@
     
     // Model
     NSArray *dataArray = [data xz_map:^id _Nonnull(id  _Nonnull obj, NSInteger idx, BOOL * _Nonnull stop) {
-        return [module.section.cell.modelClass yy_modelWithDictionary:obj] ?: obj;
+        return [XZJSON decode:obj options:0 class:module.section.cell.modelClass];
     }];
     
     // viewModel
