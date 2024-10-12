@@ -11,10 +11,10 @@
 @implementation Example20Group100SectionModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/100/").modelClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/20/table/100/").modelClass = self;
 }
 
-+ (NSDictionary<NSString *,id> *)modelContainerPropertyGenericClass {
++ (NSDictionary<NSString *,id> *)mappingJSONCodingClasses {
     return @{
         @"items": [Example20Group100CellModel class]
     };

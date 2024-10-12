@@ -11,7 +11,7 @@
 @implementation Example12Cell
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/12/table/").section.cell.viewNibClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/12/table/").section.cell.viewNibClass = self;
 }
 
 - (void)viewModelDidChange {

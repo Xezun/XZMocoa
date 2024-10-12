@@ -6,11 +6,11 @@
 //
 
 #import <XZMocoa/XZMocoa.h>
-@import YYModel;
+@import XZJSON;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Example20Group101SectionModel : XZMocoaTableViewSectionModel <YYModel>
+@interface Example20Group101SectionModel : XZMocoaTableViewSectionModel <XZJSONCoding>
 @property (nonatomic, copy) NSString *gid;
 @property (nonatomic, copy) NSArray *items;
 @end

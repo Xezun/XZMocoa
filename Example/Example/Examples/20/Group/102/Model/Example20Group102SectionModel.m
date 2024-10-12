@@ -11,7 +11,7 @@
 @implementation Example20Group102SectionModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/102/").modelClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/20/table/102/").modelClass = self;
 }
 
 - (BOOL)isEqual:(Example20Group102SectionModel *)object {
@@ -20,7 +20,7 @@
     return [self.gid isEqual:object.gid];
 }
 
-+ (NSDictionary<NSString *,id> *)modelContainerPropertyGenericClass {
++ (NSDictionary<NSString *,id> *)mappingJSONCodingClasses {
     return @{
         @"items": [Example20Group102CellModel class]
     };

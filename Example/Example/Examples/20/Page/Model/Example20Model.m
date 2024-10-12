@@ -6,12 +6,7 @@
 //
 
 #import "Example20Model.h"
-@import YYModel;
 
 @implementation Example20Model
-
-- (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
-    return YES;
-}
 
 @end

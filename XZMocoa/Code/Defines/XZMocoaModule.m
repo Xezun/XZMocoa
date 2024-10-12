@@ -13,13 +13,24 @@
 ///   - path: 单个 path 值
 ///   - kind: 输出值，MocoaKind 值
 ///   - name: 输出值，MocoaName 值
-static void XZMocoaPathParser(NSString *path, XZMocoaKind *kind, XZMocoaName *name);
+FOUNDATION_STATIC_INLINE void XZMocoaPathParser(NSString *path, XZMocoaKind *kind, XZMocoaName *name) {
+    NSRange const range = [path rangeOfString:@":"];
+    if (range.location == NSNotFound) {
+        *kind = XZMocoaKindNone;
+        *name = path;
+    } else {
+        *kind = [path substringToIndex:range.location];
+        *name = [path substringFromIndex:range.location + 1];
+    }
+}
 
 /// 将 MVVM 模块的 kind 和 name 合成 MocoaURL 中的 path 部分。
 /// - Parameters:
 ///   - kind: MocoaKind
 ///   - name: MocoaName
-static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
+FOUNDATION_STATIC_INLINE NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name) {
+    return (kind.length ? [NSString stringWithFormat:@"%@:%@", kind, name] : (name.length ? name : @":"));
+}
 
 @interface XZMocoaNamedModules : NSObject <XZMocoaModuleNamedSubscripting>
 @end
@@ -40,16 +51,21 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
         XZLog(@"参数 url 不合法：%@", url);
         return nil;
     }
+    
+    XZMocoaDomain * const domain = [XZMocoaDomain doaminNamed:host];
+    if (!domain.provider) {
+        domain.provider = [[XZMocoaModuleProvider alloc] init];
+    }
     // 关于 url 的 path
     // mocoa://www.xezun.com        =>
     // mocoa://www.xezun.com/       => /
     // mocoa://www.xezun.com/path   => /path
     // mocoa://www.xezun.com/path/  => /path
-    XZMocoaDomain * const domain = [XZMocoaDomain doaminForName:host];
-    if (!domain.provider) {
-        domain.provider = [[XZMocoaModuleProvider alloc] init];
+    NSString *path = url.path;
+    if (path == nil || path.length == 0) {
+        path = @"/";
     }
-    XZMocoaModule * const module = [domain moduleForPath:url.path];
+    XZMocoaModule * const module = [domain moduleForPath:path];
     NSAssert(!module || [module isKindOfClass:[XZMocoaModule class]], @"参数 url 对应的不是 MVVM 模块：%@", url);
     return module;
 }
@@ -125,7 +141,7 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
         submodule = [[XZMocoaModule alloc] initWithURL:submoduleURL];
         namedModules[name] = submodule;
         // 在 domain 中注册新创建的 module
-        XZMocoaDomain *domain = [XZMocoaDomain doaminForName:submoduleURL.host];
+        XZMocoaDomain *domain = [XZMocoaDomain doaminNamed:submoduleURL.host];
         [domain setModule:submodule forPath:submoduleURL.path];
     }
     return submodule;
@@ -318,7 +334,7 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 
 @implementation XZMocoaModuleProvider
 
-+ (NSURL *)moduleURLForDomain:(XZMocoaDomain *)domain atPath:(NSString *)path {
++ (NSURL *)URLForDomain:(XZMocoaDomain *)domain inPath:(NSString *)path {
     NSString * const name   = domain.name;
     NSString * const string = [NSString stringWithFormat:@"mocoa://%@%@", name, path];
     NSURL    * const url    = [NSURL URLWithString:string];
@@ -326,22 +342,33 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
     return url;
 }
 
++ (NSURL *)moduleURLForDomain:(XZMocoaDomain *)domain atPath:(NSString *)path {
+    return [self URLForDomain:domain inPath:path];
+}
+
 - (id)domain:(XZMocoaDomain *)domain moduleForPath:(nonnull NSString *)path {
     // 创建模块
-    NSURL         * const url    = [XZMocoaModuleProvider moduleURLForDomain:domain atPath:path];
-    XZMocoaModule * const module = [[XZMocoaModule alloc] initWithURL:url];
+    NSURL * const url = [XZMocoaModuleProvider URLForDomain:domain inPath:path];
     
-    // 关联上级模块
-    if (![path isEqualToString:@"/"]) {
-        NSString      * const superPath   = path.stringByDeletingLastPathComponent;
-        XZMocoaModule * const superModule = [domain moduleForPath:superPath];
-        
-        XZMocoaKind subKind = nil;
-        XZMocoaName subName = nil;
-        XZMocoaPathParser(path.lastPathComponent, &subKind, &subName);
-        if (![superModule submoduleIfLoadedForKind:subKind forName:subName]) {
-            [superModule setSubmodule:module forKind:subKind forName:subName];
-        }
+    // 根模块
+    if ([path isEqualToString:@"/"]) {
+        return [[XZMocoaModule alloc] initWithURL:url];
+    }
+    
+    // 先查找上级模块
+    NSString      * const superPath   = path.stringByDeletingLastPathComponent;
+    XZMocoaModule * const superModule = [domain moduleForPath:superPath];
+    
+    // 解析 name kind
+    XZMocoaKind subKind = nil;
+    XZMocoaName subName = nil;
+    XZMocoaPathParser(path.lastPathComponent, &subKind, &subName);
+    
+    // 查找子模块，否则创建并关联
+    XZMocoaModule *module = [superModule submoduleIfLoadedForKind:subKind forName:subName];
+    if (module == nil) {
+        module = [[XZMocoaModule alloc] initWithURL:url];
+        [superModule setSubmodule:module forKind:subKind forName:subName];
     }
     
     return module;
@@ -350,21 +377,6 @@ static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name);
 
 @end
 
-
-static void XZMocoaPathParser(NSString *path, XZMocoaKind *kind, XZMocoaName *name) {
-    NSRange const range = [path rangeOfString:@":"];
-    if (range.location == NSNotFound) {
-        *kind = XZMocoaKindNone;
-        *name = path;
-    } else {
-        *kind = [path substringToIndex:range.location];
-        *name = [path substringFromIndex:range.location + 1];
-    }
-}
-
-static NSString *XZMocoaPathCreate(XZMocoaKind kind, XZMocoaName name) {
-    return (kind.length ? [NSString stringWithFormat:@"%@:%@", kind, name] : (name.length ? name : @":"));
-}
 
 
 @implementation XZMocoaNamedModules {

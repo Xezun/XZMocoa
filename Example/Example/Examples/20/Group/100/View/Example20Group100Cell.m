@@ -12,7 +12,7 @@
 @implementation Example20Group100Cell
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/table/100/:/").viewNibClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/20/table/100/:/").viewNibClass = self;
 }
 
 @synthesize imageView;

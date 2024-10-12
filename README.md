@@ -77,7 +77,7 @@ pod 'XZMocoa'
 NSArray *dataArray;
 // viewModel
 XZMocoaTableViewModel *tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:dataArray];
-tableViewModel.module = XZMocoa(@"https://mocoa.xezun.com/table/");
+tableViewModel.module = XZModule(@"https://mocoa.xezun.com/table/");
 [tableViewModel ready];
 // view
 XZMocoaTableView *tableView = [[XZMocoaTableView alloc] initWithFrame:self.view.bounds style:(UITableViewStyleGrouped)];
@@ -165,19 +165,19 @@ ViewModel向View提供稳定的API，这可以减少View层改动，同时也能
 ```objc
 @implementation ExampleCellModel
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/table/").section.cell.modelClass = self;
+    XZModule(@"https://mocoa.xezun.com/table/").section.cell.modelClass = self;
 }
 @end
 
 @implementation ExampleCell
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/table/").section.cell.viewNibClass = self;
+    XZModule(@"https://mocoa.xezun.com/table/").section.cell.viewNibClass = self;
 }
 @end
 
 @implementation ExampleCellViewModel
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/table/").section.cell.viewModelClass = self;
+    XZModule(@"https://mocoa.xezun.com/table/").section.cell.viewModelClass = self;
 }
 @end
 ```
@@ -210,7 +210,7 @@ XZMocoa使用MVVM设计模式进行模块化，因为在MVVM设计模式下，�
 XZMocoa为模块提供了基于`URL`的模块管理方案`XZMocoaDomain`，任何模块都可以通过`URL`在`XZMocoaDomain`中注册。
 
 ```objc
-[[XZMocoaDomain doaminForName:@"mocoa.xezun.com"] setModule:yourModule forPath:@"your/module/path"];
+[[XZMocoaDomain doaminNamed:@"mocoa.xezun.com"] setModule:yourModule forPath:@"your/module/path"];
 ```
 
 上面例子中的模块地址为`https://mocoa.xezun.com/your/module/path/`，其中 URL 的`scheme`是任意的。
@@ -241,7 +241,7 @@ XZMocoa将每一个MVVM单元`Model-View-ViewModel`都视为一个模块，称�
 在Mocoa中注册MVVM模块的`View`、`Model`、`ViewModel`三个部分。
 
 ```objc
-XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/module/");
+XZMocoaModule *module = XZModule(@"https://mocoa.xezun.com/module/");
 module.modelClass     = Model.class;
 module.viewClass      = View.class;
 module.viewModelClass = ViewModel.class;
@@ -255,7 +255,7 @@ module.viewModelClass = ViewModel.class;
 // 拿到了模块的原始数据
 NSDictionary *data;
 // 获取到模块。 
-XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/view/");
+XZMocoaModule *module = XZModule(@"https://mocoa.xezun.com/view/");
 // 这里使用了 YYModel 组件处理模型化数据
 id<XZMocoaModel> model = [module.modelClass yy_modelWithDictionary:data]; 
 // 创建 viewModel
@@ -285,14 +285,14 @@ NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/main"];
 
 ```objc
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/20/content/").viewNibClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/20/content/").viewNibClass = self;
 }
 ```
 
-如果项目组对`+load`方法使用有限制，可以通过`XZMocoaDomainModuleProvider`协议自定义`XZMocoaDomain`的模块提供方式，比如读配置文件。
+如果项目组对`+load`方法使用有限制，可以通过`XZMocoaModuleProvider`协议自定义`XZMocoaDomain`的模块提供方式，比如读配置文件。
 
 ```objc
-@protocol XZMocoaDomainModuleProvider <NSObject>
+@protocol XZMocoaModuleProvider <NSObject>
 - (nullable id)domain:(XZMocoaDomain *)domain moduleForPath:(NSString *)path;
 @end
 ```
@@ -443,7 +443,7 @@ Mocoa 与其说是框架，不如说是规范，通过协议规范 MVVM 的实�
 由外部提供数据的不完全独立的页面模块，加载使用方式则与`UIView`基本一致。
 
 ```objc
-XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/");
+XZMocoaModule *module = XZModule(@"https://mocoa.xezun.com/");
 
 id model;
 XZMocoaViewModel *viewModel = [[module.viewModelClass alloc] initWithModel:model];
@@ -515,7 +515,7 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 1. 通过`ViewModel`管理`cell`的高度。
 
 ```objc
-@interface XZMocoaTableCellViewModel : XZMocoaAssembleCellViewModel
+@interface XZMocoaTableCellViewModel : XZMocoaListCellViewModel
 @optional
 @property (nonatomic) CGFloat height;
 @end
@@ -524,7 +524,7 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 2. 列表事件，重新转发给`cell`，并再转发给`ViewModel`处理。
 
 ```objc
-@interface XZMocoaTableCellViewModel : XZMocoaAssembleCellViewModel
+@interface XZMocoaTableCellViewModel : XZMocoaListCellViewModel
 @optional
 - (void)tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(XZMocoaTableView *)tableView willDisplayRowAtIndexPath:(NSIndexPath *)indexPath;

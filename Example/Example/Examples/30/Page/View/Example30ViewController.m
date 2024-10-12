@@ -25,7 +25,7 @@
 }
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/30/").viewClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/30/").viewClass = self;
 }
 
 - (void)viewDidLoad {

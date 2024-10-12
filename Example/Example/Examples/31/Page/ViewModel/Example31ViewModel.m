@@ -7,14 +7,14 @@
 
 #import "Example31ViewModel.h"
 @import XZExtensions;
-@import YYModel;
+@import XZJSON;
 
 @implementation Example31ViewModel
 
 - (void)prepare {
     [super prepare];
 
-    XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/31/collection/");
+    XZMocoaModule *module = XZModule(@"https://mocoa.xezun.com/examples/31/collection/");
     
     NSArray *data = @[@{
         @"group": @"100",
@@ -58,7 +58,7 @@
     }];
     NSArray *groups = [data xz_map:^id _Nonnull(NSDictionary *dict, NSInteger idx, BOOL * _Nonnull stop) {
         XZMocoaModule *submodule = [module submoduleForName:dict[@"group"]];
-        return [submodule.modelClass yy_modelWithDictionary:dict];
+        return [XZJSON decode:dict options:0 class:submodule.modelClass];
     }];
     
     _collectionViewModel = [[XZMocoaCollectionViewModel alloc] initWithModel:groups];

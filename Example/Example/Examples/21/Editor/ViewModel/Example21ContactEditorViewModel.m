@@ -12,7 +12,7 @@
 @implementation Example21ContactEditorViewModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/21/editor").viewModelClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/21/editor").viewModelClass = self;
 }
 
 - (void)dealloc {

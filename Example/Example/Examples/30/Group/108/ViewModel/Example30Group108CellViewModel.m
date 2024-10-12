@@ -11,7 +11,7 @@
 @implementation Example30Group108CellViewModel
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/30/table/108/:/").viewModelClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/30/table/108/:/").viewModelClass = self;
 }
 
 - (void)prepare {

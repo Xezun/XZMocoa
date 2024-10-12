@@ -10,15 +10,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// UITableView 的 Header/Footer 的默认高度，值 0.00001 。
+/// 合法的视图最小宽度或最小高度，实际值为 0.000001 百万分之一。
+/// @note
+/// 在 iOS 14.x 系统中，设置 UITableView 中 Section 的 Header/Footer 高度为 `CGFLOAT_MIN` 能正常显示，但是在调用如下方法时，会触发 NaN 崩溃。
+/// @code
+/// [tableView reloadSections:indexes withRowAnimation:(UITableViewRowAnimationTop)]
+/// @endcode
+UIKIT_EXTERN CGFloat const XZMocoaViewMinimumDimension NS_SWIFT_NAME(XZMocoaView.minimumDimension);
+
+/// 合法的最小视图大小。
 /// @discussion
-/// iOS14.x，在 UITableView 中，如果 Section 的 Header/Footer 高度为 `CGFLOAT_MIN` 时，
-/// 那么在移除 Section 的所有 cell 时，使用 -reloadSections:withRowAnimation: 更新局部视图，会触发NaN崩溃。
-UIKIT_EXTERN CGFloat const XZMocoaTableViewHeaderFooterHeight;
-/// UICollectionViewCell 的默认高度。
-/// @discussion
-/// 当 cell 宽度或高度为 0 或 `CGFLOAT_MIN` 时，会造成正常的 cell 不能正常展示。
-UIKIT_EXTERN CGSize  const XZMocoaCollectionViewItemSize;
+/// 在某些情形中，直接设置大小为 0 会显示不正常。比如在 UICollectionView 中，Cell 的宽度或高度为 0 或 `CGFLOAT_MIN` 值，会造成普通的 cell 不能正常展示。
+UIKIT_EXTERN CGSize  const XZMocoaViewMinimumSize NS_SWIFT_NAME(XZMocoaView.minimumSize);
+
+UIKIT_EXTERN CGFloat const XZMocoaTableViewHeaderFooterHeight XZ_API_RENAMED("XZMocoaViewMinimumDimension", ios(1.0, 12.0));
+UIKIT_EXTERN CGSize  const XZMocoaCollectionViewItemSize XZ_API_RENAMED("XZMocoaViewMinimumSize", ios(1.0, 12.0));
 
 /// 模块的名称。
 /// @attention 字符`:`、`/`为保留字符，不可在 XZMocoaName 中使用。

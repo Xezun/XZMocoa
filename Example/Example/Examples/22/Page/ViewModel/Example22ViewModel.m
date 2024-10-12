@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, Example21ContactBookTestAction) {
     _contactBook = [[Example21ContactBook alloc] init];
     
     _collectionViewModel = [[XZMocoaCollectionViewModel alloc] initWithModel:_contactBook];
-    _collectionViewModel.module = XZMocoa(@"https://mocoa.xezun.com/examples/22/");
+    _collectionViewModel.module = XZModule(@"https://mocoa.xezun.com/examples/22/");
     [self addSubViewModel:_collectionViewModel];
 }
 

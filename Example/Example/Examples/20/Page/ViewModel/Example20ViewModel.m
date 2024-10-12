@@ -21,7 +21,7 @@
     _cursor = 100;
     _dataArray = [NSMutableArray array];
     
-    XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/20/table/");
+    XZMocoaModule *module = XZModule(@"https://mocoa.xezun.com/examples/20/table/");
     _tableViewModel = [[XZMocoaTableViewModel alloc] initWithModel:_dataArray];
     _tableViewModel.rowAnimation = UITableViewRowAnimationFade;
     _tableViewModel.module = module;
@@ -117,13 +117,13 @@
         }
         
         // 模拟网络模块处理数据
-        XZMocoaModule *module = XZMocoa(@"https://mocoa.xezun.com/examples/20/table/");
+        XZMocoaModule *module = XZModule(@"https://mocoa.xezun.com/examples/20/table/");
         NSMutableArray *list = [NSMutableArray arrayWithCapacity:array.count];
         for (NSDictionary *dict in array) {
             XZMocoaName name = dict[@"group"];
             if (!name) continue;
             XZMocoaModule *submodule = [module sectionForName:name];
-            id item = [submodule.modelClass yy_modelWithDictionary:dict];
+            id item = [XZJSON decode:dict options:0 class:submodule.modelClass];
             if (item) {
                 [list addObject:item];
             }

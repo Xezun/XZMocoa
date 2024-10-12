@@ -12,9 +12,7 @@
 #import "Example10ContactViewModel.h"
 #import "Example10Model.h"
 @import XZExtensions;
-
-
-@import YYModel;
+@import XZJSON;
 
 @interface Example10ViewController ()
 @property (nonatomic, readonly) Example10RootView *rootView;
@@ -23,7 +21,7 @@
 @implementation Example10ViewController
 
 + (void)load {
-    XZMocoa(@"https://mocoa.xezun.com/examples/10/").viewClass = self;
+    XZModule(@"https://mocoa.xezun.com/examples/10/").viewClass = self;
 }
 
 - (void)dealloc {
@@ -98,7 +96,7 @@
     };
     
     // 解析数据
-    Example10Model *data = [Example10Model yy_modelWithDictionary:dict];
+    Example10Model *data = [XZJSON decode:dict options:0 class:[Example10Model class]];
     
     // 更新视图
     [self setData:data];
