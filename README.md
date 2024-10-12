@@ -515,7 +515,7 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 1. 通过`ViewModel`管理`cell`的高度。
 
 ```objc
-@interface XZMocoaTableCellViewModel : XZMocoaAssembleCellViewModel
+@interface XZMocoaTableCellViewModel : XZMocoaListCellViewModel
 @optional
 @property (nonatomic) CGFloat height;
 @end
@@ -524,7 +524,7 @@ Mocoa 为独立的顶层模块，提供了进入的便利方法。
 2. 列表事件，重新转发给`cell`，并再转发给`ViewModel`处理。
 
 ```objc
-@interface XZMocoaTableCellViewModel : XZMocoaAssembleCellViewModel
+@interface XZMocoaTableCellViewModel : XZMocoaListCellViewModel
 @optional
 - (void)tableView:(XZMocoaTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(XZMocoaTableView *)tableView willDisplayRowAtIndexPath:(NSIndexPath *)indexPath;

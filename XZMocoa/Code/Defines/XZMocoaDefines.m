@@ -7,11 +7,11 @@
 
 #import "XZMocoaDefines.h"
 
-CGFloat const XZMocoaViewDimensionMinimum = 0.000001;
-CGSize  const XZMocoaViewSizeMinimum      = (CGSize){XZMocoaViewDimensionMinimum, XZMocoaViewDimensionMinimum};
+CGFloat const XZMocoaViewMinimumDimension = 0.000001;
+CGSize  const XZMocoaViewMinimumSize      = (CGSize){XZMocoaViewMinimumDimension, XZMocoaViewMinimumDimension};
 
-CGFloat const XZMocoaTableViewHeaderFooterHeight = XZMocoaViewDimensionMinimum;
-CGSize  const XZMocoaCollectionViewItemSize      = XZMocoaViewSizeMinimum;
+CGFloat const XZMocoaTableViewHeaderFooterHeight = XZMocoaViewMinimumDimension;
+CGSize  const XZMocoaCollectionViewItemSize      = XZMocoaViewMinimumSize;
 
 XZMocoaName const XZMocoaNameNone    = @"";
 XZMocoaKind const XZMocoaKindNone    = @"";
