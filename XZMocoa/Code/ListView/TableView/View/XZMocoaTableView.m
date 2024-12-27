@@ -168,7 +168,8 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
+    XZMocoaTableViewSectionViewModel * const sectionViewModel = [self.viewModel sectionViewModelAtIndex:section];
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = sectionViewModel.headerViewModel;
     if (viewModel == nil) {
         return nil;
     }
@@ -178,7 +179,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].headerViewModel;
+    XZMocoaTableViewSectionViewModel * const sectionViewModel = [self.viewModel sectionViewModelAtIndex:section];
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = sectionViewModel.headerViewModel;
     if (viewModel == nil) {
         return XZMocoaViewMinimumDimension;
     }
@@ -186,7 +188,8 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
+    XZMocoaTableViewSectionViewModel * const sectionViewModel = [self.viewModel sectionViewModelAtIndex:section];
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = sectionViewModel.footerViewModel;
     if (viewModel == nil) {
         return nil;
     }
@@ -196,7 +199,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    XZMocoaTableViewHeaderFooterViewModel * const viewModel = [self.viewModel sectionViewModelAtIndex:section].footerViewModel;
+    XZMocoaTableViewSectionViewModel * const sectionViewModel = [self.viewModel sectionViewModelAtIndex:section];
+    XZMocoaTableViewHeaderFooterViewModel * const viewModel = sectionViewModel.footerViewModel;
     if (viewModel == nil) {
         return XZMocoaViewMinimumDimension;
     }

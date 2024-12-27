@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <XZMocoa/XZMocoaDefines.h>
-#import <XZMocoa/XZMocoaModule.h>
-#import <XZMocoa/XZMocoaModel.h>
+#import "XZMocoaDefines.h"
+#import "XZMocoaModule.h"
+#import "XZMocoaModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-// - Mocoa Hierarchy Emit -
+// - Mocoa Hierarchy Emition -
 // 在具有层级关系的业务模块中，下级模块向上级模块传递数据或事件，或者上级模块监听下级模块的数据或事件，
 // 在 iOS 开发中一般使用代理模式，因为代理协议可以让上下级的逻辑关系看起来更清晰。
 // 但是在使用 MVVM 设计模式开发时，因为模块的划分，原本在 MVC 模式下，可以直接交互的逻辑，变得不再
@@ -127,30 +127,31 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *name;
 /// 事件值。
 @property (nonatomic, strong, readonly, nullable) id value;
-/// 事件源。
-@property (nonatomic, weak, readonly, nullable) __kindof XZMocoaViewModel *source;
+/// 发生当前事件的源对象。
+@property (nonatomic, strong, readonly) __kindof XZMocoaViewModel *source;
+/// 传递当前事件的对象。
+@property (nonatomic, strong, XZ_READONLY) __kindof XZMocoaViewModel *target;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)emitionWithName:(nullable NSString *)name value:(nullable id)value source:(XZMocoaViewModel *)source;
 @end
 
 /// 没有名称的事件，一般作为默认事件的事件名。
-FOUNDATION_EXPORT NSString * const XZMocoaEmitNone;
+FOUNDATION_EXPORT NSString * const XZMocoaEmitionNameDefault;
 /// 更新事件。
-FOUNDATION_EXPORT NSString * const XZMocoaEmitUpdate;
+FOUNDATION_EXPORT NSString * const XZMocoaEmitionNameUpdate;
 
-@interface XZMocoaViewModel (XZMocoaViewModelHierarchyEmitting)
+@interface XZMocoaViewModel (XZMocoaViewModelHierarchyEmition)
 /// 收到下级模块的事件，或监听到下级模块的数据变化。
 /// @discussion
 /// 只有在 isReady 状态下，才会传递事件。
 /// @discussion
 /// 默认情况下，该方法直接将事件继续向上级模块传递，开发者可重写此方法，根据业务需要，控制事件是否向上传递。
-/// @param subViewModel 传递事件的下级视图模型，可能非事件源，请根据 emit.source 获取事件源
 /// @param emition 事件信息
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition;
+- (void)didReceiveEmition:(XZMocoaEmition *)emition;
 
 /// 向上级模块发送事件或数据的便利方法，当前对象将作为事件源。
 /// @discussion 只有在 isReady 状态下，才会发送事件。
-/// @param name 事件名，如为 nil 则为默认名称 XZMocoaEmitNone
+/// @param name 事件名，如为 nil 则为默认名称 XZMocoaEmitionNameDefault
 /// @param value 事件值
 - (void)emit:(nullable NSString *)name value:(nullable id)value;
 @end

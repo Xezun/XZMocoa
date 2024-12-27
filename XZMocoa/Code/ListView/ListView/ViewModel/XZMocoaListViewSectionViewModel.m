@@ -69,12 +69,13 @@ typedef void(^XZMocoaListDelayedUpdates)(XZMocoaListViewSectionViewModel *self);
     [_cellViewModels removeObject:viewModel];
 }
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition {
-    if ([emition.name isEqualToString:XZMocoaEmitUpdate]) {
-        // 正在批量更新，事件被延迟
+- (void)didReceiveEmition:(XZMocoaEmition *)emition {
+    if ([emition.name isEqualToString:XZMocoaEmitionNameUpdate]) {
+        XZMocoaViewModel * const subViewModel = emition.target;
+        // 正在批量更新，延迟事件（如果对象被销毁，事件则不会执行）
         if (self.isPerformingBatchUpdates) {
             [_delayedBatchUpdates addObject:^void(XZMocoaListViewSectionViewModel *self) {
-                [self subViewModel:subViewModel didEmit:emition];
+                [self didReceiveEmition:emition];
             }];
             return;
         }
@@ -82,17 +83,21 @@ typedef void(^XZMocoaListDelayedUpdates)(XZMocoaListViewSectionViewModel *self);
         for (NSString *key in _supplementaryViewModels) {
             for (XZMocoaListViewSupplementaryViewModel *vm in _supplementaryViewModels[key]) {
                 if (subViewModel == vm) {
-                    return [self didReloadData];
+                    [self didReloadData];
+                    return;
                 }
             }
         }
         // cell视图的更新事件
-        NSInteger const index = [self indexOfCellViewModel:subViewModel];
-        if (index != NSNotFound) {
-            return [self didReloadCellsAtIndexes:[NSIndexSet indexSetWithIndex:index]];;
+        if ([subViewModel isKindOfClass:[XZMocoaListViewCellViewModel class]]) {
+            NSInteger const index = [self indexOfCellViewModel:(id)subViewModel];
+            if (index != NSNotFound) {
+                [self didReloadCellsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+                return;
+            }
         }
     }
-    [super subViewModel:subViewModel didEmit:emition];
+    [super didReceiveEmition:emition];
 }
 
 #pragma mark - 公开方法
@@ -564,25 +569,25 @@ typedef void(^XZMocoaListDelayedUpdates)(XZMocoaListViewSectionViewModel *self);
         identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, name);
     } else if (name.length > 0) {
         // 2、使用当前 section 的默认 cell
-        XZMocoaModule *defaultModule = [self.module submoduleIfLoadedForKind:XZMocoaKindCell forName:XZMocoaNameNone];
+        XZMocoaModule *defaultModule = [self.module submoduleIfLoadedForKind:XZMocoaKindCell forName:XZMocoaNameDefault];
         VMClass = defaultModule.viewModelClass;
         if (VMClass) {
-            identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, XZMocoaNameNone);
+            identifier = XZMocoaReuseIdentifier(section, XZMocoaKindCell, XZMocoaNameDefault);
         }
     }
     if (VMClass == Nil && section.length > 0) {
-        XZMocoaModule *sectionModule = [self.superViewModel.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameNone];
+        XZMocoaModule *sectionModule = [self.superViewModel.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameDefault];
         XZMocoaModule *cellModule = [sectionModule submoduleIfLoadedForKind:XZMocoaKindCell forName:name];
         VMClass = cellModule.viewModelClass;
         if (VMClass) {
             // 3、使用默认 section 的具名 cell
-            identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, name);
+            identifier = XZMocoaReuseIdentifier(XZMocoaNameDefault, XZMocoaKindCell, name);
         } else if (name.length > 0) {
             // 4、使用默认 section 的默认 cell
-            cellModule = [sectionModule submoduleIfLoadedForKind:XZMocoaKindCell forName:XZMocoaNameNone];
+            cellModule = [sectionModule submoduleIfLoadedForKind:XZMocoaKindCell forName:XZMocoaNameDefault];
             VMClass = cellModule.viewModelClass;
             if (VMClass) {
-                identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
+                identifier = XZMocoaReuseIdentifier(XZMocoaNameDefault, XZMocoaKindCell, XZMocoaNameDefault);
             }
         }
     }
@@ -617,25 +622,25 @@ typedef void(^XZMocoaListDelayedUpdates)(XZMocoaListViewSectionViewModel *self);
         identifier = XZMocoaReuseIdentifier(section, kind, name);
     } else if (name.length > 0) {
         // 2、使用当前 section 的默认 supplementary
-        XZMocoaModule *defaultModule = [self.module submoduleIfLoadedForKind:kind forName:XZMocoaNameNone];
+        XZMocoaModule *defaultModule = [self.module submoduleIfLoadedForKind:kind forName:XZMocoaNameDefault];
         VMClass = defaultModule.viewModelClass;
         if (VMClass) {
-            identifier = XZMocoaReuseIdentifier(section, kind, XZMocoaNameNone);
+            identifier = XZMocoaReuseIdentifier(section, kind, XZMocoaNameDefault);
         }
     }
     if (VMClass == Nil && section.length > 0) {
-        XZMocoaModule *sectionModule = [self.superViewModel.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameNone];
+        XZMocoaModule *sectionModule = [self.superViewModel.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameDefault];
         XZMocoaModule *cellModule = [sectionModule submoduleIfLoadedForKind:kind forName:name];
         VMClass = cellModule.viewModelClass;
         if (VMClass) {
             // 3、使用默认 section 的具名 supplementary
-            identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, kind, name);
+            identifier = XZMocoaReuseIdentifier(XZMocoaNameDefault, kind, name);
         } else if (name.length > 0) {
             // 4、使用默认 section 的默认 supplementary
-            cellModule = [sectionModule submoduleIfLoadedForKind:kind forName:XZMocoaNameNone];
+            cellModule = [sectionModule submoduleIfLoadedForKind:kind forName:XZMocoaNameDefault];
             VMClass = cellModule.viewModelClass;
             if (VMClass) {
-                identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, kind, XZMocoaNameNone);
+                identifier = XZMocoaReuseIdentifier(XZMocoaNameDefault, kind, XZMocoaNameDefault);
             }
         }
     }

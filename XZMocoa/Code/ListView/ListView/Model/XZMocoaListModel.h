@@ -5,8 +5,8 @@
 //  Created by Xezun on 2021/4/10.
 //
 
-#import <XZMocoa/XZMocoaModel.h>
-#import <XZMocoa/XZMocoaListSectionModel.h>
+#import "XZMocoaModel.h"
+#import "XZMocoaListSectionModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

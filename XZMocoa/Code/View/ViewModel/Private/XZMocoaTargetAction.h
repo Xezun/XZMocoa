@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <XZMocoa/XZMocoaViewModel.h>
+#import "XZMocoaViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

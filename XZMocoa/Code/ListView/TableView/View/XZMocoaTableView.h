@@ -6,8 +6,8 @@
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import <XZMocoa/XZMocoaListView.h>
-#import <XZMocoa/XZMocoaTableViewModel.h>
+#import "XZMocoaListView.h"
+#import "XZMocoaTableViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 对 UITableView 进行了封装，以支持 MVVM 设计模式。
 @interface XZMocoaTableView : XZMocoaListView
 
+/// 视图模型。
 @property (nonatomic, strong, nullable) __kindof XZMocoaTableViewModel *viewModel;
 
 /// 视图 UITableView 将作为 contentView 呈现。

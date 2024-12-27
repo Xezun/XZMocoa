@@ -81,8 +81,9 @@ typedef void(^XZMocoaListDelayedUpdates)(__kindof XZMocoaViewModel *self);
 
 #pragma mark - 处理 SectionViewModel 的事件
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition {
-    if ([emition.name isEqualToString:XZMocoaEmitUpdate]) {
+- (void)didReceiveEmition:(XZMocoaEmition *)emition {
+    if ([emition.name isEqualToString:XZMocoaEmitionNameUpdate]) {
+        __kindof XZMocoaViewModel * const subViewModel = emition.target;
         if (self.isPerformingBatchUpdates) {
             // 正在进行批量更新，刷新操作将被延迟到批量更新之后。
             // 主要原因是：
@@ -90,17 +91,28 @@ typedef void(^XZMocoaListDelayedUpdates)(__kindof XZMocoaViewModel *self);
             // 2、即使当前是操作与批量更新没有重复，可能依然会存在崩溃的可能。
             // 3、批量更新之后，当前操作的对象，可能已经不存在了。
             [_delayedBatchUpdates addObject:^void(XZMocoaListViewModel *self) {
-                [self subViewModel:subViewModel didEmit:emition];
+                [self didReceiveEmition:emition];
             }];
             return;
         }
-        NSInteger const index = [self indexOfSectionViewModel:subViewModel];
-        if (index != NSNotFound) {
-            [self didReloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
-            return;
+        if ([subViewModel isKindOfClass:[XZMocoaListViewSectionViewModel class]]) {
+            XZMocoaListViewSectionViewModel * const sectionVM = subViewModel;
+            NSInteger const section = [self indexOfSectionViewModel:sectionVM];
+            if (section != NSNotFound) {
+                if ([emition.source isKindOfClass:[XZMocoaListViewCellViewModel class]]) {
+                    NSInteger const row = [sectionVM indexOfCellViewModel:emition.source];
+                    if (row != NSNotFound) {
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+                        [self didReloadCellsAtIndexPaths:@[indexPath]];
+                        return;
+                    }
+                }
+                [self didReloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:section]];
+                return;
+            }
         }
     }
-    [super subViewModel:subViewModel didEmit:emition];
+    [super didReceiveEmition:emition];
 }
 
 #pragma mark - 局部更新
@@ -536,7 +548,7 @@ typedef void(^XZMocoaListDelayedUpdates)(__kindof XZMocoaViewModel *self);
         // 1、使用当前 section 模块的视图模型
     } else if (name.length > 0) {
         // 2、使用默认 section 模块的视图模型
-        XZMocoaModule *defaultModule = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameNone];
+        XZMocoaModule *defaultModule = [self.module submoduleIfLoadedForKind:XZMocoaKindSection forName:XZMocoaNameDefault];
         VMClass = defaultModule.viewModelClass;
     }
     if (VMClass == Nil) {

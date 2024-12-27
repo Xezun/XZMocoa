@@ -20,7 +20,7 @@
     self = [super initWithModel:model];
     if (self) {
         _frame      = CGRectZero;
-        _identifier = XZMocoaReuseIdentifier(XZMocoaNameNone, XZMocoaKindCell, XZMocoaNameNone);
+        _identifier = XZMocoaReuseIdentifier(XZMocoaNameDefault, XZMocoaKindCell, XZMocoaNameDefault);
     }
     return self;
 }

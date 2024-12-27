@@ -5,7 +5,7 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListModel.h>
+#import "XZMocoaListModel.h"
 
 /// UITableView 的数据模型。
 @protocol XZMocoaTableModel <XZMocoaListModel>

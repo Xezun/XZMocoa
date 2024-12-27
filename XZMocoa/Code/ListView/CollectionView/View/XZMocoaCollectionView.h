@@ -5,8 +5,8 @@
 //  Created by Xezun on 2023/7/24.
 //
 
-#import <XZMocoa/XZMocoaListView.h>
-#import <XZMocoa/XZMocoaCollectionViewModel.h>
+#import "XZMocoaListView.h"
+#import "XZMocoaCollectionViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

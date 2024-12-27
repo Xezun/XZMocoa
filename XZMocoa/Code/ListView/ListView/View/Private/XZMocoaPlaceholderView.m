@@ -107,7 +107,7 @@
 - (void)prepare {
     [super prepare];
     
-    XZMocoaViewModel * const viewModel = self.model;
+    XZMocoaListViewCellViewModel * const viewModel = self.model;
     XZMocoaListViewSectionViewModel * const superViewModel = viewModel.superViewModel;
     
     _reason = [self reasonByCheckingModule:viewModel.module];

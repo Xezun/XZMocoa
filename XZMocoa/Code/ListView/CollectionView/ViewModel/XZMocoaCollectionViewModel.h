@@ -5,9 +5,9 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListViewModel.h>
-#import <XZMocoa/XZMocoaCollectionViewCellViewModel.h>
-#import <XZMocoa/XZMocoaCollectionViewSectionViewModel.h>
+#import "XZMocoaListViewModel.h"
+#import "XZMocoaCollectionViewCellViewModel.h"
+#import "XZMocoaCollectionViewSectionViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,8 +31,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface XZMocoaCollectionViewModel : XZMocoaListViewModel <XZMocoaCollectionViewCellViewModel *, XZMocoaCollectionViewSectionViewModel *>
+@interface XZMocoaCollectionViewModel : XZMocoaListViewModel
 @property (nonatomic, weak) id<XZMocoaCollectionViewModelDelegate> delegate;
+@end
+
+/// 重申明
+@interface XZMocoaCollectionViewModel (XZMocoaCollectionViewModel)
+@property (nonatomic, readonly) NSArray<__kindof XZMocoaCollectionViewSectionViewModel *> *sectionViewModels;
+- (__kindof XZMocoaCollectionViewSectionViewModel *)sectionViewModelAtIndex:(NSInteger)index;
+- (__kindof XZMocoaCollectionViewCellViewModel *)cellViewModelAtIndexPath:(NSIndexPath *)indexPath;
 @end
 
 NS_ASSUME_NONNULL_END
