@@ -5,7 +5,7 @@
 //  Created by Xezun on 2023/8/19.
 //
 
-#import <XZMocoa/XZMocoaTableViewCell.h>
+#import "XZMocoaTableViewCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

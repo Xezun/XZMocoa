@@ -10,7 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol XZMocoaModuleProvider;
+@class XZMocoaDomain;
+
+/// 提供模块的对象，需要实现的协议。
+@protocol XZMocoaModuleProvider <NSObject>
+/// 获取指定路径的模块。
+/// - Parameters:
+///   - domain: 调用此方法的模块管理对象，即模块所在的域
+///   - path: 模块的路径，一定是合法的。
+- (nullable id)domain:(XZMocoaDomain *)domain moduleForPath:(NSString *)path;
+@end
 
 /// 模块所在的域，一种基于 URL 的模块管理方式。
 @interface XZMocoaDomain : NSObject
@@ -18,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 获取指定域名下的模块管理对象。
 /// @note 该方法返回的是单例对象。
 /// - Parameter name: 域名
-+ (XZMocoaDomain *)doaminNamed:(NSString *)name;
++ (XZMocoaDomain *)doaminNamed:(NSString *)name NS_SWIFT_NAME(init(named:));
 + (XZMocoaDomain *)doaminForName:(NSString *)name XZ_API_RENAMED("doaminNamed:", ios(1.0, 12.0));
 
 /// 域名。
@@ -45,14 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// 提供模块的对象，需要实现的协议。    
-@protocol XZMocoaModuleProvider <NSObject>
-/// 获取指定路径的模块。
-/// - Parameters:
-///   - domain: 调用此方法的模块管理对象，即模块所在的域
-///   - path: 模块的路径，一定是合法的。
-- (nullable id)domain:(XZMocoaDomain *)domain moduleForPath:(NSString *)path;
-@end
 
 
 XZ_API_RENAMED("XZMocoaModuleProvider", ios(1.0, 12.0))

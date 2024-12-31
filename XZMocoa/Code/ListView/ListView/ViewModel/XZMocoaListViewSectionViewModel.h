@@ -6,37 +6,37 @@
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import <XZMocoa/XZMocoaViewModel.h>
-#import <XZMocoa/XZMocoaListViewModelDefines.h>
-#import <XZMocoa/XZMocoaListSectionModel.h>
-#import <XZMocoa/XZMocoaListViewSupplementaryViewModel.h>
-#import <XZMocoa/XZMocoaListViewCellViewModel.h>
+#import "XZMocoaViewModel.h"
+#import "XZMocoaListViewModelDefines.h"
+#import "XZMocoaListSectionModel.h"
+#import "XZMocoaListViewSupplementaryViewModel.h"
+#import "XZMocoaListViewCellViewModel.h"
 
 @class XZMocoaListViewModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaListViewSectionViewModel<__covariant CellViewModelType: XZMocoaListViewCellViewModel *> : XZMocoaViewModel <XZMocoaListViewModel>
+@interface XZMocoaListViewSectionViewModel : XZMocoaViewModel <XZMocoaListViewModel>
 
 @property (nonatomic, strong, readonly, nullable) id<XZMocoaListSectionModel> model;
 @property (nonatomic, readonly, nullable) __kindof XZMocoaListViewModel *superViewModel;
 
-/// 接收来自下级的 XZMocoaEmitUpdate 事件，并刷新视图，如果在批量更新的过程中，视图刷新可能会延迟。
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition;
+/// 接收来自下级的 XZMocoaEmitionNameUpdate 事件，并刷新视图，如果在批量更新的过程中，视图刷新可能会延迟。
+- (void)didReceiveEmition:(XZMocoaEmition *)emition;
 
 /// 所有 cell 视图模型。这是一个计算属性，除非遍历所有 cell 对象，请尽量避免直接使用。
 - (nullable __kindof XZMocoaListViewSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
 /// 直接返回了内部对象，外部请勿修改，使用请自行 copy 。
-@property (nonatomic, readonly) NSDictionary<XZMocoaKind, NSArray<XZMocoaViewModel *> *> *supplementaryViewModels;
+@property (nonatomic, readonly) NSDictionary<XZMocoaKind, NSArray<__kindof XZMocoaListViewSupplementaryViewModel *> *> *supplementaryViewModels;
 
-@property (nonatomic, copy, readonly) NSArray<CellViewModelType> *cellViewModels;
+@property (nonatomic, copy, readonly) NSArray<__kindof XZMocoaListViewCellViewModel *> *cellViewModels;
 
 /// 返回 YES 表示 header/cell/footer 都没有。
 @property (nonatomic, readonly) BOOL isEmpty;
 
 @property (nonatomic, readonly) NSInteger numberOfCells;
-- (CellViewModelType)cellViewModelAtIndex:(NSInteger)index;
-- (NSInteger)indexOfCellViewModel:(XZMocoaViewModel *)cellModel;
+- (__kindof XZMocoaListViewCellViewModel *)cellViewModelAtIndex:(NSInteger)index;
+- (NSInteger)indexOfCellViewModel:(__kindof XZMocoaListViewCellViewModel *)cellViewModel;
 
 // MARK: - 局部更新
 

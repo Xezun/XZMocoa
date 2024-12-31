@@ -129,7 +129,7 @@
             }
         }
         
-        NSTimeInterval delay = arc4random_uniform(2000) / 1000.0 + 0.5;
+        NSTimeInterval delay = arc4random_uniform(2000) / 1000.0 + 1.0;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             completion(list);
         });

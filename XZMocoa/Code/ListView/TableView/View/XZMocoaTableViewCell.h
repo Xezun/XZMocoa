@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <XZMocoa/XZMocoaView.h>
-#import <XZMocoa/XZMocoaTableViewCellViewModel.h>
+#import "XZMocoaView.h"
+#import "XZMocoaTableViewCellViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

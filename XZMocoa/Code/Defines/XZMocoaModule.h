@@ -6,8 +6,8 @@
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import <XZMocoa/XZMocoaDefines.h>
-#import <XZMocoa/XZMocoaDomain.h>
+#import "XZMocoaDefines.h"
+#import "XZMocoaDomain.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -63,13 +63,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// @discussion
 /// 推荐使用 XZMocoa(stringOrURL) 函数，获取模块对象。
 /// @param url 模块地址
-+ (nullable XZMocoaModule *)moduleForURL:(nullable NSURL *)url;
++ (nullable XZMocoaModule *)moduleForURL:(nullable NSURL *)url NS_SWIFT_NAME(init(for:));
 
 /// 获取指定 url 字符串对应的模块的 XZMocoaModule 对象。
 /// @discussion
 /// 推荐使用 XZMocoa(stringOrURL) 函数，获取模块对象。
 /// - Parameter urlString: 模块地址
-+ (nullable XZMocoaModule *)moduleForURLString:(nullable NSString *)urlString;
++ (nullable XZMocoaModule *)moduleForURLString:(nullable NSString *)urlString NS_SWIFT_NAME(init(for:));
 
 #pragma mark - MVVM 基本结构
 
@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @attention
 /// 此属性仅用于表示 UITableView 或 UICollectionView 模块的 XZMocoaModule 对象。
 /// @discussion
-/// 此属性等同于`[table submoduleForName:XZMocoaNameNone forKind:XZMocoaKindNone]`。
+/// 此属性等同于`[table submoduleForName:XZMocoaNameDefault forKind:XZMocoaKindDefault]`。
 @property (nonatomic, strong, null_resettable) XZMocoaModule *section;
 
 /// 获取 UITableView 或 UICollectionView 模块的指定名称 section 模块。
@@ -155,7 +155,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @attention
 /// 此方法仅用于表示 UITableView 或 UICollectionView 模块的 XZMocoaModule 对象。
 /// @discussion
-/// 此方法等同于`[table submoduleForName:name forKind:XZMocoaKindNone]`。
+/// 此方法等同于`[table submoduleForName:name forKind:XZMocoaKindDefault]`。
 /// @param name 模块名称
 - (XZMocoaModule *)sectionForName:(nullable XZMocoaName)name;
 
@@ -165,7 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @attention
 /// 此方法仅用于表示 UITableView 或 UICollectionView 模块的 XZMocoaModule 对象。
 /// @discussion
-/// 此方法等同于`[table setSubmodule:section forKind:XZMocoaKindNone forName:name]`。
+/// 此方法等同于`[table setSubmodule:section forKind:XZMocoaKindDefault forName:name]`。
 /// @param section 模块对象
 /// @param name 模块名称
 - (void)setSection:(nullable XZMocoaModule *)section forName:(nullable XZMocoaName)name;
@@ -176,7 +176,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @attention
 /// 此属性仅用于表示 UITableView 或 UICollectionView 的 Section 模块的 XZMocoaModule 对象。
 /// @discussion
-/// 此属性等同于`[section submoduleForKind:XZMocoaKindHeader forName:XZMocoaNameNone]`。
+/// 此属性等同于`[section submoduleForKind:XZMocoaKindHeader forName:XZMocoaNameDefault]`。
 @property (nonatomic, strong, null_resettable) XZMocoaModule *header;
 
 /// 获取 UITableView 或 UICollectionView 的 Section 模块的指定名称的 Header 模块。
@@ -206,7 +206,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @attention
 /// 此属性仅用于表示 UITableView 或 UICollectionView 的 Section 模块的 XZMocoaModule 对象。
 /// @discussion
-/// 此属性等同于`[section submoduleForKind:XZMocoaKindCell forName:XZMocoaNameNone]`。
+/// 此属性等同于`[section submoduleForKind:XZMocoaKindCell forName:XZMocoaNameDefault]`。
 @property (nonatomic, strong, null_resettable) XZMocoaModule *cell;
 
 /// 获取 UITableView 或 UICollectionView 的 Section 模块的指定名称的 Cell 模块。
@@ -234,7 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Section 是 UITableView 或 UICollectionView 的直接下级，Header/Cell/Footer 是 Section 的直接下级。
 /// @attention
 /// 此属性仅用于表示 UITableView 或 UICollectionView 的 Section 模块的 XZMocoaModule 对象。
-/// @discussion 此方法等同于`[section submoduleForKind:XZMocoaKindFooter forName:XZMocoaNameNone]`。
+/// @discussion 此方法等同于`[section submoduleForKind:XZMocoaKindFooter forName:XZMocoaNameDefault]`。
 @property (nonatomic, strong, null_resettable) XZMocoaModule *footer;
 
 /// 获取 UITableView 或 UICollectionView 的 Section 模块的指定名称的 Footer 模块。
@@ -260,14 +260,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface XZMocoaModuleProvider : NSObject <XZMocoaModuleProvider>
+@interface NSURL (XZMocoaModule)
 /// 子类可以通过此方法构造统一格式的 URL 对象。
 /// - Parameters:
-///   - name: 域名
-///   - path: 路径，格式如 /path1/path2 
-+ (NSURL *)URLForDomain:(XZMocoaDomain *)domain inPath:(NSString *)path;
-+ (NSURL *)moduleURLForDomain:(XZMocoaDomain *)domain atPath:(NSString *)path XZ_API_RENAMED("URLForDomain:inPath:", ios(1.0, 12.0));
+///   - domain: 域
+///   - path: 路径，格式如 /path1/path2
++ (NSURL *)mocoaURLWithDomain:(XZMocoaDomain *)domain path:(NSString *)path NS_SWIFT_NAME(init(_:path:));
 @end
+
+@interface XZMocoaModuleProvider : NSObject <XZMocoaModuleProvider>
+@property (class, readonly) XZMocoaModuleProvider *defaultProvider;
+@end
+
+
+
 
 /// 通过 URL 字符串获取 Mocoa MVVM 模块。
 /// @param moduleURLString 模块地址
@@ -279,13 +285,6 @@ FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZModule(NSString *moduleURLS
 /// @param moduleURL 模块地址
 FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZModule(NSURL *moduleURL) XZ_ATTR_OVERLOAD {
     return [XZMocoaModule moduleForURL:moduleURL];
-}
-
-FOUNDATION_STATIC_INLINE XZMocoaModule * _Nullable XZMocoa(id url) XZ_API_RENAMED("XZModule", ios(1.0, 12.0)) {
-    if ([url isKindOfClass:NSString.class]) {
-        return XZModule((NSString *)url);
-    }
-    return XZModule((NSURL *)url);
 }
 
 NS_ASSUME_NONNULL_END

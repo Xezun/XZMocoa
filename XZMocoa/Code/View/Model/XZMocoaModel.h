@@ -5,7 +5,7 @@
 //  Created by Xezun on 2021/8/25.
 //
 
-#import <XZMocoa/XZMocoaModule.h>
+#import "XZMocoaModule.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

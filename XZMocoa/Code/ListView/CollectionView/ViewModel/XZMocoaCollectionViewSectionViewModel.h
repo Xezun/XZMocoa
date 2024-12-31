@@ -5,17 +5,23 @@
 //  Created by Xezun on 2023/7/22.
 //
 
-#import <XZMocoa/XZMocoaListViewSectionViewModel.h>
-#import <XZMocoa/XZMocoaCollectionViewCellViewModel.h>
-#import <XZMocoa/XZMocoaCollectionViewSupplementaryViewModel.h>
+#import "XZMocoaListViewSectionViewModel.h"
+#import "XZMocoaCollectionViewCellViewModel.h"
+#import "XZMocoaCollectionViewSupplementaryViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XZMocoaCollectionViewSectionViewModel : XZMocoaListViewSectionViewModel<XZMocoaCollectionViewCellViewModel *>
+@interface XZMocoaCollectionViewSectionViewModel : XZMocoaListViewSectionViewModel
 @property (nonatomic) UIEdgeInsets insets;
 @property (nonatomic) CGFloat minimumLineSpacing;
 @property (nonatomic) CGFloat minimumInteritemSpacing;
 - (__kindof XZMocoaCollectionViewSupplementaryViewModel *)viewModelForSupplementaryKind:(XZMocoaKind)kind atIndex:(NSInteger)index;
+@end
+
+@interface XZMocoaCollectionViewSectionViewModel (XZMocoaCollectionViewSectionViewModel)
+@property (nonatomic, readonly) NSDictionary<XZMocoaKind, NSArray<__kindof XZMocoaCollectionViewSupplementaryViewModel *> *> *supplementaryViewModels;
+@property (nonatomic, copy, readonly) NSArray<__kindof XZMocoaCollectionViewCellViewModel *> *cellViewModels;
+- (__kindof XZMocoaCollectionViewCellViewModel *)cellViewModelAtIndex:(NSInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

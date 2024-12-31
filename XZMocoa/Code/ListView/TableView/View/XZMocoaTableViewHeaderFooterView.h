@@ -6,8 +6,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <XZMocoa/XZMocoaView.h>
-#import <XZMocoa/XZMocoaTableViewHeaderFooterViewModel.h>
+#import "XZMocoaView.h"
+#import "XZMocoaTableViewHeaderFooterViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

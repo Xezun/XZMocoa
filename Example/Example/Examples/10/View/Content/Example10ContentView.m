@@ -6,6 +6,7 @@
 //
 
 #import "Example10ContentView.h"
+@import XZML;
 
 @implementation Example10ContentView {
     UILabel *_titleLabel;
@@ -43,6 +44,7 @@
             [_contentLabel.topAnchor constraintEqualToAnchor:_titleLabel.bottomAnchor constant:20],
             [_contentLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:+20],
             [_contentLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-20],
+            [_contentLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-20],
         ]];
     }
     return self;
@@ -61,7 +63,8 @@
 }
 
 - (void)setContent:(NSString *)content {
-    _contentLabel.text = content;
+    NSString *xzml = [NSString stringWithFormat:@"<30H3A^%@>", content];
+    [_contentLabel setXZMLText:xzml];
 }
 
 @end

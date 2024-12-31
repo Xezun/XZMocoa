@@ -187,7 +187,7 @@
 - (instancetype)initWithName:(NSString *)name value:(id)value source:(XZMocoaViewModel *)source {
     self = [super init];
     if (self) {
-        _name = name.copy ?: XZMocoaEmitNone;
+        _name = name.copy ?: XZMocoaEmitionNameDefault;
         _value = value;
         _source = source;
     }
@@ -197,20 +197,22 @@
 @end
 
 
-NSString * const XZMocoaEmitNone = @"";
-NSString * const XZMocoaEmitUpdate = @"XZMocoaEmitUpdate";
+NSString * const XZMocoaEmitionNameDefault = @"";
+NSString * const XZMocoaEmitionNameUpdate = @"XZMocoaEmitionNameUpdate";
 
-@implementation XZMocoaViewModel (XZMocoaViewModelHierarchyEmitting)
+@implementation XZMocoaViewModel (XZMocoaViewModelHierarchyEmition)
 
 - (void)emit:(NSString *)name value:(id)value {
     if (!self.isReady) return;
     XZMocoaEmition * const emition = [XZMocoaEmition emitionWithName:name value:value source:self];
-    [self.superViewModel subViewModel:self didEmit:emition];
+    emition.target = self;
+    [self.superViewModel didReceiveEmition:emition];
 }
 
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition {
+- (void)didReceiveEmition:(XZMocoaEmition *)emition {
     if (!self.isReady) return;
-    [self.superViewModel subViewModel:self didEmit:emition];
+    emition.target = self;
+    [self.superViewModel didReceiveEmition:emition];
 }
 
 @end

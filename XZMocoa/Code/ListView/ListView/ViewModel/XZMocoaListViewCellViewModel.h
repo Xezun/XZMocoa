@@ -6,8 +6,8 @@
 //  Copyright © 2021 Xezun. All rights reserved.
 //
 
-#import <XZMocoa/XZMocoaDefines.h>
-#import <XZMocoa/XZMocoaViewModel.h>
+#import "XZMocoaDefines.h"
+#import "XZMocoaViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

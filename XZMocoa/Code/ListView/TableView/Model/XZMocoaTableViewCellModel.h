@@ -6,7 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <XZMocoa/XZMocoaModel.h>
+#if SWIFT_PACKAGE
+#import "XZMocoaModel.h"
+#else
+#import "XZMocoaModel.h"
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 

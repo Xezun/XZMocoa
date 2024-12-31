@@ -6,8 +6,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <XZMocoa/XZMocoaView.h>
-#import <XZMocoa/XZMocoaCollectionViewSupplementaryViewModel.h>
+#import "XZMocoaView.h"
+#import "XZMocoaCollectionViewSupplementaryViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

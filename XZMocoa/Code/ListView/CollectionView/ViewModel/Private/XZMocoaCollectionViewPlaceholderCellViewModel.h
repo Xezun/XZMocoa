@@ -5,7 +5,7 @@
 //  Created by Xezun on 2023/8/28.
 //
 
-#import <XZMocoa/XZMocoaCollectionViewCellViewModel.h>
+#import "XZMocoaCollectionViewCellViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

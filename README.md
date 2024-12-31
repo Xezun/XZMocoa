@@ -327,27 +327,27 @@ NSURL *url = [NSURL URLWithString:@"https://mocoa.xezun.com/main"];
 
 ###### 5、默认模块
 
-一般情况下，名称为`XZMocoaNameNone`的模块，一般为同级模块中的默认模块，比如在`XZMocoaTableView`或`XZMocoaCollectionView`中。
+一般情况下，名称为`XZMocoaNameDefault`的模块，一般为同级模块中的默认模块，比如在`XZMocoaTableView`或`XZMocoaCollectionView`中。
 
 1、为名称为`name`的`section`模块创建`ViewModel`对象时，会按照以下顺序使用`viewModelClass`配置。
 
 - 当前`tableView`中名称为`name`的`section`模块的`viewModelClass`
-- 当前`tableView`中名称为`XZMocoaNameNone`的`section`模块的`viewModelClass`
+- 当前`tableView`中名称为`XZMocoaNameDefault`的`section`模块的`viewModelClass`
 - 使用`PlaceholderViewModelClass`
 
 2、为名称为`name`的`cell`模块创建`ViewModel`对象时，会按照以下顺序使用`viewModelClass`配置。
 
 - `tableView`中，当前`section`中名称为`name`的`cell`模块的`viewModelClass`
 
-- `tableView`中，当前`section`中名称为`XZMocoaNameNone`的`cell`模块的`viewModelClass`
+- `tableView`中，当前`section`中名称为`XZMocoaNameDefault`的`cell`模块的`viewModelClass`
 
 - `tableView`中，默认`section`中名称为`name`的`cell`模块的`viewModelClass`
 
-- `tableView`中，默认`section`中名称为`XZMocoaNameNone`的`cell`模块的`viewModelClass`
+- `tableView`中，默认`section`中名称为`XZMocoaNameDefault`的`cell`模块的`viewModelClass`
 
 - 使用`PlaceholderViewModelClass`
 
-  *默认`section`模块，即名称为`XZMocoaNameNone`的`section`模块。*
+  *默认`section`模块，即名称为`XZMocoaNameDefault`的`section`模块。*
 
 ## Mocoa MVVM
 
@@ -379,7 +379,7 @@ Mocoa 与其说是框架，不如说是规范，通过协议规范 MVVM 的实�
 - (void)emit:(NSString *)name value:(id)value;
 
 // handle the emition
-- (void)subViewModel:(XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition;
+- (void)didReceiveEmition:(XZMocoaEmition *)emition;
 ```
 
 比如在`UITableView`列表中，`cell`模块改变了内容时，希望`UITableView`模块刷新页面时，可以像下面这样处理。
@@ -389,18 +389,18 @@ Mocoa 与其说是框架，不如说是规范，通过协议规范 MVVM 的实�
 - (void)handleUserAction {
     // change the data then
     self.height = 100; // a new height
-    [self emit:XZMocoaEmitUpdate value:nil];
+    [self emit:XZMocoaEmitionNameUpdate value:nil];
 }
 
 // 在 UITableView 模块中
-- (void)subViewModel:(__kindof XZMocoaViewModel *)subViewModel didEmit:(XZMocoaEmition *)emition {
-    if ([emition.name isEqualToString:XZMocoaEmitUpdate]) {
+- (void)didReceiveEmition:(XZMocoaEmition *)emition {
+    if ([emition.name isEqualToString:XZMocoaEmitionNameUpdate]) {
         [self reloadData];
     }
 }
 ```
 
-当前这么做，需要一些默认的约定，比如将`XZMocoaEmitUpdate`作为刷新视图的事件。
+当前这么做，需要一些默认的约定，比如将`XZMocoaEmitionNameUpdate`作为刷新视图的事件。
 在 MVC 中，解决上面的问题，一般是通过`delegate`实现，这明显或破坏模块的整体性，上层模块与下层模块的`delegate`形成了耦合，但是利用层级关系处理，就能很好的避免这一点。
 
 同时，层级关系事件的局限性也很明显，仅适合处理比较明确的事件，不过在模块封装完整的情况下，下层模块也不应该有其它事件需要传递给上级处理。
